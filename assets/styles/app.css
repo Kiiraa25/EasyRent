@@ -1,3 +1,532 @@
-body {
-    background-color: skyblue;
+* {
+    font-family: "Poppins", sans-serif;
+    padding: 0px;
+    margin: 0px;
+    font-weight: 200;
+}
+
+/* ---------------------------------------------------------------- Navbar */
+nav {
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 50px;
+    margin: 10px 0px 20px 0px;
+}
+
+.right-side-nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.right-side-nav div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-button {
+    width: fit-content;
+    padding: 0px 30px;
+    height: 51px;
+    background-color: #FF866F;
+    border-radius: 50px;
+    border: solid 2px #FF866F;
+    color: white;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.nav-button:hover {
+    background-color: white;
+    border: solid 2px #FF866F;
+    color: #FF866F;
+}
+
+/* ---------------------------------------------------------------- Header */
+
+.header-subtitle{
+    display: flex;
+    margin-top: 0px;
+    font-size: 20px;
+    gap: 8px;
+    letter-spacing: 3px;
+}
+.header-subtitle p {
+    color: #EB8072;
+    font-weight: 400;
+
+}
+
+.header-subtitle span {
+    color: #282F4B;
+    font-weight: 400;
+
+}
+.header-form-section h1 {
+    letter-spacing: 1px;
+    color: #FA6960;
+    font-size: 62px;
+    font-weight: 600;
+    margin-bottom: 0%;
+}
+
+header {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    margin-bottom: 50px;
+    gap: 30px;
+}
+
+.hero-container {
+    width: 1100px;
+    height: 800px;
+    background-image: url(../img/hero.jpg);
+    background-size: contain;
+    background-position: right bottom;
+    background-repeat: no-repeat;
+}
+
+.header-form-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 30px;
+}
+
+.header-form-section form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 320px;
+    gap: 10px;
+}
+
+.header-form-section form input {
+    width: 478px;
+    height: 52px;
+    border: #BDBDBD solid 2px;
+    border-radius: 36px;
+    padding: 10px 46px;
+    background-color: #282f4b0b ;
+}
+
+.header-form-section form input::placeholder {
+    color: #AAA8AE;
+    font-weight: 300;
+    letter-spacing: 2px;
+    font-size: 14px;
+
+}
+
+.date-input {
+    width: 572px;
+}
+
+.header-form-section form .date-input input {
+    width: 187px;
+}
+
+.input-adressIcon svg{
+    width: 24px;
+    height: 72px;
+    position: absolute;
+    left: 18px;
+    top: 0;
+}
+
+.adress-input{
+    position: relative;
+}
+
+header .nav-button{
+    width: 570px;
+    height: 72px;
+}
+
+/* ---------------------------------------------------------------- Body */
+
+/* ---------------------------------------------------------------- First section (avantages) */
+
+.blue-section {
+    height: 972px;
+    background-image: url(../img/blueBG.png);
+    text-align: center;
+}
+
+.display-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.section-1 {
+    gap: 8%;
+}
+
+.section-1 h2 {
+    color: #EB8072;
+}
+
+.section-1 p {
+    color: white;
+}
+
+.advantages-grid {
+    height: 569px;
+    width: 1300px;
+    row-gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    /* background-color: #FF866F;  */
+}
+
+.advantages-grid div {
+    width: 420px;
+    height: 274px;
+    border-radius: 15px;
+    background-color: white;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.advantages-left-side-div {
+    grid-row: 2 / span 2;
+    grid-column: 1;
+}
+
+.advantages-middle-top-div {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+}
+
+.advantages-middle-bottom-div {
+    grid-column: 2;
+    grid-row: 3 / span 2;
+}
+
+.advantages-right-side-div {
+    grid-row: 2 / span 2;
+    grid-column: 3;
+}
+
+
+
+/* ---------------------------------------------------------------- Second section (types of cars) */
+
+.section-2,
+.section-4 {
+    height: 995px;
+    background-color: white;
+}
+
+h2 {
+    color: #282F4B;
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: 5px;
+    width: 900px;
+}
+
+.section-2 article {
+    height: 508px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+hr {
+    width: 391px;
+    border: #FA6960 solid 2px;
+    height: 0px;
+}
+
+
+.section-2-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5%;
+}
+
+.section-2-vehicles {
+    display: flex;
+    text-align: center;
+}
+
+.section-2-vehicles-names {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    width: 1690px;
+}
+
+.section-2-vehicles-names p {
+    width: 400px;
+    color: #FA6960;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: 5px;
+}
+
+.section-2-vehicles img {
+    margin: auto;
+    width: 376px ;
+}
+
+.section-2-vehicles img:hover {
+    transform: scale(1.2);
+    transition: transform 0.6s;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges; 
+}
+
+
+
+/* ---------------------------------------------------------------- Third section (Cities) */
+
+.section-3 h2 {
+    color: white;
+}
+
+.cities {
+    display: flex;
+    width: 1537px;
+    justify-content: space-between;
+}
+
+.section-3 .city {
+    width: 192px;
+    height: 520px;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.464) 5px 5px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.section-3 .city:hover {
+    filter: brightness(1.7);
+}
+
+
+.section-3 article {
+    height: 698px;
+    justify-content: space-between;
+}
+
+.paris-city {
+    background-image: url(../img/Cities/Paris.png);
+}
+
+.lyon-city {
+    background-image: url(../img/Cities/Lyon.png);
+}
+
+.marseille-city {
+    background-image: url(../img/Cities/Marseille.png);
+}
+
+.bordeau-city {
+    background-image: url(../img/Cities/Bordeau.png);
+}
+
+.grenoble-city {
+    background-image: url(../img/Cities/Grenoble.png);
+}
+
+.lille-city {
+    background-image: url(../img/Cities/Lille.png);
+}
+
+.section-3 .city p {
+    color: white;
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: 5px;
+    padding: 0px 8px 0px 8px;
+    border-radius: 10px;
+    text-align: center;
+    transition: background-color 0.3s ease-in-out, opacity 0.3s ease-in-out;
+
+}
+
+.section-3 .city:hover p {
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 1;
+}
+
+
+.section-4 {
+    background-image: url(../img/whiteBG.png);
+    background-size: contain;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.section-4 img{
+    width: 585px;
+}
+
+.section-4 .nav-button{
+    background-color: #282F4B;
+    border-color: #282F4B ;
+    position: absolute;
+    width: 204px;
+    height: 72px;
+    top: 45%;
+}
+
+.section-4 .nav-button:hover {
+    background-color: #FF866F;
+    border: solid 2px #282F4B;
+    color: #282F4B;
+}
+
+.section-4-text h1{
+    color: #282F4B;
+    font-size: 60px;
+    font-weight: bold;
+}
+
+.section-4-text{
+    position: relative;
+    top: 18%;
+}
+
+.section-4-text p{
+    color: #282f4bb8;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.section-5{
+    gap: 15%;
+}
+
+.section-5 h2{
+    color: #EB8072;
+}
+.section-5 div{
+    display: flex;
+    gap: 70px;
+    margin-left: 55px;
+}
+.section-5-review-box{
+    width: 400px;
+    height: 380px;
+    border-radius: 15px;
+    background-color: white;
+    color: #555555;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.section-5-review-box .quote-icon{
+    width: 50px;
+    align-self: center;
+}
+
+.section-5-review-box p{
+    width: 336px;
+    font-weight: 300;
+}
+.section-5-review-box span{
+    color: #EB8072;
+    font-weight: 500;
+}
+
+.section-5 .feather{
+    place-self: center end;
+}
+
+
+footer{
+    height:396px ;
+    display: flex;
+   align-items: center;
+   padding: 0px 100px;
+   gap: 25%;
+}
+
+.footer-left-side div{
+    display: flex;
+    gap: 10px;
+}
+
+.footer-right-side{
+    display: flex;
+    justify-content: space-between;
+    width: 921px;
+    height: 174px;
+}
+
+.footer-right-side article{
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+
+h3{
+    font-weight: 600;
+    font-size: 20px;
+}
+
+h4{
+    font-weight: 400;
+    font-size: 16px;
+}
+
+/* .body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+} */
+
+ .subscribe-form{
+    padding: 100px 0px;
+    width: 940px;
+    background-color: #282F4B;
+}
+
+.subscribe-form form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+.subscribe-form form div{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.subscribe-form form .suscribe-input{
+    width: 346px;
+    padding-left: 40px;
+    height: 44px;
+    border-radius: 8px;
+    border: none;
+}
+
+.subscribe-form form .nav-button{
+width: 100%;
 }

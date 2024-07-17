@@ -1,0 +1,163 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Easy-Rent
+{% endblock %}
+
+
+{% block header %}
+	<header>
+		<div class="header-form-section">
+			<h1>Louez une voiture</h1>
+			<div class="header-subtitle">
+				<p>En quelques clics</p>
+				<span>
+					et n'importe quel moment</span>
+			</div>
+			<form action="">
+				<div class="adress-input">
+					<input type="text" placeholder="Adresse précise, gare, métro">
+					<span class="input-adressIcon">
+						<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+							<path d="M19 10c0 5.091-5.924 11.073-6.175 11.325a1.165 1.165 0 0 1-1.65 0C10.922 21.073 5 15.091 5 10c0-3.86 3.14-7 7-7s7 3.14 7 7zm-7 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"></path>
+						</svg>
+					</span>
+				</div>
+
+				<div class="date-input">
+					<input type="datetime" placeholder="Début">
+
+					<input type="datetime" placeholder="Fin">
+				</div>
+
+				<button class="nav-button">Rechercher</button>
+			</form>
+		</div>
+		<div class="hero-container"></div>
+
+	</header>
+{% endblock %}
+
+{% block body %}
+
+	<section class="section-1 blue-section display-center">
+		<div>
+			<h2>Nos avantages</h2>
+			<p>Découvrez votre nouvelle manière de louer une voiture ...</p>
+		</div>
+
+
+		<div class="advantages-grid">
+			<div class="advantages-left-side-div">
+				<img width="88px" src="{{ asset('img/icons/icon1.png')}}" alt="">
+				<h3>Louez à tout moment</h3>
+				Réservez une voiture près de chez vous instantanément, à tout moment, même à la dernière minute.</div>
+			<div class="advantages-middle-top-div">
+				<img width="88px" src="{{ asset('img/icons/icon1.png')}}" alt="">
+				<h3>Des prix personnalisés</h3>
+				Pour quelques heures ou bien pour quelques jours: C'est vous qui choisissez !</div>
+			<div class="advantages-middle-bottom-div">
+				<img width="88px" src="{{ asset('img/icons/icon1.png')}}" alt="">
+				<h3>Fini la paperasse</h3>
+				Les formalitées sont réglées une bonne fois pour toutes, à l'ouverture du compte.
+			</div>
+			<div class="advantages-right-side-div">
+				<img width="88px" src="{{ asset('img/icons/icon1.png')}}" alt="">
+				<h3>Pas d'agence, pas d'attente</h3>
+				Déverouillez votre véhicule directement grâce à votre smartphone.</div>
+		</div>
+
+	</section>
+
+	<section class="section-2 display-center">
+
+		<article>
+			<div class="section-2-title">
+				<hr>
+				<h2>Des voitures adaptées à vos besoins</h2>
+				<hr>
+			</div>
+			<div>
+				<div class="section-2-vehicles">
+					<img width="376px" src="{{ asset('/img/citadine.png')}}" alt="">
+					<img width="398px" src="{{ asset('/img/monospace.svg')}}" alt="">
+					<img src="{{ asset('/img/suv.svg')}}" alt="">
+					<img src="{{ asset('/img/utilitaire.svg')}}" alt="">
+				</div>
+
+				<div class="section-2-vehicles-names">
+					<p>Citadine</p>
+					<p>Monospace</p>
+					<p>SUV</p>
+					<p>Utilitaire</p>
+				</div>
+			</div>
+		</article>
+	</section>
+
+	<section class="blue-section display-center section-3">
+		<article class="display-center">
+			<h2>Disponibles partout en France</h2>
+
+			<div class="cities">
+				<div class="city paris-city">
+					<p>PARIS</p>
+				</div>
+				<div class="city lyon-city">
+					<p>LYON</p>
+				</div>
+				<div class="city marseille-city">
+					<p>MARSEILLE</p>
+				</div>
+				<div class="city bordeau-city">
+					<p>BORDEAUX</p>
+				</div>
+				<div class="city grenoble-city">
+					<p>GRENOBLE</p>
+				</div>
+				<div class="city lille-city">
+					<p>LILLE</p>
+				</div>
+			</div>
+		</article>
+	</section>
+
+	<section class="section-4 display-center">
+		<div class="section-4-text">
+			<h1>Rentabilisez votre voiture !</h1>
+			<p>Votre voiture peut vous rapporter jusqu'a 600€ / mois.</p>
+		</div>
+
+		<img src="{{ asset('/img/home/pinkhomecar.jpg')}}" alt="">
+		<button class="nav-button">Je me lance !</button>
+	</section>
+
+	<section class="section-5 display-center blue-section">
+		<h2>Les avis vous intéressent ?</h2>
+		<div>
+
+			<article class="section-5-review-box">
+				<img class="quote-icon" src="{{ asset('/img/home/quote.png')}}" alt="">
+				<p>"Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.Separated they live."</p>
+				<span>- Jerry Doe -</span>
+			</article>
+			<article class="section-5-review-box">
+				<img class="quote-icon" src="{{ asset('/img/home/quote.png')}}" alt="">
+				<p>Je suis très satisfait de Getaround. La plateforme est sérieuse et je loue en confiance dessus.</p>
+				<span>- Jerry Doe -</span>
+			</article>
+			<article class="section-5-review-box">
+				<img class="quote-icon" src="{{ asset('/img/home/quote.png')}}" alt="">
+				<p>Expérience utilisateur optimale. Site bien fait et facile d'utilisation. Location auprès du propriétaire parfaite et fluide.
+				</p>
+				<span>- Jerry Doe -</span>
+			</article>
+			<svg class="feather feather-chevron-right" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="55" height="55">
+				<path d="m9 18 6-6-6-6"></path>
+			</svg>
+		</div>
+
+
+	</section>
+{% endblock %}
+
