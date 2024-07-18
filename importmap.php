@@ -16,8 +16,8 @@ return [
         'path' => './assets/app.js',
         'entrypoint' => true,
     ],
-    'navbar' => [
-        'path' => './assets/js/navbar.js',
+    'register' => [
+        'path' => './assets/js/register.js',
         'entrypoint' => true,
     ],
     '@hotwired/stimulus' => [

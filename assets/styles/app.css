@@ -5,6 +5,18 @@
     font-weight: 200;
 }
 
+body{
+    display: flex;
+    flex-direction: column;
+}
+
+main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center ;
+}
+
 /* ---------------------------------------------------------------- Navbar */
 nav {
     font-size: 16px;
@@ -12,6 +24,8 @@ nav {
     justify-content: space-between;
     padding: 5px 50px;
     margin: 10px 0px 20px 0px;
+    width: 1820px;
+    align-self: center;
 }
 
 .right-side-nav {
@@ -42,6 +56,7 @@ nav {
     background-color: white;
     border: solid 2px #FF866F;
     color: #FF866F;
+    cursor: pointer;
 }
 
 /* ---------------------------------------------------------------- Header */
@@ -74,7 +89,7 @@ nav {
 
 header {
     display: flex;
-    justify-content: end;
+    justify-content: center;
     align-items: center;
     margin-bottom: 50px;
     gap: 30px;
@@ -234,7 +249,6 @@ h2 {
     font-size: 32px;
     font-weight: 600;
     letter-spacing: 5px;
-    width: 900px;
 }
 
 .section-2 article {
@@ -244,6 +258,10 @@ h2 {
     justify-content: space-between;
 }
 
+.section-2 h2{
+    width: 900px;
+
+}
 hr {
     width: 391px;
     border: #FA6960 solid 2px;
@@ -458,11 +476,13 @@ hr {
 
 
 footer{
+    width: 1720px;
     height:396px ;
     display: flex;
    align-items: center;
    padding: 0px 100px;
    gap: 25%;
+   align-self: center;
 }
 
 .footer-left-side div{
@@ -494,39 +514,80 @@ h4{
     font-size: 16px;
 }
 
-/* .body{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-} */
 
- .subscribe-form{
-    padding: 100px 0px;
-    width: 940px;
-    background-color: #282F4B;
+/* menu déroulant */
+nav {
+    position: relative;
 }
 
-.subscribe-form form{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 25px;
+.menu-button {
+    cursor: pointer;
 }
 
-.subscribe-form form div{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+
+.menu {
+    display: none;
+    list-style-type: none;
+    position: absolute;
+    top: 60px;
+    right: 13%;
+    width: 351px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.100);
+    background-color: white;
+    color: black;
+    padding: 20px;
+
+}
+.clip-path-container{
+    filter: drop-shadow(0px -2px 2px rgba(0, 0, 0, 0.100));
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 0;
+    top: 0;
 }
 
-.subscribe-form form .suscribe-input{
-    width: 346px;
-    padding-left: 40px;
-    height: 44px;
-    border-radius: 8px;
-    border: none;
+.menu .clip-path {
+    position: absolute;
+    top: -8px;
+    right: 43px;
+    width: 16px;
+    height: 8px;
+    background-color: rgb(255, 255, 255);
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    
 }
 
-.subscribe-form form .nav-button{
-width: 100%;
+.menu li a {
+    display: block;
+    padding: 10px;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-weight: 400;
 }
+
+.menu li a:hover {
+    font-weight: 600;
+}
+
+#menu-toggle:checked + .menu-button + .menu {
+    display: block;
+}
+
+#menu-toggle {
+    display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

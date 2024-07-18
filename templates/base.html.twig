@@ -19,20 +19,22 @@
 
 	</head>
 
-
+<body>
 	{% block navbar %}
 		{% include '_partials/_navbar.html.twig' %}
 	{% endblock %}
 
 	{% block header %}{% endblock %}
 
-<body>
-    {% block body %}{% endblock %}
 
-		
-	</body>
+    {% block body %}
+    
+	
+	{% endblock %}
+
 	{% block footer %}
 		{% include '_partials/_footer.html.twig' %}
 	{% endblock %}
-
+	
+</body>
 </html>

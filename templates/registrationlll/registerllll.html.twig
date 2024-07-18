@@ -1,17 +1,14 @@
 {% extends 'base.html.twig' %}
-
 {% block importmap %}
 	{{ importmap(['app', 'register']) }}
 {% endblock %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Inscription
+{% endblock %}
+
 
 {% block body %}
-    {% for flash_error in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
-
-    <main>
+	<main>
 
 		<section class="register-login-section">
 
@@ -49,4 +46,9 @@
 		</section>
 
 	</main>
+
+{% endblock %}
+
+{% block footer %}
+    
 {% endblock %}
