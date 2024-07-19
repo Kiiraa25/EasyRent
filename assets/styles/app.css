@@ -625,6 +625,7 @@ nav {
     display: flex;
     align-items: center;
     padding-left: 2px;
+    padding-right: 2px;
 }
 
 .toggle-owner-menu .circle-toggle-owner-menu{
@@ -632,6 +633,11 @@ nav {
    height: 29px;
    background-color: white;
    border-radius: 50px;
+   box-shadow: rgba(0, 0, 0, 0.338) 0px 0px 5px;
+}
+
+.hidden{
+    display: none;
 }
 
 

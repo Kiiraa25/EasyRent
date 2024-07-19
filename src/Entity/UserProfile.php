@@ -37,6 +37,9 @@ class UserProfile
     #[ORM\Column]
     private ?int $rating = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $picture = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -138,6 +141,18 @@ class UserProfile
     public function setRating(int $rating): static
     {
         $this->rating = $rating;
+
+        return $this;
+    }
+
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(string $picture): static
+    {
+        $this->picture = $picture;
 
         return $this;
     }
