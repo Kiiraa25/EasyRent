@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MyAccountController!{% endblock %}
+
+
+{% block header %}
+    <main>
+
+<aside class="account-nav">
+    <a href="{{ path('app_user_profile_verify') }}" class="{% if app.request.attributes.get('_route') == 'app_user_profile_verify' %}active{% endif %}">Vérifier mon profil</a>
+    <a href="{{ path('app_user_profile_edit') }}" class="{% if app.request.attributes.get('_route') == 'app_user_profile_edit' %}active{% endif %}">Modifier mon profil</a>
+    <a href="{{ path('app_user_edit') }}" class="{% if app.request.attributes.get('_route') == 'app_user_edit' %}active{% endif %}">Paramètres de compte</a>
+</aside>
+
+
+
+</main>
+{% endblock %}
+
+
+
+{% block body %}
+{% endblock %}

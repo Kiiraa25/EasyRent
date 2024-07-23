@@ -11,7 +11,7 @@ class MyAccountController extends AbstractController
     #[Route('/account', name: 'app_my_account')]
     public function index(): Response
     {
-        return $this->render('my_account/account.html.twig', [
+        return $this->render('my_account/accountBase.html.twig', [
         ]);
     }
 }

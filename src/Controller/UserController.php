@@ -20,13 +20,6 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class UserController extends AbstractController
 {
-    // //DELETE
-    // #[Route('/user/delete', name: 'app_user_delete')]
-    // public function deleteUser(Request $request,UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager): Response
-    // {
-
-
-    // }
 
 // add 5 users
     #[Route('/addUsers', name: 'app_add_users')]
