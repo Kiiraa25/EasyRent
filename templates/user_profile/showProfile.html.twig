@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block importmap %}
+	{{ importmap(['app']) }}
+{% endblock %}
+
+{% block title %}Hello UserProfileController!
+{% endblock %}
+
+{% block body %}
+
+	<main>
+
+		<h1>{{ user.firstName }}
+			{{ user.lastName }}</h1>
+
+		<br><br>
+
+		<p>
+			<strong>Email:</strong>
+			{{ user.email }}</p>
+		<p>
+			<strong>Date de Naissance:</strong>
+			{{ user.birthDate|date('d/m/Y') }}</p>
+		<p>
+			<strong>Adresse:</strong>
+			{{ userProfile.address }}</p>
+		<p>
+			<strong>Code Postal:</strong>
+			{{ userProfile.postalCode }}</p>
+		<p>
+			<strong>Ville:</strong>
+			{{ userProfile.city }}</p>
+		<p>
+			<strong>Téléphone:</strong>
+			{{ userProfile.phone }}</p>
+
+
+	</main>
+{% endblock %}

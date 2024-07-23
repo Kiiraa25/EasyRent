@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block importmap %}
+	{{ importmap(['app', 'register']) }}
+{% endblock %}
+
+{% block title %}Modifier mon compte
+{% endblock %}
+
+{% block body %}
+	{% for flash_error in app.flashes('verify_email_error') %}
+		<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+	{% endfor %}
+
+	<main>
+
+		<article class="blue-form display-center">
+			<h2>Modifier mon compte</h2>
+
+			<div>
+				<h3>Modifier mon email</h3>
+				{{ form_start(ChangeEmailForm) }}
+				{{ form_row(ChangeEmailForm.email) }}
+				{{ form_row(ChangeEmailForm.current_password) }}
+				<button type="submit" class="nav-button">Modifier mon email</button>
+				{{ form_end(ChangeEmailForm) }}
+			</div>
+
+
+			<div>
+				<h3>Modifier mon mot de passe</h3>
+				{{ form_start(ChangePasswordForm) }}
+				{{ form_row(ChangePasswordForm.currentPassword) }}
+				{{ form_row(ChangePasswordForm.newPassword.first) }}
+				{{ form_row(ChangePasswordForm.newPassword.second) }}
+				<button type="submit" class="nav-button">Modifier mon mot de passe</button>
+				{{ form_end(ChangePasswordForm) }}
+			</div>
+
+            <div>
+             <h3>Supprimer mon compte</h3>
+            {{ form_start(DeleteAccountForm) }}
+            {{ form_row(DeleteAccountForm.password) }}
+            <button type="submit" class="nav-button">Supprimer mon compte</button>
+            {{ form_end(DeleteAccountForm) }}
+            </div>
+
+		</article>
+	</main>
+{% endblock %}
+

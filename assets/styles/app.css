@@ -30,6 +30,7 @@ nav {
     margin: 10px 0px 20px 0px;
     width: 1820px;
     align-self: center;
+    margin-bottom: 100px;
 }
 
 .right-side-nav {
@@ -481,6 +482,7 @@ footer{
    padding: 0px 100px;
    gap: 25%;
    align-self: center;
+   margin-top: 100px;
 }
 
 .footer-left-side div{
@@ -642,7 +644,60 @@ nav {
 }
 
 
+.blue-form{
+    padding: 100px 0px;
+    width: 940px;
+    background-color: #282F4B;
+    border-radius: 20px 20px 20px 20px;
+    gap: 50px;
+}
 
+.blue-form form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.blue-form form .nav-button{
+    width: 100%;
+
+}
+.blue-form h2{
+    color: white;
+}
+
+
+/* edit user */
+.blue-form h3{
+    color: white;
+    align-self: flex-start;
+    margin-bottom: 10px;
+}
+
+
+.account-nav{
+    width: 40%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.account-nav a{
+    background-color:#f7d8d2;
+    color: #FF866F;
+    font-weight: 600;
+    border-radius: 20px;
+    width: 210px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.account-nav a:hover{
+    background-color: #cdcfd79a;
+    color: black;
+}
 
 
 

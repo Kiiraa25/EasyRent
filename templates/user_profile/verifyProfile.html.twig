@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block importmap %}
+	{{ importmap(['app', 'register']) }}
+{% endblock %}
+
+{% block title %}Hello UserProfileController!{% endblock %}
+
+{% block body %}
+
+<main>
+<section class="blue-form display-center" action="">
+<h2> Vérifier mon profil </h2>
+
+{{ form_errors(verificationForm) }}
+
+				{{ form_start(verificationForm) }}
+				{{ form_row(verificationForm.address) }}
+				{{ form_row(verificationForm.postalCode) }}
+				{{ form_row(verificationForm.city) }}
+				{{ form_row(verificationForm.phone) }}
+				{{ form_row(verificationForm.picture) }}
+
+                    
+				
+				<button type="submit" class="nav-button">Envoyer</button>
+				{{ form_end(verificationForm) }}
+
+
+</section>
+
+
+
+</main>
+{% endblock %}

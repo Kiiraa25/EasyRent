@@ -25,18 +25,19 @@
 			{% if app.user %}
 				<div class="user-infos">
 					<div class="user-icon">
-					{% if app.user.getProfile() %}
-					<img src="{{ asset(app.user.UserProfile.getPicture() ) }}" alt=""></div>
+						{% if app.user.profile is not null %}
+						
+							<img src="{{ asset(app.user.profile.picture ) }}" alt=""></div>
 
-					{% else %}
-					<img src="{{ asset('/img/default-user-icon.png') }}" alt=""></div>
-					
+						{% else %}
+							<img src="{{ asset('/img/default-user-icon.png') }}" alt=""></div>
+
 					{% endif %}
 					<div class="right-side-user-infos">
 						<p class="user-name">
 							{{ app.user.getLastName()}}
 							{{ app.user.getFirstName()}}</p>
-						<a href="">Mon compte</a>
+						<a href="{{ path('app_my_account')}}">Mon compte</a>
 					</div>
 				</div>
 
@@ -47,38 +48,50 @@
 					</div>
 				</div>
 				<ul class="renterMode">
-				<a href=""><li>Vérifier mon compte</li></a>
-				<a href=""><li>Locations</li></a>
-				<a href=""><li>Paiements</li></a>
-				<a href="{{ path('app_logout')}}"><li class="logout-link">Se deconnecter</li></a>
+					<a href="{{ path('app_user_profile_verify') }}">
+						<li>Vérifier mon compte</li>
+					</a>
+					<a href="">
+						<li>Locations</li>
+					</a>
+					<a href="">
+						<li>Paiements</li>
+					</a>
+					<a href="{{ path('app_logout')}}">
+						<li class="logout-link">Se deconnecter</li>
+					</a>
 				</ul>
-				
+
 				<ul class="ownerMode hidden">
-				<a href=""><li>Demandes</li></a>
-				<a href=""><li>Locations</li></a>
-				<a href=""><li>Voitures</li></a>
-				<a href=""><li>Performances</li></a>
-				<a href=""><li>Paiements</li></a>
-				<a href="{{ path('app_logout')}}"><li class="logout-link">Se deconnecter</li></a>
+					<a href="">
+						<li>Demandes</li>
+					</a>
+					<a href="">
+						<li>Locations</li>
+					</a>
+					<a href="">
+						<li>Voitures</li>
+					</a>
+					<a href="">
+						<li>Performances</li>
+					</a>
+					<a href="">
+						<li>Paiements</li>
+					</a>
+					<a href="{{ path('app_logout')}}">
+						<li class="logout-link">Se deconnecter</li>
+					</a>
 				</ul>
 
 
 			{% else %}
-			<ul>
-			<li>
-					<a href="{{ path('app_login') }}">se connecter</a>
-				</li>
-				<li>
-					<a href="{{ path('app_login') }}">Créer un compte</a>
-				</li>
-				<li>
-					<a href="{{ path('app_login') }}">Pourquoi devenir hôte ?</a>
-				</li>
-				<li>
-					<a href="{{ path('app_login') }}">Nous contacter</a>
-				</li>
-			</ul>
-				
+				<ul>
+					<li><a href="{{path('app_login')}}">se connecter</a></li>
+					<li><a href="{{path('app_login')}}">Créer un compte</a></li>
+					<li><a href="{{path('app_login')}}">Pourquoi devenir hôte ?</a></li>
+					<li><a href="{{path('app_login')}}">Nous contacter</a></li>
+				</ul>
+
 
 			{% endif %}
 		</section>
