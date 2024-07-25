@@ -14,14 +14,11 @@ class RegistrationCertificate
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: 'date')]
     private ?\DateTimeInterface $issueDate = null;
 
     #[ORM\Column(length: 200)]
     private ?string $certificateNumber = null;
-
-    #[ORM\OneToOne(mappedBy: 'registrationCertificate', cascade: ['persist', 'remove'])]
-    private ?Request $request = null;
 
     #[ORM\Column(length: 255)]
     private ?string $frontImagePath = null;
@@ -58,27 +55,6 @@ class RegistrationCertificate
         return $this;
     }
 
-    public function getRequest(): ?Request
-    {
-        return $this->request;
-    }
-
-    public function setRequest(?Request $request): static
-    {
-        // unset the owning side of the relation if necessary
-        if ($request === null && $this->request !== null) {
-            $this->request->setRegistrationCertificate(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($request !== null && $request->getRegistrationCertificate() !== $this) {
-            $request->setRegistrationCertificate($this);
-        }
-
-        $this->request = $request;
-
-        return $this;
-    }
 
     public function getFrontImagePath(): ?string
     {

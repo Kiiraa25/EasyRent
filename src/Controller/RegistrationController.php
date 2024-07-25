@@ -17,6 +17,8 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use App\Form\NameUserProfileType;
+use App\Entity\UserProfile;
 
 class RegistrationController extends AbstractController
 {
@@ -28,10 +30,22 @@ class RegistrationController extends AbstractController
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
+        $userProfile = new UserProfile();
+
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
+        $nameForm = $this->createForm(NameUserProfileType::class, $userProfile);
+        $nameForm->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
+            $user->setProfile($userProfile);
+            $userProfile->setCreatedAt(new \DateTimeImmutable());
+            $userProfile->setUpdatedAt(new \DateTimeImmutable());
+            $userProfile->setRating(0);
+            $userProfile->setVerified(false);
+
+
             $user->setActive(true);
             $user->setRoles([RoleEnum::USER]);
             $user->setPassword(
@@ -41,11 +55,14 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            $entityManager->persist($userProfile);
             $entityManager->persist($user);
             $entityManager->flush();
 
             // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+            $this->emailVerifier->sendEmailConfirmation(
+                'app_verify_email',
+                $user,
                 (new TemplatedEmail())
                     ->from(new Address('easy_rent@registration.com', 'easy_rent'))
                     ->to($user->getEmail())
@@ -60,6 +77,7 @@ class RegistrationController extends AbstractController
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form,
+            'nameForm' => $nameForm
         ]);
     }
 

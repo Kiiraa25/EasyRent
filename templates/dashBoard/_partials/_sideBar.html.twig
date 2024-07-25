@@ -1,0 +1,36 @@
+<aside>
+			<div class="account-nav">
+
+				<div>
+					<span class="linkIcon"></span>
+					<a href="{{ path('app_user_profile_verify') }}" class="{% if app.request.attributes.get('_route') == 'app_user_profile_verify' %}active{% endif %}">Vérifier mon profil</a>
+				</div>
+
+				<div>
+					<span class="linkIcon"></span>
+					<a href="{{ path('app_user_profile_edit') }}" class="{% if app.request.attributes.get('_route') == 'app_user_profile_edit' %}active{% endif %}">Modifier mon profil</a>
+				</div>
+
+				<div>
+					<span class="linkIcon"></span>
+					<a href="{{ path('app_user_edit') }}" class="{% if app.request.attributes.get('_route') == 'app_user_edit' %}active{% endif %}">Paramètres de compte</a>
+				</div>
+
+				<div>
+					<span class="linkIcon"></span>
+					<a href="" class="">Moyens de paiement</a>
+				</div>
+
+
+				<div>
+					<span class="linkIcon"></span>
+					<a href="" class="">Paramètres de paiement</a>
+				</div>
+
+
+				<div>
+					<span class="linkIcon"></span>
+					<a href="" class="">Notifications</a>
+				</div>
+			</div>
+		</aside>

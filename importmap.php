@@ -20,6 +20,18 @@ return [
         'path' => './assets/js/register.js',
         'entrypoint' => true,
     ],
+    'dashbordStyle' => [
+        'path' => './assets/js/dashbordStyle.js',
+        'entrypoint' => true,
+    ],
+    'profileVerification' => [
+        'path' => './assets/js/profileVerification.js',
+        'entrypoint' => true,
+    ],
+    'profile' => [
+        'path' => './assets/js/profile.js',
+        'entrypoint' => true,
+    ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],

@@ -1,35 +1,38 @@
-{% extends 'my_account/AccountBase.html.twig' %}
+{% extends 'dashBoard/dashBoardBase.html.twig' %}
 
 {% block importmap %}
-	{{ importmap(['app', 'register']) }}
+	{{ importmap(['app', 'register', 'dashbordStyle', 'profile']) }}
 {% endblock %}
 
-{% block title %}Hello UserProfileController!{% endblock %}
 
-{% block body %}
+{% block content %}
 
-<main>
-<section class="blue-form display-center" action="">
-<h2> Vérifier mon profil </h2>
+	<main class="profile-container">
 
-{{ form_errors(form) }}
+		<article class="user-image-section">
+			<div class="user-img"></div>
+			{# <a href="">
+											<button class="nav-button">Modifier ma photo de profil</button>
+										</a>
+										<a href="">
+											<button class="nav-button">Supprimer ma photo de profil</button>
+										</a> #}
+		</article>
+
+
+		<section class="left-side-profile">
+
+
+			<article class="personal-info-section display-center">
 
 				{{ form_start(form) }}
-				{{ form_row(form.address) }}
-				{{ form_row(form.postalCode) }}
-				{{ form_row(form.city) }}
-				{{ form_row(form.phone) }}
-				{{ form_row(form.picture) }}
+				<h3>Informations personnelles</h3>
+				{{ form_row(form.firstName,  { label: 'Nom'}) }}
+				{{ form_row(form.lastName,  { label: 'Prénom'}) }}
+				{{ form_row(form.birthDate,  { label: 'Date de naissance'}) }}
+				{{ form_row(form.phone,{ label: 'Numéro de téléphone'}) }}
+			</article>
 
-                    
-				
-				<button type="submit" class="nav-button">Envoyer</button>
-				{{ form_end(form) }}
-
-
-</section>
-
-
-
-</main>
+		</section>
+	</main>
 {% endblock %}

@@ -31,11 +31,11 @@
 				{{ form_errors(registrationForm) }}
 
 				{{ form_start(registrationForm) }}
-				{{ form_row(registrationForm.lastName) }}
-				{{ form_row(registrationForm.firstName) }}
+				{{ form_row(nameForm.lastName) }}
+				{{ form_row(nameForm.firstName) }}
+				{{ form_row(nameForm.birthDate) }}
 				{{ form_row(registrationForm.email) }}
 				{{ form_row(registrationForm.plainPassword) }}
-				{{ form_row(registrationForm.birthDate) }}
 
                     <div class="agree-terms">
                     {{ form_widget(registrationForm.agreeTerms) }}

@@ -15,36 +15,41 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserProfileController extends AbstractController
 {
-    // CREATE
-    #[Route('/user/profile/verify', name: 'app_user_profile_verify')]
+
+    //CREATE
+    #[Route('dashboard/profile_verification_status', name: 'app_user_profile_verify')]
     public function verify(Request $request, EntityManagerInterface $entityManager): Response
     {
-
-        $userProfile = new UserProfile();
-
         /** @var User $user */
         $user = $this->getUser();
-        $userProfile->setCreatedAt(new \DateTimeImmutable());
-        $userProfile->setUpdatedAt(new \DateTimeImmutable());
-        $userProfile->setRating(0);
 
+        if (!$user instanceof User) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
+
+        $userProfile = $user->getProfile();
+
+        if (!$userProfile) {
+            return $this->redirectToRoute('app_user_profile_verify');
+        }
 
         $form = $this->createForm(UserProfileType::class, $userProfile);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $user->setProfile($userProfile);
 
-            $entityManager->persist($userProfile);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            dd($form, $request);
+            $userProfile->setUpdatedAt(new \DateTimeImmutable()); 
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_login');
-        }
-        return $this->render('user_profile/verifyProfile.html.twig', [
-            'verificationForm' => $form,
-        ]);
-    }
+            $this->addFlash('success', 'Votre profil a été mis à jour avec succès.');
 
-    
+            return $this->redirectToRoute('app_user_profile',['id' => $user->getId()]);
+        }
+
+        return $this->render('user_profile/verifyProfile.html.twig', [
+            'form' => $form,        ]);
+    }
 
     //UPDATE
     #[Route('/user/profile/edit', name: 'app_user_profile_edit')]
@@ -64,10 +69,11 @@ class UserProfileController extends AbstractController
         }
 
         $form = $this->createForm(UserProfileType::class, $userProfile);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $userProfile->setUpdatedAt(new \DateTimeImmutable());
+            $userProfile->setUpdatedAt(new \DateTimeImmutable()); 
             $entityManager->flush();
 
             $this->addFlash('success', 'Votre profil a été mis à jour avec succès.');
@@ -76,8 +82,7 @@ class UserProfileController extends AbstractController
         }
 
         return $this->render('user_profile/editProfile.html.twig', [
-            'form' => $form,
-        ]);
+            'form' => $form,        ]);
     }
 
     // READ

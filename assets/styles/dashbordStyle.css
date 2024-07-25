@@ -1,0 +1,100 @@
+main{
+    display: flex;
+    margin: 0;
+    width: 100%;
+    gap: 50px;
+}
+
+aside{
+    width: 300px;
+    padding: 50px 30px;
+    height: 100vh;
+    /* background-color: rgba(185, 180, 180, 0.705); */
+    /* border-right: 1px solid #3f3f442c; */
+    background-color: white;
+    border-radius: 30px;
+    margin: 10px;
+}
+
+.account-nav{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    
+}
+
+.account-nav a{
+
+    font-weight: 600;
+     border-radius: 8px;
+    width: 250px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+
+}
+
+.account-nav div{
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.linkIcon{
+    width: 25px;
+    height: 25px;
+    background-color: antiquewhite;
+}
+
+.account-nav a:hover{
+    /* background-color: #c0c1c59a; */
+    color: rgb(173, 121, 121);
+}
+
+.account-nav a.active{
+    /* color: #df6a52; */
+    background-color: #FDCB9E;
+}
+
+.container{
+    display: flex;
+    gap: 50px;
+    background-color: #F6F6F6;
+    /* align-items: baseline; */
+}
+
+.forms-section{
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+
+}
+.blue-form{
+   width: fit-content;
+   padding: 30px;
+    background-color: #282F4B;
+    border-radius: 20px 20px 20px 20px;
+    gap: 50px;
+}
+
+.blue-form form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.first-line-forms{
+    display: flex;
+    width: 1000px;
+    justify-content: space-between;
+}
+
+.right-side-dashBoard{
+    display: flex;
+    justify-content: center;
+    width: 1500px;
+    align-items: baseline;
+    padding-top: 20px;
+}

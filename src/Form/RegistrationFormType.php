@@ -15,6 +15,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 
 class RegistrationFormType extends AbstractType
@@ -22,30 +24,19 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('lastName', TextType::class, [
-            'label' => false,
-            'attr' => [
-                'class' => 'suscribe-input',
-                'placeholder' => 'Nom'
-            ]
-        ])
-
-        ->add('firstName', TextType::class, [
-            'label' => false,
-            'attr' => [
-                'class' => 'suscribe-input',
-                'placeholder' => 'Prénom'
-            ]
-        ])
-
         ->add('email', EmailType::class, [
             'required' => true,
             'label' => false,
             'attr' => [
                 'class' => 'suscribe-input',
                 'placeholder' => 'Email'
-            ]
+            ],
+            'constraints' => [
+                new Assert\NotBlank(),
+                new Assert\Email()
+            ],
         ])
+
         ->add('plainPassword', RepeatedType::class, [
             'type' => PasswordType::class,
             'mapped' => false,
@@ -79,15 +70,6 @@ class RegistrationFormType extends AbstractType
             ],
         ])
         
-
-        ->add('birthDate', DateType::class, [
-            'widget' => 'single_text',
-            'label' => false,
-            'attr' => [
-                'class' => 'suscribe-input',
-                'placeholder' => 'Birth Date'
-            ]
-        ])
 
         ->add('agreeTerms', CheckboxType::class, [
             'mapped' => false,

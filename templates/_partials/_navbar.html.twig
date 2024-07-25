@@ -25,7 +25,7 @@
 			{% if app.user %}
 				<div class="user-infos">
 					<div class="user-icon">
-						{% if app.user.profile is not null %}
+						{% if app.user.profile.picture is not null %}
 						
 							<img src="{{ asset(app.user.profile.picture ) }}" alt=""></div>
 
@@ -35,9 +35,9 @@
 					{% endif %}
 					<div class="right-side-user-infos">
 						<p class="user-name">
-							{{ app.user.getLastName()}}
-							{{ app.user.getFirstName()}}</p>
-						<a href="{{ path('app_my_account')}}">Mon compte</a>
+							{{ app.user.profile.getLastName()}}
+							{{ app.user.profile.getFirstName()}}</p>
+						<a href="{{ path('app_user_profile_edit')}}">Mon compte</a>
 					</div>
 				</div>
 

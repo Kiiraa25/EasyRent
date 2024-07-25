@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'dashBoard/dashBoardBase.html.twig' %}
 
 {% block importmap %}
 	{{ importmap(['app']) }}
@@ -11,8 +11,8 @@
 
 	<main>
 
-		<h1>{{ user.firstName }}
-			{{ user.lastName }}</h1>
+		<h1>{{ user.profile.firstName }}
+			{{ user.profile.lastName }}</h1>
 
 		<br><br>
 
@@ -21,7 +21,7 @@
 			{{ user.email }}</p>
 		<p>
 			<strong>Date de Naissance:</strong>
-			{{ user.birthDate|date('d/m/Y') }}</p>
+			{{ userProfile.birthDate|date('d/m/Y') }}</p>
 		<p>
 			<strong>Adresse:</strong>
 			{{ userProfile.address }}</p>

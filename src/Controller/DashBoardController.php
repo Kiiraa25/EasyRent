@@ -6,12 +6,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class MyAccountController extends AbstractController
+class DashBoardController extends AbstractController
 {
-    #[Route('/account', name: 'app_my_account')]
+    #[Route('/dashboard', name: 'app_dashBoard')]
     public function index(): Response
     {
-        return $this->render('my_account/accountBase.html.twig', [
+        return $this->render('dashBoard/dashBoardBase.html.twig', [
         ]);
     }
 }

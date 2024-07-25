@@ -23,9 +23,6 @@ class DrivingLicense
     #[ORM\Column(length: 50)]
     private ?string $licenseNumber = null;
 
-    #[ORM\OneToOne(mappedBy: 'drivingLicense', cascade: ['persist', 'remove'])]
-    private ?Request $request = null;
-
     #[ORM\Column(length: 255)]
     private ?string $frontImagePath = null;
 
@@ -34,6 +31,10 @@ class DrivingLicense
 
     #[ORM\Column(length: 100)]
     private ?string $countryOfIssue = null;
+
+    #[ORM\OneToOne(inversedBy: 'drivingLicense', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?UserProfile $userProfile = null;
 
     public function getId(): ?int
     {
@@ -76,28 +77,6 @@ class DrivingLicense
         return $this;
     }
 
-    public function getRequest(): ?Request
-    {
-        return $this->request;
-    }
-
-    public function setRequest(?Request $request): static
-    {
-        // unset the owning side of the relation if necessary
-        if ($request === null && $this->request !== null) {
-            $this->request->setDrivingLicense(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($request !== null && $request->getDrivingLicense() !== $this) {
-            $request->setDrivingLicense($this);
-        }
-
-        $this->request = $request;
-
-        return $this;
-    }
-
     public function getFrontImagePath(): ?string
     {
         return $this->frontImagePath;
@@ -130,6 +109,18 @@ class DrivingLicense
     public function setCountryOfIssue(string $countryOfIssue): static
     {
         $this->countryOfIssue = $countryOfIssue;
+
+        return $this;
+    }
+
+    public function getUserProfile(): ?UserProfile
+    {
+        return $this->userProfile;
+    }
+
+    public function setUserProfile(UserProfile $userProfile): static
+    {
+        $this->userProfile = $userProfile;
 
         return $this;
     }
