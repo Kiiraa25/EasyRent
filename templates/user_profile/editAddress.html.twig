@@ -1,0 +1,37 @@
+{% extends 'dashBoard/dashBoardBase.html.twig' %}
+
+{% block importmap %}
+	{{ importmap(['app', 'register', 'dashbordStyle']) }}
+{% endblock %}
+
+{% block content %}
+
+<main>
+<section class="blue-form display-center" action="">
+<h2> Modifier mon profil </h2>
+
+{{ form_errors(form) }}
+
+				{{ form_start(form) }}
+				
+				
+				<div class="blue-form-div display-center">
+				<h3>Adresse</h3>
+				{{ form_row(form.address,{ label: 'Adresse'}) }}
+				{{ form_row(form.postalCode,{ label: 'Code postal'}) }}
+				{{ form_row(form.city,{ label: 'Ville'}) }}
+				{{ form_row(form.country,{ label: 'Pays'}) }}
+				</div>
+
+			
+				
+				<button type="submit" class="nav-button">Envoyer</button>
+				{{ form_end(form) }}
+
+
+</section>
+
+
+
+</main>
+{% endblock %}

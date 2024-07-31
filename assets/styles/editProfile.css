@@ -1,0 +1,146 @@
+
+.profile-container {
+    width: 100%;
+    align-items: baseline;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/*  block bleu user tout en haut */
+
+.top-block {
+    width: 1400px;
+    background-color: #282F4B;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: 70px;
+    padding: 15px;
+    margin-bottom: 50px;
+
+}
+
+.userInfo {
+    color: #ffffff;
+    letter-spacing: 2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    font-size: 22px;
+    margin-left: 100px;
+    position: absolute;
+    top: 18%;
+    z-index: 100;
+}
+
+.user-name {
+    display: flex;
+    gap: 15px;
+}
+
+.verified-icon img,
+.verified-icon {
+    width: 25px;
+    display: flex;
+    align-items: center;
+}
+
+.user-rating {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.user-rating img {
+    width: 20px;
+}
+
+
+.user-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 170px;
+    height: 170px;
+    border-radius: 100%;
+    background-color: #ffa391;
+    /* background-image: url('../img/userIcon.png'); */
+    background-size: contain;
+    position: absolute;
+    left: 50%;
+    top: -40%;
+    transform: translateX(-50%);
+    border: 4px #282F4B solid;
+    font-size: 70px;
+    color: #282F4B;
+}
+
+
+.bottom-block{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: 120px;
+    padding-top: 0px;
+}
+
+/*  block profile gauche */
+
+.left-side-profile, .right-side-profile{
+    gap: 50px;
+    display: flex;
+    flex-direction: column;
+    
+}
+.profile-box{
+    width: 558px;
+    height: 150px;
+    background-color: white;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 50px;
+    /* border-radius: 30px ; */
+
+    border-radius: 5px;
+    box-shadow: rgb(219, 218, 218) 0px 1px 5px;
+}
+
+.profile-box .line{
+    display: flex;
+    gap: 150px;
+}
+
+.profile-box .line p{
+    width: 160px;
+    color: #00000089;
+    font-weight: 500;
+}
+
+.driving-License-content{
+    color: #00000089;
+}
+
+.profile-content-block{
+    position: relative;
+}
+
+.profile-content-block h3{
+    margin-left: 40px;
+    margin-bottom: 8px;
+    color: #FA6960;
+    letter-spacing: 2px;
+    font-weight: 500;
+}
+
+.profile-content-block .edit-icon{
+    position: absolute;
+    left: 91%;
+    top: 20%;
+    cursor: pointer;
+}

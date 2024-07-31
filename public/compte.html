@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="compte.css" />
+  </head>
+  <body>
+    <aside>
+      <div class="account-nav">
+        <div>
+          <span class="linkIcon"></span>
+          <a
+            href="{{ path('app_user_profile_verify') }}"
+            class="{% if app.request.attributes.get('_route') == 'app_user_profile_verify' %}active{% endif %}"
+            >Vérifier mon profil</a
+          >
+        </div>
+
+        <div>
+          <span class="linkIcon"></span>
+          <a
+            href="{{ path('app_user_profile_edit') }}"
+            class="{% if app.request.attributes.get('_route') == 'app_user_profile_edit' %}active{% endif %}"
+            >Modifier mon profil</a
+          >
+        </div>
+
+        <div>
+          <span class="linkIcon"></span>
+          <a
+            href="{{ path('app_user_edit') }}"
+            class="{% if app.request.attributes.get('_route') == 'app_user_edit' %}active{% endif %}"
+            >Paramètres de compte</a
+          >
+        </div>
+
+        <div>
+          <span class="linkIcon"></span>
+          <a href="" class="">Moyens de paiement</a>
+        </div>
+
+        <div>
+          <span class="linkIcon"></span>
+          <a href="" class="">Paramètres de paiement</a>
+        </div>
+
+        <div>
+          <span class="linkIcon"></span>
+          <a href="" class="">Notifications</a>
+        </div>
+      </div>
+    </aside>
+
+    <main>
+      <h1>Mon compte</h1>
+
+      <section class="account-blocks">
+        <article>
+          <div class="edit-img"></div>
+          <div class="text-block">
+            <h3>Adresse mail</h3>
+            <p>Vous avez changé d'adresse mail ? c'est par ici !</p>
+          </div>
+          <div class="edit-icon"></div>
+        </article>
+        <article>
+          <div class="edit-img"></div>
+          <div class="text-block">
+            <h3>Mot de passe</h3>
+            <p>Une envie de changer de mot de passe ? c'est par ici !</p>
+          </div>
+          <div class="edit-icon"></div>
+        </article>
+        <article>
+          <div class="edit-img"></div>
+          <div class="text-block">
+            <h3>Suppression de compte</h3>
+            <p>Cette action est irréversible !</p>
+          </div>
+          <div class="edit-icon"></div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

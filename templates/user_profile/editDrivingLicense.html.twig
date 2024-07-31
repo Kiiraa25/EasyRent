@@ -1,0 +1,37 @@
+{% extends 'dashBoard/dashBoardBase.html.twig' %}
+
+{% block importmap %}
+	{{ importmap(['app', 'register', 'dashbordStyle']) }}
+{% endblock %}
+
+{% block content %}
+
+<main>
+<section class="blue-form display-center" action="">
+<h2> Modifier mon profil </h2>
+
+{{ form_errors(form) }}
+
+				{{ form_start(form) }}
+				
+
+				<div class="blue-form-div display-center">
+				<h3>Permis de conduire</h3>
+				{{ form_row(form.licenseNumber) }}
+				{{ form_row(form.issueDate) }}
+				{{ form_row(form.expiryDate) }}
+				{{ form_row(form.countryOfIssue) }}
+				{{ form_row(form.frontImagePath) }}
+				{{ form_row(form.backImagePath) }}
+				</div>
+				
+				<button type="submit" class="nav-button">Envoyer</button>
+				{{ form_end(form) }}
+
+
+</section>
+
+
+
+</main>
+{% endblock %}

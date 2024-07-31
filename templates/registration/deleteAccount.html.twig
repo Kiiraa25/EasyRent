@@ -1,0 +1,31 @@
+{% extends 'dashBoard/dashBoardBase.html.twig' %}
+{# {% extends 'base.html.twig' %} #}
+
+{% block importmap %}
+	{{ importmap(['app', 'register', 'dashbordStyle']) }}
+{% endblock %}
+
+{% block title %}Modifier mon compte
+{% endblock %}
+
+{% block content %}
+	{% for flash_error in app.flashes('verify_email_error') %}
+		<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+	{% endfor %}
+
+	<main>
+		
+		
+
+			
+			<div class="blue-form">
+				<h3>Supprimer mon compte</h3>
+				{{ form_start(DeleteAccountForm) }}
+				{{ form_row(DeleteAccountForm.password) }}
+				<button type="submit" class="nav-button">Supprimer mon compte</button>
+				{{ form_end(DeleteAccountForm) }}
+			</div>
+
+		
+	</main>
+{% endblock %}

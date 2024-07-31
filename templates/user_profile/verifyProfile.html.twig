@@ -1,66 +1,92 @@
 {% extends 'dashBoard/dashBoardBase.html.twig' %}
 
 {% block importmap %}
-	{{ importmap(['app', 'register', 'profileVerification', 'dashbordStyle']) }}
+	{{ importmap(['app', 'register', 'profileVerification', 'dashbordStyle', 'verifyProfile']) }}
 {% endblock %}
 
-{% block title %}Vérifier mon profile{% endblock %}
+{% block title %}Vérifier mon profile
+{% endblock %}
 
 {% block content %}
 
-<main>
-<section class="blue-form display-center" action="">
-<h2> Vérifier mon profil </h2>
+	<main>
 
-<div class="step-indicators">
-      <div class="step" data-step="0">1</div>
-      <div class="step" data-step="1">2</div>
-      <div class="step" data-step="2">3</div>
-    </div>
 
-	
+		<section class="profile-verification">
 
-{{ form_errors(form) }}
+			<h1>Vérifier mon profile</h1>
 
-				{{ form_start(form) }}
-				
-				<div class="blue-form-div personalInfo display-center">
-				<h3>Informations personnelles</h3>
-				{{ form_row(form.picture,{ label: 'Photo de profil'}) }}
-				{{ form_row(form.lastName,  { label: 'Prénom'}) }}
-				{{ form_row(form.firstName,  { label: 'Nom'}) }}
-				{{ form_row(form.birthDate,  { label: 'Date de naissance'}) }}
-				{{ form_row(form.phone,{ label: 'Numéro de téléphone'}) }}
+			<div class="step-indicators">
+				<div class="step" data-step="0">1</div>
+				<div class="step" data-step="1">2</div>
+				<div class="step" data-step="2">3</div>
+			</div>
+
+			{{ form_start(form) }}
+			<div class="form-step-1">
+
+				<div class="form-step">
+
+
+					<article class="verifying-form-block">
+						<h3>Informations personnelles</h3>
+
+						{{ form_row(form.lastName,  { label: 'Prénom'}) }}
+						{{ form_row(form.firstName,  { label: 'Nom'}) }}
+						{{ form_row(form.birthDate,  { label: 'Date de naissance'}) }}
+						{{ form_row(form.phone,{ label: 'Numéro de téléphone'}) }}
+					</article>
+
+					<article class="profile-picture-block">
+						<div class="profile-picture">
+							{{ form_row(form.picture,{ label: 'Photo de profil'}) }}
+						</div>
+					</article>
 				</div>
+			</div>
 
+			{# Drinving License Form #}
 
-				<div class="blue-form-div drivingLicenseInfo display-center hidden">
-				<h3>Permis de conduire</h3>
-				{{ form_row(form.drivingLicense.licenseNumber) }}
-				{{ form_row(form.drivingLicense.issueDate) }}
-				{{ form_row(form.drivingLicense.expiryDate) }}
-				{{ form_row(form.drivingLicense.countryOfIssue) }}
-				{{ form_row(form.drivingLicense.frontImagePath) }}
-				{{ form_row(form.drivingLicense.backImagePath) }}
+			<div class="form-step-2 hidden">
+
+				<div class="form-step">
+					<div class="verifying-form-block">
+						<h3>Permis de conduire</h3>
+						{{ form_row(form.drivingLicense.licenseNumber) }}
+						{{ form_row(form.drivingLicense.issueDate) }}
+						{{ form_row(form.drivingLicense.expiryDate) }}
+						{{ form_row(form.drivingLicense.countryOfIssue) }}
+					</div>
+
+					<article class="profile-picture-block">
+						<div class="profile-picture">
+							{{ form_row(form.drivingLicense.frontImagePath,{ label: 'Photo de profil'}) }}
+							{{ form_row(form.drivingLicense.backImagePath,{ label: 'Photo de profil'}) }}
+						</div>
+					</article>
+
 				</div>
+			</div>
 
+			<div class="form-step-3 hidden">
 
-				<div class="blue-form-div addressInfo display-center hidden">
-				<h3>Adresse</h3>
-				{{ form_row(form.address,{ label: 'Adresse'}) }}
-				{{ form_row(form.postalCode,{ label: 'Code postal'}) }}
-				{{ form_row(form.city,{ label: 'Ville'}) }}
+				<div class="form-step">
+					<div class="verifying-form-block">
+						<h3>Adresse</h3>
+						{{ form_row(form.address,{ label: 'Adresse'}) }}
+						{{ form_row(form.postalCode,{ label: 'Code postal'}) }}
+						{{ form_row(form.city,{ label: 'Ville'}) }}
+						{{ form_row(form.country,{ label: 'Pays'}) }}
+					</div>
 				</div>
-				
-				<button class="nav-button hidden prev">Précedent</button>
-				<button class="nav-button next">suivant</button>
-				<button type="submit" class="nav-button sendProfile hidden">Envoyer</button>
-				{{ form_end(form) }}
+			</div>
+
+			<button class="nav-button hidden prev">Précedent</button>
+			<button class="nav-button next">suivant</button>
+			<button type="submit" class="nav-button sendProfile hidden">Envoyer</button>
+			{{ form_end(form) }}
+		</section>
 
 
-</section>
-
-
-
-</main>
+	</main>
 {% endblock %}

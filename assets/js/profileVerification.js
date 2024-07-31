@@ -4,9 +4,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const sendButton = document.querySelector('.sendProfile');
     const stepIndicators = document.querySelectorAll('.step');
     
-    const personalInfoSection = document.querySelector('.personalInfo');
-    const drivingLicenseInfoSection = document.querySelector('.drivingLicenseInfo');
-    const addressInfoSection = document.querySelector('.addressInfo');
+    const personalInfoSection = document.querySelector('.form-step-1');
+    const drivingLicenseInfoSection = document.querySelector('.form-step-2');
+    const addressInfoSection = document.querySelector('.form-step-3');
     
     let currentSection = 0;
     const sections = [personalInfoSection, drivingLicenseInfoSection, addressInfoSection];

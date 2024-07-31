@@ -1,0 +1,36 @@
+{% extends 'dashBoard/dashBoardBase.html.twig' %}
+
+{% block importmap %}
+	{{ importmap(['app', 'register', 'dashbordStyle']) }}
+{% endblock %}
+
+{% block content %}
+
+<main>
+<section class="blue-form display-center" action="">
+<h2> Modifier mon profil </h2>
+
+{{ form_errors(form) }}
+
+				{{ form_start(form) }}
+				
+				<div class="blue-form-div display-center">
+				<h3>Informations personnelles</h3>
+			
+				{{ form_row(form.lastName,  { label: 'Prénom'}) }}
+				{{ form_row(form.firstName,  { label: 'Nom'}) }}
+				{{ form_row(form.birthDate,  { label: 'Date de naissance'}) }}
+				{{ form_row(form.phone,{ label: 'Numéro de téléphone'}) }}
+				</div>
+
+
+				<button type="submit" class="nav-button">Envoyer</button>
+				{{ form_end(form) }}
+
+
+</section>
+
+
+
+</main>
+{% endblock %}

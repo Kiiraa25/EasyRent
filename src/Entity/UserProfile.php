@@ -5,10 +5,14 @@ namespace App\Entity;
 use App\Repository\UserProfileRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Mime\Part\File;
+use vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: UserProfileRepository::class)]
+#[Vich\Uploadable()]
 class UserProfile
 {
     #[ORM\Id]
@@ -47,18 +51,27 @@ class UserProfile
 
     #[ORM\Column(type: 'datetime', options: ['default' => 'CURRENT_TIMESTAMP'])]
     private ?\DateTimeInterface $updatedAt = null;
-
+    
     #[ORM\Column]
     private ?int $rating = null;
-
+    
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $picture = null;
+
+    #[Vich\UploadableField(mapping: 'user', fileNameProperty: 'picture')]
+    private ?File $imageFile = null;
 
     #[ORM\OneToOne(mappedBy: 'userProfile', cascade: ['persist', 'remove'])]
     private ?DrivingLicense $drivingLicense = null;
 
     #[ORM\Column]
     private ?bool $isVerified = null;
+
+    #[ORM\Column(length: 100)]
+    private ?string $country = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description = null;
 
 
     public function getId(): ?int
@@ -234,6 +247,42 @@ class UserProfile
     public function setVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getCountry(): ?string
+    {
+        return $this->country;
+    }
+
+    public function setCountry(string $country): static
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): static
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getImageFile(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setImageFile(?string $description): static
+    {
+        $this->description = $description;
 
         return $this;
     }

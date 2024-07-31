@@ -21,39 +21,6 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 class UserController extends AbstractController
 {
 
-// add 5 users
-    #[Route('/addUsers', name: 'app_add_users')]
-public function insertUsers(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager)
-{
-    $users = [
-        ["lastName" => "Burke", "firstName" => "Maisie", "email" => "b-maisie@gmail.com", "birth_date" => '1990-05-15'],
-        ["lastName" => "George", "firstName" => "Mannix", "email" => "m-george3282@gmail.com", "birth_date" => '1985-08-22'],
-        ["lastName" => "Kane", "firstName" => "Vernon", "email" => "kanevernon@gmail.com", "birth_date" => '1978-11-03'],
-        ["lastName" => "Blevins", "firstName" => "Eleanor", "email" => "eleanorblevins@gmail.com", "birth_date" => '1995-01-14'],
-        ["lastName" => "Mcintosh", "firstName" => "Akeem", "email" => "mcintosh.akeem@gmail.com", "birth_date" => '1982-03-30'],
-    ];
-
-    foreach ($users as $userData) {
-        $user = new User();
-        $user->setActive(true);
-        $user->setRoles(['ROLE_USER']);
-        $user->setLastName($userData['lastName']);
-        $user->setFirstName($userData['firstName']);
-        $user->setEmail($userData['email']);
-        $user->setPassword(
-            $userPasswordHasher->hashPassword(
-                $user, '000000'
-            )
-        );
-        $user->setBirthDate(new \DateTime($userData['birth_date']));
-
-        $entityManager->persist($user);
-    }
-
-    $entityManager->flush();
-    return $this->redirectToRoute('app_login');
-}
-
   //UPDATE EMAIL & PASSWORD // DELETE USER
   #[Route('/user/edit', name: 'app_user_edit')]
     public function edit(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager, TokenStorageInterface $tokenStorage): Response
@@ -112,6 +79,90 @@ public function insertUsers(Request $request, UserPasswordHasherInterface $userP
         ]);
     }
 
+    #[Route('/user/edit-email', name: 'app_user_edit_email')]
+    public function editEmail(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if (!$user instanceof User) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
+
+        $changeEmailForm = $this->createForm(ChangeEmailType::class, $user);
+        $changeEmailForm->handleRequest($request);
+
+        if ($changeEmailForm->isSubmitted() && $changeEmailForm->isValid()) {
+            $entityManager->flush();
+            $this->addFlash('success', 'Votre email a été mis à jour avec succès.');
+            return $this->redirectToRoute('app_user_edit_email');
+        }
+
+        return $this->render('registration/editEmail.html.twig', [
+            'ChangeEmailForm' => $changeEmailForm
+        ]);
+    }
+
+    #[Route('/user/edit-password', name: 'app_user_edit_password')]
+    public function editPassword(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if (!$user instanceof User) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
+
+        $changePasswordForm = $this->createForm(ChangePasswordType::class);
+        $changePasswordForm->handleRequest($request);
+
+        if ($changePasswordForm->isSubmitted() && $changePasswordForm->isValid()) {
+            $newPassword = $changePasswordForm->get('newPassword')->getData();
+            $user->setPassword($passwordHasher->hashPassword($user, $newPassword));
+            $entityManager->flush();
+            $this->addFlash('success', 'Votre mot de passe a été changé avec succès.');
+            return $this->redirectToRoute('app_user_edit_password');
+        }
+
+        return $this->render('registration/editPassword.html.twig', [
+            'ChangePasswordForm' => $changePasswordForm
+        ]);
+    }
+
+    #[Route('/user/delete-account', name: 'app_user_delete_account')]
+    public function deleteAccount(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager, TokenStorageInterface $tokenStorage): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if (!$user instanceof User) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
+
+        $deleteAccountForm = $this->createForm(DeleteAccountType::class);
+        $deleteAccountForm->handleRequest($request);
+
+        if ($deleteAccountForm->isSubmitted() && $deleteAccountForm->isValid()) {
+            $password = $deleteAccountForm->get('password')->getData();
+            if ($passwordHasher->isPasswordValid($user, $password)) {
+                $tokenStorage->setToken(null);
+                $request->getSession()->invalidate();
+
+                $entityManager->remove($user);
+                $entityManager->flush();
+
+                $this->addFlash('success', 'Votre compte a été supprimé avec succès.');
+
+                return $this->redirectToRoute('app_home');
+            } else {
+                $this->addFlash('error', 'Mot de passe incorrect.');
+            }
+        }
+
+        return $this->render('registration/deleteAccount.html.twig', [
+            'DeleteAccountForm' => $deleteAccountForm
+        ]);
+    }
 
 
 

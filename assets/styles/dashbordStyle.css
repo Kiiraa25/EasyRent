@@ -1,100 +1,191 @@
-main{
+main {
     display: flex;
     margin: 0;
     width: 100%;
-    gap: 50px;
+    height: 700px;
 }
 
-aside{
+aside {
     width: 300px;
+    height: 600px;
     padding: 50px 30px;
-    height: 100vh;
+    /* height: 100vh; */
     /* background-color: rgba(185, 180, 180, 0.705); */
     /* border-right: 1px solid #3f3f442c; */
     background-color: white;
-    border-radius: 30px;
+    border-radius: 5px;
     margin: 10px;
+    box-shadow: rgb(219, 218, 218) 0px 1px 5px;
 }
 
-.account-nav{
+.account-nav {
     display: flex;
     flex-direction: column;
     gap: 30px;
-    
+
 }
 
-.account-nav a{
-
-    font-weight: 600;
-     border-radius: 8px;
-    width: 250px;
-    height: 48px;
+.account-nav a {
     display: flex;
     align-items: center;
+    font-weight: 400;
+    border-radius: 8px;
+    width: 250px;
+    height: 48px;
     padding-left: 15px;
+    letter-spacing: 1px;
 
 }
 
-.account-nav div{
+.account-nav div {
     display: flex;
     gap: 15px;
     align-items: center;
 }
 
-.linkIcon{
+.linkIcon {
     width: 25px;
     height: 25px;
-    background-color: antiquewhite;
+    background-color: #FF866F;
 }
 
-.account-nav a:hover{
+.account-nav a:hover {
     /* background-color: #c0c1c59a; */
-    color: rgb(173, 121, 121);
+    color: #FF866F;
 }
 
-.account-nav a.active{
+.account-nav a.active {
     /* color: #df6a52; */
-    background-color: #FDCB9E;
+    background-color: #ff876f2f;
+    color: #FF866F;
 }
 
-.container{
+.container {
     display: flex;
-    gap: 50px;
+    gap: 20px;
+    padding-bottom: 30px;
+    padding-top: 20px;
     background-color: #F6F6F6;
     /* align-items: baseline; */
 }
 
-.forms-section{
+.forms-section {
     display: flex;
     flex-direction: column;
     gap: 50px;
 
 }
-.blue-form{
-   width: fit-content;
-   padding: 30px;
+
+.blue-form {
+    width: fit-content;
+    padding: 30px;
     background-color: #282F4B;
     border-radius: 20px 20px 20px 20px;
     gap: 50px;
 }
 
-.blue-form form{
+.blue-form form {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     gap: 15px;
 }
 
-.first-line-forms{
+.first-line-forms {
     display: flex;
     width: 1000px;
     justify-content: space-between;
 }
 
-.right-side-dashBoard{
+.right-side-dashBoard {
     display: flex;
     justify-content: center;
     width: 1500px;
     align-items: baseline;
-    padding-top: 20px;
+    /* padding-top: 20px; */
+}
+
+
+/* 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+PARAMETRES DE COMPTE
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+
+
+h1 {
+    font-size: 38px;
+    color: rgb(63, 61, 61);
+    font-weight: 700;
+    align-self: baseline;
+}
+
+.account-blocks {
+    width: 1020px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* margin-top: 50px; */
+    gap: 30px;
+}
+
+.account-blocks article {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: rgb(219, 218, 218) 0px 1px 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 30px;
+    width: 960px;
+}
+
+.account-blocks article:hover {
+    z-index: 1;
+    transform: translate3d(0, -3px, 0);
+    box-shadow: rgb(190, 190, 190) 0px 4px 20px;
+}
+
+.edit-img,
+.text-block,
+.edit-icon {
+    height: 120px;
+}
+
+.edit-img img {
+    width: 170px;
+    height: 127px;
+    /* background-color: rgb(218, 142, 92); */
+}
+
+.text-block {
+    width: 700px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+.text-block p {
+    color: rgb(153, 153, 152);
+    font-size: 14px;
+}
+
+.edit-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 50px;
+    border: 1px black solid;
+    /* background-color: rgb(218, 142, 92);7ba */
+    background-image: url('../img/icons/edit-icon.png');
+    background-size: contain;
+}
+
+.edit-icon:hover {
+    background-image: url('../img/icons/edit-icon-hover.png');
+    border: 1px #FF866F solid;
+    z-index: 1;
+    transform: translate3d(0, -1px, 0);
+    box-shadow: rgb(219, 218, 218) 0px 1px 5px;
 }

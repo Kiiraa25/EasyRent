@@ -24,12 +24,16 @@ return [
         'path' => './assets/js/dashbordStyle.js',
         'entrypoint' => true,
     ],
+    'verifyProfile' => [
+        'path' => './assets/js/verifyProfile.js',
+        'entrypoint' => true,
+    ],
     'profileVerification' => [
         'path' => './assets/js/profileVerification.js',
         'entrypoint' => true,
     ],
-    'profile' => [
-        'path' => './assets/js/profile.js',
+    'editProfile' => [
+        'path' => './assets/js/editProfile.js',
         'entrypoint' => true,
     ],
     '@hotwired/stimulus' => [

@@ -10,6 +10,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use App\Form\DrivingLicenseType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints\File;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
@@ -65,6 +67,13 @@ class UserProfileType extends AbstractType
                     'placeholder' => 'Ville'
                 ]
             ])
+            ->add('country', TextType::class, [
+                'label' => false,
+                'attr' => [
+                    'class' => 'suscribe-input',
+                    'placeholder' => 'Pays'
+                ]
+            ])
             ->add('phone', TextType::class, [
                 'label' => false,
                 'attr' => [
@@ -72,13 +81,23 @@ class UserProfileType extends AbstractType
                     'placeholder' => 'Téléphone'
                 ]
             ])
-            ->add('picture', TextType::class, [
+            ->add('picture', FileType::class, [
                 'label' => false,
                 'required' => false,
                 'attr' => [
-                    'class' => 'suscribe-input',
+                    'class' => 'profile-picture-input',
                     'placeholder' => 'Photo'
-                ]
+                ],
+                'constraints' => [
+                    new File([
+                        'maxSize' => '2M',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                        ],
+                        'mimeTypesMessage' => 'Veuillez uploader une image valide (JPEG ou PNG)',
+                    ])
+                ],
             ])
 
             ->add('drivingLicense', DrivingLicenseType::class, [

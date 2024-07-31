@@ -1,0 +1,39 @@
+.profile-verification {
+    display: flex;
+    flex-direction: column;
+    gap: 70px;
+    width: 1020px;
+    height: 100%;
+}
+
+
+.profile-verification .form-step {
+    display: flex;
+    align-items: center;
+    gap: 150px;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+}
+
+.verifying-form-block {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.personalInfo .suscribe-input {
+    width: 500px;
+}
+
+.profile-picture {
+    width: 200px;
+    height: 220px;
+    background-color: bisque;
+}
+
+.profile-picture div {
+    overflow: hidden;
+}
