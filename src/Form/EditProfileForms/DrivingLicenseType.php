@@ -10,6 +10,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
+
 
 class DrivingLicenseType extends AbstractType
 {
@@ -51,20 +53,25 @@ class DrivingLicenseType extends AbstractType
                 ]
                 ])
 
-            ->add('frontImagePath',TextType::class, [
-                'label'=> 'photo recto',
-                'attr' => [
-                    'class' => 'suscribe-input',
-                    'placeholder' => 'photo recto'
-                ]
+                ->add('frontImageFile', VichImageType::class, [
+                    'label' => 'Photo recto',
+                    'required' => false,
+                    'allow_delete' => false,
+                    'download_uri' => false,
+                    'attr' => [
+                        'accept' => 'image/*',
+                        'class' => ''
+                    ]
                 ])
-
-            ->add('backImagePath',TextType::class, [
-                'label'=> 'photo verso',
-                'attr' => [
-                    'class' => 'suscribe-input',
-                    'placeholder' => 'photo verso'
-                ]
+                ->add('backImageFile', VichImageType::class, [
+                    'label' => 'Photo verso',
+                    'required' => false,
+                    'allow_delete' => false,
+                    'download_uri' => false,
+                    'attr' => [
+                        'accept' => 'image/*',
+                        'class' => ''
+                    ]
                 ])
                 
         ;

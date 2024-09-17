@@ -13,6 +13,7 @@ use App\Form\AddressType;
 use App\Form\DescriptionType;
 use App\Form\DrivingLicenseType;
 use App\Entity\User;
+use App\Form\UserImageType;
 use App\Entity\UserProfile;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -38,27 +39,31 @@ class UserProfileController extends AbstractController
         }
 
         $form = $this->createForm(UserProfileType::class, $userProfile);
+        // $imageForm = $this->createForm(UserImageType::class, $userProfile);
 
         $form->handleRequest($request);
+        // $imageForm->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $userProfile->setUpdatedAt(new \DateTimeImmutable());
+            $userProfile->setVerified(true);
             $entityManager->flush();
 
             $this->addFlash('success', 'Votre profil a été mis à jour avec succès.');
 
-            return $this->redirectToRoute('app_user_profile', ['id' => $user->getId()]);
+            return $this->redirectToRoute('app_user_profile_edit');
         }
 
         return $this->render('user_profile/verifyProfile.html.twig', [
             'form' => $form,
+            // 'imageForm' => $imageForm
         ]);
     }
 
     //UPDATE PROFILE PAGE
     #[Route('/user/profile/edit', name: 'app_user_profile_edit')]
-    public function EDIT(Request $request, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, EntityManagerInterface $entityManager): Response
     {
 
         return $this->render('user_profile/editProfile.html.twig');
@@ -88,7 +93,7 @@ class UserProfileController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', 'Informations personnelles mises à jour avec succès.');
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_user_profile_edit');
         }
 
         return $this->render('user_profile/editPersonalInfo.html.twig', [
@@ -120,7 +125,7 @@ class UserProfileController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', 'Adresse mise à jour avec succès.');
-            return $this->redirectToRoute('app_user_profile', ['id' => $user->getId()]);
+            return $this->redirectToRoute('app_user_profile_edit');
         }
 
         return $this->render('user_profile/editAddress.html.twig', [
@@ -152,7 +157,7 @@ class UserProfileController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', 'Description mise à jour avec succès.');
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_user_profile_edit');
         }
 
         return $this->render('user_profile/editDescription.html.twig', [
@@ -184,7 +189,7 @@ class UserProfileController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', 'Permis de conduire mis à jour avec succès.');
-            return $this->redirectToRoute('app_user_profile', ['id' => $user->getId()]);
+            return $this->redirectToRoute('app_user_profile_edit');
         }
 
         return $this->render('user_profile/editDrivingLicense.html.twig', [

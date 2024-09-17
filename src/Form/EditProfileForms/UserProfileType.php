@@ -2,16 +2,13 @@
 
 namespace App\Form;
 
-use App\Entity\User;
 use App\Entity\UserProfile;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use App\Form\DrivingLicenseType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Validator\Constraints\File;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
@@ -81,25 +78,16 @@ class UserProfileType extends AbstractType
                     'placeholder' => 'Téléphone'
                 ]
             ])
-            ->add('picture', FileType::class, [
-                'label' => false,
+            ->add('imageFile', VichImageType::class, [
+                'label' => 'Photo de profil',
                 'required' => false,
+                'allow_delete' => false,
+                'download_uri' => false,
                 'attr' => [
-                    'class' => 'profile-picture-input',
-                    'placeholder' => 'Photo'
-                ],
-                'constraints' => [
-                    new File([
-                        'maxSize' => '2M',
-                        'mimeTypes' => [
-                            'image/jpeg',
-                            'image/png',
-                        ],
-                        'mimeTypesMessage' => 'Veuillez uploader une image valide (JPEG ou PNG)',
-                    ])
-                ],
+                    'accept' => 'image/*',
+                    'class' => 'profile-picture-input'
+                ]
             ])
-
             ->add('drivingLicense', DrivingLicenseType::class, [
                 'label' => false,
             ]);

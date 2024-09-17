@@ -3,13 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\UserProfileRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Mime\Part\File;
-use vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: UserProfileRepository::class)]
 #[Vich\Uploadable()]
@@ -67,11 +65,14 @@ class UserProfile
     #[ORM\Column]
     private ?bool $isVerified = null;
 
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(length: 100, nullable: true)]
     private ?string $country = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
+
+
+    // getters & setters
 
 
     public function getId(): ?int
@@ -215,7 +216,7 @@ class UserProfile
         return $this->picture;
     }
 
-    public function setPicture(string $picture): static
+    public function setPicture(?string $picture): static
     {
         $this->picture = $picture;
 
@@ -275,16 +276,18 @@ class UserProfile
         return $this;
     }
 
-    public function getImageFile(): ?string
+    public function getImageFile(): ?File
     {
-        return $this->description;
+        return $this->imageFile;
     }
 
-    public function setImageFile(?string $description): static
+    public function setImageFile(?File $imageFile): static
     {
-        $this->description = $description;
+        $this->imageFile = $imageFile;
+        if (null !== $imageFile){
+            $this->updatedAt = new \DateTimeImmutable();
+        }
 
         return $this;
     }
-
 }

@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block importmap %}
+	{{ importmap(['app']) }}
+{% endblock %}
+
+{% block title %}Log in!
+{% endblock %}
+
+{% block body %}
+<main>
+	
+    <h1>Déposez votre annonce et louez votre voiture en toute simplicité</h1>
+
+   {{ form_start(vehicleForm) }}
+
+   <h3>Votre véhicule</h3>
+{# {{ form_row(vehicleForm) }} #}
+   
+   {{ form_end(vehicleForm) }}
+
+    </main>
+{% endblock %}
+
+{% block footer %}
+    
+{% endblock %}
+

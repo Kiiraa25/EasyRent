@@ -16,6 +16,11 @@
 
 			<h1>Vérifier mon profile</h1>
 
+
+			{% if app.user.profile.isVerified == true %}
+			<p>Votre profil est déja vérifié ! modifier mon profil ? </p>
+
+			{% else %}
 			<div class="step-indicators">
 				<div class="step" data-step="0">1</div>
 				<div class="step" data-step="1">2</div>
@@ -23,6 +28,8 @@
 			</div>
 
 			{{ form_start(form) }}
+
+			{# FORM STEP 1 PERSONNAL INFO #}
 			<div class="form-step-1">
 
 				<div class="form-step">
@@ -39,14 +46,14 @@
 
 					<article class="profile-picture-block">
 						<div class="profile-picture">
-							{{ form_row(form.picture,{ label: 'Photo de profil'}) }}
+							{{ form_row(form.imageFile,{ label: 'Photo de profil'}) }}
 						</div>
 					</article>
 				</div>
 			</div>
 
-			{# Drinving License Form #}
 
+			{# FORM STEP 2 Drinving License #}
 			<div class="form-step-2 hidden">
 
 				<div class="form-step">
@@ -60,33 +67,38 @@
 
 					<article class="profile-picture-block">
 						<div class="profile-picture">
-							{{ form_row(form.drivingLicense.frontImagePath,{ label: 'Photo de profil'}) }}
-							{{ form_row(form.drivingLicense.backImagePath,{ label: 'Photo de profil'}) }}
+							{{ form_row(form.drivingLicense.frontImageFile) }}
 						</div>
-					</article>
 
-				</div>
-			</div>
+						<div class="profile-picture">
+							{{ form_row(form.drivingLicense.backImageFile) }}
+							<div></article>
 
-			<div class="form-step-3 hidden">
-
-				<div class="form-step">
-					<div class="verifying-form-block">
-						<h3>Adresse</h3>
-						{{ form_row(form.address,{ label: 'Adresse'}) }}
-						{{ form_row(form.postalCode,{ label: 'Code postal'}) }}
-						{{ form_row(form.city,{ label: 'Ville'}) }}
-						{{ form_row(form.country,{ label: 'Pays'}) }}
+						</div>
 					</div>
-				</div>
-			</div>
 
-			<button class="nav-button hidden prev">Précedent</button>
-			<button class="nav-button next">suivant</button>
-			<button type="submit" class="nav-button sendProfile hidden">Envoyer</button>
-			{{ form_end(form) }}
-		</section>
+					{# FORM STEP 3 ADDRESS #}
+					<div class="form-step-3 hidden">
+
+						<div class="form-step">
+							<div class="verifying-form-block">
+								<h3>Adresse</h3>
+								{{ form_row(form.address,{ label: 'Adresse'}) }}
+								{{ form_row(form.postalCode,{ label: 'Code postal'}) }}
+								{{ form_row(form.city,{ label: 'Ville'}) }}
+								{{ form_row(form.country,{ label: 'Pays'}) }}
+							</div>
+						</div>
+					</div>
+
+					<button class="nav-button hidden prev">Précedent</button>
+					<button class="nav-button next">suivant</button>
+					<button type="submit" class="nav-button sendProfile hidden">Envoyer</button>
+					{{ form_end(form) }}
+				</section>
 
 
-	</main>
-{% endblock %}
+			</main>
+
+			{% endif %}
+		{% endblock %}

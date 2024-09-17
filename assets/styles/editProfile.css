@@ -60,23 +60,16 @@
 }
 
 
-.user-img {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.user-img img{
+    background-color: #ffffff;
     width: 170px;
     height: 170px;
     border-radius: 100%;
-    background-color: #ffa391;
-    /* background-image: url('../img/userIcon.png'); */
-    background-size: contain;
     position: absolute;
     left: 50%;
     top: -40%;
     transform: translateX(-50%);
     border: 4px #282F4B solid;
-    font-size: 70px;
-    color: #282F4B;
 }
 
 
@@ -114,6 +107,10 @@
 .profile-box .line{
     display: flex;
     gap: 150px;
+}
+
+.line div{
+    width: 170px;
 }
 
 .profile-box .line p{

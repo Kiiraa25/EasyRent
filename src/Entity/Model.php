@@ -14,14 +14,14 @@ class Model
     #[ORM\Column(length: 50)]
     private ?string $name = null;
 
-    #[ORM\ManyToOne(targetEntity: VehicleType::class)]
-    private $vehicleType;
+    #[ORM\ManyToOne(targetEntity: VehicleCategory::class)]
+    private $vehicleCategory;
 
     #[ORM\ManyToOne(targetEntity: Brand::class)]
     private $brand;
 
-    #[ORM\ManyToOne(targetEntity: FuelType::class)]
-    private $fuelType;
+    #[ORM\ManyToOne(targetEntity: Fuel::class)]
+    private $fuel;
 
     public function getId(): ?int
     {
@@ -39,14 +39,14 @@ class Model
         return $this;
     }
 
-    public function getVehicleType(): ?VehicleType
+    public function getVehicleCategory(): ?VehicleCategory
     {
-        return $this->vehicleType;
+        return $this->vehicleCategory;
     }
 
-    public function setVehicleType(?VehicleType $vehicleType): self
+    public function setVehicleType(?VehicleCategory $vehicleCategory): self
     {
-        $this->vehicleType = $vehicleType;
+        $this->vehicleCategory = $vehicleCategory;
         return $this;
     }
 
@@ -61,14 +61,14 @@ class Model
         return $this;
     }
 
-    public function getFuelType(): ?FuelType
+    public function getFuelType(): ?Fuel
     {
-        return $this->fuelType;
+        return $this->fuel;
     }
 
-    public function setFuelType(?FuelType $fuelType): self
+    public function setFuelType(?Fuel $fuel): self
     {
-        $this->fuelType = $fuelType;
+        $this->fuel = $fuel;
         return $this;
     }
 }

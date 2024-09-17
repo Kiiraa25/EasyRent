@@ -2,6 +2,7 @@
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Serializable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -9,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface, Serializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -30,9 +31,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToOne(targetEntity: UserProfile::class, inversedBy: 'user', cascade: ['persist', 'remove'])]
     private ?UserProfile $profile = null;
-
-    #[ORM\Column]
-    private bool $isVerified = false;
 
     public function getId(): ?int
     {
@@ -111,15 +109,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // If you store any temporary, sensitive data on the user, clear it here
     }
 
-    public function isVerified(): bool
+
+    public function serialize()
     {
-        return $this->isVerified;
+        return serialize([
+            $this->id,
+            $this->email,
+            $this->password,
+        ]);
     }
 
-    public function setVerified(bool $isVerified): static
+    public function unserialize(string $serialized)
     {
-        $this->isVerified = $isVerified;
-
-        return $this;
+        list (
+            $this->id,
+            $this->email,
+            $this->password,
+        ) = unserialize($serialized, ['allowed_classes' => false]);
     }
 }

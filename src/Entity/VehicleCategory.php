@@ -2,19 +2,19 @@
 
 namespace App\Entity;
 
-use App\Repository\StatusRepository;
+use App\Repository\VehicleCategoryRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: StatusRepository::class)]
-class Status
+#[ORM\Entity(repositoryClass: VehicleCategoryRepository::class)]
+class VehicleCategory
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Id, ORM\GeneratedValue, ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 50)]
-    private ?string $name = null;
+    #[ORM\Column(type: 'string', length: 50, unique: true)]
+    private $name;
+
+    // Getters and setters
 
     public function getId(): ?int
     {

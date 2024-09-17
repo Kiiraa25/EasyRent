@@ -6,3 +6,9 @@ vich_uploader:
            uri_prefix: /uploads/user
            upload_destination: '%kernel.project_dir%/public/uploads/user'
            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+       drivingLicense:  # Ce mapping doit être au même niveau que 'user'
+           uri_prefix: /uploads/drivingLicense
+           upload_destination: '%kernel.project_dir%/public/uploads/drivingLicense'
+           namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+

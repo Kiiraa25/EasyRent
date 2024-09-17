@@ -9,156 +9,208 @@
 
 	<main class="profile-container">
 
+		{% if app.user.profile.isVerified ==  false %}
 
-		<section class="top-block">
-			<article class="userInfo">
-				<div class="user-name">
-					<p>
-						{{ app.user.profile.firstName }}
-						{{ app.user.profile.lastName }}
-					</p>
-					<p class="verified-icon"><img src="{{asset('/img/icons/verified-icon.png')}}" alt=""></p>
-				</div>
-				<p class="user-rating">
-					<img src="{{ asset('/img/icons/rating-icon.png')}}" alt="">
-					<img src="{{ asset('/img/icons/rating-icon.png')}}" alt="">
-					<img src="{{ asset('/img/icons/rating-icon.png')}}" alt="">
-					<img src="{{ asset('/img/icons/rating-icon.png')}}" alt="">
-					<img src="{{ asset('/img/icons/rating-icon.png')}}" alt="">
-				</p>
-			</article>
-
-			<div class="user-img">
-			 {{ app.user.profile.firstName|slice(0, 1)|upper }}
+			<div>
+				Profil incomplet ! veuillez d'abord <a href="">vérifier votre profil</a>
 			</div>
 
-		</section>
+		{% else %}
 
-		<div class="bottom-block">
-
-			<section class="left-side-profile">
-				<article class="profile-content-block">
-					<a class="edit-icon" href="{{ path('app_user_profile_edit_personal') }}">
-					</a>
-
-					<h3>Informations personnelles</h3>
-					<div class="profile-box">
-
-						<div class="line">
-							<div>
-								<p>Nom</p>
-								<span>
-									{{ app.user.profile.lastName}}
-								</span>
-							</div>
-
-							<div>
-								<p>Prénom</p>
-								<span>
-									{{ app.user.profile.firstName}}
-								</span>
-							</div>
-						</div>
-
-						<div class="line">
-							<div>
-								<p>Date de naissance</p>
-								<span>
-									{{ app.user.profile.birthDate|date('d-m-Y')}}
-								</span>
-							</div>
-
-							<div>
-								<p>N° de téléphone</p>
-								<span>
-									{{ app.user.profile.phone}}
-								</span>
-							</div>
-						</div>
-
+			<section class="top-block">
+				<article class="userInfo">
+					<div class="user-name">
+						<p>
+							{{ app.user.profile.firstName }}
+							{{ app.user.profile.lastName }}
+						</p>
+						<p class="verified-icon"><img src="{{asset('/img/icons/verified-icon.png')}}" alt=""></p>
 					</div>
-
+					<p class="user-rating">
+						<img src="{{ asset('/img/icons/rating-icon.png')}}" alt="">
+						<img src="{{ asset('/img/icons/rating-icon.png')}}" alt="">
+						<img src="{{ asset('/img/icons/rating-icon.png')}}" alt="">
+						<img src="{{ asset('/img/icons/rating-icon.png')}}" alt="">
+						<img src="{{ asset('/img/icons/rating-icon.png')}}" alt="">
+					</p>
 				</article>
 
+				<div class="user-img">
 
-				<article class="profile-content-block">
-					<a class="edit-icon" href="{{ path('app_user_profile_edit_address') }}">
-					</a>
+					{% set userImageUrl = asset('/img/default-user-icon.png') %}
 
-					<h3>Adresse</h3>
-					<div class="profile-box">
+					{% if app.user.profile.picture %}
 
-						<div class="line">
-							<div>
-								<p>adresse</p>
-								<span>
-									{{ app.user.profile.address}}
-								</span>
-							</div>
+						{% set userImageUrl = vich_uploader_asset(app.user.profile, 'imageFile') %}
+					{% endif %}
 
-							<div>
-								<p>Code postal</p>
-								<span>
-									{{ app.user.profile.postalCode}}
-								</span>
-							</div>
-						</div>
-
-						<div class="line">
-							<div>
-								<p>Ville</p>
-								<span>
-									{{ app.user.profile.city}}
-								</span>
-							</div>
-
-							<div>
-								<p>Pays</p>
-								<span>
-									{{ app.user.profile.country}}
-								</span>
-							</div>
-						</div>
-
-					</div>
-
-				</article>
+					<img src="{{ userImageUrl}}" alt="">
+				</div>
 
 			</section>
 
-			<section class="right-side-profile">
+			<div class="bottom-block">
 
-				<article class="profile-content-block">
-					<a class="edit-icon" href="{{ path('app_user_profile_edit_driving_license') }}">
-					</a>
+				<section class="left-side-profile">
+					<article class="profile-content-block">
+						<a class="edit-icon" href="{{ path('app_user_profile_edit_personal') }}"></a>
 
-					<h3>Permis de conduire</h3>
-					<div class="profile-box">
+						<h3>Informations personnelles</h3>
+						<div class="profile-box">
 
-						<p class="driving-License-content">
-							Lorem ipsum, dolor sit amet consectetur adipisicing elit. Adipisci rem ab modi, unde iste suscipit natus ea. Ratione quaerat corrupti cum eligendi quasi. Consequuntur nemo, possimus beatae exercitationem fugit dicta?
-						</p>
-					</div>
+							<div class="line">
+								<div>
+									<p>Nom</p>
+									<span>
+										{{ app.user.profile.lastName}}
+									</span>
+								</div>
 
-				</article>
+								<div>
+									<p>Prénom</p>
+									<span>
+										{{ app.user.profile.firstName}}
+									</span>
+								</div>
+							</div>
+
+							<div class="line">
+								<div>
+									<p>Date de naissance</p>
+									<span>
+										{{ app.user.profile.birthDate|date('d-m-Y')}}
+									</span>
+								</div>
+
+								<div>
+									<p>N° de téléphone</p>
+									<span>
+										{{ app.user.profile.phone}}
+									</span>
+								</div>
+							</div>
+
+						</div>
+
+					</article>
 
 
-				<article class="profile-content-block">
-					<a class="edit-icon" href="{{ path('app_user_profile_edit_description') }}">
-					</a>
+					<article class="profile-content-block">
+						<a class="edit-icon" href="{{ path('app_user_profile_edit_address') }}"></a>
 
-					<h3>Description</h3>
-					<div class="profile-box">
+						<h3>Adresse</h3>
+						<div class="profile-box">
 
-						<p class="description-content">
-							Lorem ipsum, dolor sit amet consectetur adipisicing elit. Adipisci rem ab modi, unde iste suscipit natus ea. Ratione quaerat corrupti cum eligendi quasi. Consequuntur nemo, possimus beatae exercitationem fugit dicta?
-						</p>
-					</div>
+							<div class="line">
+								<div>
+									<p>adresse</p>
+									<span>
+										{{ app.user.profile.address}}
+									</span>
+								</div>
 
-				</div>
+								<div>
+									<p>Code postal</p>
+									<span>
+										{{ app.user.profile.postalCode}}
+									</span>
+								</div>
+							</div>
 
-			</article>
-		</section>
+							<div class="line">
+								<div>
+									<p>Ville</p>
+									<span>
+										{{ app.user.profile.city}}
+									</span>
+								</div>
 
-	</div>
-</main>{% endblock %}
+								<div>
+									<p>Pays</p>
+									<span>
+										{{ app.user.profile.country}}
+									</span>
+								</div>
+							</div>
+
+						</div>
+
+					</article>
+
+				</section>
+
+				<section
+					class="right-side-profile">
+
+					{# Permis de conduire #}
+					<article class="profile-content-block">
+						<a class="edit-icon" href="{{ path('app_user_profile_edit_driving_license') }}"></a>
+
+						<h3>Permis de conduire</h3>
+						<div class="profile-box">
+
+							<div class="line">
+								<div>
+									<p>Numéro de permis</p>
+									<span>
+										{{ app.user.profile.drivingLicense.licenseNumber}}
+									</span>
+								</div>
+
+								<div>
+									<p>Date d'obtention</p>
+									<span>
+										{{ app.user.profile.drivingLicense.issueDate|date('d-m-Y')}}
+									</span>
+								</div>
+							</div>
+
+							<div class="line">
+								<div>
+									<p>Date d'expiration'</p>
+									<span>
+										{{ app.user.profile.drivingLicense.expiryDate|date('d-m-Y')}}
+									</span>
+								</div>
+
+								<div>
+									<p>Pays d'émission</p>
+									<span>
+										{{ app.user.profile.drivingLicense.countryOfIssue}}
+									</span>
+								</div>
+							</div>
+
+						</div>
+
+					</article>
+
+					{# A propos de moi #}
+					<article class="profile-content-block">
+						<a class="edit-icon" href="{{ path('app_user_profile_edit_description') }}"></a>
+
+						<h3>A propos de moi</h3>
+						<div class="profile-box">
+
+							<p class="description-content">
+
+								{% if app.user.Profile.description is not null %}
+
+									{{ app.user.Profile.description}}
+
+								{% else %}
+									Aucune description..
+
+								{% endif %}
+							</p>
+						</div>
+
+
+					</article>
+				</section>
+
+			</div>
+
+		{% endif %}
+	</main>
+{% endblock %}

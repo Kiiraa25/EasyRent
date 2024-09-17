@@ -29,11 +29,24 @@ label {
 }
 
 .profile-picture {
-    width: 200px;
+    max-width: 200px;
     height: 220px;
     background-color: bisque;
 }
 
+.profile-picture img {
+    width: 200px;
+    height: auto;
+}
+
 .profile-picture div {
     overflow: hidden;
+}
+
+.profile-picture-block{
+    display: flex;
+    align-items: center;
+    height: 346px;
+    padding-top: 55px;
+    gap: 20px;
 }

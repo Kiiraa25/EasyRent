@@ -22,12 +22,15 @@
 				<div class="clip-path"></div>
 			</div>
 
+
+
+
 			{% if app.user %}
 				<div class="user-infos">
 					<div class="user-icon">
 						{% if app.user.profile.picture is not null %}
 						
-							<img src="{{ asset(app.user.profile.picture ) }}" alt=""></div>
+							<img src="{{ vich_uploader_asset(app.user.profile, 'imageFile') }}" alt=""></div>
 
 						{% else %}
 							<img src="{{ asset('/img/default-user-icon.png') }}" alt=""></div>
@@ -95,6 +98,6 @@
 
 			{% endif %}
 		</section>
-		<button class="nav-button">Louer ma voiture</button>
+		<button class="nav-button"><a href="{{ path('app_vehicle') }}">Louer ma voiture</a></button>
 	</div>
 </nav>

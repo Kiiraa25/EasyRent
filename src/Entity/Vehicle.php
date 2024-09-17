@@ -17,12 +17,13 @@ class Vehicle
     #[ORM\JoinColumn(nullable: false)]
     private ?User $owner = null;
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?RegistrationCertificate $RegistrationCertificate = null;
+
     #[ORM\ManyToOne(targetEntity: Model::class)]
     #[ORM\JoinColumn(nullable: false)]
     private ?Model $model = null;
-
-    #[ORM\Column(length: 20, unique: true)]
-    private ?string $registration = null;
 
     #[ORM\Column]
     private ?int $year = null;
@@ -46,15 +47,15 @@ class Vehicle
     #[ORM\JoinColumn(nullable: false)]
     private ?Location $location = null;
 
-    #[ORM\ManyToOne(targetEntity: Status::class)]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Status $status = null;
-
     #[ORM\Column(type: "datetime", options: ["default" => "CURRENT_TIMESTAMP"])]
     private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\Column(type: "datetime", options: ["default" => "CURRENT_TIMESTAMP"])]
     private ?\DateTimeInterface $updatedAt = null;
+
+    #[ORM\ManyToOne(inversedBy: 'vehicles')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Fuel $fuel = null;
 
     public function getId(): ?int
     {
@@ -73,6 +74,18 @@ class Vehicle
         return $this;
     }
 
+    public function getRegistrationCertificate(): ?RegistrationCertificate
+    {
+        return $this->RegistrationCertificate;
+    }
+
+    public function setRegistrationCertificate(RegistrationCertificate $RegistrationCertificate): static
+    {
+        $this->RegistrationCertificate = $RegistrationCertificate;
+
+        return $this;
+    }
+
     public function getModel(): ?Model
     {
         return $this->model;
@@ -81,18 +94,6 @@ class Vehicle
     public function setModel(?Model $model): static
     {
         $this->model = $model;
-
-        return $this;
-    }
-
-    public function getRegistration(): ?string
-    {
-        return $this->registration;
-    }
-
-    public function setRegistration(string $registration): static
-    {
-        $this->registration = $registration;
 
         return $this;
     }
@@ -181,17 +182,6 @@ class Vehicle
         return $this;
     }
 
-    public function getStatus(): ?Status
-    {
-        return $this->status;
-    }
-
-    public function setStatus(?Status $status): static
-    {
-        $this->status = $status;
-
-        return $this;
-    }
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
@@ -216,4 +206,18 @@ class Vehicle
 
         return $this;
     }
+
+    public function getFuel(): ?Fuel
+    {
+        return $this->fuel;
+    }
+
+    public function setFuel(?Fuel $fuel): static
+    {
+        $this->fuel = $fuel;
+
+        return $this;
+    }
+
+ 
 }

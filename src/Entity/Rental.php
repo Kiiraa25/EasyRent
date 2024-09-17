@@ -27,10 +27,6 @@ class Rental
     #[ORM\Column(type: 'date')]
     private ?\DateTimeInterface $endDate = null;
 
-    #[ORM\ManyToOne(targetEntity: Status::class)]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Status $status = null;
-
     #[ORM\ManyToOne(targetEntity: PaymentMethod::class)]
     #[ORM\JoinColumn(nullable: false)]
     private ?PaymentMethod $paymentMethod = null;
@@ -90,19 +86,7 @@ class Rental
 
         return $this;
     }
-
-    public function getStatus(): ?Status
-    {
-        return $this->status;
-    }
-
-    public function setStatus(?Status $status): static
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
+    
     public function getPaymentMethod(): ?PaymentMethod
     {
         return $this->paymentMethod;
