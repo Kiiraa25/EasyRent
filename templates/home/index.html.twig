@@ -40,8 +40,8 @@
 
 {% block body %}
 
-	<section class="section-1 blue-section display-center">
-		<div>
+	<section class="section-1 blue-section">
+		<div class="display-center">
 			<h2>Nos avantages</h2>
 			<p>Découvrez votre nouvelle manière de louer une voiture ...</p>
 		</div>
@@ -69,34 +69,34 @@
 
 	</section>
 
-	<section class="section-2 display-center">
+	<section class="section-2">
 
-		<article>
-			<div class="section-2-title">
-				<hr>
-				<h2>Des voitures adaptées à vos besoins</h2>
-				<hr>
-			</div>
-			<div>
-				<div class="section-2-vehicles">
-					<img width="376px" src="{{ asset('/img/citadine.png')}}" alt="">
-					<img width="398px" src="{{ asset('/img/monospace.svg')}}" alt="">
-					<img src="{{ asset('/img/suv.svg')}}" alt="">
-					<img src="{{ asset('/img/utilitaire.svg')}}" alt="">
-				</div>
 
-				<div class="section-2-vehicles-names">
-					<p>Citadine</p>
-					<p>Monospace</p>
-					<p>SUV</p>
-					<p>Utilitaire</p>
-				</div>
+		<div class="section-2-title">
+			<hr>
+			<h2>Des voitures adaptées à vos besoins</h2>
+			<hr>
+		</div>
+		<div>
+			<div class="section-2-vehicles">
+				<img width="376px" src="{{ asset('/img/citadine.png')}}" alt="">
+				<img width="398px" src="{{ asset('/img/monospace.svg')}}" alt="">
+				<img src="{{ asset('/img/suv.svg')}}" alt="">
+				<img src="{{ asset('/img/utilitaire.svg')}}" alt="">
 			</div>
-		</article>
+
+			<div class="section-2-vehicles-names">
+				<p>Citadine</p>
+				<p>Monospace</p>
+				<p>SUV</p>
+				<p>Utilitaire</p>
+			</div>
+		</div>
+
 	</section>
 
 	<section class="blue-section display-center section-3">
-		<article class="display-center">
+		
 			<h2>Disponibles partout en France</h2>
 
 			<div class="cities">
@@ -119,7 +119,6 @@
 					<p>LILLE</p>
 				</div>
 			</div>
-		</article>
 	</section>
 
 	<section class="section-4 display-center">
@@ -160,4 +159,3 @@
 
 	</section>
 {% endblock %}
-

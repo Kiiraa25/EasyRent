@@ -4,32 +4,34 @@
     margin: 0px;
 }
 
-body{
+body {
     display: flex;
     flex-direction: column;
 }
 
-a{
+a {
     color: black;
     text-decoration-line: none;
 }
 
-main{
+main {
     display: flex;
     flex-direction: column;
     /* justify-content: center; */
-    align-items:center ;
+    align-items: center;
 }
 
 /* ---------------------------------------------------------------- Navbar */
+
+
 nav {
     font-size: 16px;
     display: flex;
     justify-content: space-between;
-    padding: 5px 50px;
-    padding-bottom: 15px;
-    margin: 10px 0px 0px 0px;
-    width: 1820px;
+    padding: 5px 2.6%;
+    padding-bottom: 0.78%;
+    margin: 0.52% 0px 0px 0px;
+    width: 94vw;
     align-self: center;
     border-bottom: 1px solid #F6F6F6;
 }
@@ -52,6 +54,14 @@ nav {
     font-weight: 400;
 }
 
+.nav-button a {
+    color: white;
+}
+
+.nav-button:hover a {
+    color: #FF866F;
+}
+
 .nav-button:hover {
     background-color: white;
     border: solid 2px #FF866F;
@@ -61,13 +71,14 @@ nav {
 
 /* ---------------------------------------------------------------- Header */
 
-.header-subtitle{
+.header-subtitle {
     display: flex;
     margin-top: 0px;
-    font-size: 20px;
+    /* font-size: 20px; */
     gap: 8px;
     letter-spacing: 3px;
 }
+
 .header-subtitle p {
     color: #EB8072;
     font-weight: 400;
@@ -79,28 +90,29 @@ nav {
     font-weight: 400;
 
 }
+
 .header-form-section h1 {
     letter-spacing: 1px;
     color: #FA6960;
-    font-size: 62px;
+    /* font-size: 62px; */
     font-weight: 600;
     margin-bottom: 0%;
 }
 
 header {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     margin-bottom: 50px;
-    gap: 30px;
 }
 
+
+
 .hero-container {
-    width: 1100px;
-    height: 800px;
+    display: inline;
     background-image: url(../img/hero.jpg);
-    background-size: contain;
-    background-position: right bottom;
+    background-size: 100%;
+    background-position: center;
     background-repeat: no-repeat;
 }
 
@@ -120,12 +132,10 @@ header {
 }
 
 .header-form-section form input {
-    width: 478px;
-    height: 52px;
     border: #BDBDBD solid 2px;
     border-radius: 36px;
     padding: 10px 46px;
-    background-color: #282f4b0b ;
+    background-color: #282f4b0b;
 }
 
 .header-form-section form input::placeholder {
@@ -136,15 +146,8 @@ header {
 
 }
 
-.date-input {
-    width: 572px;
-}
 
-.header-form-section form .date-input input {
-    width: 187px;
-}
-
-.input-adressIcon svg{
+.input-adressIcon svg {
     width: 24px;
     height: 72px;
     position: absolute;
@@ -152,21 +155,22 @@ header {
     top: 0;
 }
 
-.adress-input{
+.adress-input {
     position: relative;
 }
 
-header .nav-button{
+/* header .nav-button{
     width: 570px;
     height: 72px;
-}
+} */
 
 /* ---------------------------------------------------------------- Body */
 
 /* ---------------------------------------------------------------- First section (avantages) */
 
 .blue-section {
-    height: 972px;
+    /* height: 972px; */
+    height: 110vh;
     background-image: url(../img/blueBG.png);
     text-align: center;
 }
@@ -180,7 +184,14 @@ header .nav-button{
 }
 
 .section-1 {
-    gap: 8%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.section-1 div{
+    text-align: center;
 }
 
 .section-1 h2 {
@@ -191,9 +202,26 @@ header .nav-button{
     color: white;
 }
 
+
+
+/* BREAKPOINTS MEDIA QUERIES ///////////////////////////////////////////////////////////////////////  */
+
+@media screen and (max-width: 480px) {}
+
+@media screen and (max-width: 768px) {}
+
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {}
+
+@media screen and (min-width: 1025px) and (max-width: 1440px) {}
+
+
+
+
+@media screen and (min-width: 1441px) and (max-width: 1920px) {}
+
+
 .advantages-grid {
-    height: 569px;
-    width: 1300px;
     row-gap: 10px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -201,9 +229,11 @@ header .nav-button{
     /* background-color: #FF866F;  */
 }
 
+div {
+    max-width: 100vw;
+}
+
 .advantages-grid div {
-    width: 420px;
-    height: 274px;
     border-radius: 15px;
     background-color: white;
     color: black;
@@ -238,32 +268,28 @@ header .nav-button{
 
 /* ---------------------------------------------------------------- Second section (types of cars) */
 
+
+section{
+    min-height: 892px;
+}
+
 .section-2,
 .section-4 {
-    height: 995px;
+    height: 110vh;
     background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
 h2 {
     color: #282F4B;
-    font-size: 32px;
     font-weight: 600;
     letter-spacing: 5px;
 }
 
-.section-2 article {
-    height: 508px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.section-2 h2{
-    width: 900px;
-
-}
 hr {
-    width: 391px;
     border: #FA6960 solid 2px;
     height: 0px;
 }
@@ -271,41 +297,38 @@ hr {
 
 .section-2-title {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
-    gap: 5%;
+    width: 100vw;
 }
 
 .section-2-vehicles {
     display: flex;
-    text-align: center;
+    margin-bottom: 20px;
 }
 
 .section-2-vehicles-names {
     display: flex;
     justify-content: space-between;
     text-align: center;
-    width: 1690px;
 }
 
 .section-2-vehicles-names p {
     width: 400px;
     color: #FA6960;
-    font-size: 28px;
     font-weight: 600;
     letter-spacing: 5px;
 }
 
 .section-2-vehicles img {
     margin: auto;
-    width: 376px ;
 }
 
 .section-2-vehicles img:hover {
     transform: scale(1.2);
     transition: transform 0.6s;
     image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges; 
+    image-rendering: crisp-edges;
 }
 
 
@@ -318,10 +341,13 @@ hr {
 
 .cities {
     display: flex;
-    width: 1537px;
-    justify-content: space-between;
+    width: 100vw;
+    justify-content: space-evenly;
 }
 
+.section-3{
+    justify-content: space-evenly;
+}
 .section-3 .city {
     width: 192px;
     height: 520px;
@@ -337,11 +363,6 @@ hr {
     filter: brightness(1.7);
 }
 
-
-.section-3 article {
-    height: 698px;
-    justify-content: space-between;
-}
 
 .paris-city {
     background-image: url(../img/Cities/Paris.png);
@@ -385,6 +406,163 @@ hr {
 }
 
 
+@media screen and (min-width: 1441px) and (max-width: 1620px) {
+
+
+    .header-form-section h1 {
+        font-size: 52px;
+    }
+
+    .header-subtitle {
+        font-size: 16px;
+    }
+
+    .hero-container {
+        width: 58%;
+        min-width: 800px;
+        min-height: 590px;
+        height: 85vh;
+    }
+
+    .header-form-section form input {
+        width: 400px;
+        height: 42px;
+    }
+
+    .date-input {
+        width: 496px;
+    }
+
+    .header-form-section form .date-input input {
+        width: 149px;
+    }
+
+    header .nav-button {
+        width: 496px;
+        height: 62px;
+    }
+
+
+    .advantages-grid {
+        height: 477px;
+        width: 1100px;
+
+    }
+    
+    
+    div {
+        max-width: 100vw;
+    }
+    
+    .advantages-grid div {
+        width: 355px;
+        height: 228px;
+       
+    }
+
+    h2 {
+        width: fit-content;
+        font-size: 26px;
+    
+    }
+
+    hr {
+        width: 320px;
+    }
+
+    .section-2-vehicles img {
+        width: 300px;
+    }
+
+    .section-2-vehicles-names p {
+        font-size: 24px;
+    }
+    
+    .section-4 img {
+        /* width: 585px; */
+        width: 445px;
+    }
+
+    .section-4 .nav-button {
+        background-color: #282F4B;
+        border-color: #282F4B;
+        position: absolute;
+        width: 204px;
+        height: 72px;
+        top: 52.5%;
+    }
+
+}
+
+@media screen and (min-width: 1621px) {
+
+
+    .header-form-section h1 {
+        font-size: 52px;
+    }
+
+    .header-subtitle {
+        font-size: 16px;
+    }
+
+    .hero-container {
+        width: 58%;
+        min-width: 800px;
+        min-height: 590px;
+        height: 85vh;
+    }
+
+    .header-form-section form input {
+        width: 478px;
+        height: 52px;
+    }
+
+    .date-input {
+        width: 572px;
+    }
+
+    .header-form-section form .date-input input {
+        width: 187px;
+    }
+
+    header .nav-button {
+        width: 570px;
+        height: 72px;
+    }
+
+    .advantages-grid {
+        height: 569px;
+        width: 1300px;
+    }
+    
+    .advantages-grid div {
+        width: 420px;
+        height: 274px;
+    }
+
+    h2 {
+        font-size: 32px;
+        width: fit-content;
+    }
+    
+
+    hr {
+        width: 391px;
+    }
+
+    .section-2-vehicles img {
+        width: 376px;
+    }
+
+    .section-2-vehicles-names p {
+        font-size: 28px;
+    }
+
+
+
+}
+
+
 .section-4 {
     background-image: url(../img/whiteBG.png);
     background-size: contain;
@@ -396,17 +574,13 @@ hr {
     position: relative;
 }
 
-.section-4 img{
-    width: 585px;
-}
-
-.section-4 .nav-button{
+.section-4 .nav-button {
     background-color: #282F4B;
-    border-color: #282F4B ;
+    border-color: #282F4B;
     position: absolute;
     width: 204px;
     height: 72px;
-    top: 45%;
+    /* top: 45%; */
 }
 
 .section-4 .nav-button:hover {
@@ -415,36 +589,38 @@ hr {
     color: #282F4B;
 }
 
-.section-4-text h1{
+.section-4-text h1 {
     color: #282F4B;
     font-size: 60px;
     font-weight: bold;
 }
 
-.section-4-text{
+.section-4-text {
     position: relative;
     top: 18%;
 }
 
-.section-4-text p{
+.section-4-text p {
     color: #282f4bb8;
     font-size: 18px;
     font-weight: 400;
 }
 
-.section-5{
+.section-5 {
     gap: 15%;
 }
 
-.section-5 h2{
+.section-5 h2 {
     color: #EB8072;
 }
-.section-5 div{
+
+.section-5 div {
     display: flex;
     gap: 70px;
     margin-left: 55px;
 }
-.section-5-review-box{
+
+.section-5-review-box {
     width: 400px;
     height: 380px;
     border-radius: 15px;
@@ -456,68 +632,68 @@ hr {
     align-items: center;
 }
 
-.section-5-review-box .quote-icon{
+.section-5-review-box .quote-icon {
     width: 50px;
     align-self: center;
 }
 
-.section-5-review-box p{
+.section-5-review-box p {
     width: 336px;
     font-weight: 300;
 }
-.section-5-review-box span{
+
+.section-5-review-box span {
     color: #EB8072;
     font-weight: 500;
 }
 
-.section-5 .feather{
+.section-5 .feather {
     place-self: center end;
 }
 
 
-footer{
-    width: 1720px;
-    height:300px ;
+footer {
+    /* width: 1720px; */
+    width: 90%;
+    height: 300px;
     display: flex;
-   align-items: center;
-   padding: 0px 100px;
-   gap: 25%;
-   align-self: center;
-   /* margin-top: 100px; */
+    align-items: center;
+    gap: 25%;
+    align-self: center;
 }
 
-.footer-left-side div{
+.footer-left-side div {
     display: flex;
     gap: 10px;
 }
 
-.footer-right-side{
+.footer-right-side {
     display: flex;
     justify-content: space-between;
     width: 921px;
     height: 174px;
 }
 
-.footer-right-side article{
+.footer-right-side article {
     display: flex;
     flex-direction: column;
     gap: 25px;
 }
 
 
-h3{
+h3 {
     font-weight: 600;
     font-size: 20px;
 }
 
-h4{
+h4 {
     font-weight: 400;
     font-size: 16px;
 }
 
 
 /* menu déroulant */
-nav {
+.menu-button {
     position: relative;
 }
 
@@ -530,8 +706,9 @@ nav {
     display: none;
     list-style-type: none;
     position: absolute;
-    top: 60px;
-    right: 13%;
+    top: 70px;
+    /* right: 13%; */
+    right: 15.8vw;
     width: 351px;
     border-radius: 15px;
     box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.100);
@@ -540,9 +717,9 @@ nav {
     padding: 20px;
     font-weight: 400;
     z-index: 200;
-
 }
-.clip-path-container{
+
+.clip-path-container {
     filter: drop-shadow(0px -2px 2px rgba(0, 0, 0, 0.100));
     width: 20px;
     height: 20px;
@@ -559,21 +736,21 @@ nav {
     height: 8px;
     background-color: rgb(255, 255, 255);
     clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-    
+
 }
 
 .menu li {
     display: block;
     padding: 10px;
     text-decoration: none;
-   
+
 }
 
 .menu li:hover {
     font-weight: 600;
 }
 
-#menu-toggle:checked + .menu-button + .menu {
+#menu-toggle:checked+.menu-button+.menu {
     display: block;
 }
 
@@ -581,35 +758,37 @@ nav {
     display: none;
 }
 
-.menu .user-infos{
+.menu .user-infos {
     display: flex;
     gap: 20px;
 }
-.menu .user-infos .user-icon img{
+
+.menu .user-infos .user-icon img {
     width: 50px;
     height: 50px;
-    border-radius:50px ;
+    border-radius: 50px;
 }
 
-.menu .user-infos .right-side-user-infos{
+.menu .user-infos .right-side-user-infos {
     display: block;
 }
 
-.right-side-user-infos .user-name{
+.right-side-user-infos .user-name {
     font-size: 20px;
     font-weight: 500;
 
 }
 
-.right-side-user-infos a{
+.right-side-user-infos a {
     font-size: 14px;
 }
-.logout-link{
+
+.logout-link {
     color: rgba(0, 0, 0, 0.664);
     margin-top: 10px;
 }
 
-.menu .owner-menu{
+.menu .owner-menu {
     height: 60px;
     /* background-color: red; */
     margin: 30px 0px;
@@ -622,7 +801,7 @@ nav {
     font-weight: 500;
 }
 
-.toggle-owner-menu{
+.toggle-owner-menu {
     width: 56px;
     height: 33px;
     background-color: #D9D9D9;
@@ -633,20 +812,20 @@ nav {
     padding-right: 2px;
 }
 
-.toggle-owner-menu .circle-toggle-owner-menu{
-   width: 29px; 
-   height: 29px;
-   background-color: white;
-   border-radius: 50px;
-   box-shadow: rgba(0, 0, 0, 0.338) 0px 0px 5px;
+.toggle-owner-menu .circle-toggle-owner-menu {
+    width: 29px;
+    height: 29px;
+    background-color: white;
+    border-radius: 50px;
+    box-shadow: rgba(0, 0, 0, 0.338) 0px 0px 5px;
 }
 
-.hidden{
+.hidden {
     display: none;
 }
 
 
-.blue-form{
+.blue-form {
     padding: 100px 0px;
     width: 940px;
     background-color: #282F4B;
@@ -654,45 +833,42 @@ nav {
     gap: 50px;
 }
 
-.blue-form form{
+.blue-form form {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     gap: 15px;
 }
 
-.blue-form form .nav-button{
+.blue-form form .nav-button {
     width: 100%;
 
 }
-.blue-form h2{
+
+.blue-form h2 {
     color: white;
 }
 
 
 /* edit user */
-.blue-form h3{
+.blue-form h3 {
     color: white;
     align-self: flex-start;
     margin-bottom: 10px;
 }
 
 
-
-
-
-
-main{
+main {
     margin-top: 50px;
 }
 
 
-.blue-form-div{
+.blue-form-div {
     gap: 15px;
     margin-bottom: 50px;
 }
 
-.blue-form-div label{
+.blue-form-div label {
     display: block;
     color: white;
 }
@@ -704,9 +880,9 @@ main{
     display: flex;
     justify-content: space-between;
     /* margin-bottom: 20px; */
-  }
-  
-  .step {
+}
+
+.step {
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -717,10 +893,8 @@ main{
     font-weight: bold;
     color: #fff;
     transition: background-color 0.3s;
-  }
-  
-  .step.active {
-    background-color: #007bff;
-  }
-  
+}
 
+.step.active {
+    background-color: #007bff;
+}
