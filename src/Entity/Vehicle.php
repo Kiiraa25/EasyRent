@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\VehicleRepository;
+use App\Enum\FuelTypeEnum;
+use App\Enum\GearboxTypeEnum;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: VehicleRepository::class)]
@@ -25,8 +27,6 @@ class Vehicle
     #[ORM\JoinColumn(nullable: false)]
     private ?Model $model = null;
 
-    #[ORM\Column]
-    private ?int $year = null;
 
     #[ORM\Column]
     private ?int $mileage = null;
@@ -43,19 +43,36 @@ class Vehicle
     #[ORM\Column]
     private ?int $extraMileageRate = null;
 
-    #[ORM\ManyToOne(targetEntity: Location::class)]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Location $location = null;
-
     #[ORM\Column(type: "datetime", options: ["default" => "CURRENT_TIMESTAMP"])]
     private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\Column(type: "datetime", options: ["default" => "CURRENT_TIMESTAMP"])]
     private ?\DateTimeInterface $updatedAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'vehicles')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Fuel $fuel = null;
+    #[ORM\Column(type: 'string', length: 20)]
+    private ?string $fuelType = null; // essence, diesel, électrique, etc.
+
+    #[ORM\Column(type: 'string', length: 20)]
+    private ?string $gearboxType = null; // manuelle ou automatique
+
+    #[ORM\Column(type: 'integer')]
+    private ?int $doors = null;
+
+    // Nouveau champ pour le nombre de sièges
+    #[ORM\Column(type: 'integer')]
+    private ?int $seats = null;
+
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
+    private ?float $pricePerDay = null;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $address;
+
+    #[ORM\Column(type: 'integer', length: 5)]
+    private $postalCode;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $city;
 
     public function getId(): ?int
     {
@@ -98,17 +115,7 @@ class Vehicle
         return $this;
     }
 
-    public function getYear(): ?int
-    {
-        return $this->year;
-    }
 
-    public function setYear(int $year): static
-    {
-        $this->year = $year;
-
-        return $this;
-    }
 
     public function getMileage(): ?int
     {
@@ -170,18 +177,6 @@ class Vehicle
         return $this;
     }
 
-    public function getLocation(): ?Location
-    {
-        return $this->location;
-    }
-
-    public function setLocation(?Location $location): static
-    {
-        $this->location = $location;
-
-        return $this;
-    }
-
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
@@ -207,17 +202,109 @@ class Vehicle
         return $this;
     }
 
-    public function getFuel(): ?Fuel
+   // Getter pour fuelType avec enum
+   public function getFuelType(): ?FuelTypeEnum
+   {
+       return $this->fuelType ? FuelTypeEnum::from($this->fuelType) : null;
+   }
+
+   // Setter pour fuelType avec enum
+   public function setFuelType(FuelTypeEnum $fuelType): self
+   {
+       $this->fuelType = $fuelType->value;
+
+       return $this;
+   }
+
+   // Getter pour gearboxType avec enum
+   public function getGearboxType(): ?GearboxTypeEnum
+   {
+       return $this->gearboxType ? GearboxTypeEnum::from($this->gearboxType) : null;
+   }
+
+   // Setter pour gearboxType avec enum
+   public function setGearboxType(GearboxTypeEnum $gearboxType): self
+   {
+       $this->gearboxType = $gearboxType->value;
+
+       return $this;
+   }
+
+    // Getter pour doors (nombre de portes)
+    public function getDoors(): ?int
     {
-        return $this->fuel;
+        return $this->doors;
     }
 
-    public function setFuel(?Fuel $fuel): static
+    // Setter pour doors
+    public function setDoors(int $doors): self
     {
-        $this->fuel = $fuel;
+        $this->doors = $doors;
 
         return $this;
     }
 
- 
+    // Getter pour seats (nombre de sièges)
+    public function getSeats(): ?int
+    {
+        return $this->seats;
+    }
+
+    // Setter pour seats
+    public function setSeats(int $seats): self
+    {
+        $this->seats = $seats;
+
+        return $this;
+    }
+
+    // Getter pour pricePerDay (prix par jour)
+    public function getPricePerDay(): ?float
+    {
+        return $this->pricePerDay;
+    }
+
+    // Setter pour pricePerDay (prix par jour)
+    public function setPricePerDay(float $pricePerDay): self
+    {
+        $this->pricePerDay = $pricePerDay;
+
+        return $this;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(string $address): self
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function getPostalCode(): ?int
+    {
+        return $this->postalCode;
+    }
+
+    public function setPostalCode(int $postalCode): self
+    {
+        $this->postalCode = $postalCode;
+
+        return $this;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(string $city): self
+    {
+        $this->city = $city;
+
+        return $this;
+    }
 }

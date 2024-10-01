@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\VehicleCategoryEnum;
 use App\Repository\ModelRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -14,14 +15,11 @@ class Model
     #[ORM\Column(length: 50)]
     private ?string $name = null;
 
-    #[ORM\ManyToOne(targetEntity: VehicleCategory::class)]
-    private $vehicleCategory;
+    #[ORM\Column(type: "string", length: 50)]
+    private ?string $vehicleCategory = null;
 
     #[ORM\ManyToOne(targetEntity: Brand::class)]
     private $brand;
-
-    #[ORM\ManyToOne(targetEntity: Fuel::class)]
-    private $fuel;
 
     public function getId(): ?int
     {
@@ -39,16 +37,18 @@ class Model
         return $this;
     }
 
-    public function getVehicleCategory(): ?VehicleCategory
-    {
-        return $this->vehicleCategory;
-    }
+    public function getVehicleCategory(): ?VehicleCategoryEnum
+{
+    return $this->vehicleCategory ? VehicleCategoryEnum::from($this->vehicleCategory) : null;
+}
 
-    public function setVehicleType(?VehicleCategory $vehicleCategory): self
-    {
-        $this->vehicleCategory = $vehicleCategory;
-        return $this;
-    }
+public function setVehicleCategory(VehicleCategoryEnum $vehicleCategory): self
+{
+    $this->vehicleCategory = $vehicleCategory->value;
+
+    return $this;
+}
+
 
     public function getBrand(): ?Brand
     {
@@ -58,17 +58,6 @@ class Model
     public function setBrand(?Brand $brand): self
     {
         $this->brand = $brand;
-        return $this;
-    }
-
-    public function getFuelType(): ?Fuel
-    {
-        return $this->fuel;
-    }
-
-    public function setFuelType(?Fuel $fuel): self
-    {
-        $this->fuel = $fuel;
         return $this;
     }
 }

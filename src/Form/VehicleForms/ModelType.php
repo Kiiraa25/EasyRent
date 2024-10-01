@@ -7,6 +7,8 @@ use App\Entity\Fuel;
 use App\Entity\Model;
 // use App\Entity\VehicleCategoryType;
 use App\Entity\VehicleType;
+use App\Enum\VehicleCategoryEnum;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,9 +20,10 @@ class ModelType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('vehicleCategory', VehicleCategoryType::class)
+            ->add('vehicleCategory', EnumType::class, [
+                'class' => vehicleCategoryEnum::class
+            ])
             ->add('brand', BrandType::class)
-            ->add('fuel', FuelType::class)
         ;
     }
 

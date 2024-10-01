@@ -20,6 +20,7 @@ class RegistrationCertificateType extends AbstractType
                 'widget' => 'single_text',
             ])
             ->add('certificateNumber')
+            ->add('countryOfIssue')
             ->add('frontImageFile', VichImageType::class, [
                 'label' => 'Photo recto',
                 'required' => false,
