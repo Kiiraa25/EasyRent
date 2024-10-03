@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes véhicules{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .vehicle-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .vehicle-item {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .vehicle-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .vehicle-item h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .vehicle-item p {
+            margin: 5px 0;
+        }
+
+        .vehicle-item a {
+            display: inline-block;
+            margin-top: 10px;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .vehicle-item a:hover {
+            text-decoration: underline;
+        }
+
+        .no-vehicles {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 50px;
+        }
+
+        .add-vehicle-btn {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .add-vehicle-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+<main>
+
+
+    <h1 class="text-center">Mes véhicules</h1>
+
+    {% if vehicles is empty %}
+        <p class="no-vehicles">Vous n'avez pas encore ajouté de véhicules.</p>
+    {% else %}
+        <div class="vehicle-list">
+        {% for vehicle in vehicles %}
+            <div class="vehicle-item">
+                <h3>Modèle : {{ vehicle.model.name }}</h3>
+                <p><strong>Kilométrage :</strong> {{ vehicle.mileage }} km</p>
+                <p><strong>Couleur :</strong> {{ vehicle.color }}</p>
+                <p><strong>Tarif par jour :</strong> {{ vehicle.pricePerDay }} €</p>
+                <a href="{{ path('app_vehicle_show', {'id': vehicle.id}) }}">Voir détails</a>
+            </div>
+        {% endfor %}
+        </div>
+    {% endif %}
+
+    <a href="{{ path('app_vehicle_new') }}" class="add-vehicle-btn">Ajouter un nouveau véhicule</a>
+
+</main>
+{% endblock %}

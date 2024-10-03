@@ -18,7 +18,7 @@ class Model
     #[ORM\Column(type: "string", length: 50)]
     private ?string $vehicleCategory = null;
 
-    #[ORM\ManyToOne(targetEntity: Brand::class)]
+    #[ORM\ManyToOne(targetEntity: Brand::class, cascade: ['persist', 'remove'])]
     private $brand;
 
     public function getId(): ?int

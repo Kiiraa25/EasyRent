@@ -1,0 +1,163 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le véhicule{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        main.vehicle-edit {
+            max-width: 100vw;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .vehicle-edit h1 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .vehicle-edit .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto;
+            column-gap: 70px;
+            row-gap: 20px;
+        }
+
+        /* Tarification section */
+        .vehicle-edit .tarification {
+            grid-column: 1;
+        }
+
+        /* Adresse section */
+        .vehicle-edit .adresse {
+            grid-column: 2;
+        }
+
+        /* Description section */
+        .vehicle-edit .description {
+            grid-column: span 2; /* Description prend toute la largeur */
+        }
+
+        .vehicle-edit .form-group {
+            margin-bottom: 15px;
+        }
+
+        .vehicle-edit label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .vehicle-edit input, .vehicle-edit textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        .vehicle-edit button.nav-button {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .vehicle-edit button.nav-button:hover {
+            background-color: #218838;
+        }
+
+        .vehicle-edit a {
+            display: inline-block;
+            margin-top: 15px;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .vehicle-edit a:hover {
+            color: #0056b3;
+        }
+
+        @media (max-width: 768px) {
+            main.vehicle-edit {
+                padding: 15px;
+            }
+
+            .vehicle-edit h1 {
+                font-size: 20px;
+            }
+
+            /* Revenir à une colonne sur mobile */
+            .vehicle-edit .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .vehicle-edit .tarification, .vehicle-edit .adresse, .vehicle-edit .description {
+                grid-column: span 1;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<main class="vehicle-edit">
+    <h1>Modifier les informations du véhicule</h1>
+
+    {{ form_start(form) }}
+
+    <div class="form-grid">
+        <!-- Tarification section -->
+        <div class="tarification">
+            <h3>Tarification</h3>
+            <div class="form-group">
+                {{ form_row(form.pricePerDay, { label: 'Tarif/jour' }) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(form.extraMileageRate, { label: 'Prix par km supplémentaire' }) }}
+            </div>
+        </div>
+
+        <!-- Adresse section -->
+        <div class="adresse">
+            <h3>Adresse de localisation</h3>
+            <div class="form-group">
+                {{ form_row(form.address, { label: 'Adresse' }) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(form.postalCode, { label: 'Code postal' }) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(form.city, { label: 'Ville' }) }}
+            </div>
+        </div>
+
+        <!-- Description section -->
+        <div class="description">
+            <h3>Description de l'annonce</h3>
+            <div class="form-group">
+                {{ form_row(form.description, { label: 'Description de l\'annonce' }) }}
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="nav-button">Enregistrer les modifications</button>
+
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_vehicle_show', { 'id': vehicle.id }) }}">Retour aux détails du véhicule</a>
+</main>
+{% endblock %}

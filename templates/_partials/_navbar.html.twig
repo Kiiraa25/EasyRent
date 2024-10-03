@@ -72,7 +72,7 @@
 					<a href="">
 						<li>Locations</li>
 					</a>
-					<a href="">
+					<a href="{{ path('app_user_vehicles')}}">
 						<li>Voitures</li>
 					</a>
 					<a href="">
@@ -98,6 +98,6 @@
 
 			{% endif %}
 		</section>
-		<button class="nav-button"><a href="{{ path('app_vehicle') }}">Louer ma voiture</a></button>
+		<button class="nav-button"><a href="{{ path('app_vehicle_new') }}">Louer ma voiture</a></button>
 	</div>
 </nav>

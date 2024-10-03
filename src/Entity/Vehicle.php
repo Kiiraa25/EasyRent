@@ -23,10 +23,9 @@ class Vehicle
     #[ORM\JoinColumn(nullable: false)]
     private ?RegistrationCertificate $RegistrationCertificate = null;
 
-    #[ORM\ManyToOne(targetEntity: Model::class)]
+    #[ORM\ManyToOne(targetEntity: Model::class, cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Model $model = null;
-
 
     #[ORM\Column]
     private ?int $mileage = null;
@@ -50,15 +49,14 @@ class Vehicle
     private ?\DateTimeInterface $updatedAt = null;
 
     #[ORM\Column(type: 'string', length: 20)]
-    private ?string $fuelType = null; // essence, diesel, électrique, etc.
+    private ?string $fuelType = null;
 
     #[ORM\Column(type: 'string', length: 20)]
-    private ?string $gearboxType = null; // manuelle ou automatique
+    private ?string $gearboxType = null;
 
     #[ORM\Column(type: 'integer')]
     private ?int $doors = null;
 
-    // Nouveau champ pour le nombre de sièges
     #[ORM\Column(type: 'integer')]
     private ?int $seats = null;
 

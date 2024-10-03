@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\RegistrationCertificateRepository;
+use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -43,6 +44,11 @@ class RegistrationCertificate
 
     #[ORM\Column(type: 'datetime', options: ['default' => 'CURRENT_TIMESTAMP'])]
     private ?\DateTimeInterface $updatedAt = null;
+
+    public function __construct()
+    {
+     $this->createdAt = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {

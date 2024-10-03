@@ -1,0 +1,142 @@
+{% extends 'base.html.twig' %}
+
+{% block importmap %}
+	{{ importmap(['app']) }}
+{% endblock %}
+
+{% block title %}Détails du véhicule{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .vehicle-details {
+            max-width: 100vw;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .vehicle-details h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #282F4B; /* Utilisation de la couleur sombre pour les titres */
+            border-bottom: 2px solid #EB8072; /* Ligne de séparation avec couleur chaude */
+            padding-bottom: 10px;
+        }
+
+        .vehicle-details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            column-gap: 40px; /* Espacement entre les colonnes */
+            row-gap: 20px; /* Espacement entre les lignes */
+        }
+
+        .vehicle-details p {
+            font-size: 16px;
+            color: #555;
+            padding: 10px;
+            border: 1px solid #ddd; /* Bordures légères autour des informations */
+            border-radius: 5px; /* Coins arrondis */
+            background-color: #fdfdfd; /* Légère couleur de fond */
+            transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Effet de transition pour le survol */
+        }
+
+        .vehicle-details p:hover {
+            background-color: #f1f1f1; /* Changement de fond au survol */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Ombre au survol */
+        }
+
+        .vehicle-details strong {
+            color: #282F4B; /* Utilisation de la couleur sombre pour les éléments en gras */
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .vehicle-details .edit-button, .vehicle-details .reserve-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #EB8072; /* Couleur sombre pour les boutons */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .vehicle-details .edit-button:hover, .vehicle-details .reserve-button:hover {
+            background-color: #d96d61; /* Couleur légèrement plus foncée au survol */
+        }
+
+        .vehicle-details .button-container {
+            grid-column: span 2; /* Les boutons occupent toute la largeur des deux colonnes */
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .vehicle-details {
+                padding: 15px;
+            }
+
+            .vehicle-details h2 {
+                font-size: 20px;
+            }
+
+            .vehicle-details-grid {
+                grid-template-columns: 1fr; /* Revenir à une colonne sur mobile */
+            }
+
+            .vehicle-details p {
+                font-size: 14px;
+            }
+
+            .vehicle-details .button-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .vehicle-details .edit-button, .vehicle-details .reserve-button {
+                width: 100%;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<main class="vehicle-details">
+    <h2>{{ vehicle.model.name }}</h2>
+
+    <!-- Grille pour afficher les informations du véhicule en deux colonnes -->
+    <div class="vehicle-details-grid">
+        <p><strong>Propriétaire :</strong> {{ owner.profile.firstName }} {{ owner.profile.lastName }}</p>
+        <p><strong>Carburant :</strong> {{ vehicle.fuelType.value }}</p>
+        
+        <p><strong>Boîte de vitesses :</strong> {{ vehicle.gearboxType.value }}</p>
+        <p><strong>Kilométrage :</strong> {{ vehicle.mileage }} km</p>
+        
+        <p><strong>Couleur :</strong> {{ vehicle.color }}</p>
+        <p><strong>Taux de kilomètres supplémentaires :</strong> {{ vehicle.extraMileageRate }} €/km</p>
+        
+        <p><strong>Prix par jour :</strong> {{ vehicle.pricePerDay }} €</p>
+        <p><strong>Nombre de portes :</strong> {{ vehicle.doors }}</p>
+        
+        <p><strong>Nombre de sièges :</strong> {{ vehicle.seats }}</p>
+        <p><strong>Adresse :</strong> {{ vehicle.address }}, {{ vehicle.postalCode }} {{ vehicle.city }}</p>
+        
+        <p><strong>Date de création de l'annonce :</strong> {{ vehicle.createdAt|date('d/m/Y H:i') }}</p>
+        <p><strong>Dernière mise à jour :</strong> {{ vehicle.updatedAt|date('d/m/Y H:i') }}</p>
+        
+        <p style="grid-column: span 2;"><strong>Description :</strong> {{ vehicle.description }}</p>
+
+        <!-- Conteneur des boutons -->
+        <div class="button-container">
+            <a href="{{ path('app_vehicle_edit', {'id': vehicle.id}) }}" class="edit-button">Éditer l'annonce</a>
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+{% block footer %}
+    
+{% endblock %}

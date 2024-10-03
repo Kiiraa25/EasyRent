@@ -36,6 +36,10 @@ return [
         'path' => './assets/js/editProfile.js',
         'entrypoint' => true,
     ],
+    'vehicleNew' => [
+        'path' => './assets/js/vehicleNew.js',
+        'entrypoint' => true,
+    ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],

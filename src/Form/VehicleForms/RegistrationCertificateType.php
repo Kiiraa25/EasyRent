@@ -25,6 +25,7 @@ class RegistrationCertificateType extends AbstractType
                 'label' => 'Photo recto',
                 'required' => false,
                 'allow_delete' => false,
+                'mapped' => false,
                 'download_uri' => false,
                 'attr' => [
                     'accept' => 'image/*',
@@ -35,6 +36,7 @@ class RegistrationCertificateType extends AbstractType
                 'label' => 'Photo verso',
                 'required' => false,
                 'allow_delete' => false,
+                'mapped' => false,
                 'download_uri' => false,
                 'attr' => [
                     'accept' => 'image/*',
