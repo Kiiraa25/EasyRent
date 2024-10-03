@@ -107,7 +107,8 @@
                     <p><strong>Couleur :</strong> {{ vehicle.color }}</p>
                     <p><strong>Tarif par jour :</strong> {{ vehicle.pricePerDay }} €</p>
                     <a href="{{ path('app_vehicle_show', {'id': vehicle.id}) }}">Voir détails</a>
-                    <a href="" class="reserve-button">Réserver</a>
+                    <a href="{{ path('app_rental_new', {'vehicle_id': vehicle.id}) }}" class="reserve-button">Réserver</a>
+
                 </div>
             {% endfor %}
         </div>
