@@ -1,135 +1,138 @@
 {% extends 'base.html.twig' %}
 
 {% block importmap %}
-	{{ importmap(['app']) }}
+	{{ importmap(['app', 'search-input']) }}
 {% endblock %}
 
-{% block title %}Déposez votre annonce{% endblock %}
+{% block title %}Déposez votre annonce
+{% endblock %}
 
 {% block stylesheets %}
-    <style>
-        main {
-            max-width: 100vw;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
+	<style>
+		main {
+			max-width: 100vw;
+			margin: 0 auto;
+			padding: 20px;
+			background-color: #f9f9f9;
+			border-radius: 10px;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+		}
 
-        .newVehicle h1 {
-            text-align: center;
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #333;
-        }
+		.newVehicle h1 {
+			text-align: center;
+			font-size: 24px;
+			margin-bottom: 20px;
+			color: #333;
+		}
 
-        .newVehicle h3 {
-            font-size: 18px;
-            margin-top: 30px;
-            color: #007bff;
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 10px;
-        }
+		.newVehicle h3 {
+			font-size: 18px;
+			margin-top: 30px;
+			color: #007bff;
+			border-bottom: 2px solid #007bff;
+			padding-bottom: 10px;
+		}
 
-        .newVehicle .form-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 70px;
-            padding-top: 15px;
-        }
+		.newVehicle .form-container {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			gap: 70px;
+			padding-top: 15px;
+		}
 
-        .newVehicle .form-group {
-            margin-bottom: 15px;
-        }
+		.newVehicle .form-group {
+			margin-bottom: 15px;
+		}
 
-        .newVehicle label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-        }
+		.newVehicle label {
+			font-weight: bold;
+			display: block;
+			margin-bottom: 5px;
+		}
 
-        .newVehicle input, select, textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-            margin-bottom: 10px;
-        }
+		.newVehicle input,
+		select,
+		textarea {
+			width: 100%;
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			box-sizing: border-box;
+			margin-bottom: 10px;
+		}
 
-        .newVehicle button {
-            background-color: #28a745;
-            color: white;
-            padding: 12px 20px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            display: block;
-            width: 100%;
-            margin-top: 20px;
-            transition: background-color 0.3s ease;
-        }
+		.newVehicle button {
+			background-color: #28a745;
+			color: white;
+			padding: 12px 20px;
+			font-size: 16px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			display: block;
+			width: 100%;
+			margin-top: 20px;
+			transition: background-color 0.3s ease;
+		}
 
-        .newVehicle button:hover {
-            background-color: #218838;
-        }
+		.newVehicle button:hover {
+			background-color: #218838;
+		}
 
-        .newVehicle .form-group img {
-            max-width: 100%;
-            height: auto;
-            margin-top: 10px;
-        }
+		.newVehicle .form-group img {
+			max-width: 100%;
+			height: auto;
+			margin-top: 10px;
+		}
 
-        @media (max-width: 768px) {
-            .newVehicle .form-container {
-                grid-template-columns: 1fr; /* 1 colonne sur mobile */
-            }
+		@media(max-width: 768px) {
+			.newVehicle .form-container {
+				grid-template-columns: 1fr; /* 1 colonne sur mobile */
+			}
 
-            main {
-                padding: 15px;
-            }
+			main {
+				padding: 15px;
+			}
 
-            .newVehicle h1 {
-                font-size: 20px;
-            }
-        }
-    </style>
+			.newVehicle h1 {
+				font-size: 20px;
+			}
+		}
+	</style>
 {% endblock %}
 
 {% block body %}
 <main class="newVehicle">
-    <h1>Déposez votre annonce et louez votre voiture en toute simplicité</h1>
+	<h1>Déposez votre annonce et louez votre voiture en toute simplicité</h1>
 
-   {{ form_start(vehicleForm) }}
+	{{ form_start(vehicleForm) }}
 
-    <h3>Votre véhicule</h3>
-    <div class="form-container">
-        <div class="form-group">
-            {{ form_row(vehicleForm.model.brand.name, { label: 'Marque' }) }}
-        </div>
-        <div class="form-group">
-            {{ form_row(vehicleForm.model.name, { label: 'Modèle' }) }}
-        </div>
-        <div class="form-group">
-            {{ form_row(vehicleForm.model.vehicleCategory, { label: 'Type de véhicule' }) }}
-        </div>
-        <div class="form-group">
-            {{ form_row(vehicleForm.color, { label: 'Couleur' }) }}
-        </div>
-    </div>
+	<h3>Votre véhicule</h3>
+	<div class="form-container">
+		<div class="form-group">
+			{{ form_row(vehicleForm.model.brand.name, { label: 'Marque' }) }}
+		</div>
+		<div class="form-group">
+			{{ form_row(vehicleForm.model.name, { label: 'Modèle' }) }}
+		</div>
+		<div class="form-group">
+			{{ form_row(vehicleForm.model.vehicleCategory, { label: 'Type de véhicule' }) }}
+		</div>
+		<div class="form-group">
+			{{ form_row(vehicleForm.color, { label: 'Couleur' }) }}
+		</div>
+	</div>
 
-    <h3>Immatriculation</h3>
-    <div class="form-container">
-        <div class="form-group">
-            {{ form_row(vehicleForm.RegistrationCertificate.certificateNumber, { label: 'Plaque d\'immatriculation' }) }}
+	<h3>Immatriculation</h3>
+	<div class="form-container">
+		<div class="form-group">
+			{{ form_row(vehicleForm.RegistrationCertificate.certificateNumber, { label: 'Plaque d\'immatriculation' }) }}
         </div>
         <div class="form-group">
             {{ form_row(vehicleForm.RegistrationCertificate.countryOfIssue, { label: 'Pays d\'immatriculation' }) }}
-        </div>
-        <div class="form-group">
-            {{ form_row(vehicleForm.RegistrationCertificate.issueDate, { label: 'Année d\'immatriculation' }) }}
+		</div>
+		<div class="form-group">
+			{{ form_row(vehicleForm.RegistrationCertificate.issueDate, { label: 'Année d\'immatriculation' }) }}
         </div>
         <div class="form-group">
         </div>
@@ -176,10 +179,20 @@
             {{ form_row(vehicleForm.address, { label: 'Adresse' }) }}
         </div>
         <div class="form-group">
-            {{ form_row(vehicleForm.postalCode, { label: 'Code postal' }) }}
+            {# {{ form_row(vehicleForm.postalCode, { label: 'Code postal' }) }} #}
+            {{ form_label(vehicleForm.postalCode,'code postal') }}
+            {{ form_widget(vehicleForm.postalCode, { 'attr': {'data-action': 'postcode-input'} }) }}
+            {{ form_errors(vehicleForm.postalCode) }}
         </div>
-        <div class="form-group">
-            {{ form_row(vehicleForm.city, { label: 'Ville' }) }}
+        <div class="form-group address-container">
+            {{ form_label(vehicleForm.city,'ville') }}
+            {{ form_widget(vehicleForm.city, { 'attr': {'data-action': 'city-input'} }) }}
+            {{ form_errors(vehicleForm.city) }}
+            <div id="dropdownMenu" class="hidden">
+                <ul id="dropdownResults">
+                    <li>Aucun résultat</li>
+                 </ul>
+            </div>
         </div>
     </div>
 

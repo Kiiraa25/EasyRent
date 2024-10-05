@@ -40,6 +40,14 @@ return [
         'path' => './assets/js/vehicleNew.js',
         'entrypoint' => true,
     ],
+    'CarModelsSelection' => [
+        'path' => './assets/js/CarModelsSelection.js',
+        'entrypoint' => true,
+    ],
+    'search-input' => [
+        'path' => './assets/js/address-input.js',
+        'entrypoint' => true,
+    ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],

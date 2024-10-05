@@ -33,12 +33,9 @@ class VehicleController extends AbstractController
         $vehicleForm->handleRequest($request);
 
         if ($vehicleForm->isSubmitted() && $vehicleForm->isValid()) {
-            
             $vehicle->setCreatedAt(new \DateTimeImmutable());
             $vehicle->setUpdatedAt(new \DateTimeImmutable());
             $vehicle->setOwner($user);
-
-            // dd($vehicle);
             
             $entityManager->persist($vehicle);
             $entityManager->flush();

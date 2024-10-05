@@ -57,7 +57,11 @@ class VehicleType extends AbstractType
 
             ->add('address')
             ->add('postalCode')
-            ->add('city')
+            ->add('city', null,[
+                'attr'=>[
+                    'data-action'=>'address-input'
+                ]
+            ])
         ;
     }
 
