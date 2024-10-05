@@ -23,9 +23,9 @@ class RegistrationCertificateType extends AbstractType
             ->add('countryOfIssue')
             ->add('frontImageFile', VichImageType::class, [
                 'label' => 'Photo recto',
-                'required' => false,
+                'required' => true,
                 'allow_delete' => false,
-                'mapped' => false,
+                'mapped' => true,
                 'download_uri' => false,
                 'attr' => [
                     'accept' => 'image/*',
@@ -34,9 +34,9 @@ class RegistrationCertificateType extends AbstractType
             ])
             ->add('backImageFile', VichImageType::class, [
                 'label' => 'Photo verso',
-                'required' => false,
+                'required' => true,
                 'allow_delete' => false,
-                'mapped' => false,
+                'mapped' => true,
                 'download_uri' => false,
                 'attr' => [
                     'accept' => 'image/*',

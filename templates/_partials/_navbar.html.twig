@@ -54,7 +54,7 @@
 					<a href="{{ path('app_user_profile_verify') }}">
 						<li>Vérifier mon compte</li>
 					</a>
-					<a href="">
+					<a href="{{ path('app_user_rentals')}}">
 						<li>Locations</li>
 					</a>
 					<a href="">
@@ -66,10 +66,10 @@
 				</ul>
 
 				<ul class="ownerMode hidden">
-					<a href="">
+					<a href="{{ path('app_user_rental_requests')}}">
 						<li>Demandes</li>
 					</a>
-					<a href="">
+					<a href="{{ path('app_user_rentals')}}">
 						<li>Locations</li>
 					</a>
 					<a href="{{ path('app_user_vehicles')}}">

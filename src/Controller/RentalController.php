@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Rental;
 use App\Enum\RentalStatusEnum;
 use App\Form\RentalType;
+use App\Form\EditRentalType;
 use App\Repository\RentalRepository;
 use App\Repository\VehicleRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,85 +15,156 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\SecurityBundle\Security;
 
-#[Route('/rental')]
+
 class RentalController extends AbstractController
 {
-    #[Route('/', name: 'app_rental_index', methods: ['GET'])]
-    public function index(RentalRepository $rentalRepository): Response
+    // ROUTE ADMIN ->
+    // #[Route('/', name: 'app_rental_index', methods: ['GET'])]
+    // public function index(RentalRepository $rentalRepository): Response
+    // {
+    //     return $this->render('rental/index.html.twig', [
+    //         'rentals' => $rentalRepository->findAll(),
+    //     ]);
+    // }
+
+    // SHOW LOCATIONS DE L'UTILISATEUR
+    #[Route('/user/rentals', name: 'app_user_rentals', methods: ['GET'])]
+    public function userRentals(RentalRepository $rentalRepository): Response
     {
-        return $this->render('rental/index.html.twig', [
-            'rentals' => $rentalRepository->findAll(),
+
+        // Récupérer l'utilisateur connecté
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur est bien connecté
+        if (!$user) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
+
+        //  $rentals = $rentalRepository->findBy([
+        //     'renter' => $user
+        //  ]);
+
+        $rentalStatuses = [
+            RentalStatusEnum::VALIDEE->value,
+            RentalStatusEnum::EN_COURS->value,
+            RentalStatusEnum::TERMINEE->value,
+            RentalStatusEnum::ANNULEE->value,
+        ];
+
+        $rentals = $rentalRepository->createQueryBuilder('r')
+            ->where('r.renter = :user')
+            ->andWhere('r.status IN (:statuses)')
+            ->setParameter('user', $user)
+            ->setParameter('statuses', $rentalStatuses)
+            ->getQuery()
+            ->getResult();
+
+        return $this->render('rental/userRentals.html.twig', [
+            'rentals' => $rentals
         ]);
     }
 
-    #[Route('/new', name: 'app_rental_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, VehicleRepository $vehicleRepository , EntityManagerInterface $entityManager, Security $security): Response
+    // SHOW DEMANDES DE LOCATIONS DE L'UTILISATEUR 
+    #[Route('/user/rental_requests', name: 'app_user_rental_requests', methods: ['GET'])]
+    public function userRentalRequests(RentalRepository $rentalRepository): Response
+    {
+
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur est bien connecté
+        if (!$user) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
+
+        $requestStatuses = [
+            RentalStatusEnum::EN_ATTENTE_VALIDATION->value,
+            RentalStatusEnum::REFUSEE->value,
+            RentalStatusEnum::EXPIREE->value,
+            RentalStatusEnum::DEMANDE_ANNULEE->value,
+        ];
+
+        $rentalRequests = $rentalRepository->createQueryBuilder('r')
+            ->where('r.renter = :user')
+            ->andWhere('r.status IN (:statuses)')
+            ->setParameter('user', $user)
+            ->setParameter('statuses', $requestStatuses)
+            ->getQuery()
+            ->getResult();
+
+        return $this->render('rental/userRentalRequests.html.twig', [
+            'rentalRequests' => $rentalRequests
+        ]);
+    }
+
+    // CREATE DEMANDE DE LOCATION
+    #[Route('/rental/new', name: 'app_rental_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, VehicleRepository $vehicleRepository, EntityManagerInterface $entityManager, Security $security): Response
     {
 
         $user = $security->getUser();
 
-    if (!$user) {
-        throw $this->createAccessDeniedException('Vous devez être connecté pour louer un véhicule.');
-    }
+        if (!$user) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour louer un véhicule.');
+        }
 
         // Récupérer l'ID du véhicule depuis l'URL
-    $vehicleId = $request->query->get('vehicle_id');
-    
-    // Récupérer le véhicule correspondant dans la base de données
-    $vehicle = $vehicleRepository->find($vehicleId);
-    
-    if (!$vehicle) {
-        throw $this->createNotFoundException('Véhicule non trouvé.');
-    }
+        $vehicleId = $request->query->get('vehicle_id');
 
-    // Créer la nouvelle réservation
-    $rental = new Rental();
-    $rental->setVehicle($vehicle);  // Associer le véhicule à la réservation
+        // Récupérer le véhicule correspondant dans la base de données
+        $vehicle = $vehicleRepository->find($vehicleId);
 
-    $form = $this->createForm(RentalType::class, $rental);
-    $form->handleRequest($request);
-
-    if ($form->isSubmitted() && $form->isValid()) {
-        $startDate = $rental->getStartDate();
-        $endDate = $rental->getEndDate();
-
-        if ($startDate && $endDate) {
-            $diff = $startDate->diff($endDate);
-            $days = $diff->days;
-
-            // Récupérer le prix par jour du véhicule
-            $vehicle = $rental->getVehicle();
-
-            $pricePerDay = $vehicle->getPricePerDay();
-            $mileageAllowance = $vehicle->getMileageAllowance();
-
-            // Calculer le totalPrice
-            $totalPrice = $days * $pricePerDay;
-            $mileageLimit = $days * $mileageAllowance;
-
-            // Mettre à jour le champ totalPrice
-            $rental->setTotalPrice($totalPrice);
-            $rental->setMileageLimit($mileageLimit);
-            $rental->setRenter($user);
-            $rental->setStatus(RentalStatusEnum::EN_ATTENTE_VALIDATION);
-            $rental->setCreatedAt(new \DateTimeImmutable());
-            $rental->setUpdatedAt(new \DateTimeImmutable());
-
+        if (!$vehicle) {
+            throw $this->createNotFoundException('Véhicule non trouvé.');
         }
-        
-        $entityManager->persist($rental);
-        $entityManager->flush();
 
-        return $this->redirectToRoute('app_rental_index', [], Response::HTTP_SEE_OTHER);
+        // Créer la nouvelle réservation
+        $rental = new Rental();
+        $rental->setVehicle($vehicle);  // Associer le véhicule à la réservation
+
+        $form = $this->createForm(RentalType::class, $rental);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $startDate = $rental->getStartDate();
+            $endDate = $rental->getEndDate();
+
+            if ($startDate && $endDate) {
+                $diff = $startDate->diff($endDate);
+                $days = $diff->days;
+
+                // Récupérer le prix par jour du véhicule
+                $vehicle = $rental->getVehicle();
+
+                $pricePerDay = $vehicle->getPricePerDay();
+                $mileageAllowance = $vehicle->getMileageAllowance();
+
+                // Calculer le totalPrice
+                $totalPrice = $days * $pricePerDay;
+                $mileageLimit = $days * $mileageAllowance;
+
+                // Mettre à jour le champ totalPrice
+                $rental->setTotalPrice($totalPrice);
+                $rental->setMileageLimit($mileageLimit);
+                $rental->setRenter($user);
+                $rental->setStatus(RentalStatusEnum::EN_ATTENTE_VALIDATION);
+                $rental->setCreatedAt(new \DateTimeImmutable());
+                $rental->setUpdatedAt(new \DateTimeImmutable());
+            }
+
+            $entityManager->persist($rental);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_rental_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('rental/new.html.twig', [
+            'rental' => $rental,
+            'form' => $form,
+        ]);
     }
 
-    return $this->render('rental/new.html.twig', [
-        'rental' => $rental,
-        'form' => $form,
-    ]);
-    }
-
-    #[Route('/{id}', name: 'app_rental_show', methods: ['GET'])]
+    // SHOW LOCATION/DEMANDE DE LOCATION
+    #[Route('/rental/{id}', name: 'app_rental_show', methods: ['GET'])]
     public function show(Rental $rental): Response
     {
         return $this->render('rental/show.html.twig', [
@@ -100,16 +172,55 @@ class RentalController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_rental_edit', methods: ['GET', 'POST'])]
+    // EDIT LOCATION/DEMANDE DE LOCATION
+    #[Route('rental/{id}/edit', name: 'app_rental_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Rental $rental, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(RentalType::class, $rental);
+        $form = $this->createForm(EditRentalType::class, $rental);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+        $requestStatuses = [
+            RentalStatusEnum::EN_ATTENTE_VALIDATION->value,
+            RentalStatusEnum::VALIDEE->value,
+            RentalStatusEnum::EN_COURS->value
+        ];
 
-            return $this->redirectToRoute('app_rental_index', [], Response::HTTP_SEE_OTHER);
+        if ($form->isSubmitted() && $form->isValid() && in_array($rental->getStatus()->value, $requestStatuses)) {
+            $startDate = $rental->getStartDate();
+            $endDate = $rental->getEndDate();
+            $pricePerDay = $rental->getVehicle()->getPricePerDay();
+            $mileageAllowance = $rental->getVehicle()->getMileageAllowance();
+
+            if ($startDate && $endDate) {
+                // Vérification : La date de fin doit être supérieure à la date de début
+                if ($endDate < $startDate) {
+                    $this->addFlash('error', 'La date de fin doit être postérieure à la date de début.');
+                    return $this->redirectToRoute('app_rental_edit', ['id' => $rental->getId()]);
+                }
+
+                $diff = $startDate->diff($endDate);
+                $days = $diff->days;
+
+                $totalPrice = $days * $pricePerDay;
+                $mileageLimit = $days * $mileageAllowance;
+
+                // Mettre à jour les champs totalPrice et mileageLimit
+                $rental->setTotalPrice($totalPrice);
+                $rental->setMileageLimit($mileageLimit);
+                $rental->setUpdatedAt(new \DateTimeImmutable());
+
+                // Enregistrer les modifications
+                $entityManager->flush();
+            }
+
+
+
+            // Redirection selon le statut de la demande de location
+            if ($rental->getStatus()->value === RentalStatusEnum::EN_ATTENTE_VALIDATION->value) {
+                return $this->redirectToRoute('app_user_rental_requests', [], Response::HTTP_SEE_OTHER);
+            } else {
+                return $this->redirectToRoute('app_user_rentals', [], Response::HTTP_SEE_OTHER);
+            }
         }
 
         return $this->render('rental/edit.html.twig', [
@@ -118,10 +229,11 @@ class RentalController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_rental_delete', methods: ['POST'])]
+
+    #[Route('rental/{id}', name: 'app_rental_delete', methods: ['POST'])]
     public function delete(Request $request, Rental $rental, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$rental->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $rental->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($rental);
             $entityManager->flush();
         }

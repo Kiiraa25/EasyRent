@@ -10,5 +10,6 @@ enum RentalStatusEnum: string
     case EN_COURS = 'en_cours';                           
     case TERMINEE = 'terminée';                           
     case ANNULEE = 'annulée';                            
-    case EXPIREE = 'expirée';                           
+    case EXPIREE = 'expirée'; 
+    case DEMANDE_ANNULEE = 'demande_annulée';                          
 }

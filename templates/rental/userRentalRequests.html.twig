@@ -1,0 +1,126 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Locations{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .rental-list {
+            max-width: 100vw;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .rental-item {
+            width: 60vw;
+            display: grid;
+            grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr;
+            align-items: center;
+            padding: 15px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            margin-top: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none; /* Retirer le soulignement du lien */
+            color: inherit; /* Garder la couleur de texte par défaut */
+        }
+
+        .rental-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .rental-image {
+            width: 80px;
+            height: 80px;
+            background-color: #282F4B; /* Bleu foncé */
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .rental-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .rental-details p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .rental-details strong {
+            color: #282F4B;
+        }
+
+        .rental-owner, .rental-price, .rental-status {
+            text-align: center;
+        }
+
+        .rental-status {
+            font-weight: bold;
+            padding: 5px 10px;
+            background-color: #EB8072;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .rental-item h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #282F4B;
+        }
+
+        a.rental-item {
+            text-decoration: none; /* Retire la décoration du lien (soulignement) */
+            color: inherit; /* Garde les couleurs du texte normales */
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<main class="rental-list">
+    <h1 class="text-center">Mes Demandes De Location</h1>
+
+    {% if rentalRequests is empty %}
+        <p>Vous n'avez aucune demande de location pour le moment</p>
+    {% else %}
+        {% for rental in rentalRequests %}
+            <!-- Lien englobant l'élément de location -->
+            <a href="{{ path('app_rental_show', {'id': rental.id}) }}" class="rental-item">
+                <!-- Colonne 1 : Carré pour l'image -->
+                <div class="rental-image">IMG</div>
+
+                <!-- Colonne 2 : Modèle et dates -->
+                <div class="rental-details">
+                    <h3>Modèle : {{ rental.vehicle.model.name }}</h3>
+                    <p><strong>Date de début :</strong> {{ rental.startDate ? rental.startDate|date('d/m/Y') : '' }}</p>
+                    <p><strong>Date de fin :</strong> {{ rental.endDate ? rental.endDate|date('d/m/Y') : '' }}</p>
+                </div>
+
+                <!-- Colonne 3 : Propriétaire -->
+                <div class="rental-owner">
+                    <p><strong>Propriétaire :</strong></p>
+                    <p>{{ rental.vehicle.owner.profile.firstName }} {{ rental.vehicle.owner.profile.lastName }}</p>
+                </div>
+
+                <!-- Colonne 4 : Prix -->
+                <div class="rental-price">
+                    <p><strong>Prix total :</strong></p>
+                    <p>{{ rental.totalPrice }} €</p>
+                </div>
+
+                <!-- Colonne 5 : Statut -->
+                <div class="rental-status">{{ rental.status.value }}</div>
+            </a>
+        {% endfor %}
+    {% endif %}
+</main>
+{% endblock %}

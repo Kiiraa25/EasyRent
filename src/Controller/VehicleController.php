@@ -80,15 +80,11 @@ class VehicleController extends AbstractController
              throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
          }
  
-         // Utiliser le repository pour trouver les véhicules de l'utilisateur connecté
-         $vehicles = $vehicleRepository->findBy([
-             'owner' => $user
-         ]);
- 
          return $this->render('vehicle/showUserVehicles.html.twig', [
-             'vehicles' => $vehicles,
-             'user' => $user,
-         ]);
+             'vehicles' => $vehicleRepository->findBy([
+                'owner' => $user
+            ])
+             ]);
      }
 
      // SHOW ALL VEHICLES
@@ -137,6 +133,17 @@ class VehicleController extends AbstractController
              'form' => $form,
              'vehicle' => $vehicle,
          ]);
+     }
+
+     #[Route('rental/{id}', name: 'app_rental_delete', methods: ['POST'])]
+     public function delete(Request $request, Vehicle $vehicle, EntityManagerInterface $entityManager): Response
+     {
+         if ($this->isCsrfTokenValid('delete' . $vehicle->getId(), $request->getPayload()->getString('_token'))) {
+             $entityManager->remove($vehicle);
+             $entityManager->flush();
+         }
+ 
+         return $this->redirectToRoute('app_user_vehicles', [], Response::HTTP_SEE_OTHER);
      }
 
     }
