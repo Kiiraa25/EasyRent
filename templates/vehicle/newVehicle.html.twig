@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block importmap %}
-	{{ importmap(['app', 'search-input']) }}
+	{{ importmap(['app', 'search-input', 'CarModelsSelection', 'country-input']) }}
 {% endblock %}
 
 {% block title %}Déposez votre annonce
@@ -109,30 +109,55 @@
 
 	<h3>Votre véhicule</h3>
 	<div class="form-container">
-		<div class="form-group">
-			{{ form_row(vehicleForm.model.brand.name, { label: 'Marque' }) }}
+		<div class="form-group brand-container vehicle-container">
+			{{ form_label(vehicleForm.model.brand.name, 'Marque') }}
+			{{ form_widget(vehicleForm.model.brand.name, { 'attr': {'data-action': 'brand-input'} }) }}
+			{{ form_errors(vehicleForm.model.brand.name) }}
+			<div id="dropdownMenu" class="hidden">
+				<ul id="dropdownResults">
+					<li>Aucun résultat</li>
+				</ul>
+			</div>
 		</div>
-		<div class="form-group">
-			{{ form_row(vehicleForm.model.name, { label: 'Modèle' }) }}
-		</div>
-		<div class="form-group">
-			{{ form_row(vehicleForm.model.vehicleCategory, { label: 'Type de véhicule' }) }}
-		</div>
-		<div class="form-group">
-			{{ form_row(vehicleForm.color, { label: 'Couleur' }) }}
+
+		<div class="form-group model-container vehicle-container">
+			{{ form_label(vehicleForm.model.name, 'Modèle') }}
+			{{ form_widget(vehicleForm.model.name, { 'attr': {'data-action': 'model-input'} }) }}
+			{{ form_errors(vehicleForm.model.name) }}
+			<div id="dropdownMenu" class="hidden">
+				<ul id="dropdownResults">
+					<li>Aucun résultat</li>
+				</ul>
+			</div>
 		</div>
 	</div>
 
-	<h3>Immatriculation</h3>
-	<div class="form-container">
-		<div class="form-group">
-			{{ form_row(vehicleForm.RegistrationCertificate.certificateNumber, { label: 'Plaque d\'immatriculation' }) }}
+	<div class="form-group">
+		{{ form_row(vehicleForm.model.vehicleCategory, { label: 'Type de véhicule' }) }}
+	</div>
+	<div class="form-group">
+		{{ form_row(vehicleForm.color, { label: 'Couleur' }) }}
+	</div>
+</div>
+
+<h3>Immatriculation</h3>
+<div class="form-container">
+	<div class="form-group">
+		{{ form_row(vehicleForm.RegistrationCertificate.certificateNumber, { label: 'Plaque d\'immatriculation' }) }}
         </div>
-        <div class="form-group">
-            {{ form_row(vehicleForm.RegistrationCertificate.countryOfIssue, { label: 'Pays d\'immatriculation' }) }}
+
+        <div class="form-group country-container">
+        {{ form_label(vehicleForm.RegistrationCertificate.countryOfIssue, 'Pays d\'immatriculation') }}
+		{{ form_widget(vehicleForm.RegistrationCertificate.countryOfIssue, { 'attr': {'data-action': 'country-input'} }) }}
+		{{ form_errors(vehicleForm.RegistrationCertificate.countryOfIssue) }}
+		<div id="dropdownMenu" class="hidden">
+			<ul id="dropdownResults">
+				<li>Aucun résultat</li>
+			</ul>
 		</div>
-		<div class="form-group">
-			{{ form_row(vehicleForm.RegistrationCertificate.issueDate, { label: 'Année d\'immatriculation' }) }}
+	</div>
+	<div class="form-group">
+		{{ form_row(vehicleForm.RegistrationCertificate.issueDate, { label: 'Année d\'immatriculation' }) }}
         </div>
         <div class="form-group">
         </div>
@@ -175,16 +200,28 @@
 
     <h3>Localisation</h3>
     <div class="form-container">
-        <div class="form-group">
-            {{ form_row(vehicleForm.address, { label: 'Adresse' }) }}
+        <div class="form-group address-container street-container">
+            {{ form_label(vehicleForm.address,'Adresse') }}
+            {{ form_widget(vehicleForm.address, { 'attr': {'data-action': 'address-input'} }) }}
+            {{ form_errors(vehicleForm.address) }}
+            <div id="dropdownMenu" class="hidden">
+                <ul id="dropdownResults">
+                    <li>Aucun résultat</li>
+                 </ul>
+            </div>
         </div>
-        <div class="form-group">
+        <div class="form-group address-container postcode-container">
             {# {{ form_row(vehicleForm.postalCode, { label: 'Code postal' }) }} #}
             {{ form_label(vehicleForm.postalCode,'code postal') }}
             {{ form_widget(vehicleForm.postalCode, { 'attr': {'data-action': 'postcode-input'} }) }}
             {{ form_errors(vehicleForm.postalCode) }}
+            <div id="dropdownMenu" class="hidden">
+                <ul id="dropdownResults">
+                    <li>Aucun résultat</li>
+                 </ul>
+            </div>
         </div>
-        <div class="form-group address-container">
+        <div class="form-group address-container city-container">
             {{ form_label(vehicleForm.city,'ville') }}
             {{ form_widget(vehicleForm.city, { 'attr': {'data-action': 'city-input'} }) }}
             {{ form_errors(vehicleForm.city) }}
@@ -207,4 +244,6 @@
 
     {{ form_end(vehicleForm) }}
 </main>
+<script type="text/javascript" src="http://www.carqueryapi.com/js/jquery.min.js"></script>
+<script type="text/javascript" src="http://www.carqueryapi.com/js/carquery.0.3.4.js"></script>
 {% endblock %}

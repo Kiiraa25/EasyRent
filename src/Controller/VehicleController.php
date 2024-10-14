@@ -14,6 +14,7 @@ use App\Form\VehicleType;
 use App\Form\EditVehicleType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\VehicleRepository;
+use App\Enum\VehicleStatusEnum;
 
 class VehicleController extends AbstractController
 {
@@ -36,7 +37,7 @@ class VehicleController extends AbstractController
             $vehicle->setCreatedAt(new \DateTimeImmutable());
             $vehicle->setUpdatedAt(new \DateTimeImmutable());
             $vehicle->setOwner($user);
-            
+
             $entityManager->persist($vehicle);
             $entityManager->flush();
 
@@ -44,103 +45,126 @@ class VehicleController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        return $this->render('vehicle/newVehicle.html.twig',[
+        return $this->render('vehicle/newVehicle.html.twig', [
             'vehicleForm' => $vehicleForm,
         ]);
     }
 
-     // READ
-     #[Route('/vehicle/{id}', name: 'app_vehicle_show')]
-     public function show(Vehicle $vehicle): Response
-     {
+    // READ
+    #[Route('/vehicle/{id}', name: 'app_vehicle_show')]
+    public function show(Vehicle $vehicle): Response
+    {
         if (!$vehicle) {
             throw $this->createNotFoundException('Véhicule non trouvé.');
         }
 
-         $owner = $vehicle->getOwner();
- 
-         return $this->render('vehicle/showVehicle.html.twig', [
-            'vehicle' => $vehicle,
-            'owner' => $owner,
-         ]);
-     }
-
-     // SHOW ALL USER VEHICLES
-     #[Route('/user/vehicles', name: 'app_user_vehicles')]
-     public function showUserVehicles(VehicleRepository $vehicleRepository): Response
-     {
-         // Récupérer l'utilisateur connecté
-         $user = $this->getUser();
- 
-         // Vérifier si l'utilisateur est bien connecté
-         if (!$user) {
-             throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
-         }
- 
-         return $this->render('vehicle/showUserVehicles.html.twig', [
-             'vehicles' => $vehicleRepository->findBy([
-                'owner' => $user
-            ])
-             ]);
-     }
-
-     // SHOW ALL VEHICLES
-     #[Route('/vehicles', name: 'app_vehicles')]
-     public function showVehicles(VehicleRepository $vehicleRepository): Response
-     {
- 
-         // Utiliser le repository pour trouver les véhicules de l'utilisateur connecté
-         $vehicles = $vehicleRepository->findAll();
- 
-         return $this->render('vehicle/showAllVehicles.html.twig', [
-             'vehicles' => $vehicles,
-         ]);
-     }
-
-
-     // UPDATE
-     #[Route('/vehicle/{id}/edit', name: 'app_vehicle_edit')]
-     public function edit(Request $request, Vehicle $vehicle, EntityManagerInterface $entityManager): Response
-     {
-         
         $owner = $vehicle->getOwner();
 
-        if (!$owner instanceof User) {
+        return $this->render('vehicle/showVehicle.html.twig', [
+            'vehicle' => $vehicle,
+            'owner' => $owner,
+        ]);
+    }
+
+    // SHOW ALL USER VEHICLES
+    #[Route('/user/vehicles', name: 'app_user_vehicles')]
+    public function showUserVehicles(VehicleRepository $vehicleRepository): Response
+    {
+        // Récupérer l'utilisateur connecté
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur est bien connecté
+        if (!$user) {
             throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
         }
 
-         if (!$vehicle) {
-             throw $this->createNotFoundException('Véhicule non trouvé.');
-         }
- 
-         
-         $form = $this->createForm(EditVehicleType::class, $vehicle);
-         $form->handleRequest($request);
- 
-        
-         if ($form->isSubmitted() && $form->isValid()) {
-             $vehicle->setUpdatedAt(new \DateTimeImmutable());
-             $entityManager->flush();
- 
-             $this->addFlash('success', 'Véhicule mis à jour avec succès.');
-             return $this->redirectToRoute('app_vehicle_show', ['id' => $vehicle->getId()]);
-         }
- 
-         return $this->render('vehicle/editVehicle.html.twig', [
-             'form' => $form,
-             'vehicle' => $vehicle,
-         ]);
-     }
+        $vehicles = $vehicleRepository->createQueryBuilder('v')
+        ->where('v.owner = :owner')
+        ->andWhere('v.status IN (:statuses)')
+        ->setParameter('owner', $user)
+        ->setParameter('statuses', [VehicleStatusEnum::ACTIVE, VehicleStatusEnum::SUSPENDED])
+        ->getQuery()
+        ->getResult();
 
-     #[Route('rental/{id}', name: 'app_rental_delete', methods: ['POST'])]
-     public function delete(Request $request, Vehicle $vehicle, EntityManagerInterface $entityManager): Response
-     {
-         if ($this->isCsrfTokenValid('delete' . $vehicle->getId(), $request->getPayload()->getString('_token'))) {
-             $entityManager->remove($vehicle);
-             $entityManager->flush();
-         }
- 
-         return $this->redirectToRoute('app_user_vehicles', [], Response::HTTP_SEE_OTHER);
-     }
+    return $this->render('vehicle/showUserVehicles.html.twig', [
+        'vehicles' => $vehicles
+    ]);
+    }
+
+    // SHOW ALL VEHICLES
+    #[Route('/vehicles', name: 'app_vehicles')]
+    public function showVehicles(VehicleRepository $vehicleRepository): Response
+    {
+
+        // Utiliser le repository pour trouver les véhicules de l'utilisateur connecté
+        $vehicles = $vehicleRepository->findAll();
+
+        return $this->render('vehicle/showAllVehicles.html.twig', [
+            'vehicles' => $vehicles,
+        ]);
+    }
+
+
+    // UPDATE
+    #[Route('/vehicle/{id}/edit', name: 'app_vehicle_edit')]
+    public function edit(Request $request, Vehicle $vehicle, EntityManagerInterface $entityManager): Response
+    {
+
+        $owner = $vehicle->getOwner();
+        $currentUser = $this->getUser();
+
+
+        if (!$owner instanceof User || $currentUser !== $owner) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
+
+        if (!$vehicle) {
+            throw $this->createNotFoundException('Véhicule non trouvé.');
+        }
+
+
+        $form = $this->createForm(EditVehicleType::class, $vehicle);
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $vehicle->setUpdatedAt(new \DateTimeImmutable());
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Véhicule mis à jour avec succès.');
+            return $this->redirectToRoute('app_vehicle_show', ['id' => $vehicle->getId()]);
+        }
+
+        return $this->render('vehicle/editVehicle.html.twig', [
+            'form' => $form,
+            'vehicle' => $vehicle,
+        ]);
+    }
+
+    // DELETE --> mettre en statut "supprimé"
+    #[Route('/delete/vehicle/{id}', name: 'app_vehicle_delete')]
+    public function delete(Request $request, Vehicle $vehicle, EntityManagerInterface $entityManager): Response
+    {
+        $owner = $vehicle->getOwner();
+        $currentUser = $this->getUser();
+
+
+        if (!$owner instanceof User || $currentUser == !$owner) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
+
+        if (!$vehicle) {
+            throw $this->createNotFoundException('Véhicule non trouvé.');
+        }
+
+        $vehicle->setStatus(VehicleStatusEnum::ARCHIVED);
+        $vehicle->setUpdatedAt(new \DateTimeImmutable());
+
+        $entityManager->persist($vehicle);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Véhicule supprimé avec succès.');
+        return $this->redirectToRoute('app_user_vehicles');
 
     }
+}

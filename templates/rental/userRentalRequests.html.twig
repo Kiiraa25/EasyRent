@@ -15,18 +15,17 @@
         .rental-item {
             width: 60vw;
             display: grid;
-            grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr;
+            grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 1fr;
             align-items: center;
             padding: 15px;
             background-color: white;
             border: 1px solid #ddd;
             border-radius: 10px;
-            margin-bottom: 20px;
-            margin-top: 20px;
+            margin: 20px 0;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
             transition: transform 0.2s, box-shadow 0.2s;
-            text-decoration: none; /* Retirer le soulignement du lien */
-            color: inherit; /* Garder la couleur de texte par défaut */
+            text-decoration: none;
+            color: inherit;
         }
 
         .rental-item:hover {
@@ -37,7 +36,7 @@
         .rental-image {
             width: 80px;
             height: 80px;
-            background-color: #282F4B; /* Bleu foncé */
+            background-color: #282F4B;
             border-radius: 5px;
             display: flex;
             align-items: center;
@@ -51,36 +50,71 @@
             flex-direction: column;
         }
 
-        .rental-details p {
+        .rental-details p, .rental-owner p, .rental-price p {
             margin: 5px 0;
             color: #555;
         }
+    
 
-        .rental-details strong {
+        .rental-details h3, .rental-owner strong, .rental-price strong {
             color: #282F4B;
-        }
-
-        .rental-owner, .rental-price, .rental-status {
-            text-align: center;
         }
 
         .rental-status {
             font-weight: bold;
-            padding: 5px 10px;
-            background-color: #EB8072;
-            color: white;
-            border-radius: 5px;
-        }
-
-        .rental-item h3 {
-            margin: 0;
-            font-size: 18px;
+            text-align: center;
             color: #282F4B;
         }
 
-        a.rental-item {
-            text-decoration: none; /* Retire la décoration du lien (soulignement) */
-            color: inherit; /* Garde les couleurs du texte normales */
+        .btn {
+            display: inline-block;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .cancel-button {
+            background-color: #FF6347;
+            color: white;
+            border: none;
+        }
+
+        .cancel-button:hover { background-color: #FF4500; }
+
+        .modify-button {
+            background-color: #6495ED;
+            color: white;
+            border: none;
+        }
+
+        .modify-button:hover { background-color: #4682B4; }
+
+        .accept-button {
+            background-color: #32CD32;
+            color: white;
+            border: none;
+        }
+
+        .accept-button:hover { background-color: #228B22; }
+
+        .refuse-button {
+            background-color: #FF6347;
+            color: white;
+            border: none;
+        }
+
+        .refuse-button:hover { background-color: #FF4500; }
+
+        .rental-actions {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            align-items: center;
         }
     </style>
 {% endblock %}
@@ -93,9 +127,8 @@
         <p>Vous n'avez aucune demande de location pour le moment</p>
     {% else %}
         {% for rental in rentalRequests %}
-            <!-- Lien englobant l'élément de location -->
-            <a href="{{ path('app_rental_show', {'id': rental.id}) }}" class="rental-item">
-                <!-- Colonne 1 : Carré pour l'image -->
+            <div class="rental-item">
+                <!-- Colonne 1 : Image -->
                 <div class="rental-image">IMG</div>
 
                 <!-- Colonne 2 : Modèle et dates -->
@@ -110,6 +143,10 @@
                     <p><strong>Propriétaire :</strong></p>
                     <p>{{ rental.vehicle.owner.profile.firstName }} {{ rental.vehicle.owner.profile.lastName }}</p>
                 </div>
+                <div class="rental-renter">
+                    <p><strong>Locataire :</strong></p>
+                    <p>{{ rental.renter.profile.firstName }} {{ rental.renter.profile.lastName }}</p>
+                </div>
 
                 <!-- Colonne 4 : Prix -->
                 <div class="rental-price">
@@ -119,7 +156,20 @@
 
                 <!-- Colonne 5 : Statut -->
                 <div class="rental-status">{{ rental.status.value }}</div>
-            </a>
+
+                <!-- Colonne 6 : Actions -->
+                <div class="rental-actions">
+                    {% if rental.renter == app.user %}
+                        <!-- Boutons pour le locataire -->
+                        <button class="btn cancel-button">Annuler</button>
+                        <button class="btn modify-button">Modifier</button>
+                    {% elseif rental.vehicle.owner == app.user %}
+                        <!-- Boutons pour le propriétaire -->
+                        <button class="btn accept-button">Accepter</button>
+                        <button class="btn refuse-button">Refuser</button>
+                    {% endif %}
+                </div>
+            </div>
         {% endfor %}
     {% endif %}
 </main>

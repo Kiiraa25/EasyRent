@@ -17,7 +17,7 @@ class Rental
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: Vehicle::class)]
+    #[ORM\ManyToOne(targetEntity: Vehicle::class, inversedBy:"rentals")]
     #[ORM\JoinColumn(nullable: false)]
     private ?Vehicle $vehicle = null;
 
@@ -41,19 +41,26 @@ class Rental
     private ?string $status = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $updated_at = null;
+    private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column]
-    private ?int $mileage_limit = null;
+    private ?int $mileageLimit = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $cancellation_reason = null;
+    private ?string $cancellationReason = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $cancelled_by = null;
+    private ?string $cancelledBy = null;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
+    }
+
 
     public function getId(): ?int
     {
@@ -65,7 +72,7 @@ class Rental
         return $this->vehicle;
     }
 
-    public function setVehicle(?Vehicle $vehicle): static
+    public function setVehicle(?Vehicle $vehicle): self
     {
         $this->vehicle = $vehicle;
 
@@ -77,7 +84,7 @@ class Rental
         return $this->renter;
     }
 
-    public function setRenter(?User $renter): static
+    public function setRenter(?User $renter): self
     {
         $this->renter = $renter;
 
@@ -147,60 +154,60 @@ class Rental
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updated_at): static
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
     public function getMileageLimit(): ?int
     {
-        return $this->mileage_limit;
+        return $this->mileageLimit;
     }
 
-    public function setMileageLimit(int $mileage_limit): static
+    public function setMileageLimit(int $mileageLimit): static
     {
-        $this->mileage_limit = $mileage_limit;
+        $this->mileageLimit = $mileageLimit;
 
         return $this;
     }
 
     public function getCancellationReason(): ?string
     {
-        return $this->cancellation_reason;
+        return $this->cancellationReason;
     }
 
-    public function setCancellationReason(string $cancellation_reason): static
+    public function setCancellationReason(string $cancellationReason): static
     {
-        $this->cancellation_reason = $cancellation_reason;
+        $this->cancellationReason = $cancellationReason;
 
         return $this;
     }
 
-    public function getCancelledBy(): ?string
+    public function getCancelledBy(): ?CancelledByEnum
     {
-        return $this->cancelled_by;
+        return $this->cancelledBy ? CancelledByEnum::from($this->cancelledBy) : null;
     }
 
-    public function setCancelledBy(?string $cancelled_by): static
+    public function setCancelledBy(?CancelledByEnum $cancelledBy): static
     {
-        $this->cancelled_by = $cancelled_by;
+        $this->cancelledBy = $cancelledBy?->value;
 
         return $this;
     }

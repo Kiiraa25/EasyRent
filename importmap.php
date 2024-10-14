@@ -48,6 +48,10 @@ return [
         'path' => './assets/js/address-input.js',
         'entrypoint' => true,
     ],
+    'country-input' => [
+        'path' => './assets/js/country-input.js',
+        'entrypoint' => true,
+    ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],

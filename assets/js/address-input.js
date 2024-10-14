@@ -1,7 +1,6 @@
 let cityInput = document.querySelector('[data-action=city-input]');
 let postcodeInput = document.querySelector('[data-action=postcode-input]');
-let dropdownContainer = document.querySelector('#dropdownMenu');
-let dropdownResults = document.querySelector('#dropdownResults');
+let addressInput = document.querySelector('[data-action=address-input]');
 let addressContainer = document.querySelector('.address-container');
 let noResult = document.createElement('li');
 noResult.className = "noResultCity";
@@ -9,14 +8,13 @@ noResult.innerText = "Aucun résultat";
 
 let citySelected = false;
 
-cityInput.addEventListener('keyup', debounce(function (e) {
+function handleInput(containerName, key, value) {
     citySelected = false;
 
-    let value = e.target.value;
-    // if (value.length < 3 || value.length > 200) {
-    //     alert('la ville doit comporter entre 3 et 200 caractères')
-    // } else {
-    fetch(`https://api-adresse.data.gouv.fr/search/?q=${value}&type=municipality&limit=10`, {
+    let dropdownContainer = document.querySelector(`.${containerName} #dropdownMenu`);
+    let dropdownResults = dropdownContainer.querySelector('#dropdownResults');
+
+    fetch(`https://api-adresse.data.gouv.fr/search/?q=${value}&limit=10`, {
         method: 'GET'
     }).then((response) => {
         let status = response.status;
@@ -26,23 +24,29 @@ cityInput.addEventListener('keyup', debounce(function (e) {
 
         return response.json();
     }).then((body) => {
-        let features = body.features;
-
+        
         dropdownContainer.classList.remove('hidden')
-
         dropdownResults.innerHTML = '';
+
+        let features = body.features;
 
         if (features != null && features.length > 0) {
 
-
             features.map((feature) => {
                 let li = document.createElement('li');
-                li.innerText = `${feature.properties.name} - ${feature.properties.postcode}`;
-                
-                
+                li.innerText = feature.properties[key];
+
+
                 li.addEventListener('click', () => {
-                    cityInput.value = li.innerText;
-                    postcodeInput.value = feature.properties.postcode;
+                    if (containerName === 'street-container') {
+                        addressInput.value = feature.properties.name;
+                        cityInput.value = feature.properties.city;
+                        postcodeInput.value = feature.properties.postcode;
+                    } else if (containerName === 'postcode-container' || containerName === 'city-container') {
+                        cityInput.value = feature.properties.city;
+                        postcodeInput.value = feature.properties.postcode;
+                    }
+
                     dropdownContainer.classList.add('hidden');
                     dropdownResults.innerHTML = '';
                     citySelected = true;
@@ -57,17 +61,24 @@ cityInput.addEventListener('keyup', debounce(function (e) {
     })
 
     document.addEventListener('click', (e) => {
-        if (!addressContainer.contains(e.target)) {
-            dropdownContainer.classList.add('hidden');
-            dropdownResults.innerHTML = '';
-            if (!citySelected) {
-                postcodeInput.value = ''; 
-                cityInput.value='';
+    if (!addressContainer.contains(e.target)) {
+        dropdownContainer.classList.add('hidden');
+        dropdownResults.innerHTML = '';
+
+        if (!citySelected) {
+            // Handle the different cases for each input separately
+            if (containerName === 'street-container' && addressInput.value !== '') {
+                addressInput.value = ''; // Only clear address input if modifying address
+            } 
+            else if (containerName === 'postcode-container' || containerName === 'city-container') {
+                postcodeInput.value = ''; // Clear postcode and city only
+                cityInput.value = '';
             }
         }
-    })
-    // }
-}, 450))
+    }
+});
+
+}
 
 function debounce(callback, delay) {
     let timer;
@@ -80,3 +91,13 @@ function debounce(callback, delay) {
         }, delay)
     }
 }
+
+addressInput.addEventListener('keyup', debounce(function (e) {
+    handleInput('street-container', 'label', e.target.value); // Search for addresses
+}, 450));
+cityInput.addEventListener('keyup', debounce(function (e) {
+    handleInput('city-container', 'city', e.target.value); // Search for addresses
+}, 450));
+postcodeInput.addEventListener('keyup', debounce(function (e) {
+    handleInput('postcode-container', 'postcode', e.target.value); // Search for addresses
+}, 450));

@@ -3,9 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\VehicleRepository;
+use App\Enum\VehicleStatusEnum;
 use App\Enum\FuelTypeEnum;
 use App\Enum\GearboxTypeEnum;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+
 
 #[ORM\Entity(repositoryClass: VehicleRepository::class)]
 class Vehicle
@@ -42,10 +46,10 @@ class Vehicle
     #[ORM\Column]
     private ?int $extraMileageRate = null;
 
-    #[ORM\Column(type: "datetime", options: ["default" => "CURRENT_TIMESTAMP"])]
+    #[ORM\Column(type: "datetime")]
     private ?\DateTimeInterface $createdAt = null;
 
-    #[ORM\Column(type: "datetime", options: ["default" => "CURRENT_TIMESTAMP"])]
+    #[ORM\Column(type: "datetime")]
     private ?\DateTimeInterface $updatedAt = null;
 
     #[ORM\Column(type: 'string', length: 20)]
@@ -71,6 +75,48 @@ class Vehicle
 
     #[ORM\Column(type: 'string', length: 255)]
     private $city;
+
+    #[ORM\OneToMany(targetEntity: Rental::class, mappedBy: 'vehicle', cascade: ['persist', 'remove'])]
+    private Collection $rentals;
+
+    public function __construct()
+    {
+        $this->rentals = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
+    }
+
+
+    public function getRentals(): Collection
+    {
+        return $this->rentals;
+    }
+
+    public function addRental(Rental $rental): self
+    {
+        if (!$this->rentals->contains($rental)) {
+            $this->rentals[] = $rental;
+            $rental->setVehicle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRental(Rental $rental): self
+    {
+        if ($this->rentals->removeElement($rental)) {
+
+            if ($rental->getVehicle() === $this) {
+                $rental->setVehicle(null);
+            }
+        }
+
+        return $this;
+    }
+
+
+    #[ORM\Column(type: 'string')]
+    private ?string $status = null;
 
     public function getId(): ?int
     {
@@ -200,33 +246,33 @@ class Vehicle
         return $this;
     }
 
-   // Getter pour fuelType avec enum
-   public function getFuelType(): ?FuelTypeEnum
-   {
-       return $this->fuelType ? FuelTypeEnum::from($this->fuelType) : null;
-   }
+    // Getter pour fuelType avec enum
+    public function getFuelType(): ?FuelTypeEnum
+    {
+        return $this->fuelType ? FuelTypeEnum::from($this->fuelType) : null;
+    }
 
-   // Setter pour fuelType avec enum
-   public function setFuelType(FuelTypeEnum $fuelType): self
-   {
-       $this->fuelType = $fuelType->value;
+    // Setter pour fuelType avec enum
+    public function setFuelType(FuelTypeEnum $fuelType): self
+    {
+        $this->fuelType = $fuelType->value;
 
-       return $this;
-   }
+        return $this;
+    }
 
-   // Getter pour gearboxType avec enum
-   public function getGearboxType(): ?GearboxTypeEnum
-   {
-       return $this->gearboxType ? GearboxTypeEnum::from($this->gearboxType) : null;
-   }
+    // Getter pour gearboxType avec enum
+    public function getGearboxType(): ?GearboxTypeEnum
+    {
+        return $this->gearboxType ? GearboxTypeEnum::from($this->gearboxType) : null;
+    }
 
-   // Setter pour gearboxType avec enum
-   public function setGearboxType(GearboxTypeEnum $gearboxType): self
-   {
-       $this->gearboxType = $gearboxType->value;
+    // Setter pour gearboxType avec enum
+    public function setGearboxType(GearboxTypeEnum $gearboxType): self
+    {
+        $this->gearboxType = $gearboxType->value;
 
-       return $this;
-   }
+        return $this;
+    }
 
     // Getter pour doors (nombre de portes)
     public function getDoors(): ?int
@@ -302,6 +348,18 @@ class Vehicle
     public function setCity(string $city): self
     {
         $this->city = $city;
+
+        return $this;
+    }
+
+    public function getStatus(): ?VehicleStatusEnum
+    {
+        return $this->status ? VehicleStatusEnum::from($this->status) : null;
+    }
+
+    public function setStatus(VehicleStatusEnum $status): self
+    {
+        $this->status = $status->value;
 
         return $this;
     }

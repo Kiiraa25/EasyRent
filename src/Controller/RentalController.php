@@ -40,10 +40,7 @@ class RentalController extends AbstractController
             throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
         }
 
-        //  $rentals = $rentalRepository->findBy([
-        //     'renter' => $user
-        //  ]);
-
+        //status utilisés lors d'une location
         $rentalStatuses = [
             RentalStatusEnum::VALIDEE->value,
             RentalStatusEnum::EN_COURS->value,
@@ -51,8 +48,10 @@ class RentalController extends AbstractController
             RentalStatusEnum::ANNULEE->value,
         ];
 
+
         $rentals = $rentalRepository->createQueryBuilder('r')
-            ->where('r.renter = :user')
+            ->join('r.vehicle', 'v')
+            ->where('r.renter = :user OR v.owner = :user')
             ->andWhere('r.status IN (:statuses)')
             ->setParameter('user', $user)
             ->setParameter('statuses', $rentalStatuses)
@@ -64,7 +63,7 @@ class RentalController extends AbstractController
         ]);
     }
 
-    // SHOW DEMANDES DE LOCATIONS DE L'UTILISATEUR 
+    // SHOW DEMANDES DE LOCATIONS DE L'UTILISATEUR onwer ou renter
     #[Route('/user/rental_requests', name: 'app_user_rental_requests', methods: ['GET'])]
     public function userRentalRequests(RentalRepository $rentalRepository): Response
     {
@@ -84,7 +83,8 @@ class RentalController extends AbstractController
         ];
 
         $rentalRequests = $rentalRepository->createQueryBuilder('r')
-            ->where('r.renter = :user')
+            ->join('r.vehicle', 'v')
+            ->where('r.renter = :user OR v.owner = :user')
             ->andWhere('r.status IN (:statuses)')
             ->setParameter('user', $user)
             ->setParameter('statuses', $requestStatuses)
@@ -117,6 +117,7 @@ class RentalController extends AbstractController
             throw $this->createNotFoundException('Véhicule non trouvé.');
         }
 
+
         // Créer la nouvelle réservation
         $rental = new Rental();
         $rental->setVehicle($vehicle);  // Associer le véhicule à la réservation
@@ -128,7 +129,30 @@ class RentalController extends AbstractController
             $startDate = $rental->getStartDate();
             $endDate = $rental->getEndDate();
 
+            $today = new \DateTimeImmutable();
+
             if ($startDate && $endDate) {
+
+                if ($startDate < $today || $endDate < $today || $endDate < $startDate) {
+                    $this->addFlash('error', 'Les dates saisies ne sont pas valides');
+                    return $this->redirectToRoute('app_rental_new', ['vehicle_id' => $vehicleId]);
+                }
+
+                // recupérer les locations existantes pour ce véhicule pour vérifier sa disponibilité
+                $existingRentals = $vehicle->getRentals()
+                    ->filter(function ($rental) use ($startDate, $endDate) {
+                        return $rental->getStatus() !== RentalStatusEnum::ANNULEE &&
+                            $startDate <= $rental->getEndDate() &&
+                            $endDate >= $rental->getStartDate();
+                    });
+
+                if (!$existingRentals->isEmpty()) {
+                    $this->addFlash('error', 'Ce véhicule n\'est pas disponible pour ces dates.');
+                    return $this->redirectToRoute('app_rental_new', ['vehicle_id' => $vehicleId]);
+                }
+
+
+
                 $diff = $startDate->diff($endDate);
                 $days = $diff->days;
 
@@ -153,8 +177,9 @@ class RentalController extends AbstractController
 
             $entityManager->persist($rental);
             $entityManager->flush();
+            $this->addFlash('success', 'Votre demande de location a été créée avec succès !');
 
-            return $this->redirectToRoute('app_rental_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_rental_requests', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('rental/new.html.twig', [
