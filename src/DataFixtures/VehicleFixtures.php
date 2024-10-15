@@ -16,7 +16,7 @@ use App\Enum\VehicleStatusEnum;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Faker\Factory;
 
-class VehicleFixtures extends Fixture implements DependentFixtureInterface
+class VehicleFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
@@ -105,10 +105,5 @@ class VehicleFixtures extends Fixture implements DependentFixtureInterface
         $manager->flush();
     }
 
-    public function getDependencies(): array
-    {
-        return [
-            UserFixtures::class
-        ];
-    }
+    
 }
