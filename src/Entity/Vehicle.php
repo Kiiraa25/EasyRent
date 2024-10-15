@@ -27,7 +27,7 @@ class Vehicle
     #[ORM\JoinColumn(nullable: false)]
     private ?RegistrationCertificate $RegistrationCertificate = null;
 
-    #[ORM\ManyToOne(targetEntity: Model::class, cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(targetEntity: Model::class, cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Model $model = null;
 
