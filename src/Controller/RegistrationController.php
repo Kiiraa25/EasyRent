@@ -47,7 +47,6 @@ class RegistrationController extends AbstractController
 
 
             $user->setActive(true);
-            $user->setRoles([RoleEnum::USER]);
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,

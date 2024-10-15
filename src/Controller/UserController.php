@@ -17,12 +17,14 @@ use App\Form\ChangePasswordType;
 use App\Form\DeleteAccountType;
 
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class UserController extends AbstractController
 {
 
   //UPDATE EMAIL & PASSWORD // DELETE USER
   #[Route('/user/edit', name: 'app_user_edit')]
+  #[IsGranted('ROLE_USER')]
     public function edit(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager, TokenStorageInterface $tokenStorage): Response
     {
         /** @var User $user */
@@ -80,6 +82,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/user/edit-email', name: 'app_user_edit_email')]
+    #[IsGranted('ROLE_USER')]
     public function editEmail(Request $request, EntityManagerInterface $entityManager): Response
     {
         /** @var User $user */
@@ -104,6 +107,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/user/edit-password', name: 'app_user_edit_password')]
+    #[IsGranted('ROLE_USER')]
     public function editPassword(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager): Response
     {
         /** @var User $user */
@@ -130,6 +134,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/user/delete-account', name: 'app_user_delete_account')]
+    #[IsGranted('ROLE_USER')]
     public function deleteAccount(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager, TokenStorageInterface $tokenStorage): Response
     {
         /** @var User $user */

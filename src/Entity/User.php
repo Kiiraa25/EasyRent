@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
-class User implements UserInterface, PasswordAuthenticatedUserInterface, Serializable
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -110,21 +110,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Seriali
     }
 
 
-    public function serialize()
+    // public function serialize()
+    // {
+    //     return serialize([
+    //         $this->id,
+    //         $this->email,
+    //         $this->password,
+    //     ]);
+    // }
+
+    // public function unserialize(string $serialized)
+    // {
+    //     list (
+    //         $this->id,
+    //         $this->email,
+    //         $this->password,
+    //     ) = unserialize($serialized, ['allowed_classes' => false]);
+    // }
+
+    public function __serialize(): array
     {
-        return serialize([
-            $this->id,
-            $this->email,
-            $this->password,
-        ]);
+        return [
+            'id' => $this->id,
+            'email' => $this->email,
+            'password' => $this->password,
+        ];
     }
 
-    public function unserialize(string $serialized)
+    // Nouvelle méthode de désérialisation
+    public function __unserialize(array $data): void
     {
-        list (
-            $this->id,
-            $this->email,
-            $this->password,
-        ) = unserialize($serialized, ['allowed_classes' => false]);
+        $this->id = $data['id'];
+        $this->email = $data['email'];
+        $this->password = $data['password'];
     }
 }

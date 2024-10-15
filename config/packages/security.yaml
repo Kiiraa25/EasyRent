@@ -22,8 +22,15 @@ security:
                 enable_csrf: true
             logout:
                 path: app_logout
+                invalidate_session: false
                 # where to redirect after logout
                 # target: app_any_route
+            # remember_me:
+            #     secret: '%kernel.secret%'
+            #     lifetime: 604800  # 1 semaine (en secondes)
+            #     path: /
+            #     always_remember_me: true
+
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -35,7 +42,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/profile, roles: ROLE_USER }
 
 when@test:
     security:

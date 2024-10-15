@@ -49,10 +49,10 @@ class Rental
     #[ORM\Column]
     private ?int $mileageLimit = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: 'text', nullable: true)]
     private ?string $cancellationReason = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $cancelledBy = null;
 
     public function __construct()
@@ -205,9 +205,9 @@ class Rental
         return $this->cancelledBy ? CancelledByEnum::from($this->cancelledBy) : null;
     }
 
-    public function setCancelledBy(?CancelledByEnum $cancelledBy): static
+    public function setCancelledBy(?CancelledByEnum $cancelledBy): self
     {
-        $this->cancelledBy = $cancelledBy?->value;
+        $this->cancelledBy = $cancelledBy->value;
 
         return $this;
     }

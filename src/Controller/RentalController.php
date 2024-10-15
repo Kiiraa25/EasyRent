@@ -4,8 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Rental;
 use App\Enum\RentalStatusEnum;
+use App\Enum\CancelledByEnum;
 use App\Form\RentalType;
+use App\Entity\User;
 use App\Form\EditRentalType;
+use App\Form\CancelRentalType;
 use App\Repository\RentalRepository;
 use App\Repository\VehicleRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\SecurityBundle\Security;
-
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class RentalController extends AbstractController
 {
@@ -29,6 +32,7 @@ class RentalController extends AbstractController
 
     // SHOW LOCATIONS DE L'UTILISATEUR
     #[Route('/user/rentals', name: 'app_user_rentals', methods: ['GET'])]
+    #[IsGranted('ROLE_USER')]
     public function userRentals(RentalRepository $rentalRepository): Response
     {
 
@@ -65,6 +69,7 @@ class RentalController extends AbstractController
 
     // SHOW DEMANDES DE LOCATIONS DE L'UTILISATEUR onwer ou renter
     #[Route('/user/rental_requests', name: 'app_user_rental_requests', methods: ['GET'])]
+    #[IsGranted('ROLE_USER')]
     public function userRentalRequests(RentalRepository $rentalRepository): Response
     {
 
@@ -98,6 +103,7 @@ class RentalController extends AbstractController
 
     // CREATE DEMANDE DE LOCATION
     #[Route('/rental/new', name: 'app_rental_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_USER')]
     public function new(Request $request, VehicleRepository $vehicleRepository, EntityManagerInterface $entityManager, Security $security): Response
     {
 
@@ -115,6 +121,10 @@ class RentalController extends AbstractController
 
         if (!$vehicle) {
             throw $this->createNotFoundException('Véhicule non trouvé.');
+        }
+
+        if ($vehicle->getOwner() === $user) {
+            throw $this->createNotFoundException('Vous ne pouvez pas louer votre propre véhicule.');
         }
 
 
@@ -190,6 +200,7 @@ class RentalController extends AbstractController
 
     // SHOW LOCATION/DEMANDE DE LOCATION
     #[Route('/rental/{id}', name: 'app_rental_show', methods: ['GET'])]
+    #[IsGranted('ROLE_USER')]
     public function show(Rental $rental): Response
     {
         return $this->render('rental/show.html.twig', [
@@ -199,6 +210,7 @@ class RentalController extends AbstractController
 
     // EDIT LOCATION/DEMANDE DE LOCATION
     #[Route('rental/{id}/edit', name: 'app_rental_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_USER')]
     public function edit(Request $request, Rental $rental, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(EditRentalType::class, $rental);
@@ -255,14 +267,65 @@ class RentalController extends AbstractController
     }
 
 
-    #[Route('rental/{id}', name: 'app_rental_delete', methods: ['POST'])]
-    public function delete(Request $request, Rental $rental, EntityManagerInterface $entityManager): Response
+    // #[Route('rental/{id}', name: 'app_rental_delete', methods: ['POST'])]
+    // public function delete(Request $request, Rental $rental, EntityManagerInterface $entityManager): Response
+    // {
+    //     if ($this->isCsrfTokenValid('delete' . $rental->getId(), $request->getPayload()->getString('_token'))) {
+    //         $entityManager->remove($rental);
+    //         $entityManager->flush();
+    //     }
+
+    //     return $this->redirectToRoute('app_rental_index', [], Response::HTTP_SEE_OTHER);
+    // }
+
+    // DELETE --> mettre en statut "annulé"
+    #[Route('/rental/{id}/cancel', name: 'app_rental_cancel')]
+    #[IsGranted('ROLE_USER')]
+    public function Cancel(Request $request, Rental $rental, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $rental->getId(), $request->getPayload()->getString('_token'))) {
-            $entityManager->remove($rental);
-            $entityManager->flush();
+        $currentStatus = $rental->getStatus();
+        $currentUser = $this->getUser();
+        $vehicle = $rental->getVehicle();
+
+
+        if (!$currentUser instanceof User) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
         }
 
-        return $this->redirectToRoute('app_rental_index', [], Response::HTTP_SEE_OTHER);
+        if ($vehicle->getOwner() !== $currentUser && $rental->getRenter() !== $currentUser) {
+            throw $this->createAccessDeniedException('Vous n\'êtes pas autorisé à accéder à cette page.');
+        }
+
+
+        if (!$vehicle) {
+            throw $this->createNotFoundException('Véhicule non trouvé.');
+        }
+
+        $cancelForm = $this->createForm(CancelRentalType::class, $rental);
+        $cancelForm->handleRequest($request);
+
+        if ($cancelForm->isSubmitted() && $cancelForm->isValid()) {
+            if ($currentStatus === RentalStatusEnum::EN_ATTENTE_VALIDATION) {
+                $rental->setStatus(RentalStatusEnum::DEMANDE_ANNULEE);
+            } else if ($currentStatus === RentalStatusEnum::VALIDEE) {
+                $rental->setStatus(RentalStatusEnum::ANNULEE);
+            }
+            if ($currentUser === $vehicle->getOwner()) {
+                $rental->setCancelledBy(CancelledByEnum::OWNER);
+            } else if ($currentUser === $rental->getRenter()) {
+                $rental->setCancelledBy(CancelledByEnum::RENTER);
+            }
+
+            $rental->setUpdatedAt(new \DateTimeImmutable());
+
+            // $entityManager->persist($rental);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Véhicule supprimé avec succès.');
+            return $this->redirectToRoute('app_user_vehicles');
+        }
+        return $this->render('rental/cancelRental.html.twig', [
+            'cancelForm' => $cancelForm,
+        ]);
     }
 }

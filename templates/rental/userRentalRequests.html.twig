@@ -161,7 +161,7 @@
                 <div class="rental-actions">
                     {% if rental.renter == app.user %}
                         <!-- Boutons pour le locataire -->
-                        <button class="btn cancel-button">Annuler</button>
+                        <a href="{{ path('app_rental_cancel', { 'id': rental.id })}}" class="btn cancel-button"> Annuler</a>
                         <button class="btn modify-button">Modifier</button>
                     {% elseif rental.vehicle.owner == app.user %}
                         <!-- Boutons pour le propriétaire -->

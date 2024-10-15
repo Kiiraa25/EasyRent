@@ -15,10 +15,12 @@ use App\Form\EditVehicleType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\VehicleRepository;
 use App\Enum\VehicleStatusEnum;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class VehicleController extends AbstractController
 {
     #[Route('/vehicle/new', name: 'app_vehicle_new')]
+    #[IsGranted('ROLE_USER')]
     public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
         /** @var User $user */
@@ -37,6 +39,7 @@ class VehicleController extends AbstractController
             $vehicle->setCreatedAt(new \DateTimeImmutable());
             $vehicle->setUpdatedAt(new \DateTimeImmutable());
             $vehicle->setOwner($user);
+            $vehicle->setStatus(VehicleStatusEnum::WAITING_FOR_VALIDATION);
 
             $entityManager->persist($vehicle);
             $entityManager->flush();
@@ -68,6 +71,7 @@ class VehicleController extends AbstractController
 
     // SHOW ALL USER VEHICLES
     #[Route('/user/vehicles', name: 'app_user_vehicles')]
+    #[IsGranted('ROLE_USER')]
     public function showUserVehicles(VehicleRepository $vehicleRepository): Response
     {
         // Récupérer l'utilisateur connecté
@@ -82,7 +86,7 @@ class VehicleController extends AbstractController
         ->where('v.owner = :owner')
         ->andWhere('v.status IN (:statuses)')
         ->setParameter('owner', $user)
-        ->setParameter('statuses', [VehicleStatusEnum::ACTIVE, VehicleStatusEnum::SUSPENDED])
+        ->setParameter('statuses', [VehicleStatusEnum::WAITING_FOR_VALIDATION, VehicleStatusEnum::ACTIVE, VehicleStatusEnum::SUSPENDED])
         ->getQuery()
         ->getResult();
 
@@ -96,8 +100,11 @@ class VehicleController extends AbstractController
     public function showVehicles(VehicleRepository $vehicleRepository): Response
     {
 
-        // Utiliser le repository pour trouver les véhicules de l'utilisateur connecté
-        $vehicles = $vehicleRepository->findAll();
+        $vehicles = $vehicleRepository->createQueryBuilder('v')
+        ->where('v.status = :active')
+        ->setParameter('active', VehicleStatusEnum::ACTIVE)
+        ->getQuery()
+        ->getResult();
 
         return $this->render('vehicle/showAllVehicles.html.twig', [
             'vehicles' => $vehicles,
@@ -107,6 +114,7 @@ class VehicleController extends AbstractController
 
     // UPDATE
     #[Route('/vehicle/{id}/edit', name: 'app_vehicle_edit')]
+    #[IsGranted('ROLE_USER')]
     public function edit(Request $request, Vehicle $vehicle, EntityManagerInterface $entityManager): Response
     {
 
@@ -115,7 +123,8 @@ class VehicleController extends AbstractController
 
 
         if (!$owner instanceof User || $currentUser !== $owner) {
-            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+            throw $this->createAccessDeniedException('Vous n\'êtes pas autorisé à accéder à cette page.');
+
         }
 
         if (!$vehicle) {
@@ -141,8 +150,9 @@ class VehicleController extends AbstractController
         ]);
     }
 
-    // DELETE --> mettre en statut "supprimé"
-    #[Route('/delete/vehicle/{id}', name: 'app_vehicle_delete')]
+    // DELETE --> mettre en statut "supprimé" ou "archivé"
+    #[Route('/vehicle/{id}/delete', name: 'app_vehicle_delete')]
+    #[IsGranted('ROLE_USER')]
     public function delete(Request $request, Vehicle $vehicle, EntityManagerInterface $entityManager): Response
     {
         $owner = $vehicle->getOwner();

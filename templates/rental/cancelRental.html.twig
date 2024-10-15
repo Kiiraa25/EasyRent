@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Rental{% endblock %}
+
+{% block body %}
+    <h1>Annuler la location ?</h1>
+
+  {{ form_start(cancelForm) }}
+    {{ form_widget(cancelForm) }}
+    <button type="submit">Annuler</button>
+{{ form_end(cancelForm) }}
+
+
+{% endblock %}

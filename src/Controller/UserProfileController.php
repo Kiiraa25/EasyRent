@@ -16,13 +16,14 @@ use App\Entity\User;
 use App\Form\UserImageType;
 use App\Entity\UserProfile;
 use Symfony\Component\Security\Core\User\UserInterface;
-
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class UserProfileController extends AbstractController
 {
 
     //CREATE
     #[Route('dashboard/profile_verification_status', name: 'app_user_profile_verify')]
+    #[IsGranted('ROLE_USER')]
     public function verify(Request $request, EntityManagerInterface $entityManager): Response
     {
         /** @var User $user */
@@ -63,6 +64,7 @@ class UserProfileController extends AbstractController
 
     //UPDATE PROFILE PAGE
     #[Route('/user/profile/edit', name: 'app_user_profile_edit')]
+    #[IsGranted('ROLE_USER')]
     public function edit(Request $request, EntityManagerInterface $entityManager): Response
     {
 
@@ -71,6 +73,7 @@ class UserProfileController extends AbstractController
 
     //UPDATE PERSONAL INFORMATIONS
     #[Route('/user/profile/edit/personal', name: 'app_user_profile_edit_personal')]
+    #[IsGranted('ROLE_USER')]
     public function editPersonalInfo(Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
@@ -103,6 +106,7 @@ class UserProfileController extends AbstractController
 
     //UPDATE ADDRESS
     #[Route('/user/profile/edit/address', name: 'app_user_profile_edit_address')]
+    #[IsGranted('ROLE_USER')]
     public function editAddress(Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
@@ -135,6 +139,7 @@ class UserProfileController extends AbstractController
 
     //UPDATE DESCRIPTION
     #[Route('/user/profile/edit/description', name: 'app_user_profile_edit_description')]
+    #[IsGranted('ROLE_USER')]
     public function editDescription(Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
@@ -167,6 +172,7 @@ class UserProfileController extends AbstractController
 
     //UPDATE DRIVING LICENSE
     #[Route('/user/profile/edit/driving_license', name: 'app_user_profile_edit_driving_license')]
+    #[IsGranted('ROLE_USER')]
     public function editDrivingLicense(Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
@@ -215,6 +221,7 @@ class UserProfileController extends AbstractController
 
     // DELETE
     #[Route('/user/delete/{id}', name: 'app_user_delete')]
+    #[IsGranted('ROLE_USER')]
     public function deleteUser($id, EntityManagerInterface $entityManager): Response
     {
         $user = $entityManager->getRepository(User::class)->find($id);
