@@ -14,9 +14,9 @@
 				<span>
 					et n'importe quel moment</span>
 			</div>
-			<form action="">
+			<form action="{{ path('app_vehicles') }}" method="get">
 				<div class="adress-input">
-					<input type="text" placeholder="Adresse précise, gare, métro">
+					<input type="text" name="search" placeholder="Adresse précise, gare, métro" required>
 					<span class="input-adressIcon">
 						<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 							<path d="M19 10c0 5.091-5.924 11.073-6.175 11.325a1.165 1.165 0 0 1-1.65 0C10.922 21.073 5 15.091 5 10c0-3.86 3.14-7 7-7s7 3.14 7 7zm-7 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"></path>
@@ -25,12 +25,11 @@
 				</div>
 
 				<div class="date-input">
-					<input type="datetime" placeholder="Début">
-
-					<input type="datetime" placeholder="Fin">
+					<input type="date" name="startDate" placeholder="Début" required>
+					<input type="date" name="endDate" placeholder="Fin" required>
 				</div>
 
-				<a href="{{ path('app_vehicles')}}" ><button type="button" class="nav-button">Rechercher</button></a>
+				<button type="submit" class="nav-button">Rechercher</button>
 			</form>
 		</div>
 		<div class="hero-container"></div>

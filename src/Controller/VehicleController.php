@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Dto\SearchDto;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -101,13 +102,18 @@ class VehicleController extends AbstractController
     public function showVehicles(VehicleRepository $vehicleRepository, Request $request): Response
     {
 
-        $vehicles = $vehicleRepository->createQueryBuilder('v')
-            ->where('v.status = :active')
-            ->setParameter('active', VehicleStatusEnum::ACTIVE)
-            ->getQuery()
-            ->getResult();
+        $search = $request->query->get('search');
+        $startDateQuery = new \DateTime($request->query->get('startDate'));
+        $endDateQuery = new \DateTime($request->query->get('endDate'));
 
-        $searchForm = $this->createForm(SearchType::class);
+
+        $searchDto = new SearchDto();
+        $searchDto
+            ->setSearch($search)
+            ->setStartDate($startDateQuery)
+            ->setEndDate($endDateQuery);
+
+        $searchForm = $this->createForm(SearchType::class, $searchDto);
         $searchForm->handleRequest($request);
 
         $vehicleTotalPrices = [];
@@ -115,16 +121,10 @@ class VehicleController extends AbstractController
         $startDate = $searchForm->get('startDate')->getData();
         $endDate = $searchForm->get('endDate')->getData();
         $days = $startDate->diff($endDate)->days;
+
         if ($searchForm->isSubmitted() && $searchForm->isValid()) {
-            $vehicles = $vehicleRepository->search(
-                $searchForm->get('search')->getData(),
-                $startDate,
-                $endDate,
-                $searchForm->get('vehicleCategory')->getData(),
-                $searchForm->get('gearboxType')->getData(),
-                $searchForm->get('fuelType')->getData(),
-                $searchForm->get('totalPrice')->getData()
-            );
+
+            $vehicles = $vehicleRepository->search($searchDto);
 
             foreach ($vehicles as $vehicle) {
                 $vehicleTotalPrices[$vehicle->getId()] = $vehicle->getPricePerDay() * $days;

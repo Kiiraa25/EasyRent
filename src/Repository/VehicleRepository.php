@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Dto\SearchDto;
 use App\Entity\Vehicle;
 use App\Enum\FuelTypeEnum;
 use App\Enum\GearboxTypeEnum;
@@ -21,15 +22,11 @@ class VehicleRepository extends ServiceEntityRepository
         parent::__construct($registry, Vehicle::class);
     }
 
-    public function search(
-        ?string $search,
-        ?DateTime $startDate,
-        ?DateTime $endDate,
-        ?VehicleCategoryEnum $vehicleCategory,
-        ?GearboxTypeEnum $gearboxType,
-        ?FuelTypeEnum $fuelType,
-        ?int $totalPrice
-    ) {
+    public function search(SearchDto $search) {
+
+        $startDate = $search->getStartDate();
+        $endDate = $search->getEndDate();
+        
         $qb = $this->createQueryBuilder('v')
             ->leftJoin('v.rentals', 'r')
             ->andWhere('r.id IS NULL OR (r.status IN (:nonValidStatuses) OR r.endDate < :startDate OR r.startDate > :endDate)')
@@ -42,34 +39,34 @@ class VehicleRepository extends ServiceEntityRepository
                 RentalStatusEnum::EXPIREE->value,
                 RentalStatusEnum::DEMANDE_ANNULEE->value,
             ]);
-        if ($search) {
+        if ($search->getSearch()) {
             $qb->andWhere('v.address LIKE :search OR v.postalCode LIKE :search OR v.city LIKE :search')
-                ->setParameter('search', '%' . $search . '%');
+                ->setParameter('search', '%' . $search->getSearch() . '%');
         }
 
 
-        if ($gearboxType) {
+        if ($search->getGearboxType()) {
             $qb->andWhere('v.gearboxType LIKE :gearboxType')
-                ->setParameter('gearboxType', $gearboxType);
+                ->setParameter('gearboxType', $search->getGearboxType());
         }
 
-        if ($fuelType) {
+        if ($search->getFuelType()) {
             $qb->andWhere('v.fuelType LIKE :fuelType')
-                ->setParameter('fuelType', $fuelType);
+                ->setParameter('fuelType', $search->getFuelType());
         }
 
-        if ($vehicleCategory) {
+        if ($search->getVehicleCategory()) {
             $qb->join('v.model', 'm')
                 ->andWhere('m.vehicleCategory LIKE :vehicleCategory')
-                ->setParameter('vehicleCategory', $vehicleCategory);
+                ->setParameter('vehicleCategory', $search->getVehicleCategory());
         }
 
         $days = $startDate->diff($endDate)->days;
 
-        if ($totalPrice) {
+        if ($search->getTotalPrice()) {
             $qb->andWhere('v.pricePerDay * :days <= :totalPrice')
                 ->setParameter('days', $days)
-                ->setParameter('totalPrice', $totalPrice);
+                ->setParameter('totalPrice', $search->getTotalPrice());
         }
 
         return $qb->getQuery()->getResult();

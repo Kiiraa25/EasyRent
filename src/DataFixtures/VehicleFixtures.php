@@ -54,8 +54,8 @@ class VehicleFixtures extends Fixture
                 if (!$model) {
                     $model = new Model();
                     $model->setName($modelName)
-                          ->setBrand($brand)
-                          ->setVehicleCategory($faker->randomElement(VehicleCategoryEnum::cases()));
+                        ->setBrand($brand)
+                        ->setVehicleCategory($faker->randomElement(VehicleCategoryEnum::cases()));
                     $manager->persist($model);
                 }
 
@@ -74,6 +74,22 @@ class VehicleFixtures extends Fixture
 
 
                     $vehicle = new Vehicle();
+
+                    $bigCities = [
+                        'Paris' => 75000,
+                        'Lyon' => 69000,
+                        'Marseille' => 13000,
+                        'Toulouse' => 31000,
+                        'Nice' => 06000,
+                        'Nantes' => 44000,
+                        'Strasbourg' => 67000,
+                        'Montpellier' => 34000,
+                        'Bordeaux' => 33000,
+                        'Lille' => 59000,
+                    ];
+                    $city = $faker->randomElement(array_keys($bigCities));
+                    $postalCode = $bigCities[$city];
+
                     $vehicle->setOwner($faker->randomElement($users))
                         ->setRegistrationCertificate($registrationCertificate)
                         ->setModel($model)
@@ -90,10 +106,11 @@ class VehicleFixtures extends Fixture
                         ->setSeats($faker->numberBetween(2, 7))
                         ->setPricePerDay($faker->numberBetween(20, 150))
                         ->setAddress($faker->streetAddress)
-                        ->setPostalCode((int) str_replace(' ', '', $faker->postcode))
-                        ->setCity($faker->city)
+                        ->setCity($city)
+                        ->setPostalCode($postalCode)
                         ->setStatus($faker->randomElement(
-                            VehicleStatusEnum::cases()))
+                            VehicleStatusEnum::cases()
+                        ))
                     ;
 
                     $manager->persist($registrationCertificate);
@@ -104,6 +121,4 @@ class VehicleFixtures extends Fixture
 
         $manager->flush();
     }
-
-    
 }

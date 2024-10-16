@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Dto\SearchDto;
 use App\Enum\FuelTypeEnum;
 use App\Enum\GearboxTypeEnum;
 use App\Enum\VehicleCategoryEnum;
@@ -18,8 +19,7 @@ class SearchType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $today = new \DateTime();
-        $endDateDefault = (clone $today)->modify('+7 days');
+       
 
         $builder
             ->add('search', TextType::class, [
@@ -35,7 +35,6 @@ class SearchType extends AbstractType
                 'widget' => 'single_text',
                 'required' => false,
                 'label' => false,
-                'data' => $today,
                 'attr' => [
                     'class' => 'suscribe-input',
                     'placeholder' => 'Date de début'
@@ -45,7 +44,6 @@ class SearchType extends AbstractType
                 'widget' => 'single_text',
                 'required' => false,
                 'label' => false,
-                'data' => $endDateDefault,
                 'attr' => [
                     'class' => 'suscribe-input',
                     'placeholder' => 'Date de fin'
@@ -98,6 +96,7 @@ class SearchType extends AbstractType
     {
         $resolver->setDefaults([
             // Configure your form options here
+            'data_class' => SearchDto::class
         ]);
     }
 }
