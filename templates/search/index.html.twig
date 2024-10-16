@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SearchController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Hello {{ controller_name }}! ✅</h1>
+
+    This friendly message is coming from:
+    <ul>
+        <li>Your controller at <code>C:/Users/Kiiraa/Documents/Symfony/rentacar/src/Controller/SearchController.php</code></li>
+        <li>Your template at <code>C:/Users/Kiiraa/Documents/Symfony/rentacar/templates/search/index.html.twig</code></li>
+    </ul>
+
+    {{ form_start(searchForm) }}
+				<div class="form-group">
+					{{ form_label(searchForm.search) }}
+					{{ form_widget(searchForm.search, {'attr': {'class': 'search-input'}}) }}
+					{{ form_errors(searchForm.search) }}
+				</div>
+				{# <input type="text" placeholder="Adresse précise, gare, métro..." class="search-input"> #}
+				<div class="date-container">
+					<div class="form-group">
+						{{ form_label(searchForm.startDate) }}
+						{{ form_widget(searchForm.startDate, {'attr': {'class': 'search-input'}}) }}
+						{{ form_errors(searchForm.startDate) }}
+					</div>
+					<div class="form-group">
+						{{ form_label(searchForm.endDate) }}
+						{{ form_widget(searchForm.endDate, {'attr': {'class': 'search-input'}}) }}
+						{{ form_errors(searchForm.endDate) }}
+					</div>
+					{# <input type="date" placeholder="début" class="search-input">
+																																								<input type="date" placeholder="fin" class="search-input"> #}
+				</div>
+			</div>
+
+
+			<div class="filters">
+				<div class="form-group">
+					{{ form_label(searchForm.totalPrice) }}
+					{{ form_widget(searchForm.totalPrice, {'attr': {'class': 'filter-btn'}}) }}
+					{{ form_errors(searchForm.totalPrice) }}
+				</div>
+				<div class="form-group">
+					{{ form_label(searchForm.vehicleCategory) }}
+					{{ form_widget(searchForm.vehicleCategory, {'attr': {'class': 'filter-btn'}}) }}
+					{{ form_errors(searchForm.vehicleCategory) }}
+				</div>
+				<div class="form-group">
+					{{ form_label(searchForm.gearboxType) }}
+					{{ form_widget(searchForm.gearboxType, {'attr': {'class': 'filter-btn'}}) }}
+					{{ form_errors(searchForm.gearboxType) }}
+				</div>
+				<div class="form-group">
+					<button type="submit" class="filter-btn">Rechercher</button>
+				</div>
+
+				{# <button class="filter-btn">Prix total</button>
+																								<button class="filter-btn">Citadine</button>
+																								<button class="filter-btn">Type de véhicule</button>
+																								<button class="filter-btn">Plus de filtres</button> #}
+			</div>
+
+			{{ form_end(searchForm) }}
+</div>
+{% endblock %}

@@ -8,4 +8,5 @@ enum FuelTypeEnum: string
     case DIESEL = 'diesel';
     case ELECTRIQUE = 'électrique';
     case HYBRIDE = 'hybride';
+    
 }

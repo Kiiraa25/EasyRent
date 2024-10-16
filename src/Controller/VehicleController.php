@@ -15,6 +15,7 @@ use App\Form\EditVehicleType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\VehicleRepository;
 use App\Enum\VehicleStatusEnum;
+use App\Form\SearchType;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class VehicleController extends AbstractController
@@ -83,31 +84,58 @@ class VehicleController extends AbstractController
         }
 
         $vehicles = $vehicleRepository->createQueryBuilder('v')
-        ->where('v.owner = :owner')
-        ->andWhere('v.status IN (:statuses)')
-        ->setParameter('owner', $user)
-        ->setParameter('statuses', [VehicleStatusEnum::WAITING_FOR_VALIDATION, VehicleStatusEnum::ACTIVE, VehicleStatusEnum::SUSPENDED])
-        ->getQuery()
-        ->getResult();
+            ->where('v.owner = :owner')
+            ->andWhere('v.status IN (:statuses)')
+            ->setParameter('owner', $user)
+            ->setParameter('statuses', [VehicleStatusEnum::WAITING_FOR_VALIDATION, VehicleStatusEnum::ACTIVE, VehicleStatusEnum::SUSPENDED])
+            ->getQuery()
+            ->getResult();
 
-    return $this->render('vehicle/showUserVehicles.html.twig', [
-        'vehicles' => $vehicles
-    ]);
+        return $this->render('vehicle/showUserVehicles.html.twig', [
+            'vehicles' => $vehicles
+        ]);
     }
 
     // SHOW ALL VEHICLES
     #[Route('/vehicles', name: 'app_vehicles')]
-    public function showVehicles(VehicleRepository $vehicleRepository): Response
+    public function showVehicles(VehicleRepository $vehicleRepository, Request $request): Response
     {
 
         $vehicles = $vehicleRepository->createQueryBuilder('v')
-        ->where('v.status = :active')
-        ->setParameter('active', VehicleStatusEnum::ACTIVE)
-        ->getQuery()
-        ->getResult();
+            ->where('v.status = :active')
+            ->setParameter('active', VehicleStatusEnum::ACTIVE)
+            ->getQuery()
+            ->getResult();
+
+        $searchForm = $this->createForm(SearchType::class);
+        $searchForm->handleRequest($request);
+
+        $vehicleTotalPrices = [];
+
+        $startDate = $searchForm->get('startDate')->getData();
+        $endDate = $searchForm->get('endDate')->getData();
+        $days = $startDate->diff($endDate)->days;
+        if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+            $vehicles = $vehicleRepository->search(
+                $searchForm->get('search')->getData(),
+                $startDate,
+                $endDate,
+                $searchForm->get('vehicleCategory')->getData(),
+                $searchForm->get('gearboxType')->getData(),
+                $searchForm->get('fuelType')->getData(),
+                $searchForm->get('totalPrice')->getData()
+            );
+
+            foreach ($vehicles as $vehicle) {
+                $vehicleTotalPrices[$vehicle->getId()] = $vehicle->getPricePerDay() * $days;
+            }
+        }
 
         return $this->render('vehicle/showAllVehicles.html.twig', [
-            'vehicles' => $vehicles,
+            'searchForm' => $searchForm,
+            'vehicles' => $vehicles ?? [],
+            'vehicleTotalPrices' => $vehicleTotalPrices,
+            'days' => $days
         ]);
     }
 
@@ -124,7 +152,6 @@ class VehicleController extends AbstractController
 
         if (!$owner instanceof User || $currentUser !== $owner) {
             throw $this->createAccessDeniedException('Vous n\'êtes pas autorisé à accéder à cette page.');
-
         }
 
         if (!$vehicle) {
@@ -175,6 +202,5 @@ class VehicleController extends AbstractController
 
         $this->addFlash('success', 'Véhicule supprimé avec succès.');
         return $this->redirectToRoute('app_user_vehicles');
-
     }
 }

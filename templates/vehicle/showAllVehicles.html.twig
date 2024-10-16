@@ -74,7 +74,7 @@
 		/* Main Content Section */
 		.main-container {
 			width: 100%;
-            height: 610px;
+			height: 610px;
 			display: flex;
 			gap: 20px;
 			padding: 0 20px;
@@ -210,7 +210,6 @@
 		.vehicle-price:hover {
 			background-color: #d96d61;
 		}
-
 	</style>
 {% endblock %}
 
@@ -218,18 +217,64 @@
 	<main class="all-vehicles-container">
 		<div class="search-header">
 			<div class="search-header-input">
-				<input type="text" placeholder="Adresse précise, gare, métro..." class="search-input">
+
+				{{ form_start(searchForm) }}
+				<div class="form-group">
+					{{ form_label(searchForm.search) }}
+					{{ form_widget(searchForm.search, {'attr': {'class': 'search-input'}}) }}
+					{{ form_errors(searchForm.search) }}
+				</div>
+				{# <input type="text" placeholder="Adresse précise, gare, métro..." class="search-input"> #}
 				<div class="date-container">
-					<input type="date" placeholder="début" class="search-input">
-					<input type="date" placeholder="fin" class="search-input">
+					<div class="form-group">
+						{{ form_label(searchForm.startDate) }}
+						{{ form_widget(searchForm.startDate, {'attr': {'class': 'search-input'}}) }}
+						{{ form_errors(searchForm.startDate) }}
+					</div>
+					<div class="form-group">
+						{{ form_label(searchForm.endDate) }}
+						{{ form_widget(searchForm.endDate, {'attr': {'class': 'search-input'}}) }}
+						{{ form_errors(searchForm.endDate) }}
+					</div>
+					{# <input type="date" placeholder="début" class="search-input">
+																																													<input type="date" placeholder="fin" class="search-input"> #}
 				</div>
 			</div>
+
+
 			<div class="filters">
-				<button class="filter-btn">Prix total</button>
-				<button class="filter-btn">Citadine</button>
-				<button class="filter-btn">Type de véhicule</button>
-				<button class="filter-btn">Plus de filtres</button>
+				<div class="form-group">
+					{{ form_label(searchForm.totalPrice) }}
+					{{ form_widget(searchForm.totalPrice, {'attr': {'class': 'filter-btn'}}) }}
+					{{ form_errors(searchForm.totalPrice) }}
+				</div>
+				<div class="form-group">
+					{{ form_label(searchForm.vehicleCategory) }}
+					{{ form_widget(searchForm.vehicleCategory, {'attr': {'class': 'filter-btn'}}) }}
+					{{ form_errors(searchForm.vehicleCategory) }}
+				</div>
+				<div class="form-group">
+					{{ form_label(searchForm.gearboxType) }}
+					{{ form_widget(searchForm.gearboxType, {'attr': {'class': 'filter-btn'}}) }}
+					{{ form_errors(searchForm.gearboxType) }}
+				</div>
+
+				<div class="form-group">
+					{{ form_label(searchForm.fuelType) }}
+					{{ form_widget(searchForm.fuelType, {'attr': {'class': 'filter-btn'}}) }}
+					{{ form_errors(searchForm.fuelType) }}
+				</div>
+				<div class="form-group">
+					<button type="submit" class="filter-btn">Rechercher</button>
+				</div>
+
+				{# <button class="filter-btn">Prix total</button>
+																												<button class="filter-btn">Citadine</button>
+																												<button class="filter-btn">Type de véhicule</button>
+																												<button class="filter-btn">Plus de filtres</button> #}
 			</div>
+
+			{{ form_end(searchForm) }}
 		</div>
 
 		<div
@@ -240,9 +285,9 @@
 					<p class="no-vehicles">Il n'y a aucun véhicule disponible</p>
 				{% else %}
 					{% for vehicle in vehicles %}
-					
-						<a href="{{ path('app_vehicle_show', { 'id': vehicle.id }) }}"
-							class="vehicle-item">
+
+						<a
+							href="{{ path('app_vehicle_show', { 'id': vehicle.id }) }}" class="vehicle-item">
 							<!-- Placeholder for vehicle image -->
 							<div class="vehicle-image-placeholder"></div>
 
@@ -256,9 +301,9 @@
 								</div>
 								<div class="vehicle-details">
 									<span>4 places</span>
-									<span>5 portes</span>
-									<span>Manuelle</span>
-									<span>Diesel</span>
+									<span>{{vehicle.model.vehicleCategory.value}}</span>
+									<span>{{vehicle.gearBoxType.value}}</span>
+									<span>{{vehicle.fuelType.value}}</span>
 								</div>
 								<p>
 									<strong>{{ vehicle.city }}</strong>
@@ -266,9 +311,13 @@
 							</div>
 
 							<!-- Price per day -->
+							<div>
 							<div class="vehicle-price">
-								<span>{{ vehicle.pricePerDay }}€ / jour</span>
+								<span>{{ vehicleTotalPrices[vehicle.id] ?? 0}}€</span>
 							</div>
+							<span>pour {{days}} jours</span>
+							</div>
+							
 						</a>
 
 					{% endfor %}
