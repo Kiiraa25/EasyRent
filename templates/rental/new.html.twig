@@ -1,14 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Rental{% endblock %}
+{% block title %}Nouvelle Réservation{% endblock %}
 
 {% block body %}
-    <h1>Create new Rental</h1>
+    <h1>Créer une nouvelle réservation</h1>
 
    {{ form_start(form) }}
-    {{ form_widget(form) }}
+    {{ form_widget(form.startDate) }}
+    {{ form_widget(form.endDate) }}
     <button class="btn">{{ button_label|default('Réserver') }}</button>
 {{ form_end(form) }}
 
-    <a href="{{ path('app_vehicles') }}">back to list</a>
+    <a href="{{ path('app_vehicles') }}">Retour à la liste</a>
 {% endblock %}

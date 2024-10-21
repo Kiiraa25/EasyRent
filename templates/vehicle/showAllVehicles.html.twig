@@ -286,8 +286,9 @@
 				{% else %}
 					{% for vehicle in vehicles %}
 
+
 						<a
-							href="{{ path('app_vehicle_show', { 'id': vehicle.id }) }}" class="vehicle-item">
+							href="{{ path('app_vehicle_show', { 'id': vehicle.id, 'startDate': startDate|date('Y-m-d'), 'endDate': endDate|date('Y-m-d') }) }}" class="vehicle-item">
 							<!-- Placeholder for vehicle image -->
 							<div class="vehicle-image-placeholder"></div>
 

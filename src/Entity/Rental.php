@@ -25,10 +25,10 @@ class Rental
     #[ORM\JoinColumn(nullable: false)]
     private ?User $renter = null;
 
-    #[ORM\Column(type: 'date')]
+    #[ORM\Column(type: 'date', nullable: false)]
     private ?\DateTimeInterface $startDate = null;
 
-    #[ORM\Column(type: 'date')]
+    #[ORM\Column(type: 'date', nullable: false)]
     private ?\DateTimeInterface $endDate = null;
 
     #[ORM\Column(type: 'string', length: 40)]

@@ -16,8 +16,12 @@ use App\Form\EditVehicleType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\VehicleRepository;
 use App\Enum\VehicleStatusEnum;
+use App\Form\RentalType;
 use App\Form\SearchType;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Twig\Node\Expression\Binary\StartsWithBinary;
+
+use function Amp\Dns\query;
 
 class VehicleController extends AbstractController
 {
@@ -57,17 +61,21 @@ class VehicleController extends AbstractController
 
     // READ
     #[Route('/vehicle/{id}', name: 'app_vehicle_show')]
-    public function show(Vehicle $vehicle): Response
+    public function show(Vehicle $vehicle, Request $request): Response
     {
         if (!$vehicle) {
             throw $this->createNotFoundException('Véhicule non trouvé.');
         }
 
+        $startDate = $request->query->get('startDate');
+        $endDate = $request->query->get('endDate');
         $owner = $vehicle->getOwner();
 
         return $this->render('vehicle/showVehicle.html.twig', [
             'vehicle' => $vehicle,
             'owner' => $owner,
+            'startDate' => $startDate,
+            'endDate' => $endDate,
         ]);
     }
 
@@ -113,16 +121,26 @@ class VehicleController extends AbstractController
             ->setStartDate($startDateQuery)
             ->setEndDate($endDateQuery);
 
-        $searchForm = $this->createForm(SearchType::class, $searchDto);
+        $searchForm = $this->createForm(SearchType::class, $searchDto, [
+            'startDate' => $startDateQuery,
+            'endDate' => $endDateQuery
+        ]);
         $searchForm->handleRequest($request);
 
         $vehicleTotalPrices = [];
-
         $startDate = $searchForm->get('startDate')->getData();
         $endDate = $searchForm->get('endDate')->getData();
         $days = $startDate->diff($endDate)->days;
 
-        if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+        if (($searchForm->isSubmitted() && $searchForm->isValid()) ||
+            ($request->query->has('search') && $request->query->has('startDate') && $request->query->has('endDate'))
+        ) {
+
+            $today = new \DateTimeImmutable();
+            if ($startDate < $today || $endDate < $today || $endDate < $startDate) {
+                $this->addFlash('error', 'Les dates saisies ne sont pas valides');
+                return $this->redirectToRoute('app_vehicles');
+            }
 
             $vehicles = $vehicleRepository->search($searchDto);
 
@@ -135,7 +153,9 @@ class VehicleController extends AbstractController
             'searchForm' => $searchForm,
             'vehicles' => $vehicles ?? [],
             'vehicleTotalPrices' => $vehicleTotalPrices,
-            'days' => $days
+            'days' => $days,
+            'startDate' => $startDate,
+            'endDate' => $endDate,
         ]);
     }
 

@@ -29,7 +29,7 @@ class VehicleRepository extends ServiceEntityRepository
         
         $qb = $this->createQueryBuilder('v')
             ->leftJoin('v.rentals', 'r')
-            ->andWhere('r.id IS NULL OR (r.status IN (:nonValidStatuses) OR r.endDate < :startDate OR r.startDate > :endDate)')
+            ->andWhere('(r.status IN (:nonValidStatuses) OR r.endDate < :startDate OR r.startDate > :endDate)')
             ->setParameter('startDate', $startDate)
             ->setParameter('endDate', $endDate)
             ->setParameter('nonValidStatuses', [

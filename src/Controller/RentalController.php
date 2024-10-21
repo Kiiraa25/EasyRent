@@ -30,77 +30,6 @@ class RentalController extends AbstractController
     //     ]);
     // }
 
-    // SHOW LOCATIONS DE L'UTILISATEUR
-    #[Route('/user/rentals', name: 'app_user_rentals', methods: ['GET'])]
-    #[IsGranted('ROLE_USER')]
-    public function userRentals(RentalRepository $rentalRepository): Response
-    {
-
-        // Récupérer l'utilisateur connecté
-        $user = $this->getUser();
-
-        // Vérifier si l'utilisateur est bien connecté
-        if (!$user) {
-            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
-        }
-
-        //status utilisés lors d'une location
-        $rentalStatuses = [
-            RentalStatusEnum::VALIDEE->value,
-            RentalStatusEnum::EN_COURS->value,
-            RentalStatusEnum::TERMINEE->value,
-            RentalStatusEnum::ANNULEE->value,
-        ];
-
-
-        $rentals = $rentalRepository->createQueryBuilder('r')
-            ->join('r.vehicle', 'v')
-            ->where('r.renter = :user OR v.owner = :user')
-            ->andWhere('r.status IN (:statuses)')
-            ->setParameter('user', $user)
-            ->setParameter('statuses', $rentalStatuses)
-            ->getQuery()
-            ->getResult();
-
-        return $this->render('rental/userRentals.html.twig', [
-            'rentals' => $rentals
-        ]);
-    }
-
-    // SHOW DEMANDES DE LOCATIONS DE L'UTILISATEUR onwer ou renter
-    #[Route('/user/rental_requests', name: 'app_user_rental_requests', methods: ['GET'])]
-    #[IsGranted('ROLE_USER')]
-    public function userRentalRequests(RentalRepository $rentalRepository): Response
-    {
-
-        $user = $this->getUser();
-
-        // Vérifier si l'utilisateur est bien connecté
-        if (!$user) {
-            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
-        }
-
-        $requestStatuses = [
-            RentalStatusEnum::EN_ATTENTE_VALIDATION->value,
-            RentalStatusEnum::REFUSEE->value,
-            RentalStatusEnum::EXPIREE->value,
-            RentalStatusEnum::DEMANDE_ANNULEE->value,
-        ];
-
-        $rentalRequests = $rentalRepository->createQueryBuilder('r')
-            ->join('r.vehicle', 'v')
-            ->where('r.renter = :user OR v.owner = :user')
-            ->andWhere('r.status IN (:statuses)')
-            ->setParameter('user', $user)
-            ->setParameter('statuses', $requestStatuses)
-            ->getQuery()
-            ->getResult();
-
-        return $this->render('rental/userRentalRequests.html.twig', [
-            'rentalRequests' => $rentalRequests
-        ]);
-    }
-
     // CREATE DEMANDE DE LOCATION
     #[Route('/rental/new', name: 'app_rental_new', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
@@ -132,13 +61,17 @@ class RentalController extends AbstractController
         $rental = new Rental();
         $rental->setVehicle($vehicle);  // Associer le véhicule à la réservation
 
-        $form = $this->createForm(RentalType::class, $rental);
+        $startDate = new \DateTime($request->query->get('startDate'));
+        $endDate = new \DateTime($request->query->get('endDate'));
+
+        $form = $this->createForm(RentalType::class, $rental, [
+            'startDate' => $startDate,
+            'endDate' => $endDate
+        ]);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $startDate = $rental->getStartDate();
-            $endDate = $rental->getEndDate();
-
             $today = new \DateTimeImmutable();
 
             if ($startDate && $endDate) {
@@ -178,12 +111,15 @@ class RentalController extends AbstractController
 
                 // Mettre à jour le champ totalPrice
                 $rental->setTotalPrice($totalPrice);
+
                 $rental->setMileageLimit($mileageLimit);
                 $rental->setRenter($user);
                 $rental->setStatus(RentalStatusEnum::EN_ATTENTE_VALIDATION);
                 $rental->setCreatedAt(new \DateTimeImmutable());
                 $rental->setUpdatedAt(new \DateTimeImmutable());
             }
+
+
 
             $entityManager->persist($rental);
             $entityManager->flush();
@@ -195,10 +131,84 @@ class RentalController extends AbstractController
         return $this->render('rental/new.html.twig', [
             'rental' => $rental,
             'form' => $form,
+            'startDate' => $startDate,
+            'endDate' => $endDate
         ]);
     }
 
-    // SHOW LOCATION/DEMANDE DE LOCATION
+    // READ LOCATIONS DE L'UTILISATEUR
+    #[Route('/user/rentals', name: 'app_user_rentals', methods: ['GET'])]
+    #[IsGranted('ROLE_USER')]
+    public function userRentals(RentalRepository $rentalRepository): Response
+    {
+
+        // Récupérer l'utilisateur connecté
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur est bien connecté
+        if (!$user) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
+
+        //status utilisés lors d'une location
+        $rentalStatuses = [
+            RentalStatusEnum::VALIDEE->value,
+            RentalStatusEnum::EN_COURS->value,
+            RentalStatusEnum::TERMINEE->value,
+            RentalStatusEnum::ANNULEE->value,
+        ];
+
+
+        $rentals = $rentalRepository->createQueryBuilder('r')
+            ->join('r.vehicle', 'v')
+            ->where('r.renter = :user OR v.owner = :user')
+            ->andWhere('r.status IN (:statuses)')
+            ->setParameter('user', $user)
+            ->setParameter('statuses', $rentalStatuses)
+            ->getQuery()
+            ->getResult();
+
+        return $this->render('rental/userRentals.html.twig', [
+            'rentals' => $rentals
+        ]);
+    }
+
+    // READ DEMANDES DE LOCATIONS DE L'UTILISATEUR onwer ou renter
+    #[Route('/user/rental_requests', name: 'app_user_rental_requests', methods: ['GET'])]
+    #[IsGranted('ROLE_USER')]
+    public function userRentalRequests(RentalRepository $rentalRepository): Response
+    {
+
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur est bien connecté
+        if (!$user) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
+
+        $requestStatuses = [
+            RentalStatusEnum::EN_ATTENTE_VALIDATION->value,
+            RentalStatusEnum::REFUSEE->value,
+            RentalStatusEnum::EXPIREE->value,
+            RentalStatusEnum::DEMANDE_ANNULEE->value,
+        ];
+
+        $rentalRequests = $rentalRepository->createQueryBuilder('r')
+            ->join('r.vehicle', 'v')
+            ->where('r.renter = :user OR v.owner = :user')
+            ->andWhere('r.status IN (:statuses)')
+            ->setParameter('user', $user)
+            ->setParameter('statuses', $requestStatuses)
+            ->getQuery()
+            ->getResult();
+
+        return $this->render('rental/userRentalRequests.html.twig', [
+            'rentalRequests' => $rentalRequests
+        ]);
+    }
+
+
+    // READ LOCATION/DEMANDE DE LOCATION
     #[Route('/rental/{id}', name: 'app_rental_show', methods: ['GET'])]
     #[IsGranted('ROLE_USER')]
     public function show(Rental $rental): Response
@@ -208,11 +218,23 @@ class RentalController extends AbstractController
         ]);
     }
 
-    // EDIT LOCATION/DEMANDE DE LOCATION
+    // UPDATE LOCATION/DEMANDE DE LOCATION
     #[Route('rental/{id}/edit', name: 'app_rental_edit', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
     public function edit(Request $request, Rental $rental, EntityManagerInterface $entityManager): Response
     {
+
+        $user = $this->getUser();
+        $renter = $rental->getRenter();
+
+        if (!$renter instanceof User || $user !== $renter) {
+            throw $this->createAccessDeniedException('Vous n\'êtes pas autorisé à accéder à cette page.');
+        }
+
+        if (!$rental) {
+            throw $this->createNotFoundException('Location non trouvé.');
+        }
+
         $form = $this->createForm(EditRentalType::class, $rental);
         $form->handleRequest($request);
 
@@ -266,17 +288,67 @@ class RentalController extends AbstractController
         ]);
     }
 
+    // UPDATE ACCEPTER UNE DEMANDE DE LOCATION EN TANT QUE OWNER
+    #[Route('rental/{id}/accept', name: 'app_rental_accept', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_USER')]
+    public function accept(Request $request, Rental $rental, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+        $owner = $rental->getVehicle()->getOwner();
 
-    // #[Route('rental/{id}', name: 'app_rental_delete', methods: ['POST'])]
-    // public function delete(Request $request, Rental $rental, EntityManagerInterface $entityManager): Response
-    // {
-    //     if ($this->isCsrfTokenValid('delete' . $rental->getId(), $request->getPayload()->getString('_token'))) {
-    //         $entityManager->remove($rental);
-    //         $entityManager->flush();
-    //     }
+        if (!$owner instanceof User || $user !== $owner) {
+            throw $this->createAccessDeniedException('Vous n\'êtes pas autorisé à accéder à cette page.');
+        }
 
-    //     return $this->redirectToRoute('app_rental_index', [], Response::HTTP_SEE_OTHER);
-    // }
+        if (!$rental) {
+            throw $this->createNotFoundException('Demande de location non trouvée.');
+        }
+
+        // Vérifie que le statut est en attente avant d'accepter
+        if ($rental->getStatus()->value === RentalStatusEnum::EN_ATTENTE_VALIDATION->value) {
+            $rental->setStatus(RentalStatusEnum::VALIDEE);  // Accepte la demande
+            $rental->setUpdatedAt(new \DateTimeImmutable());
+
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Demande de location acceptée avec succès.');
+            return $this->redirectToRoute('app_user_rental_requests', [], Response::HTTP_SEE_OTHER);
+        } else {
+            $this->addFlash('error', 'Cette demande de location ne peut pas être acceptée.');
+            return $this->redirectToRoute('app_user_rental_requests');
+        }
+    }
+
+    // UPDATE ACCEPTER UNE DEMANDE DE LOCATION EN TANT QUE OWNER
+    #[Route('rental/{id}/refuse', name: 'app_rental_refuse', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_USER')]
+    public function refuse(Request $request, Rental $rental, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+        $owner = $rental->getVehicle()->getOwner();
+
+        if (!$owner instanceof User || $user !== $owner) {
+            throw $this->createAccessDeniedException('Vous n\'êtes pas autorisé à accéder à cette page.');
+        }
+
+        if (!$rental) {
+            throw $this->createNotFoundException('Demande de location non trouvée.');
+        }
+
+        // Vérifie que le statut est en attente avant d'accepter
+        if ($rental->getStatus()->value === RentalStatusEnum::EN_ATTENTE_VALIDATION->value) {
+            $rental->setStatus(RentalStatusEnum::REFUSEE);
+            $rental->setUpdatedAt(new \DateTimeImmutable());
+
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Demande de location acceptée avec succès.');
+            return $this->redirectToRoute('app_user_rental_requests', [], Response::HTTP_SEE_OTHER);
+        } else {
+            $this->addFlash('error', 'Cette demande de location ne peut pas être refusée.');
+            return $this->redirectToRoute('app_user_rental_requests');
+        }
+    }
 
     // DELETE --> mettre en statut "annulé"
     #[Route('/rental/{id}/cancel', name: 'app_rental_cancel')]

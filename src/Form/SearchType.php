@@ -32,17 +32,15 @@ class SearchType extends AbstractType
             ])
 
             ->add('startDate', DateType::class, [
-                'widget' => 'single_text',
-                'required' => false,
+                'required' => true,
                 'label' => false,
                 'attr' => [
                     'class' => 'suscribe-input',
                     'placeholder' => 'Date de début'
                 ]
             ])
-            ->add('endDate', DateType::class, [
-                'widget' => 'single_text',
-                'required' => false,
+            ->add('endDate', DateType::class,[
+                'required' => true,
                 'label' => false,
                 'attr' => [
                     'class' => 'suscribe-input',
@@ -96,7 +94,9 @@ class SearchType extends AbstractType
     {
         $resolver->setDefaults([
             // Configure your form options here
-            'data_class' => SearchDto::class
+            'data_class' => SearchDto::class,
+            'startDate' => null,
+            'endDate' => null,
         ]);
     }
 }
