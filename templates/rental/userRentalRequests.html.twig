@@ -136,6 +136,18 @@
 	<main class="rental-list">
 		<h1 class="text-center">Mes Demandes De Location</h1>
 
+ <!-- Formulaire de filtre -->
+    <form method="get" action="{{ path('app_user_rental_requests') }}">
+        <div class="form-group">
+            <label for="filter">Afficher les locations en tant que :</label>
+            <select name="filter" id="filter" class="filter-select">
+                <option value="renter" {% if filter == 'renter' %}selected{% endif %}>Locataire</option>
+                <option value="owner" {% if filter == 'owner' %}selected{% endif %}>Propriétaire</option>
+            </select>
+            <button type="submit" class="btn">Filtrer</button>
+        </div>
+    </form>
+
 		{% if rentalRequests is empty %}
 			<p>Vous n'avez aucune demande de location pour le moment</p>
 		{% else %}
@@ -187,12 +199,12 @@
 
 					<!-- Colonne 6 : Actions -->
 					<div class="rental-actions">
-						{% if rental.renter == app.user %}
+						{% if rental.renter == app.user and rental.status.value == "en_attente_validation"%}
 							<!-- Boutons pour le locataire -->
 							<a href="{{ path('app_rental_cancel', { 'id': rental.id }) }}" onclick="return confirm('Are you sure you want to cancel?')" class="btn cancel-button">
 								Annuler</a>
 							<a href="{{ path('app_rental_edit', { 'id': rental.id }) }}" onclick="return confirm('Are you sure you want to modify?')" class="btn modify-button">Modifier</a>
-						{% elseif rental.vehicle.owner == app.user %}
+						{% elseif rental.vehicle.owner == app.user and rental.status.value == "en_attente_validation"%}
 							<!-- Boutons pour le propriétaire -->
 							<a href="{{ path('app_rental_accept', { 'id': rental.id }) }}" onclick="return confirm('Are you sure you want to accept?')" class="btn accept-button">Accepter</a>
                             <a href="{{ path('app_rental_refuse', { 'id': rental.id }) }}" onclick="return confirm('Are you sure you want to refuse?')" class="btn refuse-button">Refuser</a>

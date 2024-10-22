@@ -139,16 +139,20 @@ class RentalController extends AbstractController
     // READ LOCATIONS DE L'UTILISATEUR
     #[Route('/user/rentals', name: 'app_user_rentals', methods: ['GET'])]
     #[IsGranted('ROLE_USER')]
-    public function userRentals(RentalRepository $rentalRepository): Response
+    public function userRentals(RentalRepository $rentalRepository, Request $request): Response
     {
 
         // Récupérer l'utilisateur connecté
         $user = $this->getUser();
 
+
         // Vérifier si l'utilisateur est bien connecté
         if (!$user) {
             throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
         }
+
+        $filter = $request->query->get('filter', 'renter');
+        $status = $request->query->get('status', 'a_venir');
 
         //status utilisés lors d'une location
         $rentalStatuses = [
@@ -158,28 +162,57 @@ class RentalController extends AbstractController
             RentalStatusEnum::ANNULEE->value,
         ];
 
+        $rentals = $rentalRepository->createQueryBuilder('r');
 
-        $rentals = $rentalRepository->createQueryBuilder('r')
-            ->join('r.vehicle', 'v')
-            ->where('r.renter = :user OR v.owner = :user')
-            ->andWhere('r.status IN (:statuses)')
-            ->setParameter('user', $user)
-            ->setParameter('statuses', $rentalStatuses)
-            ->getQuery()
-            ->getResult();
+        if ($filter === 'owner') {
+            $rentals->join('r.vehicle', 'v')
+                ->where('v.owner = :user')
+                ->setParameter('user', $user);
+        } else {
+            $rentals->where('r.renter = :user')
+                ->setParameter('user', $user);
+        }
+
+        // Appliquer le filtre de statut indépendamment
+        switch ($status) {
+            case 'a_venir':
+                $rentals->andWhere('r.status = :valide')
+                    ->setParameter('valide', RentalStatusEnum::VALIDEE->value);
+                break;
+            case 'en_cours':
+                $rentals->andWhere('r.status = :en_cours')
+                    ->setParameter('en_cours', RentalStatusEnum::EN_COURS->value);
+                break;
+            case 'termine':
+                $rentals->andWhere('(r.status = :termine OR r.status = :annule)')
+                    ->setParameter('termine', RentalStatusEnum::TERMINEE->value)
+                    ->setParameter('annule', RentalStatusEnum::ANNULEE->value);
+
+                break;
+            case 'all':
+                $rentals->andWhere('r.status IN (:statuses)')
+                    ->setParameter('statuses', $rentalStatuses);
+                break;
+        }
+
+        $rentals = $rentals->getQuery()->getResult();
+
 
         return $this->render('rental/userRentals.html.twig', [
-            'rentals' => $rentals
+            'rentals' => $rentals,
+            'filter' => $filter,
+            'status' => $status
         ]);
     }
 
     // READ DEMANDES DE LOCATIONS DE L'UTILISATEUR onwer ou renter
     #[Route('/user/rental_requests', name: 'app_user_rental_requests', methods: ['GET'])]
     #[IsGranted('ROLE_USER')]
-    public function userRentalRequests(RentalRepository $rentalRepository): Response
+    public function userRentalRequests(RentalRepository $rentalRepository, Request $request): Response
     {
 
         $user = $this->getUser();
+        $filter = $request->query->get('filter', 'renter');
 
         // Vérifier si l'utilisateur est bien connecté
         if (!$user) {
@@ -193,17 +226,28 @@ class RentalController extends AbstractController
             RentalStatusEnum::DEMANDE_ANNULEE->value,
         ];
 
-        $rentalRequests = $rentalRepository->createQueryBuilder('r')
-            ->join('r.vehicle', 'v')
-            ->where('r.renter = :user OR v.owner = :user')
-            ->andWhere('r.status IN (:statuses)')
-            ->setParameter('user', $user)
-            ->setParameter('statuses', $requestStatuses)
-            ->getQuery()
-            ->getResult();
+        if ($filter === 'owner') {
+            $rentalRequests = $rentalRepository->createQueryBuilder('r')
+                ->join('r.vehicle', 'v')
+                ->where('v.owner = :user')
+                ->andWhere('r.status IN (:statuses)')
+                ->setParameter('user', $user)
+                ->setParameter('statuses', $requestStatuses)
+                ->getQuery()
+                ->getResult();
+        } else {
+            $rentalRequests = $rentalRepository->createQueryBuilder('r')
+                ->where('r.renter = :user')
+                ->andWhere('r.status IN (:statuses)')
+                ->setParameter('user', $user)
+                ->setParameter('statuses', $requestStatuses)
+                ->getQuery()
+                ->getResult();
+        }
 
         return $this->render('rental/userRentalRequests.html.twig', [
-            'rentalRequests' => $rentalRequests
+            'rentalRequests' => $rentalRequests,
+            'filter' => $filter,
         ]);
     }
 
