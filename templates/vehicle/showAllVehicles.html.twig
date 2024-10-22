@@ -9,10 +9,12 @@
 		body {
 			font-family: Arial, sans-serif;
 			background-color: white;
+			max-height: 100vh;
 		}
 
 		.all-vehicles-container {
 			width: 100vw;
+			max-height: 100vh;
 			display: flex;
 			justify-content: center;
 		}
@@ -30,7 +32,8 @@
 		}
 		.search-header .search-header-input {
 			width: 1043px;
-			gap: 50px;
+			gap: 10px;
+			display: flex;
 		}
 
 		.search-header-input,
@@ -38,7 +41,6 @@
 			margin-left: 20px;
 		}
 		.search-header input {
-			width: 100%;
 			padding: 10px;
 			border: 1px solid #ddd;
 			border-radius: 5px;
@@ -87,7 +89,7 @@
 			flex-direction: column;
 			gap: 20px;
 			padding: 20px;
-			max-height: 600px;
+			height: 591px;
 			overflow-y: auto;
 		}
 
@@ -144,7 +146,7 @@
 		.blue-box {
 			flex: 3;
 			background-color: #007bff;
-			height: 616px;
+			height: 631px;
 			display: flex;
 			justify-content: center;
 			align-items: center;
@@ -153,7 +155,7 @@
 		}
 
 		/* Dark blue image placeholder */
-		.vehicle-image-placeholder {
+		.vehicle-image-placeholder img {
 			width: 180px;
 			height: 120px;
 			background-color: #282F4B; /* Dark blue color */
@@ -210,34 +212,38 @@
 		.vehicle-price:hover {
 			background-color: #d96d61;
 		}
+
+		.search{
+			width: 390px;
+		}
 	</style>
 {% endblock %}
 
 {% block body %}
 	<main class="all-vehicles-container">
 		<div class="search-header">
+			{{ form_start(searchForm, {'attr': {'id': 'searchForm'}}) }}
 			<div class="search-header-input">
 
-				{{ form_start(searchForm) }}
 				<div class="form-group">
 					{{ form_label(searchForm.search) }}
-					{{ form_widget(searchForm.search, {'attr': {'class': 'search-input'}}) }}
+					{{ form_widget(searchForm.search, {'attr': {'class': 'search-input search'}}) }}
 					{{ form_errors(searchForm.search) }}
 				</div>
 				{# <input type="text" placeholder="Adresse précise, gare, métro..." class="search-input"> #}
 				<div class="date-container">
 					<div class="form-group">
 						{{ form_label(searchForm.startDate) }}
-						{{ form_widget(searchForm.startDate, {'attr': {'class': 'search-input'}}) }}
+						{{ form_widget(searchForm.startDate, {'attr': {'class': 'search-input, filter-btn'}}) }}
 						{{ form_errors(searchForm.startDate) }}
 					</div>
 					<div class="form-group">
 						{{ form_label(searchForm.endDate) }}
-						{{ form_widget(searchForm.endDate, {'attr': {'class': 'search-input'}}) }}
+						{{ form_widget(searchForm.endDate, {'attr': {'class': 'search-input, filter-btn'}}) }}
 						{{ form_errors(searchForm.endDate) }}
 					</div>
 					{# <input type="date" placeholder="début" class="search-input">
-																																													<input type="date" placeholder="fin" class="search-input"> #}
+																																																												<input type="date" placeholder="fin" class="search-input"> #}
 				</div>
 			</div>
 
@@ -245,7 +251,7 @@
 			<div class="filters">
 				<div class="form-group">
 					{{ form_label(searchForm.totalPrice) }}
-					{{ form_widget(searchForm.totalPrice, {'attr': {'class': 'filter-btn'}}) }}
+					{{ form_widget(searchForm.totalPrice, {'attr': {'class': 'filter-btn search-input'}}) }}
 					{{ form_errors(searchForm.totalPrice) }}
 				</div>
 				<div class="form-group">
@@ -264,14 +270,11 @@
 					{{ form_widget(searchForm.fuelType, {'attr': {'class': 'filter-btn'}}) }}
 					{{ form_errors(searchForm.fuelType) }}
 				</div>
-				<div class="form-group">
-					<button type="submit" class="filter-btn">Rechercher</button>
-				</div>
 
 				{# <button class="filter-btn">Prix total</button>
-																												<button class="filter-btn">Citadine</button>
-																												<button class="filter-btn">Type de véhicule</button>
-																												<button class="filter-btn">Plus de filtres</button> #}
+																																								<button class="filter-btn">Citadine</button>
+																																								<button class="filter-btn">Type de véhicule</button>
+																																								<button class="filter-btn">Plus de filtres</button> #}
 			</div>
 
 			{{ form_end(searchForm) }}
@@ -290,7 +293,10 @@
 						<a
 							href="{{ path('app_vehicle_show', { 'id': vehicle.id, 'startDate': startDate|date('Y-m-d'), 'endDate': endDate|date('Y-m-d') }) }}" class="vehicle-item">
 							<!-- Placeholder for vehicle image -->
-							<div class="vehicle-image-placeholder"></div>
+							<div class="vehicle-image-placeholder">
+								<img src="{{ asset('/img/vehicles/' ~ vehicle.getPhotos[0].imagePath) }}" alt="Photo du véhicule">
+
+							</div>
 
 							<!-- Vehicle info section -->
 							<div class="vehicle-info">
@@ -313,12 +319,14 @@
 
 							<!-- Price per day -->
 							<div>
-							<div class="vehicle-price">
-								<span>{{ vehicleTotalPrices[vehicle.id] ?? 0}}€</span>
+								<div class="vehicle-price">
+									<span>{{ vehicleTotalPrices[vehicle.id] ?? 0}}€</span>
+								</div>
+								<span>pour
+									{{days}}
+									jours</span>
 							</div>
-							<span>pour {{days}} jours</span>
-							</div>
-							
+
 						</a>
 
 					{% endfor %}
@@ -331,6 +339,25 @@
 			</div>
 		</div>
 	</main>
+	<script>
+    // Fonction pour soumettre automatiquement le formulaire lorsque les champs sont modifiés
+    document.querySelectorAll('.filter-btn').forEach(function (element) {
+        element.addEventListener('change', function () {
+            document.getElementById('searchForm').submit();
+        });
+    });
+
+	// Fonction pour soumettre le formulaire quand la touche "Entrée" est pressée
+    document.querySelectorAll('.search-input').forEach(function (element) {
+        element.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') { // Si la touche "Entrée" est pressée
+                e.preventDefault(); // Empêche l'action par défaut
+                document.getElementById('searchForm').submit(); // Soumettre le formulaire
+            }
+        });
+    });
+</script>
+
 {% endblock %}
 
 {% block footer %}{% endblock %}

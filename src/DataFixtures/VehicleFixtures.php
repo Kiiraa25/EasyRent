@@ -9,12 +9,15 @@ use App\Entity\Model;
 use App\Entity\Brand;
 use App\Entity\RegistrationCertificate;
 use App\Entity\User;
+use App\Entity\VehiclePhoto;
 use App\Enum\FuelTypeEnum;
 use App\Enum\GearboxTypeEnum;
+use App\Enum\PhotoTypeEnum;
 use App\Enum\VehicleCategoryEnum;
 use App\Enum\VehicleStatusEnum;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Faker\Factory;
+use Symfony\Component\HttpFoundation\File\File;
 
 class VehicleFixtures extends Fixture
 {
@@ -38,6 +41,9 @@ class VehicleFixtures extends Fixture
         $brandRepo = $manager->getRepository(Brand::class);
         $modelRepo = $manager->getRepository(Model::class);
 
+        $vehicleImagesDirectory = __DIR__ . '/../../assets/img/vehicles';
+        $vehicleImages = array_diff(scandir($vehicleImagesDirectory), ['.', '..']); // Récupère toutes les images sauf "." et ".."
+
         foreach ($brandsAndModels as $brandName => $modelNames) {
 
             // Vérifier si la marque existe déjà dans la base de données
@@ -60,7 +66,7 @@ class VehicleFixtures extends Fixture
                 }
 
                 // Créer des véhicules associés au modèle et à la marque
-                for ($i = 0; $i < 2; $i++) { // Ajoute deux véhicules par modèle pour varier les données
+                for ($i = 0; $i < 3; $i++) { // Ajoute deux véhicules par modèle pour varier les données
 
                     // Création du certificat d'immatriculation
                     $registrationCertificate = new RegistrationCertificate;
@@ -112,6 +118,28 @@ class VehicleFixtures extends Fixture
                             VehicleStatusEnum::cases()
                         ))
                     ;
+
+                    for ($j = 0; $j < 5; $j++) {
+                        // Sélectionner une image aléatoire du dossier
+                        $randomImage = $faker->randomElement($vehicleImages);
+
+                        // Créer une nouvelle instance de VehiclePhoto
+                        $photo = new VehiclePhoto();
+                        $photo->setVehicle($vehicle);
+                        $photo->setImagePath($randomImage);
+                        $photo->setType(PhotoTypeEnum::VEHICLE); // Assigner le type de photo
+                        $photo->setCreatedAt(new \DateTimeImmutable());
+                        $photo->setUpdatedAt(new \DateTimeImmutable());
+
+                        // Définir le chemin du fichier
+                        $imageFile = new File($vehicleImagesDirectory . '/' . $randomImage);
+                        $photo->setImageFile($imageFile);
+
+                        // Note : VichUploaderBundle gère le déplacement du fichier et l'attribution du nom.
+                        // Ici, on peut laisser le champ imagePath vide, il sera rempli par VichUploader.
+
+                        $manager->persist($photo);
+                    }
 
                     $manager->persist($registrationCertificate);
                     $manager->persist($vehicle);

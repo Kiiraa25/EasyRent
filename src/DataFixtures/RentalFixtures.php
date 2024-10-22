@@ -24,6 +24,7 @@ class RentalFixtures extends Fixture implements DependentFixtureInterface
         $vehicles = $manager->getRepository(Vehicle::class)->findAll();
         $users = $manager->getRepository(User::class)->findAll();
 
+        
         foreach ($vehicles as $vehicle) {
             // Sélectionner un utilisateur aléatoire pour chaque location
             $renter = $faker->randomElement($users);

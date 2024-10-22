@@ -11,6 +11,7 @@ use App\Entity\User;
 use App\Entity\Vehicle;
 use App\Entity\Model;
 use App\Entity\RegistrationCertificate;
+use App\Enum\PhotoTypeEnum;
 use App\Form\VehicleType;
 use App\Form\EditVehicleType;
 use Symfony\Component\HttpFoundation\Request;
@@ -48,11 +49,21 @@ class VehicleController extends AbstractController
                     'form' => $vehicleForm,
                 ]);
             }
+
+            // Traitement de chaque photo soumise
+        foreach ($vehicle->getPhotos() as $photo) {
+            // Définir les propriétés supplémentaires qui ne sont pas dans le formulaire
+            $photo->setVehicle($vehicle);
+            $photo->setCreatedAt(new \DateTimeImmutable());
+            $photo->setUpdatedAt(new \DateTimeImmutable());
+            $photo->setType(PhotoTypeEnum::VEHICLE);
+        }
             $vehicle->setCreatedAt(new \DateTimeImmutable());
             $vehicle->setUpdatedAt(new \DateTimeImmutable());
             $vehicle->setOwner($user);
             $vehicle->setStatus(VehicleStatusEnum::WAITING_FOR_VALIDATION);
 
+            $entityManager->persist($photo);
             $entityManager->persist($vehicle);
             $entityManager->flush();
 
