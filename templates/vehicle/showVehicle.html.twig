@@ -115,9 +115,10 @@
 		<!-- Grille pour afficher les informations du véhicule en deux colonnes -->
 		<div class="show-vehicle-details-grid">
 			<p>
+			 <a href="{{ path('app_user_profile', { 'id': owner.id }) }}">
 				<strong>Propriétaire :</strong>
 				{{ owner.profile.firstName }}
-				{{ owner.profile.lastName }}</p>
+				{{ owner.profile.lastName }} </a></p>
 			<p>
 				<strong>Carburant :</strong>
 				{{ vehicle.fuelType.value }}</p>

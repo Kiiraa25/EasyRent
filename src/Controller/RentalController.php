@@ -423,7 +423,7 @@ class RentalController extends AbstractController
         if ($cancelForm->isSubmitted() && $cancelForm->isValid()) {
             if ($currentStatus === RentalStatusEnum::EN_ATTENTE_VALIDATION) {
                 $rental->setStatus(RentalStatusEnum::DEMANDE_ANNULEE);
-            } else if ($currentStatus === RentalStatusEnum::VALIDEE) {
+            } else if ($currentStatus === RentalStatusEnum::VALIDEE || $currentStatus === RentalStatusEnum::EN_COURS) {
                 $rental->setStatus(RentalStatusEnum::ANNULEE);
             }
             if ($currentUser === $vehicle->getOwner()) {
@@ -437,8 +437,8 @@ class RentalController extends AbstractController
             // $entityManager->persist($rental);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Véhicule supprimé avec succès.');
-            return $this->redirectToRoute('app_user_vehicles');
+            $this->addFlash('success', 'Location annulée avec succès.');
+            return $this->redirectToRoute('app_user_rentals');
         }
         return $this->render('rental/cancelRental.html.twig', [
             'cancelForm' => $cancelForm,

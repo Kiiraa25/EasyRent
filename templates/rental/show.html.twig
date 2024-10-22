@@ -1,128 +1,135 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Détails de la Location{% endblock %}
+{% block title %}Détails de la Location
+{% endblock %}
 
 {% block stylesheets %}
-    <style>
-        .rental-details {
-            max-width: 100vw;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
+	<style>
+		.rental-details {
+			max-width: 100vw;
+			padding: 20px;
+			background-color: #f9f9f9;
+			border-radius: 10px;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+		}
 
-        .rental-details h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #282F4B; /* Couleur sombre pour le titre */
-            text-align: center;
-        }
+		.rental-details h1 {
+			font-size: 24px;
+			margin-bottom: 20px;
+			color: #282F4B; /* Couleur sombre pour le titre */
+			text-align: center;
+		}
 
-        .rental-details table {
-            width: 40%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+		.rental-details table {
+			width: 40%;
+			border-collapse: collapse;
+			margin-bottom: 20px;
+			background-color: #fff;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		}
 
-        .rental-details th,
-        .rental-details td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #ddd;
-            text-align: left;
-            width: 50%;
-        }
+		.rental-details th,
+		.rental-details td {
+			padding: 12px 15px;
+			border-bottom: 1px solid #ddd;
+			text-align: left;
+			width: 50%;
+		}
 
-        .rental-details th {
-            background-color: #282F4B;
-            color: white;
-            font-weight: bold;
-        }
+		.rental-details th {
+			background-color: #282F4B;
+			color: white;
+			font-weight: bold;
+		}
 
-        .rental-details td {
-            background-color: #fdfdfd;
-            color: #333;
-        }
+		.rental-details td {
+			background-color: #fdfdfd;
+			color: #333;
+		}
 
-        .rental-details a,
-        .rental-details button {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #EB8072;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
+		.rental-details a,
+		.rental-details button {
+			display: inline-block;
+			margin: 0 10px;
+			padding: 10px 20px;
+			background-color: #EB8072;
+			color: white;
+			text-decoration: none;
+			border-radius: 5px;
+			font-weight: bold;
 			font-size: 16px;
-            transition: background-color 0.3s ease;
-            text-align: center;
-            border: none; /* Ajoute cette règle pour rendre le bouton delete similaire aux liens */
-            cursor: pointer;
-			 margin: 0 10px;
-        }
+			transition: background-color 0.3s ease;
+			text-align: center;
+			border: none; /* Ajoute cette règle pour rendre le bouton delete similaire aux liens */
+			cursor: pointer;
+		}
 
-        .rental-details a:hover,
-        .rental-details button:hover {
-            background-color: #d96d61;
-        }
+		.rental-details a:hover,
+		.rental-details button:hover {
+			background-color: #d96d61;
+		}
 
-        .rental-actions {
-            text-align: center;
-            margin-top: 20px;
-        }
+		.rental-actions {
+			text-align: center;
+			margin-top: 20px;
+		}
 
-        .rental-actions form {
-            display: inline-block;
-        }
-    </style>
+		.rental-actions form {
+			display: inline-block;
+		}
+	</style>
 {% endblock %}
 
 {% block body %}
-    <main class="rental-details">
-        <h1>Détails de la Location</h1>
+	<main class="rental-details">
+		<h1>Détails de la Location</h1>
 
-        <table>
-            <tbody>
-                <tr>
-                    <th>Véhicule</th>
-                    <td>{{ rental.vehicle.model.name }}</td>
-                </tr>
-                <tr>
-                    <th>Propriétaire</th>
-                    <td>{{ rental.vehicle.owner.profile.firstName}} {{ rental.vehicle.owner.profile.lastName}}</td>
-                </tr>
-                <tr>
-                    <th>Date de début</th>
-                    <td>{{ rental.startDate ? rental.startDate|date('Y-m-d') : '' }}</td>
-                </tr>
-                <tr>
-                    <th>Date de fin</th>
-                    <td>{{ rental.endDate ? rental.endDate|date('Y-m-d') : '' }}</td>
-                </tr>
-                <tr>
-                    <th>Prix de la location</th>
-                    <td>{{ rental.totalPrice }}€</td>
-                </tr>
-                <tr>
-                    <th>Km inclus</th>
-                    <td>{{ rental.mileageLimit }}km</td>
-                </tr>
-                <tr>
-                    <th>Prix par km supplémentaire</th>
-                    <td>{{ rental.vehicle.extraMileageRate }}€</td>
-                </tr>
-            </tbody>
-        </table>
+		<table>
+			<tbody>
+				<tr>
+					<th>Véhicule</th>
+					<td>{{ rental.vehicle.model.name }}</td>
+				</tr>
+				<tr>
+					<th>Propriétaire</th>
+					<td>{{ rental.vehicle.owner.profile.firstName}}
+						{{ rental.vehicle.owner.profile.lastName}}</td>
+				</tr>
+				<tr>
+					<th>Date de début</th>
+					<td>{{ rental.startDate ? rental.startDate|date('Y-m-d') : '' }}</td>
+				</tr>
+				<tr>
+					<th>Date de fin</th>
+					<td>{{ rental.endDate ? rental.endDate|date('Y-m-d') : '' }}</td>
+				</tr>
+				<tr>
+					<th>Prix de la location</th>
+					<td>{{ rental.totalPrice }}€</td>
+				</tr>
+				<tr>
+					<th>Km inclus</th>
+					<td>{{ rental.mileageLimit }}km</td>
+				</tr>
+				<tr>
+					<th>Prix par km supplémentaire</th>
+					<td>{{ rental.vehicle.extraMileageRate }}€</td>
+				</tr>
+			</tbody>
+		</table>
 
-        <div class="rental-actions">
-            <a href="{{ path('app_user_rentals') }}">Retour à la liste</a>
-            <a href="{{ path('app_rental_edit', {'id': rental.id}) }}">Modifier</a>
+		<div class="rental-actions">
+			<a href="{{ path('app_user_rentals') }}">Retour à la liste</a>
 
-            <!-- Bouton delete stylisé -->
-            {{ include('rental/_delete_form.html.twig') }}
-        </div>
-    </main>
+			{% if rental.renter == app.user %}
+				<a href="{{ path('app_rental_edit', { 'id': rental.id }) }}" class="btn modify-button">Modifier</a>
+				<a href="{{ path('app_rental_cancel', { 'id': rental.id }) }}" onclick="return confirm('Are you sure you want to cancel?')" class="btn cancel-button">Annuler</a>
+			{% elseif rental.vehicle.owner == app.user %}
+				<a href="{{ path('app_rental_cancel', { 'id': rental.id }) }}" onclick="return confirm('Are you sure you want to cancel?')" class="btn cancel-button">Annuler</a>
+			{% endif %}
+
+			<!-- Bouton delete stylisé -->
+			{{ include('rental/_delete_form.html.twig') }}
+		</div>
+	</main>
 {% endblock %}

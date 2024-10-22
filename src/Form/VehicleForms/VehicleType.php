@@ -14,9 +14,12 @@ use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use App\Entity\Vehicle;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Validator\Constraints\Count;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class VehicleType extends AbstractType
 {
@@ -62,6 +65,21 @@ class VehicleType extends AbstractType
                     'data-action'=>'address-input'
                 ]
             ])
+
+            ->add('photos', CollectionType::class, [
+                'entry_type' => VehiclePhotoType::class,  // Utilise le formulaire VehiclePhotoType pour chaque photo
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+                'label' => 'Photos du véhicule (5 minimum)',
+                'prototype' => true,
+                'constraints' => [
+                    new Count([
+                        'min' => 5,
+                        'minMessage' => 'Vous devez télécharger au moins {{ limit }} photos.',
+                    ]),
+                ],
+            ]);
         ;
     }
 

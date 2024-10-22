@@ -79,13 +79,43 @@ class Vehicle
     #[ORM\OneToMany(targetEntity: Rental::class, mappedBy: 'vehicle', cascade: ['persist', 'remove'])]
     private Collection $rentals;
 
+    #[ORM\OneToMany(mappedBy: 'vehicle', targetEntity: VehiclePhoto::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    private Collection $photos;
+
     public function __construct()
     {
         $this->rentals = new ArrayCollection();
+        $this->photos = new ArrayCollection();
         $this->createdAt = new \DateTimeImmutable();
         $this->updatedAt = new \DateTimeImmutable();
     }
-
+    
+    public function getPhotos(): Collection
+    {
+        return $this->photos;
+    }
+    
+    public function addPhoto(VehiclePhoto $photo): self
+    {
+        if (!$this->photos->contains($photo)) {
+            $this->photos[] = $photo;
+            $photo->setVehicle($this);
+        }
+    
+        return $this;
+    }
+    
+    public function removePhoto(VehiclePhoto $photo): self
+    {
+        if ($this->photos->removeElement($photo)) {
+            // Set the owning side to null (unless already changed)
+            if ($photo->getVehicle() === $this) {
+                $photo->setVehicle(null);
+            }
+        }
+    
+        return $this;
+    }
 
     public function getRentals(): Collection
     {

@@ -32,7 +32,7 @@ class VehicleCondition
     private ?string $condition = null;
 
     #[ORM\Column(type: 'string', length: 10)]
-    private ?string $type = null; // 'entry' or 'exit'
+    private ?string $type = null;
 
     #[ORM\Column(type: 'datetime')]
     private ?\DateTimeInterface $createdAt = null;

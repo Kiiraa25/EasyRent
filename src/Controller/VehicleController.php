@@ -42,6 +42,12 @@ class VehicleController extends AbstractController
         $vehicleForm->handleRequest($request);
 
         if ($vehicleForm->isSubmitted() && $vehicleForm->isValid()) {
+            if (count($vehicle->getPhotos()) < 5) {
+                $this->addFlash('error', 'Vous devez ajouter au moins 5 photos pour ce véhicule.');
+                return $this->render('vehicle/new.html.twig', [
+                    'form' => $vehicleForm,
+                ]);
+            }
             $vehicle->setCreatedAt(new \DateTimeImmutable());
             $vehicle->setUpdatedAt(new \DateTimeImmutable());
             $vehicle->setOwner($user);
@@ -63,6 +69,7 @@ class VehicleController extends AbstractController
     #[Route('/vehicle/{id}', name: 'app_vehicle_show')]
     public function show(Vehicle $vehicle, Request $request): Response
     {
+        
         if (!$vehicle) {
             throw $this->createNotFoundException('Véhicule non trouvé.');
         }
@@ -110,9 +117,18 @@ class VehicleController extends AbstractController
     public function showVehicles(VehicleRepository $vehicleRepository, Request $request): Response
     {
 
-        $search = $request->query->get('search');
-        $startDateQuery = new \DateTime($request->query->get('startDate'));
-        $endDateQuery = new \DateTime($request->query->get('endDate'));
+        $today = new \DateTime();
+        $todayString = $today->format('Y-m-d');
+
+        $endDate = (new \DateTime())->modify('+7 days');
+        $endDateString = $endDate->format('Y-m-d');
+
+        // Récupérer les paramètres GET ou utiliser les valeurs par défaut
+        $search = $request->query->get('search', 'paris');
+
+        // Récupérer les dates GET ou utiliser les dates actuelles par défaut (chaînes de caractères)
+        $startDateQuery = new \DateTime($request->query->get('startDate', $todayString)); 
+        $endDateQuery = new \DateTime($request->query->get('endDate', $endDateString));
 
 
         $searchDto = new SearchDto();

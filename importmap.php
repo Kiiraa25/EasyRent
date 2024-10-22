@@ -52,6 +52,10 @@ return [
         'path' => './assets/js/country-input.js',
         'entrypoint' => true,
     ],
+    'vehiclePhotoDynamicInput' => [
+        'path' => './assets/js/vehiclePhotoDynamicInput.js',
+        'entrypoint' => true,
+    ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],

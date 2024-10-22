@@ -170,20 +170,6 @@
     </div>
 </form>
 
-<!-- Formulaire de filtre de Statut -->
-{# <form method="get" action="{{ path('app_user_rentals') }}">
-    <div class="form-group">
-        <select name="status" id="status" class="filter-select">
-            <option value="all" {% if status == 'all' %} selected {% endif %}>Tous</option>
-            <option value="a_venir" {% if status == 'a_venir' %} selected {% endif %}>À venir</option>
-            <option value="en_cours" {% if status == 'en_cours' %} selected {% endif %}>En cours</option>
-            <option value="termine" {% if status == 'termine' %} selected {% endif %}>Terminé</option>
-            <option value="annule" {% if status == 'annule' %} selected {% endif %}>Annulé</option>
-        </select>
-        <input type="hidden" name="filter" value="{{ filter }}">
-        <button type="submit" class="btn">Filtrer</button>
-    </div>
-</form> #}
 <div class="tab-container">
     <div class="tabs">
         <a href="{{ path('app_user_rentals', { 'status': 'a_venir', 'filter': filter }) }}" class="tab {% if status == 'a_venir' %}active{% endif %}">
