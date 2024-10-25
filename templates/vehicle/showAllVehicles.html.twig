@@ -1,9 +1,21 @@
 {% extends 'base.html.twig' %}
 
+
+{% block javascripts %}
+	{% block importmap %}
+		{{ importmap(['app', 'vehicles-search-input']) }}
+	{% endblock %}
+
+	<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+{% endblock %}
+
+
 {% block title %}Mes véhicules
 {% endblock %}
 
 {% block stylesheets %}
+
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 	<style>
 		/* Global Style */
 		body {
@@ -27,8 +39,10 @@
 			width: 100vw;
 		}
 
-		.search-header div {
-			display: flex;
+		{
+			# .search-header div {
+				display: flex;
+			} #
 		}
 		.search-header .search-header-input {
 			width: 1043px;
@@ -45,6 +59,7 @@
 			border: 1px solid #ddd;
 			border-radius: 5px;
 			font-size: 16px;
+			display: flex;
 		}
 
 		.date-container {
@@ -213,7 +228,7 @@
 			background-color: #d96d61;
 		}
 
-		.search{
+		.search {
 			width: 390px;
 		}
 	</style>
@@ -225,10 +240,15 @@
 			{{ form_start(searchForm, {'attr': {'id': 'searchForm'}}) }}
 			<div class="search-header-input">
 
-				<div class="form-group">
+				<div class="form-group search-container">
 					{{ form_label(searchForm.search) }}
-					{{ form_widget(searchForm.search, {'attr': {'class': 'search-input search'}}) }}
+					{{ form_widget(searchForm.search, {'attr': {'class': 'search-input search', 'data-action': 'search-input'}}) }}
 					{{ form_errors(searchForm.search) }}
+					<div id="dropdownMenu" class="hidden">
+						<ul id="dropdownResults">
+							<li>Aucun résultat</li>
+						</ul>
+					</div>
 				</div>
 				{# <input type="text" placeholder="Adresse précise, gare, métro..." class="search-input"> #}
 				<div class="date-container">
@@ -243,7 +263,7 @@
 						{{ form_errors(searchForm.endDate) }}
 					</div>
 					{# <input type="date" placeholder="début" class="search-input">
-																																																												<input type="date" placeholder="fin" class="search-input"> #}
+																																																																											<input type="date" placeholder="fin" class="search-input"> #}
 				</div>
 			</div>
 
@@ -272,9 +292,9 @@
 				</div>
 
 				{# <button class="filter-btn">Prix total</button>
-																																								<button class="filter-btn">Citadine</button>
-																																								<button class="filter-btn">Type de véhicule</button>
-																																								<button class="filter-btn">Plus de filtres</button> #}
+																																																				<button class="filter-btn">Citadine</button>
+																																																				<button class="filter-btn">Type de véhicule</button>
+																																																				<button class="filter-btn">Plus de filtres</button> #}
 			</div>
 
 			{{ form_end(searchForm) }}
@@ -294,6 +314,7 @@
 							href="{{ path('app_vehicle_show', { 'id': vehicle.id, 'startDate': startDate|date('Y-m-d'), 'endDate': endDate|date('Y-m-d') }) }}" class="vehicle-item">
 							<!-- Placeholder for vehicle image -->
 							<div class="vehicle-image-placeholder">
+
 								<img src="{{ asset('/img/vehicles/' ~ vehicle.getPhotos[0].imagePath) }}" alt="Photo du véhicule">
 
 							</div>
@@ -334,29 +355,62 @@
 			</div>
 
 			<!-- Right-side: Blue Placeholder -->
-			<div class="blue-box">
+			<div class="blue-box" id="map">
 				<p>Placeholder for map or other content</p>
 			</div>
 		</div>
 	</main>
 	<script>
-    // Fonction pour soumettre automatiquement le formulaire lorsque les champs sont modifiés
-    document.querySelectorAll('.filter-btn').forEach(function (element) {
-        element.addEventListener('change', function () {
-            document.getElementById('searchForm').submit();
-        });
-    });
+		// Fonction pour soumettre automatiquement le formulaire lorsque les champs sont modifiés
+document.querySelectorAll('.filter-btn').forEach(function (element) {
+element.addEventListener('change', function () {
+document.getElementById('searchForm').submit();
+});
+});
 
-	// Fonction pour soumettre le formulaire quand la touche "Entrée" est pressée
-    document.querySelectorAll('.search-input').forEach(function (element) {
-        element.addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') { // Si la touche "Entrée" est pressée
-                e.preventDefault(); // Empêche l'action par défaut
-                document.getElementById('searchForm').submit(); // Soumettre le formulaire
-            }
-        });
-    });
-</script>
+// Fonction pour soumettre le formulaire quand la touche "Entrée" est pressée
+document.querySelectorAll('.search-input').forEach(function (element) {
+element.addEventListener('keypress', function (e) {
+if (e.key === 'Enter') { // Si la touche "Entrée" est pressée
+e.preventDefault(); // Empêche l'action par défaut
+document.getElementById('searchForm').submit(); // Soumettre le formulaire
+}
+});
+});
+
+let latitude = {{ latitude }};
+let longitude = {{ longitude }};
+
+// Initialiser la carte avec les coordonnées de la ville recherchée
+let map = L.map('map').setView([latitude, longitude], 13);
+
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+
+// Data for the markers (passed from the controller)
+let vehicleMarkers = {{ vehicleMarkers|json_encode|raw }};
+
+
+var coloredIcon = L.icon({
+    iconUrl: "{{ asset('img/icons/leaflet-icon-marker.png') }}", // Chemin vers l'image colorée de l'icône
+    iconAnchor: [12, 41],                   // Point d'ancrage
+    popupAnchor: [0, -41]                   // Position du popup par rapport à l'icône
+});
+
+// Loop through the vehicleMarkers and add them to the map
+vehicleMarkers.forEach(function(vehicle) {
+    let marker = L.marker([vehicle.latitude, vehicle.longitude], { icon: coloredIcon }).addTo(map);
+
+    // Add a popup for each marker with vehicle details
+    marker.bindPopup(`
+        <strong>${vehicle.model}</strong><br>
+        City: ${vehicle.city}<br>
+        Price per day: €${vehicle.pricePerDay}
+    `);
+});
+	</script>
 
 {% endblock %}
 

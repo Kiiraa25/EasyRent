@@ -3,6 +3,8 @@ let postcodeInput = document.querySelector('[data-action=postcode-input]');
 let addressInput = document.querySelector('[data-action=address-input]');
 let addressContainer = document.querySelector('.address-container');
 let noResult = document.createElement('li');
+
+let addressIdInput = document.querySelector('[data-action=address-id-input');
 noResult.className = "noResultCity";
 noResult.innerText = "Aucun résultat";
 

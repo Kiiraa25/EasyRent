@@ -15,9 +15,12 @@ use App\Entity\Vehicle;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Count;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
@@ -46,26 +49,42 @@ class VehicleType extends AbstractType
                 'class' => GearboxTypeEnum::class
             ])
 
-            ->add('mileage')
-            ->add('doors')
-            ->add('seats')
-            ->add('description')
-            ->add('color')
-            ->add('extraMileageRate')
+            ->add('mileage', IntegerType::class, [
+                'label' => 'Kilométrage',
+            ])
+            ->add('doors', IntegerType::class, [
+                'label' => 'Nombre de portes',
+            ])
+            ->add('seats', IntegerType::class, [
+                'label' => 'Nombre de sièges',
+            ])
+            ->add('description', TextType::class, [
+                'label' => 'Description',
+            ])
+            ->add('color', TextType::class, [
+                'label' => 'Couleur',
+            ])
+            ->add('extraMileageRate', IntegerType::class, [
+                'label' => 'Tarif supplémentaire/km',
+            ])
             ->add('pricePerDay', MoneyType::class, [
                 'label' => 'Tarif/jour',
-                'currency' => 'EUR',  // Ou une autre devise si nécessaire
-                'scale' => 2,  // Gère les décimales
+                // 'currency' => 'EUR',
+                'scale' => 2,
             ])
 
-            ->add('address')
-            ->add('postalCode')
-            ->add('city', null,[
-                'attr'=>[
-                    'data-action'=>'address-input'
+            ->add('address', TextType::class, [
+                'label' => 'Adresse',
+            ])
+
+            ->add('postalCode', IntegerType::class, [
+                'label' => 'Code postal',
+            ])
+            ->add('city', TextType::class, [
+                'attr' => [
+                    'data-action' => 'address-input'
                 ]
             ])
-
             ->add('photos', CollectionType::class, [
                 'entry_type' => VehiclePhotoType::class,  // Utilise le formulaire VehiclePhotoType pour chaque photo
                 'allow_add' => true,

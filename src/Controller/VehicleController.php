@@ -19,13 +19,18 @@ use App\Repository\VehicleRepository;
 use App\Enum\VehicleStatusEnum;
 use App\Form\RentalType;
 use App\Form\SearchType;
+use App\Service\DataGouvAddressService;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Twig\Node\Expression\Binary\StartsWithBinary;
 
 use function Amp\Dns\query;
 
 class VehicleController extends AbstractController
+
+
 {
+
     #[Route('/vehicle/new', name: 'app_vehicle_new')]
     #[IsGranted('ROLE_USER')]
     public function index(Request $request, EntityManagerInterface $entityManager): Response
@@ -51,13 +56,13 @@ class VehicleController extends AbstractController
             }
 
             // Traitement de chaque photo soumise
-        foreach ($vehicle->getPhotos() as $photo) {
-            // Définir les propriétés supplémentaires qui ne sont pas dans le formulaire
-            $photo->setVehicle($vehicle);
-            $photo->setCreatedAt(new \DateTimeImmutable());
-            $photo->setUpdatedAt(new \DateTimeImmutable());
-            $photo->setType(PhotoTypeEnum::VEHICLE);
-        }
+            foreach ($vehicle->getPhotos() as $photo) {
+                // Définir les propriétés supplémentaires qui ne sont pas dans le formulaire
+                $photo->setVehicle($vehicle);
+                $photo->setCreatedAt(new \DateTimeImmutable());
+                $photo->setUpdatedAt(new \DateTimeImmutable());
+                $photo->setType(PhotoTypeEnum::VEHICLE);
+            }
             $vehicle->setCreatedAt(new \DateTimeImmutable());
             $vehicle->setUpdatedAt(new \DateTimeImmutable());
             $vehicle->setOwner($user);
@@ -80,7 +85,7 @@ class VehicleController extends AbstractController
     #[Route('/vehicle/{id}', name: 'app_vehicle_show')]
     public function show(Vehicle $vehicle, Request $request): Response
     {
-        
+
         if (!$vehicle) {
             throw $this->createNotFoundException('Véhicule non trouvé.');
         }
@@ -125,7 +130,7 @@ class VehicleController extends AbstractController
 
     // SHOW ALL VEHICLES
     #[Route('/vehicles', name: 'app_vehicles')]
-    public function showVehicles(VehicleRepository $vehicleRepository, Request $request): Response
+    public function showVehicles(VehicleRepository $vehicleRepository, Request $request, DataGouvAddressService $DataGouvAddressService): Response
     {
 
         $today = new \DateTime();
@@ -135,18 +140,18 @@ class VehicleController extends AbstractController
         $endDateString = $endDate->format('Y-m-d');
 
         // Récupérer les paramètres GET ou utiliser les valeurs par défaut
-        $search = $request->query->get('search', 'paris');
+        $search = $request->query->get('search');
 
         // Récupérer les dates GET ou utiliser les dates actuelles par défaut (chaînes de caractères)
-        $startDateQuery = new \DateTime($request->query->get('startDate', $todayString)); 
+        $startDateQuery = new \DateTime($request->query->get('startDate', $todayString));
         $endDateQuery = new \DateTime($request->query->get('endDate', $endDateString));
-
 
         $searchDto = new SearchDto();
         $searchDto
             ->setSearch($search)
             ->setStartDate($startDateQuery)
             ->setEndDate($endDateQuery);
+
 
         $searchForm = $this->createForm(SearchType::class, $searchDto, [
             'startDate' => $startDateQuery,
@@ -159,9 +164,14 @@ class VehicleController extends AbstractController
         $endDate = $searchForm->get('endDate')->getData();
         $days = $startDate->diff($endDate)->days;
 
+        $vehicleMarkers = [];
+        $latitude = 45.750000;
+        $longitude = 4.850000;
+
         if (($searchForm->isSubmitted() && $searchForm->isValid()) ||
             ($request->query->has('search') && $request->query->has('startDate') && $request->query->has('endDate'))
         ) {
+
 
             $today = new \DateTimeImmutable();
             if ($startDate < $today || $endDate < $today || $endDate < $startDate) {
@@ -173,8 +183,30 @@ class VehicleController extends AbstractController
 
             foreach ($vehicles as $vehicle) {
                 $vehicleTotalPrices[$vehicle->getId()] = $vehicle->getPricePerDay() * $days;
+                
+                $vehicleMarkers[] = [
+                    'id' => $vehicle->getId(),
+                    'latitude' => $vehicle->getLatitude(),
+                    'longitude' => $vehicle->getLongitude(),
+                    'model' => $vehicle->getModel()->getName(),
+                    'pricePerDay' => $vehicle->getPricePerDay(),
+                    'city' => $vehicle->getCity(),
+                ];
+            }
+
+            // Obtenir les coordonnées de la ville recherchée
+            $cityCoordinates = $DataGouvAddressService->getCityCoordinates($searchDto->getSearch());
+
+            if ($cityCoordinates) {
+                $latitude = $cityCoordinates['features'][0]['geometry']['coordinates'][1];
+                $longitude = $cityCoordinates['features'][0]['geometry']['coordinates'][0];
             }
         }
+
+
+
+
+
 
         return $this->render('vehicle/showAllVehicles.html.twig', [
             'searchForm' => $searchForm,
@@ -183,6 +215,9 @@ class VehicleController extends AbstractController
             'days' => $days,
             'startDate' => $startDate,
             'endDate' => $endDate,
+            'vehicleMarkers' => $vehicleMarkers,
+            'latitude' => $latitude,  // Passer la latitude
+            'longitude' => $longitude, // Passer la longitude
         ]);
     }
 

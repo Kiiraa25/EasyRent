@@ -48,6 +48,10 @@ return [
         'path' => './assets/js/address-input.js',
         'entrypoint' => true,
     ],
+    'vehicles-search-input' => [
+        'path' => './assets/js/vehicles-search-input.js',
+        'entrypoint' => true,
+    ],
     'country-input' => [
         'path' => './assets/js/country-input.js',
         'entrypoint' => true,
