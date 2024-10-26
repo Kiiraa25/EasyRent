@@ -1,20 +1,120 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AdminController!{% endblock %}
+{% block title %}Tableau de bord Administrateur{% endblock %}
+
+{% block stylesheets %}
+<style>
+    .dashboard-container {
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
+        padding: 20px;
+        background-color: #f7f9fc;
+    }
+
+    .dashboard-title {
+        color: #282F4B;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .indicators {
+        display: grid;
+        justify-content: center;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        width: 80vw;
+        margin: 0 auto;
+    }
+
+    .indicator-card {
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .chart-container {
+        width: 80vw;
+        height: 300px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .chart-title {
+        color: #282F4B;
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+</style>
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div class="dashboard-container">
+    <h1 class="dashboard-title">Tableau de bord Administrateur</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class="indicators">
+        <div class="indicator-card">
+            <div>Inscriptions</div>
+            <div>{{ inscriptions_count }}</div>
+        </div>
+        <div class="indicator-card">
+            <div>Locations Actives</div>
+            <div>{{ active_rentals_count }}</div>
+        </div>
+        <div class="indicator-card">
+            <div>Véhicules Disponibles</div>
+            <div>{{ available_vehicles_count }}</div>
+        </div>
+    </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/Kiiraa/Documents/Symfony/rentacar/src/Controller/AdminController.php</code></li>
-        <li>Your template at <code>C:/Users/Kiiraa/Documents/Symfony/rentacar/templates/admin/index.html.twig</code></li>
-    </ul>
+    <div class="chart-container">
+        <h2 class="chart-title">Statistiques Mensuelles</h2>
+        <canvas id="monthlyStatsChart"></canvas>
+    </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('monthlyStatsChart').getContext('2d');
+    const monthlyStatsChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            datasets: [
+                {
+                    label: 'Inscriptions',
+                    data: {{ monthly_signups|json_encode|raw }},
+                    borderColor: '#FF866F',
+                    fill: false
+                },
+                {
+                    label: 'Locations',
+                    data: {{ monthly_rentals|json_encode|raw }},
+                    borderColor: '#1f2b45',
+                    fill: false
+                },
+                {
+                    label: 'Revenus (€)',
+                    data: {{ monthly_revenues|json_encode|raw }},
+                    borderColor: '#EB8072',
+                    fill: false
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: { display: true, title: { display: true, text: 'Mois' } },
+                y: { display: true, title: { display: true, text: 'Valeur' }, beginAtZero: true }
+            }
+        }
+    });
+</script>
 {% endblock %}

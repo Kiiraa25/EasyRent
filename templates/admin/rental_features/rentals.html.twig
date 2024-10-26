@@ -1,0 +1,203 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Liste des Locations{% endblock %}
+
+{% block stylesheets %}
+    <style>
+		/* Style pour la table */
+
+		/* Conteneur pour gérer la taille maximale du tableau */
+		.table-container {
+			max-height: 74.5vh;
+			overflow-y: auto;
+			border-radius: 8px;
+			padding: 1em;
+		}
+
+		table {
+			border-collapse: collapse;
+			font-size: 1em;
+			font-family: Arial, sans-serif;
+			background-color: #ffffff;
+			color: #282F4B;
+			border: 2px solid #282F4B;
+			border-radius: 8px;
+			overflow: hidden;
+		}
+
+		table thead tr {
+			background-color: #282F4B;
+			color: #ffffff;
+		}
+
+		table th,
+		table td {
+			padding: 12px 16px;
+			border: 1px solid #EEE;
+			min-width: fit-content;
+            min-width: 170px
+		}
+
+		table tbody tr:nth-child(even) {
+			background-color: #f8f8f8;
+		}
+
+		table tbody tr:hover {
+			background-color: #eee;
+		}
+
+		.admin-dashboard-content h1 {
+			color: #282F4B;
+			text-align: center;
+            margin-top: 16px;
+            font-size: 28px;
+		}
+
+		/* Style pour les boutons */
+		.btn {
+			width: 96px;
+			padding: 5px 10px;
+			font-size: 0.9em;
+			text-align: center;
+			border: none;
+			border-radius: 3px;
+			cursor: pointer;
+		}
+
+		.btn-edit {
+			background-color: #FF866F;
+			color: #ffffff;
+		}
+
+		.btn-toggle-status {
+			background-color: #282F4B;
+			color: #ffffff;
+		}
+
+		.btn-delete {
+			background-color: #e74c3c; /* Rouge foncé pour supprimer */
+			color: #ffffff;
+		}
+
+		.btn:hover {
+			opacity: 0.9;
+		}
+
+		.actions {
+			display: flex;
+			gap: 10px;
+			height: 31px;
+		}
+
+
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f4f6f8;
+			display: flex;
+			margin: 0;
+			padding: 0;
+		}
+
+		/* Barre latérale */
+		.sidebar {
+			width: 240px;
+			background-color: #1f2b45;
+			color: white;
+			height: 80vh;
+			padding: 20px;
+            border-radius: 20px 0px 0px 20px;
+		}
+
+		.sidebar h3 {
+			color: #ffffff;
+			margin-bottom: 40px;
+		}
+
+		.sidebar ul {
+			list-style-type: none;
+			padding: 0;
+		}
+
+		.sidebar li {
+			margin: 20px 0;
+		}
+
+		.sidebar a {
+			color: #ffffff;
+			text-decoration: none;
+			font-size: 1.1em;
+			display: flex;
+			align-items: center;
+		}
+
+		.sidebar a:hover {
+			color: #FF866F;
+		}
+
+	</style>
+{% endblock %}
+
+{% block content %}
+<div class="admin-dashboard-content">
+    <h1>Liste des Locations</h1>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Véhicule</th>
+                    <th>Client</th>
+                    <th>Date de début</th>
+                    <th>Date de fin</th>
+                    <th>Prix total (€)</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rental in rentals %}
+                    <tr>
+                        <td onclick="window.location.href='{{ path('app_admin_rental_show', {'id': rental.id}) }}'" style="cursor: pointer;">
+                            {{ rental.vehicle.model.brand.name }} {{ rental.vehicle.model.name }}
+                        </td>
+                        <td onclick="window.location.href='{{ path('app_admin_rental_show', {'id': rental.id}) }}'" style="cursor: pointer;">
+                            {{ rental.renter.profile.lastName }} {{ rental.renter.profile.firstName }}
+                        </td>
+                        <td onclick="window.location.href='{{ path('app_admin_rental_show', {'id': rental.id}) }}'" style="cursor: pointer;">
+                            {{ rental.startDate|date('d/m/Y') }}
+                        </td>
+                        <td onclick="window.location.href='{{ path('app_admin_rental_show', {'id': rental.id}) }}'" style="cursor: pointer;">
+                            {{ rental.endDate|date('d/m/Y') }}
+                        </td>
+                        <td onclick="window.location.href='{{ path('app_admin_rental_show', {'id': rental.id}) }}'" style="cursor: pointer;">
+                            {{ rental.totalPrice }} €
+                        </td>
+                        <td onclick="window.location.href='{{ path('app_admin_rental_show', {'id': rental.id}) }}'" style="cursor: pointer;">
+                            {{ rental.status.value }}
+                        </td>
+                        <td class="actions">
+                            <!-- Bouton de modification pour les locations en attente de validation ou en cours -->
+                            {% if rental.status == constant('App\\Enum\\RentalStatusEnum::EN_ATTENTE_VALIDATION') or rental.status == constant('App\\Enum\\RentalStatusEnum::EN_COURS') or rental.status == constant('App\\Enum\\RentalStatusEnum::VALIDEE') %}
+                                <a href="{{ path('app_admin_rental_edit', { 'id': rental.id }) }}" class="btn btn-edit">Modifier</a>
+                            {% endif %}
+
+                            <!-- Formulaire pour changer le statut avec confirmation -->
+                            {% if rental.status == constant('App\\Enum\\RentalStatusEnum::EN_ATTENTE_VALIDATION') or rental.status == constant('App\\Enum\\RentalStatusEnum::VALIDEE') or rental.status == constant('App\\Enum\\RentalStatusEnum::EN_COURS')%}
+                                <form action="{{ path('app_admin_rental_toggle_status', { 'id': rental.id }) }}" method="post" style="display:inline;" onsubmit="return confirm('Êtes-vous sûr de vouloir changer le statut de cette location ?');">
+                                    <button type="submit" class="btn btn-toggle-status">
+                                        {{ rental.status == constant('App\\Enum\\RentalStatusEnum::VALIDEE') or rental.status == constant('App\\Enum\\RentalStatusEnum::EN_COURS') ? 'Annuler' : 'Valider' }}
+                                    </button>
+                                </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="7" style="text-align: center;">Aucune location trouvée.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
+{% endblock %}

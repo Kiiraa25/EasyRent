@@ -1,0 +1,121 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Éditer la location{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        /* Global styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #282F4B;
+            text-align: center;
+        }
+
+        /* Form container */
+        .form-container {
+            width: 60%;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px 40px;
+            margin-top: 20px;
+        }
+
+        /* Form elements */
+        label {
+            color: #282F4B;
+            font-weight: bold;
+            margin-top: 15px;
+            display: inline-block;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .form-control:focus {
+            border-color: #FF866F;
+            outline: none;
+            box-shadow: 0 0 4px rgba(255, 134, 111, 0.4);
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #FF866F;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn-submit:hover {
+            background-color: #e67564;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: #282F4B;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            color: #FF866F;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h1>Éditer la location</h1>
+
+    <div class="form-container">
+        {{ form_start(form, {'attr': {'onsubmit': 'return confirmUpdate()'}}) }}
+
+        {{ form_label(form.startDate, 'Date de début') }}
+        {{ form_widget(form.startDate, {'attr': {'class': 'form-control'}}) }}
+
+        {{ form_label(form.endDate, 'Date de fin') }}
+        {{ form_widget(form.endDate, {'attr': {'class': 'form-control'}}) }}
+
+        {{ form_label(form.paymentMethod, 'Méthode de paiement') }}
+        {{ form_widget(form.paymentMethod, {'attr': {'class': 'form-control'}}) }}
+
+        {{ form_label(form.totalPrice, 'Prix total') }}
+        {{ form_widget(form.totalPrice, {'attr': {'class': 'form-control'}}) }}
+
+        {{ form_label(form.mileageLimit, 'Limite de kilométrage') }}
+        {{ form_widget(form.mileageLimit, {'attr': {'class': 'form-control'}}) }}
+
+        <button type="submit" class="btn-submit">Mettre à jour la location</button>
+
+        {{ form_end(form) }}
+
+        <a href="{{ path('app_admin_rentals') }}" class="back-link">Retour à la liste des locations</a>
+    </div>
+
+    <script>
+        function confirmUpdate() {
+            return confirm("Êtes-vous sûr de vouloir mettre à jour les informations de cette location ?");
+        }
+    </script>
+{% endblock %}

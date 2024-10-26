@@ -19,6 +19,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 use App\Form\NameUserProfileType;
 use App\Entity\UserProfile;
+use App\Enum\UserStatusEnum;
 
 class RegistrationController extends AbstractController
 {
@@ -46,7 +47,7 @@ class RegistrationController extends AbstractController
             $userProfile->setVerified(false);
 
 
-            $user->setActive(true);
+            $user->setStatus(UserStatusEnum::INACTIF);
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
@@ -81,7 +82,7 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/verify/email', name: 'app_verify_email')]
-    public function verifyUserEmail(Request $request, TranslatorInterface $translator, UserRepository $userRepository): Response
+    public function verifyUserEmail(Request $request, TranslatorInterface $translator, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
         $id = $request->query->get('id');
 

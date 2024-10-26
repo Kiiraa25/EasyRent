@@ -5,6 +5,14 @@
 		</svg>
 	</a>
 	<div class="right-side-nav">
+
+	{% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('app_admin_users') }}">Interface Administrateur</a>
+{% endif %}
+
+	<button class="nav-button">
+			<a href="{{ path('app_vehicle_new') }}">Louer ma voiture</a>
+		</button>
 		<input type="checkbox" id="menu-toggle">
 		<label for="menu-toggle" class="menu-button">
 
@@ -16,88 +24,85 @@
 			</svg>
 		</label>
 
-
+		
 		<section class="menu">
 			<div class="clip-path-container">
 				<div class="clip-path"></div>
 			</div>
 
 
-
-
 			{% if app.user %}
 				<div class="user-infos">
 					<div class="user-icon">
 						{% if app.user.profile.picture is not null %}
-						
+
 							<img src="{{ vich_uploader_asset(app.user.profile, 'imageFile') }}" alt=""></div>
 
-						{% else %}
-							<img src="{{ asset('/img/default-user-icon.png') }}" alt=""></div>
+					{% else %}
+						<img src="{{ asset('/img/default-user-icon.png') }}" alt=""></div>
 
-					{% endif %}
-					<div class="right-side-user-infos">
-						<p class="user-name">
-							{{ app.user.profile.getLastName()}}
-							{{ app.user.profile.getFirstName()}}</p>
-						<a href="{{ path('app_user_profile_edit')}}">Mon compte</a>
-					</div>
+				{% endif %}
+				<div class="right-side-user-infos">
+					<p class="user-name">
+						{{ app.user.profile.getLastName()}}
+						{{ app.user.profile.getFirstName()}}</p>
+					<a href="{{ path('app_user_profile_edit')}}">Mon compte</a>
 				</div>
+			</div>
 
-				<div class="owner-menu">
-					<p>Menu propriétaire</p>
-					<div class="toggle-owner-menu">
-						<div class="circle-toggle-owner-menu"></div>
-					</div>
+			<div class="owner-menu">
+				<p>Menu propriétaire</p>
+				<div class="toggle-owner-menu">
+					<div class="circle-toggle-owner-menu"></div>
 				</div>
-				<ul class="renterMode">
-					<a href="{{ path('app_user_profile_verify') }}">
-						<li>Vérifier mon compte</li>
-					</a>
-					<a href="{{ path('app_user_rentals')}}">
-						<li>Locations</li>
-					</a>
-					<a href="">
-						<li>Paiements</li>
-					</a>
-					<a href="{{ path('app_logout')}}">
-						<li class="logout-link">Se deconnecter</li>
-					</a>
-				</ul>
+			</div>
+			<ul class="renterMode">
+				<a href="{{ path('app_user_profile_verify') }}">
+					<li>Vérifier mon compte</li>
+				</a>
+				<a href="{{ path('app_user_rentals')}}">
+					<li>Locations</li>
+				</a>
+				<a href="">
+					<li>Paiements</li>
+				</a>
+				<a href="{{ path('app_logout')}}">
+					<li class="logout-link">Se deconnecter</li>
+				</a>
+			</ul>
 
-				<ul class="ownerMode hidden">
-					<a href="{{ path('app_user_rental_requests')}}">
-						<li>Demandes</li>
-					</a>
-					<a href="{{ path('app_user_rentals')}}">
-						<li>Locations</li>
-					</a>
-					<a href="{{ path('app_user_vehicles')}}">
-						<li>Voitures</li>
-					</a>
-					<a href="">
-						<li>Performances</li>
-					</a>
-					<a href="">
-						<li>Paiements</li>
-					</a>
-					<a href="{{ path('app_logout')}}">
-						<li class="logout-link">Se deconnecter</li>
-					</a>
-				</ul>
-
-
-			{% else %}
-				<ul>
-					<li><a href="{{path('app_login')}}">se connecter</a></li>
-					<li><a href="{{path('app_login')}}">Créer un compte</a></li>
-					<li><a href="{{path('app_login')}}">Pourquoi devenir hôte ?</a></li>
-					<li><a href="{{path('app_login')}}">Nous contacter</a></li>
-				</ul>
+			<ul class="ownerMode hidden">
+				<a href="{{ path('app_user_rental_requests')}}">
+					<li>Demandes</li>
+				</a>
+				<a href="{{ path('app_user_rentals')}}">
+					<li>Locations</li>
+				</a>
+				<a href="{{ path('app_user_vehicles')}}">
+					<li>Voitures</li>
+				</a>
+				<a href="">
+					<li>Performances</li>
+				</a>
+				<a href="">
+					<li>Paiements</li>
+				</a>
+				<a href="{{ path('app_logout')}}">
+					<li class="logout-link">Se deconnecter</li>
+				</a>
+			</ul>
 
 
-			{% endif %}
-		</section>
-		<button class="nav-button"><a href="{{ path('app_vehicle_new') }}">Louer ma voiture</a></button>
-	</div>
-</nav>
+		{% else %}
+			<ul>
+				<li><a href="{{path('app_login')}}">se connecter</a></li>
+				<li><a href="{{path('app_login')}}">Créer un compte</a></li>
+				<li><a href="{{path('app_login')}}">Pourquoi devenir hôte ?</a></li>
+				<li><a href="{{path('app_login')}}">Nous contacter</a></li>
+			</ul>
+
+
+		{% endif %}
+	</section>
+
+</div></nav>

@@ -1,6 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 * {
     font-family: "Poppins", sans-serif;
@@ -32,10 +29,10 @@ nav {
     font-size: 16px;
     display: flex;
     justify-content: space-between;
-    padding: 5px 2.6%;
+    padding: 5px 1em;
     padding-bottom: 0.78%;
     margin: 0.52% 0px 0px 0px;
-    width: 94vw;
+    width: 88vw;
     align-self: center;
     border-bottom: 1px solid #F6F6F6;
 }
@@ -71,6 +68,16 @@ nav {
     border: solid 2px #FF866F;
     color: #FF866F;
     cursor: pointer;
+}
+
+.right-side-nav .nav-button:hover{
+    background-color: #282F4B;
+    color: white;
+    border-color: #282F4B;
+}
+
+.right-side-nav .nav-button:hover a {
+    color: white;
 }
 
 /* ---------------------------------------------------------------- Header */
@@ -937,6 +944,7 @@ h4 {
 /* menu déroulant */
 .menu-button {
     position: relative;
+    display: flex;
 }
 
 .menu-button {
@@ -948,9 +956,9 @@ h4 {
     display: none;
     list-style-type: none;
     position: absolute;
-    top: 70px;
+    top: 80px;
     /* right: 13%; */
-    right: 15.8vw;
+    right: 4.5vw;
     width: 351px;
     border-radius: 15px;
     box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.100);

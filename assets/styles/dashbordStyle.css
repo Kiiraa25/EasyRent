@@ -63,9 +63,10 @@ aside {
 .container {
     display: flex;
     gap: 20px;
-    padding-bottom: 30px;
-    padding-top: 20px;
     background-color: #F6F6F6;
+    border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.318) 2px 10px 20px 2px;
+    margin: 20px;
     /* align-items: baseline; */
 }
 
@@ -100,7 +101,6 @@ aside {
 .right-side-dashBoard {
     display: flex;
     justify-content: center;
-    width: 1500px;
     align-items: baseline;
     /* padding-top: 20px; */
 }

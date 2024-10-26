@@ -72,6 +72,18 @@ class VehicleRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function countAvailableVehicles(): int
+    {
+        return $this->createQueryBuilder('v')
+            ->select('COUNT(v.id)')
+            ->where('v.status = :status')
+            ->setParameter('status', 'AVAILABLE') // Assurez-vous que 'AVAILABLE' correspond à la valeur dans l'enum
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+    
+
+
     //    /**
     //     * @return Vehicle[] Returns an array of Vehicle objects
     //     */

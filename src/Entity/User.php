@@ -1,5 +1,8 @@
-<?php namespace App\Entity;
+<?php
 
+namespace App\Entity;
+
+use App\Enum\UserStatusEnum;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Serializable;
@@ -26,11 +29,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = [];
 
-    #[ORM\Column]
-    private ?bool $isActive = null;
-
     #[ORM\OneToOne(targetEntity: UserProfile::class, inversedBy: 'user', cascade: ['persist', 'remove'])]
     private ?UserProfile $profile = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $status = null;
 
     public function getId(): ?int
     {
@@ -45,17 +48,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): static
     {
         $this->email = $email;
-        return $this;
-    }
-
-    public function isActive(): ?bool
-    {
-        return $this->isActive;
-    }
-
-    public function setActive(bool $isActive): static
-    {
-        $this->isActive = $isActive;
         return $this;
     }
 
@@ -143,5 +135,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->id = $data['id'];
         $this->email = $data['email'];
         $this->password = $data['password'];
+    }
+
+    public function getStatus(): ?UserStatusEnum
+    {
+        return $this->status ? UserStatusEnum::from($this->status) : null;
+    }
+
+    public function setStatus(UserStatusEnum $status): static
+    {
+        $this->status = $status->value;
+
+        return $this;
     }
 }

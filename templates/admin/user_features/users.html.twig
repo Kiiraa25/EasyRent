@@ -1,0 +1,205 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Liste des Utilisateurs
+{% endblock %}
+
+{% block stylesheets %}
+	<style>
+		/* Style pour la table */
+
+		/* Conteneur pour gérer la taille maximale du tableau */
+		.table-container {
+			max-height: 74.5vh;
+			overflow-y: auto;
+			border-radius: 8px;
+			padding: 1em;
+		}
+
+		table {
+			border-collapse: collapse;
+			font-size: 1em;
+			font-family: Arial, sans-serif;
+			background-color: #ffffff;
+			color: #282F4B;
+			border: 2px solid #282F4B;
+			border-radius: 8px;
+			overflow: hidden;
+		}
+
+		table thead tr {
+			background-color: #282F4B;
+			color: #ffffff;
+		}
+
+		table th,
+		table td {
+			padding: 12px 16px;
+			border: 1px solid #EEE;
+			min-width: fit-content;
+            min-width: 170px
+		}
+
+		table tbody tr:nth-child(even) {
+			background-color: #f8f8f8;
+		}
+
+		table tbody tr:hover {
+			background-color: #eee;
+		}
+
+		.admin-dashboard-content h1 {
+			color: #282F4B;
+			text-align: center;
+            margin-top: 16px;
+            font-size: 28px;
+		}
+
+		/* Style pour les boutons */
+		.btn {
+			width: 96px;
+			padding: 5px 10px;
+			font-size: 0.9em;
+			text-align: center;
+			border: none;
+			border-radius: 3px;
+			cursor: pointer;
+		}
+
+		.btn-edit {
+			background-color: #FF866F;
+			color: #ffffff;
+		}
+
+		.btn-toggle-status {
+			background-color: #282F4B;
+			color: #ffffff;
+		}
+
+		.btn-delete {
+			background-color: #e74c3c; /* Rouge foncé pour supprimer */
+			color: #ffffff;
+		}
+
+		.btn:hover {
+			opacity: 0.9;
+		}
+
+		.actions {
+			display: flex;
+			gap: 10px;
+			height: 31px;
+		}
+
+
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f4f6f8;
+			display: flex;
+			margin: 0;
+			padding: 0;
+		}
+
+		/* Barre latérale */
+		.sidebar {
+			width: 240px;
+			background-color: #1f2b45;
+			color: white;
+			height: 80vh;
+			padding: 20px;
+            border-radius: 20px 0px 0px 20px;
+		}
+
+		.sidebar h3 {
+			color: #ffffff;
+			margin-bottom: 40px;
+		}
+
+		.sidebar ul {
+			list-style-type: none;
+			padding: 0;
+		}
+
+		.sidebar li {
+			margin: 20px 0;
+		}
+
+		.sidebar a {
+			color: #ffffff;
+			text-decoration: none;
+			font-size: 1.1em;
+			display: flex;
+			align-items: center;
+		}
+
+		.sidebar a:hover {
+			color: #FF866F;
+		}
+
+	</style>
+{% endblock %}
+
+{% block content %}
+	<div class="admin-dashboard-content">
+		<h1>Liste des Utilisateurs</h1>
+		<div class="table-container">
+			<table>
+				<thead>
+					<tr>
+						<th>Nom</th>
+						<th>Prénom</th>
+						<th>Email</th>
+						<th>Rôles</th>
+						<th>Status</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for user in users %}
+						<tr onclick="window.location.href='{{ path('app_admin_user_profile', {'id': user.id}) }}'" style="cursor: pointer;">
+							<td>{{ user.profile.lastName }}</td>
+							<td>{{ user.profile.firstName }}</td>
+							<td>{{ user.email }}</td>
+							<td>{{ user.roles | join(', ') }}</td>
+							<td>{{ user.status.value }}</td>
+
+							<td class="actions">
+								{% if user.id != app.user.id %}
+									<!-- Bouton de modification : affiché uniquement pour les utilisateurs actifs, bannis ou inactifs -->
+									{% if user.status == constant('App\\Enum\\UserStatusEnum::ACTIF') or user.status == constant('App\\Enum\\UserStatusEnum::BANNI') or user.status == constant('App\\Enum\\UserStatusEnum::INACTIF') %}
+										<a href="{{ path('app_admin_user_edit', { 'id': user.id }) }}" class="btn btn-edit">Modifier</a>
+									{% endif %}
+
+									<!-- Formulaire pour bannir/dé-bannir avec confirmation -->
+									{% if user.status == constant('App\\Enum\\UserStatusEnum::ACTIF') or user.status == constant('App\\Enum\\UserStatusEnum::INACTIF') or user.status == constant('App\\Enum\\UserStatusEnum::BANNI') %}
+										<form action="{{ path('app_admin_user_toggle_ban', { 'id': user.id }) }}" method="post" style="display:inline;" onsubmit="return confirm('Êtes-vous sûr de vouloir {{ user.status == constant('App\\Enum\\UserStatusEnum::BANNI') ? 'dé-bannir' : 'bannir' }} cet utilisateur ?');">
+											<button type="submit" class="btn btn-toggle-status">
+												{{ user.status == constant('App\\Enum\\UserStatusEnum::BANNI') ? 'Dé-bannir' : 'Bannir' }}
+											</button>
+										</form>
+									{% endif %}
+
+									<!-- Formulaire pour suppression avec confirmation -->
+									{% if user.status != constant('App\\Enum\\UserStatusEnum::SUPPRIME') %}
+										<form action="{{ path('app_admin_user_delete', { 'id': user.id }) }}" method="post" style="display:inline;" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">
+											<button type="submit" class="btn btn-delete">Supprimer</button>
+										</form>
+									{% endif %}
+								{% else %}
+									<!-- Message d’information pour l'admin connecté -->
+									<span>Aucune action disponible.</span>
+
+								{% endif %}
+							</td>
+						</tr>
+					{% else %}
+						<tr>
+							<tdcolspan="5"style="text-align:center;">Aucun utilisateur trouvé.</td>
+						</tr>
+					{% endfor %}
+
+                    
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endblock %}

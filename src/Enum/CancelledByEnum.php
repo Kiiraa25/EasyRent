@@ -6,4 +6,5 @@ enum CancelledByEnum: string
 {
     case OWNER = 'owner';
     case RENTER = 'renter';
+    case ADMIN = 'admin';
 }
