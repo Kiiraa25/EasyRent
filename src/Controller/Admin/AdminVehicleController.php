@@ -9,6 +9,7 @@ use App\Form\AdminForms\VehicleType;
 use App\Repository\RatingRepository;
 use App\Repository\RentalRepository;
 use App\Repository\VehicleRepository;
+use App\Service\DataGouvAddressService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -61,32 +62,54 @@ public function show(Vehicle $vehicle, RentalRepository $rentalRepository, Ratin
 }
 
 
-    // Route pour éditer un véhicule
-    #[Route('/vehicle/edit/{id}', name: 'vehicle_edit')]
-    public function edit(Vehicle $vehicle, Request $request, EntityManagerInterface $entityManager): Response
-    {
-        // Création du formulaire avec les données du véhicule
-        $form = $this->createForm(VehicleType::class, $vehicle);
-        $form->handleRequest($request);
+   // Route pour éditer un véhicule
+#[Route('/vehicle/edit/{id}', name: 'vehicle_edit')]
+public function edit(Vehicle $vehicle, Request $request, EntityManagerInterface $entityManager, DataGouvAddressService $dataGouvAddressService): Response
+{
+    // Création du formulaire avec les données du véhicule
+    $form = $this->createForm(VehicleType::class, $vehicle);
+    $form->handleRequest($request);
 
-        // Vérification de la soumission et de la validité du formulaire
-        if ($form->isSubmitted() && $form->isValid()) {
-            // Mise à jour du véhicule dans la base de données
-            $entityManager->flush();
+    // Vérification de la soumission et de la validité du formulaire
+    if ($form->isSubmitted() && $form->isValid()) {
+        // Récupération de l'adresse modifiée
+        $newAddress = [
+            'address' => $vehicle->getAddress(),
+            'postal_code' => $vehicle->getPostalCode(),
+            'city' => $vehicle->getCity(),
+        ];
 
-            // Message de confirmation
-            $this->addFlash('success', 'Les informations du véhicule ont été mises à jour avec succès.');
+        // Obtenir les coordonnées de la nouvelle adresse si elle est modifiée
+        $coordinates = $dataGouvAddressService->getVehicleCoordinates($newAddress['address'], $newAddress['postal_code']);
 
-            // Redirection vers la liste des véhicules après l'édition
-            return $this->redirectToRoute('app_admin_vehicles');
+        // Vérifier si les coordonnées ont été retournées et les définir
+        if (!empty($coordinates['features'])) {
+            $latitude = $coordinates['features'][0]['geometry']['coordinates'][1] ?? null;
+            $longitude = $coordinates['features'][0]['geometry']['coordinates'][0] ?? null;
+
+            if ($latitude && $longitude) {
+                $vehicle->setLatitude($latitude);
+                $vehicle->setLongitude($longitude);
+            }
         }
 
-        // Affichage du formulaire d'édition de véhicule
-        return $this->render('admin/vehicle_features/vehicle_edit.html.twig', [
-            'form' => $form->createView(),
-            'vehicle' => $vehicle,
-        ]);
+        // Mise à jour du véhicule dans la base de données
+        $entityManager->flush();
+
+        // Message de confirmation
+        $this->addFlash('success', 'Les informations du véhicule ont été mises à jour avec succès.');
+
+        // Redirection vers la liste des véhicules après l'édition
+        return $this->redirectToRoute('app_admin_vehicles');
     }
+
+    // Affichage du formulaire d'édition de véhicule
+    return $this->render('admin/vehicle_features/vehicle_edit.html.twig', [
+        'form' => $form,
+        'vehicle' => $vehicle,
+    ]);
+}
+
 
     // Route pour activer/suspendre un véhicule
     #[Route('/vehicle/toggle-status/{id}', name: 'vehicle_toggle_status', methods: ['POST'])]

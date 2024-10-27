@@ -33,28 +33,28 @@ class VehicleController extends AbstractController
 
     #[Route('/vehicle/new', name: 'app_vehicle_new')]
     #[IsGranted('ROLE_USER')]
-    public function index(Request $request, EntityManagerInterface $entityManager): Response
+    public function index(Request $request, EntityManagerInterface $entityManager, DataGouvAddressService $dataGouvAddressService): Response
     {
         /** @var User $user */
         $user = $this->getUser();
-
+    
         if (!$user instanceof User) {
             throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
         }
-
+    
         $vehicle = new Vehicle();
-
+    
         $vehicleForm = $this->createForm(VehicleType::class, $vehicle);
         $vehicleForm->handleRequest($request);
-
+    
         if ($vehicleForm->isSubmitted() && $vehicleForm->isValid()) {
             if (count($vehicle->getPhotos()) < 5) {
                 $this->addFlash('error', 'Vous devez ajouter au moins 5 photos pour ce véhicule.');
-                return $this->render('vehicle/new.html.twig', [
-                    'form' => $vehicleForm,
+                return $this->render('vehicle/newVehicle.html.twig', [
+                    'vehicleForm' => $vehicleForm->createView(),
                 ]);
             }
-
+    
             // Traitement de chaque photo soumise
             foreach ($vehicle->getPhotos() as $photo) {
                 // Définir les propriétés supplémentaires qui ne sont pas dans le formulaire
@@ -63,23 +63,47 @@ class VehicleController extends AbstractController
                 $photo->setUpdatedAt(new \DateTimeImmutable());
                 $photo->setType(PhotoTypeEnum::VEHICLE);
             }
+    
+            // Obtenir les coordonnées basées sur l'adresse et le code postal
+            $coordinates = $dataGouvAddressService->getVehicleCoordinates($vehicle->getAddress(), $vehicle->getPostalCode());
+    
+            if (!empty($coordinates['features'])) {
+                $latitude = $coordinates['features'][0]['geometry']['coordinates'][1] ?? null;
+                $longitude = $coordinates['features'][0]['geometry']['coordinates'][0] ?? null;
+    
+                if ($latitude && $longitude) {
+                    $vehicle->setLatitude($latitude);
+                    $vehicle->setLongitude($longitude);
+                } else {
+                    $this->addFlash('error', 'Impossible de récupérer les coordonnées GPS pour l\'adresse fournie.');
+                    return $this->render('vehicle/newVehicle.html.twig', [
+                        'vehicleForm' => $vehicleForm->createView(),
+                    ]);
+                }
+            } else {
+                $this->addFlash('error', 'Impossible de récupérer les coordonnées GPS pour l\'adresse fournie.');
+                return $this->render('vehicle/newVehicle.html.twig', [
+                    'vehicleForm' => $vehicleForm->createView(),
+                ]);
+            }
+    
             $vehicle->setCreatedAt(new \DateTimeImmutable());
             $vehicle->setUpdatedAt(new \DateTimeImmutable());
             $vehicle->setOwner($user);
             $vehicle->setStatus(VehicleStatusEnum::WAITING_FOR_VALIDATION);
-
-            $entityManager->persist($photo);
+    
             $entityManager->persist($vehicle);
             $entityManager->flush();
-
-            $this->addFlash('success', 'Votre annonce à été ajoutée avec succès.');
+    
+            $this->addFlash('success', 'Votre annonce a été ajoutée avec succès.');
             return $this->redirectToRoute('app_home');
         }
-
+    
         return $this->render('vehicle/newVehicle.html.twig', [
-            'vehicleForm' => $vehicleForm,
+            'vehicleForm' => $vehicleForm->createView(),
         ]);
     }
+    
 
     // READ
     #[Route('/vehicle/{id}', name: 'app_vehicle_show')]
@@ -222,42 +246,65 @@ class VehicleController extends AbstractController
     }
 
 
-    // UPDATE
-    #[Route('/vehicle/{id}/edit', name: 'app_vehicle_edit')]
-    #[IsGranted('ROLE_USER')]
-    public function edit(Request $request, Vehicle $vehicle, EntityManagerInterface $entityManager): Response
-    {
+   // UPDATE
+#[Route('/vehicle/{id}/edit', name: 'app_vehicle_edit')]
+#[IsGranted('ROLE_USER')]
+public function edit(
+    Request $request, 
+    Vehicle $vehicle, 
+    EntityManagerInterface $entityManager, 
+    DataGouvAddressService $dataGouvAddressService
+): Response {
 
-        $owner = $vehicle->getOwner();
-        $currentUser = $this->getUser();
+    $owner = $vehicle->getOwner();
+    $currentUser = $this->getUser();
 
-
-        if (!$owner instanceof User || $currentUser !== $owner) {
-            throw $this->createAccessDeniedException('Vous n\'êtes pas autorisé à accéder à cette page.');
-        }
-
-        if (!$vehicle) {
-            throw $this->createNotFoundException('Véhicule non trouvé.');
-        }
-
-
-        $form = $this->createForm(EditVehicleType::class, $vehicle);
-        $form->handleRequest($request);
-
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $vehicle->setUpdatedAt(new \DateTimeImmutable());
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Véhicule mis à jour avec succès.');
-            return $this->redirectToRoute('app_vehicle_show', ['id' => $vehicle->getId()]);
-        }
-
-        return $this->render('vehicle/editVehicle.html.twig', [
-            'form' => $form,
-            'vehicle' => $vehicle,
-        ]);
+    if (!$owner instanceof User || $currentUser !== $owner) {
+        throw $this->createAccessDeniedException('Vous n\'êtes pas autorisé à accéder à cette page.');
     }
+
+    if (!$vehicle) {
+        throw $this->createNotFoundException('Véhicule non trouvé.');
+    }
+
+    $form = $this->createForm(EditVehicleType::class, $vehicle);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        // Récupération des nouvelles coordonnées si l'adresse a changé
+        $newAddress = $vehicle->getAddress();
+        $newPostalCode = $vehicle->getPostalCode();
+
+        $coordinates = $dataGouvAddressService->getVehicleCoordinates($newAddress, $newPostalCode);
+
+        if (!empty($coordinates['features'])) {
+            $latitude = $coordinates['features'][0]['geometry']['coordinates'][1] ?? null;
+            $longitude = $coordinates['features'][0]['geometry']['coordinates'][0] ?? null;
+
+            if ($latitude && $longitude) {
+                $vehicle->setLatitude($latitude);
+                $vehicle->setLongitude($longitude);
+            } else {
+                $this->addFlash('error', 'Impossible de récupérer les nouvelles coordonnées GPS pour l\'adresse fournie.');
+                return $this->redirectToRoute('app_vehicle_edit', ['id' => $vehicle->getId()]);
+            }
+        } else {
+            $this->addFlash('error', 'Impossible de récupérer les nouvelles coordonnées GPS pour l\'adresse fournie.');
+            return $this->redirectToRoute('app_vehicle_edit', ['id' => $vehicle->getId()]);
+        }
+
+        $vehicle->setUpdatedAt(new \DateTimeImmutable());
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Véhicule mis à jour avec succès.');
+        return $this->redirectToRoute('app_vehicle_show', ['id' => $vehicle->getId()]);
+    }
+
+    return $this->render('vehicle/editVehicle.html.twig', [
+        'form' => $form->createView(),
+        'vehicle' => $vehicle,
+    ]);
+}
 
     // DELETE --> mettre en statut "supprimé" ou "archivé"
     #[Route('/vehicle/{id}/delete', name: 'app_vehicle_delete')]

@@ -7,23 +7,19 @@
 {% block title %}Tableau de Bord Administrateur
 {% endblock %}
 
+
 {% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha384-DyZ88mC6Up2uqS3s7kF85pY3Jt9FvVn4b4EDb9A8M5+3QK0eGxyLMp8y1gI0UQ4a" crossorigin="anonymous">
+<script src="https://kit.fontawesome.com/2a0508afd8.js" crossorigin="anonymous"></script>
 {% endblock %}
+
 
 {% block body %}
 
 	<div class="container">
-		<div class="sidebar">
-			<h3>Admin Dashboard</h3>
-			<ul>
-				<li><a href="{{path('app_admin_dashboard')}}">Tableau de bord</a></li>
-				<li><a href="{{path('app_admin_users')}}">Utilisateurs</a></li>
-				<li><a href="{{path('app_admin_vehicles')}}">Véhicules</a></li>
-				<li><a href="{{path('app_admin_rentals')}}">Locations</a></li>
-				<li><a href="#">Rapports</a></li>
-				<li><a href="#">Paramètres</a></li>
-			</ul>
-		</div>
+		{% include 'admin/_partials/_sidebar.html.twig' %}
+
 		<div class="right-side-dashBoard">
 			{% block content %}{% endblock %}
 		</div>

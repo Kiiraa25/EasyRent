@@ -19,7 +19,7 @@ class DescriptionType extends AbstractType
         ->add('description', TextareaType::class, [
             'label' => false,
             'attr' => [
-                'class' => 'suscribe-input',
+                'class' => 'edit-input',
                 'placeholder' => 'Description'
             ]
         ])

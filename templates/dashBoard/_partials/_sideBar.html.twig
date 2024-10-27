@@ -1,36 +1,79 @@
-<aside>
-			<div class="account-nav">
+<div class="sidebar">
 
-				<div>
-					<span class="linkIcon"></span>
-					<a href="{{ path('app_user_profile_verify') }}" class="{% if app.request.attributes.get('_route') == 'app_user_profile_verify' %}active{% endif %}">Vérifier mon profil</a>
-				</div>
-
-				<div>
-					<span class="linkIcon"></span>
-					<a href="{{ path('app_user_profile_edit') }}" class="{% if app.request.attributes.get('_route') == 'app_user_profile_edit' %}active{% endif %}">Modifier mon profil</a>
-				</div>
-
-				<div>
-					<span class="linkIcon"></span>
-					<a href="{{ path('app_user_edit') }}" class="{% if app.request.attributes.get('_route') == 'app_user_edit' %}active{% endif %}">Paramètres de compte</a>
-				</div>
-
-				<div>
-					<span class="linkIcon"></span>
-					<a href="" class="">Moyens de paiement</a>
-				</div>
+	<div class="top-section">
 
 
-				<div>
-					<span class="linkIcon"></span>
-					<a href="" class="">Paramètres de paiement</a>
-				</div>
+		<h3>Tableau de Bord</h3>
+		<ul>
+			{% if is_granted('ROLE_ADMIN')  %}
+				<li>
+					<a href="{{path('app_admin_dashboard')}}">
+						<i class="fas fa-tachometer-alt"></i>Tableau de bord</a>
+				</li>
+				<li>
+					<a href="{{path('app_admin_users')}}">
+						<i class="fas fa-users"></i>Utilisateurs</a>
+				</li>
+				<li>
+					<a href="{{path('app_admin_vehicles')}}">
+						<i class="fas fa-car"></i>Véhicules</a>
+				</li>
+				<li>
+					<a href="{{path('app_admin_rentals')}}">
+						<i class="fas fa-calendar-alt"></i>Locations</a>
+				</li>
+				<li>
+					<a href="#">
+						<i class="fas fa-file-alt"></i>Rapports</a>
+				</li>
+				<li>
+					<a href="#">
+						<i class="fas fa-cog"></i>Paramètres</a>
+				</li>
+				<br>
+				Interface Utilisateur
+				<br><br>
+			{% endif %}
+			<li>
+				<a href="{{path('app_admin_dashboard')}}">
+					<i class="fas fa-tachometer-alt"></i>Tableau de bord</a>
+			</li>
+			<li>
+				<a href="{{ path('app_user_profile_verify') }}">
+					<i class="fas fa-users"></i>Vérifier mon profil</a>
+			</li>
+			<li>
+				<a href="{{ path('app_user_profile_edit') }}">
+					<i class="fas fa-car"></i>Modifier mon profil</a>
+			</li>
+			<li>
+				<a href="{{ path('app_user_edit') }}">
+					<i class="fas fa-calendar-alt"></i>Paramètres de compte</a>
+			</li>
+			<li>
+				<a href="#">
+					<i class="fas fa-file-alt"></i>Moyens de paiement</a>
+			</li>
+			<li>
+				<a href="#">
+					<i class="fas fa-cog"></i>Paramètres de paiement</a>
+			</li>
+
+		</ul>
+	</div>
 
 
-				<div>
-					<span class="linkIcon"></span>
-					<a href="" class="">Notifications</a>
-				</div>
-			</div>
-		</aside>
+	<div class="bottom-section">
+		<div class="user-profile" onclick="window.location.href='{{ path('app_user_edit') }}'">
+
+			<img src="{{ asset('img/default-user-icon.png') }}" alt="Photo de profil">
+			<span>{{ app.user.profile.lastName}}
+				{{ app.user.profile.firstName}}</span>
+
+		</div>
+		<a href="{{path('app_logout')}}" class="logout">
+			<i class="fas fa-sign-out-alt"></i>
+		</a>
+
+	</div>
+</div>

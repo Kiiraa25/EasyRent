@@ -60,15 +60,7 @@ aside {
     color: #FF866F;
 }
 
-.container {
-    display: flex;
-    gap: 20px;
-    background-color: #F6F6F6;
-    border-radius: 15px;
-    box-shadow: rgba(0, 0, 0, 0.318) 2px 10px 20px 2px;
-    margin: 0px 20px 20px 20px;
-    /* align-items: baseline; */
-}
+
 
 .forms-section {
     display: flex;
@@ -98,12 +90,7 @@ aside {
     justify-content: space-between;
 }
 
-.right-side-dashBoard {
-    display: flex;
-    justify-content: center;
-    align-items: baseline;
-    /* padding-top: 20px; */
-}
+
 
 
 /* 

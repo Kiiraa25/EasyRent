@@ -22,7 +22,7 @@ class DrivingLicenseType extends AbstractType
         ->add('licenseNumber',TextType::class, [
             'label'=> 'Numéro de permis',
             'attr' => [
-                'class' => 'suscribe-input',
+                'class' => 'edit-input',
                 'placeholder' => 'Numéro de permis'
             ]
             ])
@@ -31,7 +31,7 @@ class DrivingLicenseType extends AbstractType
                 'widget' => 'single_text',
                 'label' => 'Date d"obtention',
                 'attr' => [
-                    'class' => 'suscribe-input',
+                    'class' => 'edit-input',
                     'placeholder' => 'Date d"obtention'
                 ]
             ])
@@ -40,7 +40,7 @@ class DrivingLicenseType extends AbstractType
                 'widget' => 'single_text',
                 'label' => 'date d"expiration',
                 'attr' => [
-                    'class' => 'suscribe-input',
+                    'class' => 'edit-input',
                     'placeholder' => 'date d"expiration'
                 ]
             ])
@@ -48,7 +48,7 @@ class DrivingLicenseType extends AbstractType
             ->add('countryOfIssue',TextType::class, [
                 'label'=> 'Pays de délivrence',
                 'attr' => [
-                    'class' => 'suscribe-input',
+                    'class' => 'edit-input',
                     'placeholder' => 'Pays de délivrence'
                 ]
                 ])

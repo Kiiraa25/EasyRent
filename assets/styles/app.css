@@ -1123,32 +1123,6 @@ main {
     color: white;
 }
 
-
-
-.step-indicators {
-    width: 350px;
-    display: flex;
-    justify-content: space-between;
-    /* margin-bottom: 20px; */
-}
-
-.step {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-color: #ddd;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    color: #fff;
-    transition: background-color 0.3s;
-}
-
-.step.active {
-    background-color: #007bff;
-}
-
 .hidden{
     display: none;
 }

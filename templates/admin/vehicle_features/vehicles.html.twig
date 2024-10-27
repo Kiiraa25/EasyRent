@@ -32,12 +32,12 @@
 							<td
 								class="actions">
 								<!-- Bouton de modification pour les véhicules actifs ou suspendus -->
-								{% if vehicle.status == constant('App\\Enum\\VehicleStatusEnum::ACTIVE') or vehicle.status == constant('App\\Enum\\VehicleStatusEnum::SUSPENDED') %}
+								{% if vehicle.status == constant('App\\Enum\\VehicleStatusEnum::ACTIVE') or vehicle.status == constant('App\\Enum\\VehicleStatusEnum::SUSPENDED') or vehicle.status == constant('App\\Enum\\VehicleStatusEnum::WAITING_FOR_VALIDATION')%}
 									<a href="{{ path('app_admin_vehicle_edit', { 'id': vehicle.id }) }}" class="btn btn-edit">Modifier</a>
 								{% endif %}
 
 								<!-- Formulaire pour activer/suspendre avec confirmation -->
-								{% if vehicle.status == constant('App\\Enum\\VehicleStatusEnum::ACTIVE') or vehicle.status == constant('App\\Enum\\VehicleStatusEnum::SUSPENDED') %}
+								{% if vehicle.status == constant('App\\Enum\\VehicleStatusEnum::ACTIVE') or vehicle.status == constant('App\\Enum\\VehicleStatusEnum::SUSPENDED') or vehicle.status == constant('App\\Enum\\VehicleStatusEnum::WAITING_FOR_VALIDATION') %}
 									<form action="{{ path('app_admin_vehicle_toggle_status', { 'id': vehicle.id }) }}" method="post" style="display:inline;" onsubmit="return confirm('Êtes-vous sûr de vouloir {{ vehicle.status == constant('App\\Enum\\VehicleStatusEnum::SUSPENDED') ? 'réactiver' : 'suspendre' }} ce véhicule ?');">
 										<button type="submit" class="btn btn-toggle-status">
 											{{ vehicle.status == constant('App\\Enum\\VehicleStatusEnum::SUSPENDED') ? 'Réactiver' : 'Suspendre' }}

@@ -20,7 +20,7 @@ class PersonalInfoType extends AbstractType
         ->add('lastName', TextType::class, [
             'label' => false,
             'attr' => [
-                'class' => 'suscribe-input',
+                'class' => 'edit-input',
                 'placeholder' => 'Nom'
             ]
         ])
@@ -28,7 +28,7 @@ class PersonalInfoType extends AbstractType
         ->add('firstName', TextType::class, [
             'label' => false,
             'attr' => [
-                'class' => 'suscribe-input',
+                'class' => 'edit-input',
                 'placeholder' => 'Prénom'
             ]
         ])
@@ -37,7 +37,7 @@ class PersonalInfoType extends AbstractType
             'widget' => 'single_text',
             'label' => false,
             'attr' => [
-                'class' => 'suscribe-input',
+                'class' => 'edit-input',
                 'placeholder' => 'Birth Date'
             ]
         ])
@@ -45,7 +45,7 @@ class PersonalInfoType extends AbstractType
         ->add('phone', TextType::class, [
             'label' => false,
             'attr' => [
-                'class' => 'suscribe-input',
+                'class' => 'edit-input',
                 'placeholder' => 'Téléphone'
             ]
         ])

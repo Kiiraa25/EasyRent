@@ -21,7 +21,7 @@ class UserProfileType extends AbstractType
         ->add('lastName', TextType::class, [
             'label' => false,
             'attr' => [
-                'class' => 'suscribe-input',
+                'class' => 'edit-input',
                 'placeholder' => 'Nom'
             ]
         ])
@@ -29,7 +29,7 @@ class UserProfileType extends AbstractType
         ->add('firstName', TextType::class, [
             'label' => false,
             'attr' => [
-                'class' => 'suscribe-input',
+                'class' => 'edit-input',
                 'placeholder' => 'Prénom'
             ]
         ])
@@ -38,7 +38,7 @@ class UserProfileType extends AbstractType
             'widget' => 'single_text',
             'label' => false,
             'attr' => [
-                'class' => 'suscribe-input',
+                'class' => 'edit-input',
                 'placeholder' => 'Birth Date'
             ]
         ])
@@ -46,35 +46,35 @@ class UserProfileType extends AbstractType
             ->add('address', TextType::class, [
                 'label' => false,
                 'attr' => [
-                    'class' => 'suscribe-input',
+                    'class' => 'edit-input',
                     'placeholder' => 'adresse'
                 ]
             ])
             ->add('postalCode', TextType::class, [
                 'label' => false,
                 'attr' => [
-                    'class' => 'suscribe-input',
+                    'class' => 'edit-input',
                     'placeholder' => 'Code postal'
                 ]
             ])
             ->add('city', TextType::class, [
                 'label' => false,
                 'attr' => [
-                    'class' => 'suscribe-input',
+                    'class' => 'edit-input',
                     'placeholder' => 'Ville'
                 ]
             ])
             ->add('country', TextType::class, [
                 'label' => false,
                 'attr' => [
-                    'class' => 'suscribe-input',
+                    'class' => 'edit-input',
                     'placeholder' => 'Pays'
                 ]
             ])
             ->add('phone', TextType::class, [
                 'label' => false,
                 'attr' => [
-                    'class' => 'suscribe-input',
+                    'class' => 'edit-input',
                     'placeholder' => 'Téléphone'
                 ]
             ])

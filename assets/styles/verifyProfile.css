@@ -1,41 +1,87 @@
+.step-indicators {
+    width: 400px;
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    top: 22px;
+    /* margin-bottom: 20px; */
+}
+
+.step {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #fff;
+    transition: background-color 0.3s;
+}
+
+.step.active {
+    background-color: #FF866F;
+}
+
+
 .profile-verification {
     display: flex;
     flex-direction: column;
-    gap: 70px;
-    width: 1020px;
-    height: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 90%;
+    height: 70vh;
 }
-
 
 .profile-verification .form-step {
     display: flex;
     align-items: center;
-    gap: 150px;
+    justify-content: center;
     margin-bottom: 20px;
+    width: 100%;
+}
+
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
 }
 
 label {
     display: block;
 }
 
+.edit-input {
+    width: 60vw;
+    padding: 10px;
+    margin: 8px 0 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.edit-input:focus {
+    border-color: #FF866F;
+    outline: none;
+    box-shadow: 0 0 4px rgba(255, 134, 111, 0.4);
+}
+
 .verifying-form-block {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-}
-
-.personalInfo .suscribe-input {
-    width: 500px;
 }
 
 .profile-picture {
-    max-width: 200px;
-    height: 220px;
-    background-color: bisque;
+    height: 200px;
+    width: 180px;
+    background-color: #ffffff;
 }
 
 .profile-picture img {
-    width: 200px;
+    width: 180px;
     height: auto;
 }
 
@@ -43,10 +89,8 @@ label {
     overflow: hidden;
 }
 
-.profile-picture-block{
+.profile-picture-block {
     display: flex;
-    align-items: center;
-    height: 346px;
-    padding-top: 55px;
-    gap: 20px;
+    justify-content: center;
+    gap: 25px;
 }
