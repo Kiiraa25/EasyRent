@@ -30,18 +30,20 @@ class AdminController extends AbstractController
     ): Response {
         // Calcul des statistiques globales
         $inscriptionsCount = $userRepository->count([]);
-        $activeRentalsCount = $rentalRepository->count(['status' => 'ACTIVE']);
-        $availableVehiclesCount = $vehicleRepository->count(['status' => 'AVAILABLE']);
+        $rentalsCount = $rentalRepository->count();
+        $vehiclesCount = $vehicleRepository->count();
 
         // Obtenir les données mensuelles pour l'année en cours
         $monthlySignups = $userRepository->getMonthlySignupsForCurrentYear();
         $monthlyRentals = $rentalRepository->getMonthlyRentalsForCurrentYear();
         $monthlyRevenues = $rentalRepository->getMonthlyRevenuesForCurrentYear();
+        $globalRevenu = $rentalRepository->calculateTotalRevenue();
 
         return $this->render('admin/index.html.twig', [
             'inscriptions_count' => $inscriptionsCount,
-            'active_rentals_count' => $activeRentalsCount,
-            'available_vehicles_count' => $availableVehiclesCount,
+            'rentals_count' => $rentalsCount,
+            'vehicles_count' => $vehiclesCount,
+            'globalRevenu' => $globalRevenu,
             'monthly_signups' => $monthlySignups,
             'monthly_rentals' => $monthlyRentals,
             'monthly_revenues' => $monthlyRevenues,

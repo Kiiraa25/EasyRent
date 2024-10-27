@@ -1,57 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block importmap %}
-	{{ importmap(['app','dashbordStyle']) }}
+	{{ importmap(['app','dashbordStyle', 'adminDashboardStyle']) }}
 {% endblock %}
 
 {% block title %}Tableau de Bord Administrateur
 {% endblock %}
 
 {% block stylesheets %}
-	<style>
-		/* Styles généraux */
-		body {
-			font-family: Arial, sans-serif;
-			background-color: #f4f6f8;
-			display: flex;
-			margin: 0;
-			padding: 0;
-		}
-
-		/* Barre latérale */
-		.sidebar {
-			width: 240px;
-			background-color: #1f2b45;
-			color: white;
-			padding: 20px;
-		}
-
-		.sidebar h3 {
-			color: #ffffff;
-			margin-bottom: 40px;
-		}
-
-		.sidebar ul {
-			list-style-type: none;
-			padding: 0;
-		}
-
-		.sidebar li {
-			margin: 20px 0;
-		}
-
-		.sidebar a {
-			color: #ffffff;
-			text-decoration: none;
-			font-size: 1.1em;
-			display: flex;
-			align-items: center;
-		}
-
-		.sidebar a:hover {
-			color: #FF866F;
-		}
-	</style>
 {% endblock %}
 
 {% block body %}
@@ -60,7 +16,7 @@
 		<div class="sidebar">
 			<h3>Admin Dashboard</h3>
 			<ul>
-				<li><a href="#">Tableau de bord</a></li>
+				<li><a href="{{path('app_admin_dashboard')}}">Tableau de bord</a></li>
 				<li><a href="{{path('app_admin_users')}}">Utilisateurs</a></li>
 				<li><a href="{{path('app_admin_vehicles')}}">Véhicules</a></li>
 				<li><a href="{{path('app_admin_rentals')}}">Locations</a></li>

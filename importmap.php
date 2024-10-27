@@ -60,6 +60,10 @@ return [
         'path' => './assets/js/vehiclePhotoDynamicInput.js',
         'entrypoint' => true,
     ],
+    'adminDashboardStyle' => [
+        'path' => './assets/js/adminDashboardStyle.js',
+        'entrypoint' => true,
+    ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],

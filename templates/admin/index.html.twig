@@ -1,75 +1,28 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/base.html.twig' %}
 
 {% block title %}Tableau de bord Administrateur{% endblock %}
 
-{% block stylesheets %}
-<style>
-    .dashboard-container {
-        display: flex;
-        flex-direction: column;
-        gap: 50px;
-        padding: 20px;
-        background-color: #f7f9fc;
-    }
 
-    .dashboard-title {
-        color: #282F4B;
-        font-size: 24px;
-        font-weight: bold;
-        margin-bottom: 20px;
-    }
-
-    .indicators {
-        display: grid;
-        justify-content: center;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 20px;
-        width: 80vw;
-        margin: 0 auto;
-    }
-
-    .indicator-card {
-        background-color: #fff;
-        border-radius: 8px;
-        padding: 20px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        text-align: center;
-    }
-
-    .chart-container {
-        width: 80vw;
-        height: 300px;
-        margin: 0 auto;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .chart-title {
-        color: #282F4B;
-        font-size: 18px;
-        margin-bottom: 20px;
-    }
-</style>
-{% endblock %}
-
-{% block body %}
-<div class="dashboard-container">
+{% block content %}
+<div class="admin-dashboard-content">
     <h1 class="dashboard-title">Tableau de bord Administrateur</h1>
 
     <div class="indicators">
         <div class="indicator-card">
-            <div>Inscriptions</div>
+            <div>Utilisateurs</div>
             <div>{{ inscriptions_count }}</div>
         </div>
         <div class="indicator-card">
-            <div>Locations Actives</div>
-            <div>{{ active_rentals_count }}</div>
+            <div>Demandes de locations</div>
+            <div>{{ rentals_count }}</div>
         </div>
         <div class="indicator-card">
-            <div>Véhicules Disponibles</div>
-            <div>{{ available_vehicles_count }}</div>
+            <div>Véhicules</div>
+            <div>{{ vehicles_count }}</div>
+        </div>
+        <div class="indicator-card">
+            <div>Revenu global</div>
+            <div>{{ globalRevenu }} €</div>
         </div>
     </div>
 
