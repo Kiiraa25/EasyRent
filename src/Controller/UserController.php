@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Controller;
+
 use App\Entity\User;
 use App\Entity\UserProfile;
 use App\Form\UserType;
 use App\Enum\RoleEnum;
-
+use App\Enum\UserStatusEnum;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,9 +23,9 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class UserController extends AbstractController
 {
 
-  //UPDATE EMAIL & PASSWORD // DELETE USER
-  #[Route('/user/edit', name: 'app_user_edit')]
-  #[IsGranted('ROLE_USER')]
+    //UPDATE EMAIL & PASSWORD // DELETE USER
+    #[Route('/user/edit', name: 'app_user_edit')]
+    #[IsGranted('ROLE_USER')]
     public function edit(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager, TokenStorageInterface $tokenStorage): Response
     {
         /** @var User $user */
@@ -60,12 +61,12 @@ class UserController extends AbstractController
             $password = $deleteAccountForm->get('password')->getData();
             if ($passwordHasher->isPasswordValid($user, $password)) {
 
-                $tokenStorage->setToken(null);
-                $request->getSession()->invalidate();
+                $user->setStatus(UserStatusEnum::SUPPRIME);
+                $user->getProfile()->setUpdatedAt(new \DateTimeImmutable());
 
-                $entityManager->remove($user);
+
                 $entityManager->flush();
-
+                $request->getSession()->invalidate();
                 $this->addFlash('success', 'Votre compte a été supprimé avec succès.');
 
                 return $this->redirectToRoute('app_home');
@@ -74,7 +75,7 @@ class UserController extends AbstractController
             }
         }
 
-        return $this->render('registration/editUser.html.twig', [
+        return $this->render('dashBoard/user/user_account/editUser.html.twig', [
             'ChangeEmailForm' => $changeEmailForm,
             'ChangePasswordForm' => $changePasswordForm,
             'DeleteAccountForm' => $deleteAccountForm,
@@ -101,7 +102,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_user_edit_email');
         }
 
-        return $this->render('registration/editEmail.html.twig', [
+        return $this->render('dashBoard/user/user_account/editEmail.html.twig', [
             'ChangeEmailForm' => $changeEmailForm
         ]);
     }
@@ -128,7 +129,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_user_edit_password');
         }
 
-        return $this->render('registration/editPassword.html.twig', [
+        return $this->render('dashBoard/user/user_account/editPassword.html.twig', [
             'ChangePasswordForm' => $changePasswordForm
         ]);
     }
@@ -164,13 +165,10 @@ class UserController extends AbstractController
             }
         }
 
-        return $this->render('registration/deleteAccount.html.twig', [
+        return $this->render('dashBoard/user/user_account/deleteAccount.html.twig', [
             'DeleteAccountForm' => $deleteAccountForm
         ]);
     }
-
-
-
 }
 
 // // READ

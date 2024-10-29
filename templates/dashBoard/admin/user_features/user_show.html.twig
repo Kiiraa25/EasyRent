@@ -1,0 +1,212 @@
+{% extends 'dashBoard/base.html.twig' %}
+
+{% block title %}Profil de
+	{{ user.profile.firstName }}
+	{{ user.profile.lastName }}
+{% endblock %}
+
+{% block stylesheets %}
+	<style>
+		/* Global styles */
+		body {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.profile-container {
+			max-width: 800px;
+			background-color: #ffffff;
+			border-radius: 8px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			padding: 20px;
+			margin-top: 20px;
+		}
+
+		.profile-header {
+			display: flex;
+			align-items: center;
+			border-bottom: 2px solid #FF866F;
+			padding-bottom: 15px;
+			margin-bottom: 20px;
+		}
+
+		.profile-picture img {
+			border-radius: 50%;
+			width: 150px;
+			height: 150px;
+			object-fit: cover;
+			margin-right: 20px;
+		}
+
+		.profile-info h1 {
+			color: #282F4B;
+			margin: 0;
+		}
+
+		.profile-info p {
+			color: #666;
+			margin: 5px 0;
+		}
+
+		.section {
+			margin-top: 30px;
+		}
+
+		.section h2 {
+			color: #282F4B;
+			border-bottom: 1px solid #FF866F;
+			padding-bottom: 8px;
+			margin-bottom: 15px;
+			font-size: 1.2em;
+		}
+
+		.section-content p {
+			color: #333;
+			margin: 5px 0;
+		}
+
+		.reservation,
+		.review {
+			background-color: #f9f9f9;
+			padding: 10px;
+			border: 1px solid #ddd;
+			border-radius: 5px;
+			margin-bottom: 10px;
+		}
+
+		.back-link {
+			display: inline-block;
+			margin-top: 15px;
+			color: #282F4B;
+			text-decoration: none;
+			font-weight: bold;
+		}
+	</style>
+{% endblock %}
+
+{% block body %}
+	<div class="profile-container">
+		<div class="profile-header">
+			<div class="profile-picture">
+				{% if user.profile.picture is not null %}
+					<img src="{{ vich_uploader_asset(user.profile, 'imageFile') }}" alt="Photo de profil de {{ user.profile.firstName }}">
+				{% else %}
+					<img src="{{ asset('/img/default-user-icon.png') }}" alt="Photo de profil par défaut">
+				{% endif %}
+			</div>
+			<div class="profile-info">
+				<h1>{{ user.profile.firstName }}
+					{{ user.profile.lastName }}</h1>
+				<p>
+					<strong>Email:</strong>
+					{{ user.email }}</p>
+				<p>
+					<strong>Note:</strong>
+					{{ user.profile.rating }}
+					/ 5</p>
+			</div>
+		</div>
+
+		<div class="section">
+			<h2>Informations Personnelles</h2>
+			<div class="section-content">
+				<p>
+					<strong>Description:</strong>
+					{{ user.profile.description ?: 'Non renseigné' }}</p>
+				<p>
+					<strong>Date de Naissance:</strong>
+					{{ user.profile.birthDate ? user.profile.birthDate|date('d/m/Y') : 'Non renseigné' }}</p>
+				<p>
+					<strong>Adresse:</strong>
+					{{ user.profile.address ?: 'Non renseigné' }}</p>
+				<p>
+					<strong>Code Postal:</strong>
+					{{ user.profile.postalCode ?: 'Non renseigné' }}</p>
+				<p>
+					<strong>Ville:</strong>
+					{{ user.profile.city ?: 'Non renseigné' }}</p>
+				<p>
+					<strong>Téléphone:</strong>
+					{{ user.profile.phone ?: 'Non renseigné' }}</p>
+				<p>
+					<strong>Pays:</strong>
+					{{ user.profile.country ?: 'Non renseigné' }}</p>
+			</div>
+		</div>
+
+		<div class="section">
+			<h2>Réservations de
+				{{ user.profile.firstName }}</h2>
+			<div class="section-content">
+				{% for reservation in reservations %}
+					<div class="reservation">
+						<p>
+							<strong>Véhicule:</strong>
+							{{ reservation.vehicle.model.name }}
+							-
+							{{ reservation.vehicle.model.brand.name }}</p>
+						<p>
+							<strong>Du:</strong>
+							{{ reservation.startDate|date('d/m/Y') }}
+							<strong>au:</strong>
+							{{ reservation.endDate|date('d/m/Y') }}</p>
+						<p>
+							<strong>Status:</strong>
+							{{ reservation.status.value }}</p>
+					</div>
+				{% else %}
+					<p>Aucune réservation enregistrée.</p>
+				{% endfor %}
+			</div>
+		</div>
+
+
+		<div class="section">
+			<h2>Avis Reçus</h2>
+			<div class="section-content">
+				{% for review in receivedReviews %}
+					<div class="review">
+						<p>
+							<strong>De:</strong>
+							{{ review.reviewer.profile.firstName }}
+							{{ review.reviewer.profile.lastName }}</p>
+						<p>
+							<strong>Commentaire:</strong>
+							{{ review.comment }}</p>
+						<p>
+							<strong>Note:</strong>
+							{{ review.rating }}
+							/ 5</p>
+					</div>
+				{% else %}
+					<p>Aucun avis reçu.</p>
+				{% endfor %}
+			</div>
+		</div>
+
+		<div class="section">
+			<h2>Avis Émis</h2>
+			<div class="section-content">
+				{% for review in givenReviews %}
+					<div class="review">
+						<p>
+							<strong>À:</strong>
+							{{ review.reviewed.profile.firstName }}
+							{{ review.reviewed.profile.lastName }}</p>
+						<p>
+							<strong>Commentaire:</strong>
+							{{ review.comment }}</p>
+						<p>
+							<strong>Note:</strong>
+							{{ review.rating }}
+							/ 5</p>
+					</div>
+				{% else %}
+					<p>Aucun avis émis.</p>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+	<a href="{{ path('app_admin_users') }}" class="back-link">Retour à la liste des utilisateurs</a>
+{% endblock %}

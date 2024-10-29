@@ -18,38 +18,48 @@ class VehicleType extends AbstractType
             
             ->add('mileage', IntegerType::class, [
                 'label' => 'Kilométrage',
+                'attr' => ['class' => 'edit-input'],
             ])
             ->add('doors', IntegerType::class, [
                 'label' => 'Nombre de portes',
+                'attr' => ['class' => 'edit-input'],
             ])
             ->add('seats', IntegerType::class, [
                 'label' => 'Nombre de sièges',
+                'attr' => ['class' => 'edit-input'],
             ])
             ->add('description', TextType::class, [
                 'label' => 'Description',
+                'attr' => ['class' => 'edit-input'],
             ])
             ->add('color', TextType::class, [
                 'label' => 'Couleur',
+                'attr' => ['class' => 'edit-input'],
             ])
             ->add('extraMileageRate', IntegerType::class, [
                 'label' => 'Tarif supplémentaire/km',
+                'attr' => ['class' => 'edit-input'],
             ])
             ->add('pricePerDay', MoneyType::class, [
                 'label' => 'Tarif/jour',
                 // 'currency' => 'EUR',
                 'scale' => 2,
+                'attr' => ['class' => 'edit-input'],
             ])
 
             ->add('address', TextType::class, [
                 'label' => 'Adresse',
+                'attr' => ['class' => 'edit-input'],
             ])
 
             ->add('postalCode', IntegerType::class, [
                 'label' => 'Code postal',
+                'attr' => ['class' => 'edit-input'],
             ])
             ->add('city', TextType::class, [
                 'attr' => [
-                    'data-action' => 'address-input'
+                    'data-action' => 'address-input',
+                    'class' => 'edit-input'
                 ]
             ])
         ;

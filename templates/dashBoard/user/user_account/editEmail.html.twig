@@ -1,0 +1,35 @@
+{% extends 'dashBoard/base.html.twig' %}
+{# {% extends 'base.html.twig' %} #}
+
+{% block importmap %}
+{{ parent() }}
+	{{ importmap(['componentsStyle']) }}
+{% endblock %}
+
+{% block title %}Modifier mon compte
+{% endblock %}
+
+{% block content %}
+	{% for flash_error in app.flashes('verify_email_error') %}
+		<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+	{% endfor %}
+
+	<section class="admin-dashboard-content">
+		<h1 class="dashboard-title">Modifier mon email</h1>
+
+		{{ form_start(ChangeEmailForm) }}
+		<h3>Modifier mon email</h3>
+		{{ form_row(ChangeEmailForm.email) }}
+		{{ form_row(ChangeEmailForm.current_password) }}
+
+
+		<div class="form-submit-block">
+			<a href="{{ path('app_user_edit') }}" class="back-link">Retour aux paramètres de compte</a>
+			<button type="submit" class="nav-button"  onclick="return confirm('Êtes-vous sûr de vouloir appliquer ces modifications ?');">Modifier</button>
+		</div>
+
+		{{ form_end(ChangeEmailForm) }}
+
+
+	</section>
+{% endblock %}

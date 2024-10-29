@@ -1,0 +1,37 @@
+{% extends 'dashBoard/base.html.twig' %}
+
+{% block importmap %}
+{{ parent() }}
+	{{ importmap(['componentsStyle']) }}
+{% endblock %}
+
+{% block content %}
+
+
+	<section class="admin-dashboard-content">
+		<h1 class="dashboard-title">
+			Modifier mon profil
+		</h1>
+
+		{{ form_start(form) }}
+
+
+		<h3>Adresse</h3>
+		{{ form_row(form.address,{ label: 'Adresse'}) }}
+		{{ form_row(form.postalCode,{ label: 'Code postal'}) }}
+		{{ form_row(form.city,{ label: 'Ville'}) }}
+		{{ form_row(form.country,{ label: 'Pays'}) }}
+
+
+		<div class="form-submit-block">
+			<a href="{{ path('app_user_profile_edit') }}" class="back-link">Retour à la page profil</a>
+
+			<button type="submit" class="nav-button">Modifier</button>
+		</div>
+		{{ form_end(form) }}
+
+
+	</section>
+
+
+{% endblock %}

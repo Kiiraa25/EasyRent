@@ -28,58 +28,52 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+{
+    $user = new User();
+    $userProfile = new UserProfile();
+    $user->setProfile($userProfile);
+
+    $form = $this->createForm(RegistrationFormType::class, $user);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) 
     {
-        $user = new User();
-        $userProfile = new UserProfile();
+        $userProfile->setCreatedAt(new \DateTimeImmutable());
+        $userProfile->setUpdatedAt(new \DateTimeImmutable());
+        $userProfile->setRating(0);
+        $userProfile->setVerified(false);
 
-        $form = $this->createForm(RegistrationFormType::class, $user);
-        $form->handleRequest($request);
-
-        $nameForm = $this->createForm(NameUserProfileType::class, $userProfile);
-        $nameForm->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $user->setProfile($userProfile);
-            $userProfile->setCreatedAt(new \DateTimeImmutable());
-            $userProfile->setUpdatedAt(new \DateTimeImmutable());
-            $userProfile->setRating(0);
-            $userProfile->setVerified(false);
-
-
-            $user->setStatus(UserStatusEnum::INACTIF);
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
-
-            $entityManager->persist($userProfile);
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation(
-                'app_verify_email',
+        $user->setStatus(UserStatusEnum::INACTIF);
+        $user->setPassword(
+            $userPasswordHasher->hashPassword(
                 $user,
-                (new TemplatedEmail())
-                    ->from(new Address('easy_rent@registration.com', 'easy_rent'))
-                    ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
-            );
+                $form->get('plainPassword')->getData()
+            )
+        );
 
-            // do anything else you need here, like send an email
+        $entityManager->persist($userProfile);
+        $entityManager->persist($user);
+        $entityManager->flush();
 
-            return $this->redirectToRoute('app_login');
-        }
+        $this->emailVerifier->sendEmailConfirmation(
+            'app_verify_email',
+            $user,
+            (new TemplatedEmail())
+                ->from(new Address('easy_rent@registration.com', 'easy_rent'))
+                ->to($user->getEmail())
+                ->subject('Please Confirm your Email')
+                ->htmlTemplate('registration/confirmation_email.html.twig')
+        );
 
-        return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form,
-            'nameForm' => $nameForm
-        ]);
+        return $this->redirectToRoute('app_login');
     }
+
+    return $this->render('registration/register.html.twig', [
+        'registrationForm' => $form,
+    ]);
+}
+
 
     #[Route('/verify/email', name: 'app_verify_email')]
     public function verifyUserEmail(Request $request, TranslatorInterface $translator, UserRepository $userRepository, EntityManagerInterface $entityManager): Response

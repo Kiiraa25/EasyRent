@@ -16,7 +16,7 @@ class DeleteAccountType extends AbstractType
                 'mapped' => false,
                 'label'=> false,
                 'attr' => [
-                    'class' => 'suscribe-input',
+                    'class' => 'edit-input',
                     'placeholder' => 'Mot de passe'
                 ]
                 ]);

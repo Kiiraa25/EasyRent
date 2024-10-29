@@ -1,0 +1,73 @@
+{% extends 'dashBoard/base.html.twig' %}
+
+{% block title %}Tableau de bord Administrateur{% endblock %}
+
+
+{% block content %}
+<div class="admin-dashboard-content">
+    <h1 class="dashboard-title">Tableau de bord Administrateur</h1>
+
+    <div class="indicators">
+        <div class="indicator-card">
+            <div>Utilisateurs</div>
+            <div>{{ inscriptions_count }}</div>
+        </div>
+        <div class="indicator-card">
+            <div>Demandes de locations</div>
+            <div>{{ rentals_count }}</div>
+        </div>
+        <div class="indicator-card">
+            <div>Véhicules</div>
+            <div>{{ vehicles_count }}</div>
+        </div>
+        <div class="indicator-card">
+            <div>Revenu global</div>
+            <div>{{ globalRevenu }} €</div>
+        </div>
+    </div>
+
+    <div class="chart-container">
+        <h2 class="chart-title">Statistiques Mensuelles</h2>
+        <canvas id="monthlyStatsChart"></canvas>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('monthlyStatsChart').getContext('2d');
+    const monthlyStatsChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            datasets: [
+                {
+                    label: 'Inscriptions',
+                    data: {{ monthly_signups|json_encode|raw }},
+                    borderColor: '#D9D9D9',
+                    fill: false
+                },
+                {
+                    label: 'Locations',
+                    data: {{ monthly_rentals|json_encode|raw }},
+                    borderColor: '#1f2b45',
+                    fill: false
+                },
+                {
+                    label: 'Revenus (€)',
+                    data: {{ monthly_revenues|json_encode|raw }},
+                    borderColor: '#EB8072',
+                    fill: false
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: { display: true, title: { display: true, text: 'Mois' } },
+                y: { display: true, title: { display: true, text: 'Valeur' }, beginAtZero: true }
+            }
+        }
+    });
+</script>
+{% endblock %}

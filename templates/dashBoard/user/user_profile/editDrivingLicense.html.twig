@@ -1,0 +1,55 @@
+{% extends 'dashBoard/base.html.twig' %}
+
+{% block importmap %}
+{{ parent() }}
+	{{ importmap(['componentsStyle']) }}
+
+{% endblock %}
+
+{% block content %}
+
+
+	<section class="admin-dashboard-content">
+		<h1 class="dashboard-title">
+			Modifier mon profil
+		</h1>
+
+
+		{{ form_start(form) }}
+
+		<div class="form-step-2">
+			<article class="profile-picture-block">
+				<div class="profile-picture">
+					{{ form_row(form.frontImageFile) }}
+				</div>
+
+				<div class="profile-picture">
+					{{ form_row(form.backImageFile) }}
+					<div></article>
+					<div class="form-step">
+						<div class="verifying-form-block">
+							<h3>Permis de conduire</h3>
+							{{ form_row(form.licenseNumber) }}
+							{{ form_row(form.issueDate) }}
+							{{ form_row(form.expiryDate) }}
+							{{ form_row(form.countryOfIssue) }}
+						</div>
+
+
+					</div>
+				</div>
+				
+				<div class="form-submit-block">
+				<a href="{{ path('app_user_profile_edit') }}" class="back-link">Retour à la page profil</a>
+				
+				<button type="submit" class="nav-button">Modifier</button>
+				</div>
+				{{ form_end(form) }}
+
+				
+
+
+			</section>
+
+
+		{% endblock %}

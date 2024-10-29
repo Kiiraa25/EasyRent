@@ -1,0 +1,70 @@
+{% extends 'dashBoard/base.html.twig' %}
+
+{% block title %}Liste des Utilisateurs
+{% endblock %}
+
+{% block content %}
+	<div class="admin-dashboard-content">
+		<h1 class="dashboard-title">Liste des Utilisateurs</h1>
+		<div class="table-container">
+			<table>
+				<thead>
+					<tr>
+						<th>Nom</th>
+						<th>Prénom</th>
+						<th>Email</th>
+						<th>Rôles</th>
+						<th>Status</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for user in users %}
+						<tr onclick="window.location.href='{{ path('app_admin_user_profile', {'id': user.id}) }}'" style="cursor: pointer;">
+							<td>{{ user.profile.lastName }}</td>
+							<td>{{ user.profile.firstName }}</td>
+							<td>{{ user.email }}</td>
+							<td>{{ user.roles | join(', ') }}</td>
+							<td>{{ user.status.value }}</td>
+
+							<td class="actions">
+								{% if user.id != app.user.id %}
+									<!-- Bouton de modification : affiché uniquement pour les utilisateurs actifs, bannis ou inactifs -->
+									{% if user.status == constant('App\\Enum\\UserStatusEnum::ACTIF') or user.status == constant('App\\Enum\\UserStatusEnum::BANNI') or user.status == constant('App\\Enum\\UserStatusEnum::INACTIF') %}
+										<a href="{{ path('app_admin_user_edit', { 'id': user.id }) }}" class="btn btn-edit">Modifier</a>
+									{% endif %}
+
+									<!-- Formulaire pour bannir/dé-bannir avec confirmation -->
+									{% if user.status == constant('App\\Enum\\UserStatusEnum::ACTIF') or user.status == constant('App\\Enum\\UserStatusEnum::INACTIF') or user.status == constant('App\\Enum\\UserStatusEnum::BANNI') %}
+										<form action="{{ path('app_admin_user_toggle_ban', { 'id': user.id }) }}" method="post" style="display:inline;" onsubmit="return confirm('Êtes-vous sûr de vouloir {{ user.status == constant('App\\Enum\\UserStatusEnum::BANNI') ? 'dé-bannir' : 'bannir' }} cet utilisateur ?');">
+											<button type="submit" class="btn btn-toggle-status">
+												{{ user.status == constant('App\\Enum\\UserStatusEnum::BANNI') ? 'Dé-bannir' : 'Bannir' }}
+											</button>
+										</form>
+									{% endif %}
+
+									<!-- Formulaire pour suppression avec confirmation -->
+									{% if user.status != constant('App\\Enum\\UserStatusEnum::SUPPRIME') %}
+										<form action="{{ path('app_admin_user_delete', { 'id': user.id }) }}" method="post" style="display:inline;" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">
+											<button type="submit" class="btn btn-delete">Supprimer</button>
+										</form>
+									{% endif %}
+								{% else %}
+									<!-- Message d’information pour l'admin connecté -->
+									<span>Aucune action disponible.</span>
+
+								{% endif %}
+							</td>
+						</tr>
+					{% else %}
+						<tr>
+							<tdcolspan="5"style="text-align:center;">Aucun utilisateur trouvé.</td>
+						</tr>
+					{% endfor %}
+
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endblock %}

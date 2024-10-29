@@ -38,7 +38,7 @@ class AdminUserController extends AbstractController
             return $order[$a->getStatus()->value] <=> $order[$b->getStatus()->value];
         });
 
-        return $this->render('admin/user_features/users.html.twig', [
+        return $this->render('dashBoard/admin/user_features/users.html.twig', [
             'users' => $users,
         ]);
     }
@@ -61,7 +61,7 @@ class AdminUserController extends AbstractController
             return $this->redirectToRoute('app_admin_users');
         }
 
-        return $this->render('admin/user_features/user_edit.html.twig', [
+        return $this->render('dashBoard/admin/user_features/user_edit.html.twig', [
             'form' => $form,
         ]);
     }
@@ -107,7 +107,7 @@ class AdminUserController extends AbstractController
         $receivedReviews = $entityManager->getRepository(Rating::class)->findAll();
         $givenReviews = $entityManager->getRepository(Rating::class)->findAll();
 
-        return $this->render('admin/user_features/user_show.html.twig', [
+        return $this->render('dashBoard/admin/user_features/user_show.html.twig', [
             'user' => $user,
             'reservations' => $reservations,
             'receivedReviews' => $receivedReviews,

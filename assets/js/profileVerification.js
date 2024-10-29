@@ -1,3 +1,6 @@
+// Formulaire multi-étapes
+// Route : app_user_profile_verify
+
 document.addEventListener("DOMContentLoaded", function () {
     const prevButton = document.querySelector('.prev');
     const nextButton = document.querySelector('.next');

@@ -1,0 +1,43 @@
+{% extends 'dashBoard/base.html.twig' %}
+{# {% extends 'base.html.twig' %} #}
+
+{% block title %}Modifier mon compte
+{% endblock %}
+
+{% block content %}
+	{% for flash_error in app.flashes('verify_email_error') %}
+		<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+	{% endfor %}
+
+	<div class="admin-dashboard-content">
+		<h1 class="dashboard-title">Mon compte</h1>
+    
+		<section class="account-blocks">
+			<article>
+				<div class="edit-img"><img src="{{ asset('/img/changeEmail.png') }}" alt=""></div>
+				<div class="text-block">
+					<h3>Adresse mail</h3>
+					<p>Vous avez changé d'adresse mail ? c'est par ici !</p>
+				</div>
+				<a class="edit-icon" href="{{ path('app_user_edit_email') }}"></a>
+
+			</article>
+			<article>
+				<div class="edit-img"><img src="{{ asset('/img/changePassword.png') }}" alt=""></div>
+				<div class="text-block">
+					<h3>Mot de passe</h3>
+					<p>Une envie de changer de mot de passe ? c'est par ici !</p>
+				</div>
+				<a class="edit-icon" href="{{ path('app_user_edit_password') }}"></a>
+			</article>
+			<article>
+				<div class="edit-img"><img src="{{ asset('/img/deleteAccount.png') }}" alt=""></div>
+				<div class="text-block">
+					<h3>Suppression de compte</h3>
+					<p>Cette action est irréversible !</p>
+				</div>
+				<a class="edit-icon" href="{{ path('app_user_delete_account') }}"></a>
+			</article>
+		</section>
+	</div>
+{% endblock %}

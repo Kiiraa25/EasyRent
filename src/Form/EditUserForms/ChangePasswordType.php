@@ -17,7 +17,7 @@ class ChangePasswordType extends AbstractType
                 'mapped' => false,
                 'label'=> false,
                 'attr' => [
-                    'class' => 'suscribe-input',
+                    'class' => 'edit-input',
                     'placeholder' => 'Ancien mot de passe'
                 ]
             ])
@@ -31,7 +31,7 @@ class ChangePasswordType extends AbstractType
                 'attr' => [
                     'autocomplete' => 'new-password',
                     'placeholder' => 'Nouveau mot de passe',
-                    'class' => 'suscribe-input'
+                    'class' => 'edit-input'
                 ]
             ],
             'second_options' => [
@@ -39,7 +39,7 @@ class ChangePasswordType extends AbstractType
                 'attr' => [
                     'autocomplete' => 'new-password',
                     'placeholder' => 'Répéter mot de passe',
-                    'class' => 'suscribe-input'
+                    'class' => 'edit-input'
                 ]
             ],
             ]);

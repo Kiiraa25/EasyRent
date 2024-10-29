@@ -1,0 +1,36 @@
+{% extends 'dashBoard/base.html.twig' %}
+
+{% block importmap %}
+{{ parent() }}
+	{{ importmap(['componentsStyle']) }}
+
+{% endblock %}
+
+{% block content %}
+
+	<section class="admin-dashboard-content">
+		<h1 class="dashboard-title">
+			Modifier mon profil
+		</h1>
+
+
+		{{ form_start(form) }}
+
+		<h3>Informations personnelles</h3>
+
+		{{ form_row(form.lastName,  { label: 'Prénom'}) }}
+		{{ form_row(form.firstName,  { label: 'Nom'}) }}
+		{{ form_row(form.birthDate,  { label: 'Date de naissance'}) }}
+		{{ form_row(form.phone,{ label: 'Numéro de téléphone'}) }}
+
+
+		<div class="form-submit-block">
+			<a href="{{ path('app_user_profile_edit') }}" class="back-link">Retour à la page profil</a>
+
+			<button type="submit" class="nav-button" onclick="return confirm('Êtes-vous sûr de vouloir modifier ces informations ?');">Modifier</button>
+		</div>
+		{{ form_end(form) }}
+	</section>
+
+
+{% endblock %}

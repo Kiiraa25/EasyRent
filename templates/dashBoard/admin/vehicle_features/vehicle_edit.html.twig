@@ -1,0 +1,76 @@
+{% extends 'dashBoard/base.html.twig' %}
+
+{% block importmap %}
+	{{ parent() }}
+	{{ importmap(['componentsStyle']) }}
+
+{% endblock %}
+
+{% block title %}Éditer le véhicule
+{% endblock %}
+
+{% block stylesheets %}
+	<style>
+
+		/* Form container */
+		.form-container {
+			width: 90%;
+			background-color: #ffffff;
+			border-radius: 8px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			padding: 20px 40px;
+			margin-top: 20px;
+			max-height: 85vh;
+			overflow: auto;
+		}
+
+		/* Form elements */
+		label {
+			color: #282F4B;
+			font-weight: bold;
+			margin-top: 15px;
+			display: inline-block;
+		}
+	</style>
+{% endblock %}
+
+{% block content %}
+	<section class="admin-dashboard-content">
+		<h1 class="dashboard-title">Éditer le véhicule</h1>
+
+		<div class="form-container">
+			{{ form_start(form) }}
+
+			{{ form_row(form.mileage)}}
+
+			{{ form_row(form.doors) }}
+
+			{{ form_row(form.seats) }}
+
+			{{ form_row(form.description) }}
+
+			{{ form_row(form.color) }}
+
+			{{ form_row(form.extraMileageRate) }}
+
+			{{ form_row(form.pricePerDay) }}
+
+			{{ form_row(form.address) }}
+
+			{{ form_row(form.postalCode) }}
+
+			{{ form_row(form.city) }}
+
+
+			<button type="submit" class="nav-button" onclick="return confirm('Êtes-vous sûr de vouloir modifier les informations de ce vehicule ?');">Mettre à jour le véhicule</button>
+
+
+			{{ form_end(form) }}
+
+		</div>
+
+		<div class="form-submit-block">
+			<a href="{{ path('app_admin_vehicles') }}" class="back-link">Retour à la liste des véhicules</a>
+		</div>
+	</section>
+{% endblock %}

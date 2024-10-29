@@ -1,0 +1,106 @@
+{% extends 'dashBoard/base.html.twig' %}
+
+{% block importmap %}
+{{ parent() }}
+	{{ importmap(['registerStyle', 'profileVerification', 'verifyProfileStyle', 'componentsStyle']) }}
+{% endblock %}
+
+{% block title %}Vérifier mon profile
+{% endblock %}
+
+{% block content %}
+
+	<div class="admin-dashboard-content">
+		<h1 class="dashboard-title">Vérifier mon profile</h1>
+		<section class="profile-verification">
+
+
+			{% if app.user.profile.isVerified == true %}
+				<p>Votre profil est déja vérifié ! modifier mon profil ?
+				</p>
+
+			{% else %}
+				<div class="step-indicators">
+					<div class="step" data-step="0">1</div>
+					<div class="step" data-step="1">2</div>
+					<div class="step" data-step="2">3</div>
+				</div>
+
+				{{ form_start(form) }}
+
+				{# FORM STEP 1 PERSONNAL INFO #}
+				<div class="form-step-1">
+					<article class="profile-picture-block">
+						<div class="profile-picture">
+							{{ form_row(form.imageFile,{ label: 'Photo de profil'}) }}
+						</div>
+					</article>
+					<div class="form-step">
+						<article class="verifying-form-block">
+							<h3>Informations personnelles</h3>
+
+							{{ form_row(form.lastName,  { label: 'Prénom'}) }}
+							{{ form_row(form.firstName,  { label: 'Nom'}) }}
+							{{ form_row(form.birthDate,  { label: 'Date de naissance'}) }}
+							{{ form_row(form.phone,{ label: 'Numéro de téléphone'}) }}
+						</article>
+
+
+					</div>
+				</div>
+
+
+				{# FORM STEP 2 Drinving License #}
+				<div class="form-step-2 hidden">
+					<article class="profile-picture-block">
+						<div class="profile-picture">
+							{{ form_row(form.drivingLicense.frontImageFile) }}
+						</div>
+
+						<div class="profile-picture">
+							{{ form_row(form.drivingLicense.backImageFile) }}
+						<div>
+					</article>
+							<div class="form-step">
+								<div class="verifying-form-block">
+									<h3>Permis de conduire</h3>
+									{{ form_row(form.drivingLicense.licenseNumber) }}
+									{{ form_row(form.drivingLicense.issueDate) }}
+									{{ form_row(form.drivingLicense.expiryDate) }}
+									{{ form_row(form.drivingLicense.countryOfIssue) }}
+								</div>
+
+
+							</div>
+				</div>
+
+						{# FORM STEP 3 ADDRESS #}
+						<div class="form-step-3 hidden">
+
+							<div class="form-step">
+								<div class="verifying-form-block">
+									<h3>Adresse</h3>
+									{{ form_row(form.address,{ label: 'Adresse'}) }}
+									{{ form_row(form.postalCode,{ label: 'Code postal'}) }}
+									{{ form_row(form.city,{ label: 'Ville'}) }}
+									{{ form_row(form.country,{ label: 'Pays'}) }}
+								</div>
+							</div>
+						</div>
+
+
+						<div class="buttons">
+
+							<button class="nav-button hidden prev">Précedent</button>
+							<button class="nav-button next">suivant</button>
+							<button type="submit" class="nav-button sendProfile hidden">Envoyer</button>
+						</div>
+						{{ form_end(form) }}
+
+
+					{% endif %}
+				</section>
+			</div>
+
+
+		{% endblock %}

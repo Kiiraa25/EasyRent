@@ -16,7 +16,7 @@ class ChangeEmailType extends AbstractType
             ->add('email', EmailType::class, [
                 'label' => false,
                 'attr' => [
-                    'class' => 'suscribe-input',
+                    'class' => 'edit-input',
                     'placeholder' => 'Nouvel Email'
                 ]
             ])
@@ -25,7 +25,7 @@ class ChangeEmailType extends AbstractType
                 'label' => false,
                'mapped' => false,
                 'attr' => [
-                    'class' => 'suscribe-input',
+                    'class' => 'edit-input',
                     'placeholder' => 'Mot de passe actuel'
                 ]
                 ]);

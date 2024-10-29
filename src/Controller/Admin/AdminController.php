@@ -39,7 +39,7 @@ class AdminController extends AbstractController
         $monthlyRevenues = $rentalRepository->getMonthlyRevenuesForCurrentYear();
         $globalRevenu = $rentalRepository->calculateTotalRevenue();
 
-        return $this->render('admin/index.html.twig', [
+        return $this->render('dashBoard/admin/index.html.twig', [
             'inscriptions_count' => $inscriptionsCount,
             'rentals_count' => $rentalsCount,
             'vehicles_count' => $vehiclesCount,

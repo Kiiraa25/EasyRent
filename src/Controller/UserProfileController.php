@@ -56,7 +56,7 @@ class UserProfileController extends AbstractController
             return $this->redirectToRoute('app_user_profile_edit');
         }
 
-        return $this->render('user_profile/verifyProfile.html.twig', [
+        return $this->render('dashBoard/user/user_profile/verifyProfile.html.twig', [
             'form' => $form,
             // 'imageForm' => $imageForm
         ]);
@@ -68,7 +68,7 @@ class UserProfileController extends AbstractController
     public function edit(Request $request, EntityManagerInterface $entityManager): Response
     {
 
-        return $this->render('user_profile/editProfile.html.twig');
+        return $this->render('dashBoard/user/user_profile/editProfile.html.twig');
     }
 
     //UPDATE PERSONAL INFORMATIONS
@@ -99,7 +99,7 @@ class UserProfileController extends AbstractController
             return $this->redirectToRoute('app_user_profile_edit');
         }
 
-        return $this->render('user_profile/editPersonalInfo.html.twig', [
+        return $this->render('dashBoard/user/user_profile/editPersonalInfo.html.twig', [
             'form' => $form,
         ]);
     }
@@ -132,7 +132,7 @@ class UserProfileController extends AbstractController
             return $this->redirectToRoute('app_user_profile_edit');
         }
 
-        return $this->render('user_profile/editAddress.html.twig', [
+        return $this->render('dashBoard/user/user_profile/editAddress.html.twig', [
             'form' => $form,
         ]);
     }
@@ -165,7 +165,7 @@ class UserProfileController extends AbstractController
             return $this->redirectToRoute('app_user_profile_edit');
         }
 
-        return $this->render('user_profile/editDescription.html.twig', [
+        return $this->render('dashBoard/user/user_profile/editDescription.html.twig', [
             'form' => $form,
         ]);
     }
@@ -198,7 +198,7 @@ class UserProfileController extends AbstractController
             return $this->redirectToRoute('app_user_profile_edit');
         }
 
-        return $this->render('user_profile/editDrivingLicense.html.twig', [
+        return $this->render('dashBoard/user/user_profile/editDrivingLicense.html.twig', [
             'form' => $form,
         ]);
     }
@@ -213,7 +213,7 @@ class UserProfileController extends AbstractController
             return $this->redirectToRoute('app_user_profile_edit');
         }
 
-        return $this->render('user_profile/showProfile.html.twig', [
+        return $this->render('dashBoard/user/user_profile/showProfile.html.twig', [
             'userProfile' => $userProfile,
             'user' => $user,
         ]);

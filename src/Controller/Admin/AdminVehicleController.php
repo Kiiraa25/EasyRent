@@ -39,7 +39,7 @@ class AdminVehicleController extends AbstractController
             return $order[$a->getStatus()->value] <=> $order[$b->getStatus()->value];
         });
 
-        return $this->render('admin/vehicle_features/vehicles.html.twig', [
+        return $this->render('dashBoard/admin/vehicle_features/vehicles.html.twig', [
             'vehicles' => $vehicles,
         ]);
     }
@@ -54,7 +54,7 @@ public function show(Vehicle $vehicle, RentalRepository $rentalRepository, Ratin
     // Récupérer les avis pour ce véhicule
     $reviews = $reviewRepository->findAll();
 
-    return $this->render('admin/vehicle_features/vehicle_show.html.twig', [
+    return $this->render('dashBoard/admin/vehicle_features/vehicle_show.html.twig', [
         'vehicle' => $vehicle,
         'rentals' => $rentals,
         'reviews' => $reviews,
@@ -104,7 +104,7 @@ public function edit(Vehicle $vehicle, Request $request, EntityManagerInterface 
     }
 
     // Affichage du formulaire d'édition de véhicule
-    return $this->render('admin/vehicle_features/vehicle_edit.html.twig', [
+    return $this->render('dashBoard/admin/vehicle_features/vehicle_edit.html.twig', [
         'form' => $form,
         'vehicle' => $vehicle,
     ]);

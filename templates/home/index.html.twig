@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block importmap %}
+{{ parent() }}
+	{{ importmap(['geolocation']) }}
+{% endblock %}
 
 {% block title %}Easy-Rent
 {% endblock %}
@@ -161,4 +165,5 @@
 
 
 	</section>
+
 {% endblock %}

@@ -157,10 +157,10 @@ class VehicleController extends AbstractController
     public function showVehicles(VehicleRepository $vehicleRepository, Request $request, DataGouvAddressService $DataGouvAddressService): Response
     {
 
-        $today = new \DateTime();
+        $today = (new \DateTime())->modify('+1 day');
         $todayString = $today->format('Y-m-d');
 
-        $endDate = (new \DateTime())->modify('+7 days');
+        $endDate = (new \DateTime())->modify('+8 days');
         $endDateString = $endDate->format('Y-m-d');
 
         // Récupérer les paramètres GET ou utiliser les valeurs par défaut
@@ -197,7 +197,6 @@ class VehicleController extends AbstractController
         ) {
 
 
-            $today = new \DateTimeImmutable();
             if ($startDate < $today || $endDate < $today || $endDate < $startDate) {
                 $this->addFlash('error', 'Les dates saisies ne sont pas valides');
                 return $this->redirectToRoute('app_vehicles');

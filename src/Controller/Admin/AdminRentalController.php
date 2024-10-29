@@ -42,7 +42,7 @@ class AdminRentalController extends AbstractController
            return $order[$a->getStatus()->value] <=> $order[$b->getStatus()->value];
        });
 
-       return $this->render('admin/rental_features/rentals.html.twig', [
+       return $this->render('dashBoard/admin/rental_features/rentals.html.twig', [
            'rentals' => $rentals,
        ]);
     }
@@ -51,7 +51,7 @@ class AdminRentalController extends AbstractController
     #[Route('/rental/{id}', name: 'rental_show')]
     public function show(Rental $rental): Response
     {
-        return $this->render('admin/rental_features/rental_show.html.twig', [
+        return $this->render('dashBoard/admin/rental_features/rental_show.html.twig', [
             'rental' => $rental,
         ]);
     }
@@ -70,7 +70,7 @@ class AdminRentalController extends AbstractController
             return $this->redirectToRoute('app_admin_rentals');
         }
 
-        return $this->render('admin/rental_features/rental_edit.html.twig', [
+        return $this->render('dashBoard/admin/rental_features/rental_edit.html.twig', [
             'form' => $form,
             'rental' => $rental,
         ]);

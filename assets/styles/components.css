@@ -1,0 +1,85 @@
+/* Edit FORMS */
+
+form {
+    /* width: 100%; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+label {
+    display: block;
+}
+
+.edit-input {
+    width: 60vw;
+    padding: 10px;
+    margin: 8px 0 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.edit-input:focus {
+    border-color: #FF866F;
+    outline: none;
+    box-shadow: 0 0 4px rgba(255, 134, 111, 0.4);
+}
+/* 
+select{
+    width: 100% !important;
+    height: 44px !important;
+} */
+
+/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+
+
+/* Images dans formulaires EDIT */
+.profile-picture {
+    height: 200px;
+    width: 180px;
+    background-color: #ffffff;
+}
+
+.profile-picture img {
+    width: 180px;
+    height: auto;
+}
+
+.profile-picture div {
+    overflow: hidden;
+}
+
+.profile-picture-block {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+}
+
+/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+
+/* back links (retour en arriere) */
+.form-submit-block{
+    display: flex;
+    width: calc(50% + (126.56px / 2));
+    align-self: flex-start;
+    justify-content: space-between;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 15px;
+    color: #282F4B;
+    text-decoration: none;
+    font-weight: bold;
+
+}
+
+.back-link:hover {
+    color: #FF866F;
+}
+
+/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+

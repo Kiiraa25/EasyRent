@@ -1,5 +1,4 @@
 const toggleButton = document.querySelector('.toggle-owner-menu');
-const circle = document.querySelector('.circle-toggle-owner-menu');
 const renterMenu = document.querySelector('.renterMode');
 const ownerMenu = document.querySelector('.ownerMode');
 
@@ -23,8 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
             renterMenu.classList.add('hidden')
 
         }
-
-        console.log(ownerMode)
 
     })
 

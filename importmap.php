@@ -16,54 +16,73 @@ return [
         'path' => './assets/app.js',
         'entrypoint' => true,
     ],
-    'register' => [
-        'path' => './assets/js/register.js',
+
+// STYLES
+    'registerStyle' => [
+        'path' => './assets/js/styles/registerStyle.js',
         'entrypoint' => true,
     ],
-    'dashbordStyle' => [
-        'path' => './assets/js/dashbordStyle.js',
+    'verifyProfileStyle' => [
+        'path' => './assets/js/styles/verifyProfileStyle.js',
         'entrypoint' => true,
     ],
-    'verifyProfile' => [
-        'path' => './assets/js/verifyProfile.js',
+    'editProfileStyle' => [
+        'path' => './assets/js/styles/editProfileStyle.js',
         'entrypoint' => true,
     ],
+    'adminDashboardStyle' => [
+        'path' => './assets/js/styles/adminDashboardStyle.js',
+        'entrypoint' => true,
+    ],
+    'componentsStyle' => [
+        'path' => './assets/js/styles/componentsStyle.js',
+        'entrypoint' => true,
+    ],
+    
+
+// JAVASCRIPTS
     'profileVerification' => [
         'path' => './assets/js/profileVerification.js',
         'entrypoint' => true,
     ],
-    'editProfile' => [
-        'path' => './assets/js/editProfile.js',
-        'entrypoint' => true,
-    ],
+
     'vehicleNew' => [
         'path' => './assets/js/vehicleNew.js',
-        'entrypoint' => true,
-    ],
-    'CarModelsSelection' => [
-        'path' => './assets/js/CarModelsSelection.js',
-        'entrypoint' => true,
-    ],
-    'search-input' => [
-        'path' => './assets/js/address-input.js',
-        'entrypoint' => true,
-    ],
-    'vehicles-search-input' => [
-        'path' => './assets/js/vehicles-search-input.js',
-        'entrypoint' => true,
-    ],
-    'country-input' => [
-        'path' => './assets/js/country-input.js',
         'entrypoint' => true,
     ],
     'vehiclePhotoDynamicInput' => [
         'path' => './assets/js/vehiclePhotoDynamicInput.js',
         'entrypoint' => true,
     ],
-    'adminDashboardStyle' => [
-        'path' => './assets/js/adminDashboardStyle.js',
+    
+
+
+    // API
+    'CarModelsSelection' => [
+        'path' => './assets/js/api/CarModelsSelection.js',
         'entrypoint' => true,
     ],
+    'search-input' => [
+        'path' => './assets/js/api/address-input.js',
+        'entrypoint' => true,
+    ],
+    'vehicles-search-input' => [
+        'path' => './assets/js/api/vehicles-search-input.js',
+        'entrypoint' => true,
+    ],
+    'country-input' => [
+        'path' => './assets/js/api/country-input.js',
+        'entrypoint' => true,
+    ],
+    'geolocation' => [
+        'path' => './assets/js/api/geolocation.js',
+        'entrypoint' => true,
+    ],
+   
+
+
+
+
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],
