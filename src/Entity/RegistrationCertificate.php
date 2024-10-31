@@ -30,7 +30,7 @@ class RegistrationCertificate
     #[Vich\UploadableField(mapping: 'registrationCertificate', fileNameProperty: 'frontImagePath')]
     private ?File $frontImageFile = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $backImagePath = null;
 
     #[Vich\UploadableField(mapping: 'registrationCertificate', fileNameProperty: 'backImagePath')]

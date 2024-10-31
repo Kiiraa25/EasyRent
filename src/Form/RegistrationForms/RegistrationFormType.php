@@ -49,7 +49,7 @@ class RegistrationFormType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'autocomplete' => 'new-password',
-                    'placeholder' => 'Mot de passe',
+                    'placeholder' => 'Mot de passe *',
                     'class' => 'suscribe-input'
                 ]
             ],
@@ -57,7 +57,7 @@ class RegistrationFormType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'autocomplete' => 'new-password',
-                    'placeholder' => 'Répéter mot de passe',
+                    'placeholder' => 'Répéter mot de passe *',
                     'class' => 'suscribe-input'
                 ]
             ],
@@ -66,9 +66,13 @@ class RegistrationFormType extends AbstractType
                     'message' => 'Veuillez insérer un mot de passe',
                 ]),
                 new Length([
-                    'min' => 6,
-                    'minMessage' => 'Your password should be at least {{ limit }} characters',
+                    'min' => 8,
+                    'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères',
                     'max' => 4096,
+                ]),
+                new Assert\Regex([
+                    'pattern' => '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).+$/',
+                    'message' => 'Votre mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial.',
                 ]),
             ],
         ])
@@ -76,9 +80,12 @@ class RegistrationFormType extends AbstractType
 
         ->add('agreeTerms', CheckboxType::class, [
             'mapped' => false,
+            'label' => "J'accepte les <a href='/CGU' target='_blank'>Conditions Générales d'Utilisation</a>",
+            'label_html' => true,  // Active l’interprétation HTML dans le label
+            'label_attr' => ['class' => 'cgu-label'],
             'constraints' => [
                 new IsTrue([
-                    'message' => 'You should agree to our terms.',
+                    'message' => 'Vous devez accepter les Conditions Générales d\'Utilisation.',
                 ]),
             ],
         ]);

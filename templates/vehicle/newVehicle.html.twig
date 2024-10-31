@@ -122,10 +122,100 @@
 				font-size: 20px;
 			}
 		}
+
+		/* POP UP STYLE  */
+
+		.overlay {
+			position: fixed;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background: rgba(0, 0, 0, 0.7);
+			transition: opacity 500ms;
+			visibility: hidden;
+			opacity: 0;
+		}
+		.overlay:target {
+			visibility: visible;
+			opacity: 1;
+			z-index: 99999;
+		}
+
+		.popup {
+			margin: 45vh auto;
+			padding: 50px 20px;
+			background: #fff;
+			border-radius: 5px;
+			width: 50%;
+			position: relative;
+			transition: all 2s ease-in-out;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.popup .close {
+			position: absolute;
+			top: 20px;
+			right: 30px;
+			transition: all 200ms;
+			font-size: 30px;
+			font-weight: bold;
+			text-decoration: none;
+			color: #333;
+		}
+		.popup .close:hover {
+			color: rgba(11, 79, 108, 0.575);
+		}
+		.popup .content {
+			max-height: 30%;
+			overflow: auto;
+			text-align: center;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			gap: 10px;
+		}
+
+		.popup .content a {
+			text-decoration: underline;
+		}
+
+		.popup .content a:hover {
+			text-decoration: underline;
+			font-weight: 500;
+		}
+
+
+		.alert-error {
+			list-style-type: none;
+			margin-top: 3px;
+			font-size: 15px;
+			color: red;
+		}
 	</style>
 {% endblock %}
 
 {% block body %}
+
+	<!-- START POP UP -->
+	<div id="msg" class="overlay">
+		<div class="popup">
+			<a class="close" href="#">x</a>
+			<div class="content">
+				Votre profil doit être vérifié pour pouvoir ajouter un véhicule.
+				<br>
+				<a href="{{ path('app_user_profile_verify') }}">Vérifier mon profil</a>
+			</div>
+		</form>
+	</div>
+</div>
+<!-- END POP UP -->
+
+
 <main class="newVehicle">
 	<h1>Déposez votre annonce et louez votre voiture en toute simplicité</h1>
 
@@ -136,7 +226,7 @@
 		<div class="form-group brand-container vehicle-container">
 			{{ form_label(vehicleForm.model.brand.name, 'Marque') }}
 			{{ form_widget(vehicleForm.model.brand.name, { 'attr': {'data-action': 'brand-input'} }) }}
-			{{ form_errors(vehicleForm.model.brand.name) }}
+			<div class="form-error">{{ form_errors(vehicleForm.model.brand.name) }}</div>
 			<div id="dropdownMenu" class="hidden">
 				<ul id="dropdownResults">
 					<li>Aucun résultat</li>
@@ -147,7 +237,7 @@
 		<div class="form-group model-container vehicle-container">
 			{{ form_label(vehicleForm.model.name, 'Modèle') }}
 			{{ form_widget(vehicleForm.model.name, { 'attr': {'data-action': 'model-input'} }) }}
-			{{ form_errors(vehicleForm.model.name) }}
+			<div class="form-error">{{ form_errors(vehicleForm.model.name) }}</div>
 			<div id="dropdownMenu" class="hidden">
 				<ul id="dropdownResults">
 					<li>Aucun résultat</li>
@@ -173,7 +263,7 @@
         <div class="form-group country-container">
         {{ form_label(vehicleForm.RegistrationCertificate.countryOfIssue, 'Pays d\'immatriculation') }}
 		{{ form_widget(vehicleForm.RegistrationCertificate.countryOfIssue, { 'attr': {'data-action': 'country-input'} }) }}
-		{{ form_errors(vehicleForm.RegistrationCertificate.countryOfIssue) }}
+		<div class="form-error">{{ form_errors(vehicleForm.RegistrationCertificate.countryOfIssue) }}</div>
 		<div id="dropdownMenu" class="hidden">
 			<ul id="dropdownResults">
 				<li>Aucun résultat</li>
@@ -182,6 +272,7 @@
 	</div>
 	<div class="form-group">
 		{{ form_row(vehicleForm.RegistrationCertificate.issueDate, { label: 'Année d\'immatriculation' }) }}
+
         </div>
         <div class="form-group">
         </div>
@@ -196,8 +287,13 @@
     <h3>Caractéristiques techniques</h3>
     <div class="form-container">
         <div class="form-group">
-            {{ form_row(vehicleForm.mileage, { label: 'Kilométrage' }) }}
-        </div>
+    {{ form_label(vehicleForm.mileage, 'Kilométrage') }}
+    {{ form_widget(vehicleForm.mileage) }}
+    {% if vehicleForm.mileage.vars.errors|length > 0 %}
+        <div class="form-error">{{ vehicleForm.mileage.vars.errors[0].message }}</div>
+    {% endif %}
+</div>
+
         <div class="form-group">
             {{ form_row(vehicleForm.fuelType, { label: 'Carburant' }) }}
         </div>
@@ -283,14 +379,20 @@
     <button type="button" class="add-photo-button">Ajouter une photo</button>
 
     <div class="photo-prototype" data-prototype="{{ form_widget(vehicleForm.photos.vars.prototype)|e('html_attr') }}">
-        <!-- Le prototype sera utilisé pour ajouter des champs supplémentaires -->
-    </div>
+		<!-- Le prototype sera utilisé pour ajouter des champs supplémentaires -->
+	</div>
 </div>
 
-<button type="submit" class="nav-button">Ajouter mon véhicule</button>
-
-    {{ form_end(vehicleForm) }}
-</main>
-<script type="text/javascript" src="http://www.carqueryapi.com/js/jquery.min.js"></script>
-<script type="text/javascript" src="http://www.carqueryapi.com/js/carquery.0.3.4.js"></script>
-{% endblock %}
+{% for type, messages in app.flashes %}
+	{% for message in messages %}
+		<div class="alert alert-{{ type }}">
+			{{ message }}
+		</div>
+	{% endfor %}
+{% endfor %}
+{% if app.user.profile.isVerified is not same as true %}
+	<a href="#msg" class="nav-button">Ajouter mon véhicule</a>
+{% else %}
+	<button type="submit" class="nav-button">Ajouter mon véhicule</button>
+{% endif %}
+{{ form_end(vehicleForm) }}</main><script type="text/javascript" src="http://www.carqueryapi.com/js/jquery.min.js"></script><script type="text/javascript" src="http://www.carqueryapi.com/js/carquery.0.3.4.js"></script>{% endblock %}

@@ -16,6 +16,14 @@ security:
         main:
             lazy: true
             provider: app_user_provider
+
+            remember_me:
+                secret: '%env(APP_SECRET)%'  # Utilisez le secret de votre application
+                lifetime: 604800  # Durée de la connexion en secondes (ici, 7 jours)
+                path: '/'          # Chemin pour lequel le cookie sera valide
+                always_remember_me: true  # Connexion automatique pour tous les utilisateurs
+                
+            user_checker: App\Security\UserChecker
             form_login:
                 login_path: app_login
                 check_path: app_login

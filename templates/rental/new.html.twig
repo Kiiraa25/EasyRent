@@ -1,15 +1,122 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Nouvelle Réservation{% endblock %}
+{% block title %}Nouvelle Réservation
+{% endblock %}
+
+{% block stylesheets %}
+	<style>
+		/* POP UP STYLE  */
+
+		.overlay {
+			position: fixed;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background: rgba(0, 0, 0, 0.7);
+			transition: opacity 500ms;
+			visibility: hidden;
+			opacity: 0;
+		}
+		.overlay:target {
+			visibility: visible;
+			opacity: 1;
+			z-index: 99999;
+		}
+
+		.popup {
+			margin: 45vh auto;
+			padding: 50px 20px;
+			background: #fff;
+			border-radius: 5px;
+			width: 50%;
+			position: relative;
+			transition: all 2s ease-in-out;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.popup .close {
+			position: absolute;
+			top: 20px;
+			right: 30px;
+			transition: all 200ms;
+			font-size: 30px;
+			font-weight: bold;
+			text-decoration: none;
+			color: #333;
+		}
+		.popup .close:hover {
+			color: rgba(11, 79, 108, 0.575);
+		}
+		.popup .content {
+			max-height: 30%;
+			overflow: auto;
+			text-align: center;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			gap: 10px;
+		}
+
+		.popup .content a {
+			text-decoration: underline;
+		}
+
+		.popup .content a:hover {
+			text-decoration: underline;
+			font-weight: 500;
+		}
+
+        .alert-error {
+			list-style-type: none;
+			margin-top: 3px;
+			font-size: 15px;
+			color: red;
+		}
+
+	</style>
+{% endblock %}
 
 {% block body %}
-    <h1>Créer une nouvelle réservation</h1>
+	<h1>Créer une nouvelle réservation</h1>
 
-   {{ form_start(form) }}
-    {{ form_widget(form.startDate) }}
-    {{ form_widget(form.endDate) }}
-    <button class="btn">{{ button_label|default('Réserver') }}</button>
+	<!-- START POP UP -->
+	<div id="msg" class="overlay">
+		<div class="popup">
+			<a class="close" href="#">x</a>
+			<div class="content">
+				Votre profil doit être vérifié pour pouvoir louer un véhicule.
+				<br>
+				<a href="{{ path('app_user_profile_verify') }}">Vérifier mon profil</a>
+			</div>
+		</form>
+	</div>
+</div>
+<!-- END POP UP -->
+
+{{ form_start(form) }}
+{{ form_widget(form.startDate) }}
+{{ form_widget(form.endDate) }}
+{{ form_widget(form.paymentMethod) }}
+
+{% for type, messages in app.flashes %}
+	{% for message in messages %}
+		<div class="alert alert-{{ type }}">
+			{{ message }}
+		</div>
+	{% endfor %}
+{% endfor %}
+
+
+{% if app.user.profile.isVerified is not same as true %}
+	<a href="#msg" class="btn">Reserver</a>
+{% else %}
+	<button type="submit" class="btn">{{ button_label|default('Réserver') }}</button>
+{% endif %}
 {{ form_end(form) }}
 
-    <a href="{{ path('app_vehicles') }}">Retour à la liste</a>
-{% endblock %}
+<a href="{{ path('app_vehicles') }}">Retour à la liste</a>{% endblock %}

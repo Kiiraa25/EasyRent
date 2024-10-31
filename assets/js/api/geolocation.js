@@ -9,6 +9,8 @@ function setLocationInSearch() {
                 
                 // Appelez la fonction pour obtenir l'adresse
                 getAddressFromCoordinates(latitude, longitude);
+                console.log(latitude, longitude);
+                
             },
             (error) => {
                 console.error("Géolocalisation non autorisée ou indisponible.");
@@ -17,6 +19,7 @@ function setLocationInSearch() {
     } else {
         alert("La géolocalisation n'est pas supportée par ce navigateur.");
     }
+    
 }
 
 

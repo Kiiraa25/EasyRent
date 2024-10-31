@@ -23,56 +23,87 @@ use App\Enum\UserStatusEnum;
 
 class RegistrationController extends AbstractController
 {
-    public function __construct(private EmailVerifier $emailVerifier)
-    {
-    }
+    public function __construct(private EmailVerifier $emailVerifier) {}
 
     #[Route('/register', name: 'app_register')]
-public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
-{
-    $user = new User();
-    $userProfile = new UserProfile();
-    $user->setProfile($userProfile);
-
-    $form = $this->createForm(RegistrationFormType::class, $user);
-    $form->handleRequest($request);
-
-    if ($form->isSubmitted() && $form->isValid()) 
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
-        $userProfile->setCreatedAt(new \DateTimeImmutable());
-        $userProfile->setUpdatedAt(new \DateTimeImmutable());
-        $userProfile->setRating(0);
-        $userProfile->setVerified(false);
 
-        $user->setStatus(UserStatusEnum::INACTIF);
-        $user->setPassword(
-            $userPasswordHasher->hashPassword(
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_home');
+        }
+
+        $user = new User();
+        $userProfile = new UserProfile();
+        $user->setProfile($userProfile);
+
+        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            // Vérification de l'âge
+            $birthDate = $userProfile->getBirthDate();
+            $today = new \DateTime();
+            $age = $today->diff($birthDate)->y;
+
+            if ($age < 18) {
+                $this->addFlash('error', 'Vous devez être majeur pour vous inscrire.');
+                return $this->redirectToRoute('app_register');
+            }
+
+            $userProfile->setCreatedAt(new \DateTimeImmutable());
+            $userProfile->setUpdatedAt(new \DateTimeImmutable());
+            $userProfile->setRating(0);
+            $userProfile->setVerified(false);
+
+            $user->setStatus(UserStatusEnum::INACTIF);
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
+
+            $entityManager->persist($userProfile);
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $this->emailVerifier->sendEmailConfirmation(
+                'app_verify_email',
                 $user,
-                $form->get('plainPassword')->getData()
-            )
-        );
+                (new TemplatedEmail())
+                    ->from(new Address('easy_rent@registration.com', 'easy_rent'))
+                    ->to($user->getEmail())
+                    ->subject('Please Confirm your Email')
+                    ->htmlTemplate('registration/confirmation_email.html.twig')
+            );
 
-        $entityManager->persist($userProfile);
-        $entityManager->persist($user);
-        $entityManager->flush();
+            return $this->redirectToRoute('app_login');
+        }
 
-        $this->emailVerifier->sendEmailConfirmation(
-            'app_verify_email',
-            $user,
-            (new TemplatedEmail())
-                ->from(new Address('easy_rent@registration.com', 'easy_rent'))
-                ->to($user->getEmail())
-                ->subject('Please Confirm your Email')
-                ->htmlTemplate('registration/confirmation_email.html.twig')
-        );
-
-        return $this->redirectToRoute('app_login');
+        return $this->render('registration/register.html.twig', [
+            'registrationForm' => $form,
+        ]);
     }
 
-    return $this->render('registration/register.html.twig', [
-        'registrationForm' => $form,
-    ]);
-}
+    #[Route('/resend-verification', name: 'app_resend_verification')]
+    public function resendVerification(Request $request, UserRepository $userRepository): Response
+    {
+        $userId = $request->query->get('id');
+        $user = $userRepository->find($userId);
+
+        if (!$user || $user->getStatus() === UserStatusEnum::ACTIF) {
+            $this->addFlash('error', 'Ce compte est déjà vérifié ou n\'existe pas.');
+            return $this->redirectToRoute('app_login');
+        }
+
+        // Envoyer un nouvel e-mail de vérification
+        $this->emailVerifier->resendVerificationEmail($user, 'app_verify_email');
+
+        $this->addFlash('success', 'Un nouveau lien de vérification vous a été envoyé.');
+        return $this->redirectToRoute('app_login');
+    }
 
 
     #[Route('/verify/email', name: 'app_verify_email')]
@@ -94,9 +125,8 @@ public function register(Request $request, UserPasswordHasherInterface $userPass
         try {
             $this->emailVerifier->handleEmailConfirmation($request, $user);
         } catch (VerifyEmailExceptionInterface $exception) {
-            $this->addFlash('verify_email_error', $translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
-
-            return $this->redirectToRoute('app_register');
+            $this->addFlash('verify_email_error', 'Le lien a expiré, veuillez redemander un nouveau lien.');
+            return $this->redirectToRoute('app_resend_verification', ['id' => $user->getId()]);
         }
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates

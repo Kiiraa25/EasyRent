@@ -22,6 +22,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Count;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class VehicleType extends AbstractType
@@ -52,9 +54,11 @@ class VehicleType extends AbstractType
             ->add('mileage', IntegerType::class, [
                 'label' => 'Kilométrage',
             ])
+
             ->add('doors', IntegerType::class, [
                 'label' => 'Nombre de portes',
             ])
+
             ->add('seats', IntegerType::class, [
                 'label' => 'Nombre de sièges',
             ])
@@ -64,12 +68,14 @@ class VehicleType extends AbstractType
             ->add('color', TextType::class, [
                 'label' => 'Couleur',
             ])
-            ->add('extraMileageRate', IntegerType::class, [
+            ->add('extraMileageRate', MoneyType::class, [
                 'label' => 'Tarif supplémentaire/km',
+                'currency' => false,
+                'scale' => 2,
             ])
             ->add('pricePerDay', MoneyType::class, [
                 'label' => 'Tarif/jour',
-                // 'currency' => 'EUR',
+                'currency' => false,
                 'scale' => 2,
             ])
 
@@ -92,12 +98,12 @@ class VehicleType extends AbstractType
                 'by_reference' => false,
                 'label' => 'Photos du véhicule (5 minimum)',
                 'prototype' => true,
-                'constraints' => [
-                    new Count([
-                        'min' => 5,
-                        'minMessage' => 'Vous devez télécharger au moins {{ limit }} photos.',
-                    ]),
-                ],
+                // 'constraints' => [
+                //     new Count([
+                //         'min' => 5,
+                //         'minMessage' => 'Vous devez télécharger au moins {{ limit }} photos.',
+                //     ]),
+                // ],
             ]);
         ;
     }

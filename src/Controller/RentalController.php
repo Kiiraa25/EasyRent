@@ -33,18 +33,26 @@ class RentalController extends AbstractController
     // CREATE DEMANDE DE LOCATION
     #[Route('/rental/new', name: 'app_rental_new', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
-    public function new(Request $request, VehicleRepository $vehicleRepository, EntityManagerInterface $entityManager, Security $security): Response
+    public function new(User $user, Request $request, VehicleRepository $vehicleRepository, EntityManagerInterface $entityManager, Security $security): Response
     {
 
+        /** @var User $user */
         $user = $security->getUser();
 
+        
+        
+        
         if (!$user) {
             throw $this->createAccessDeniedException('Vous devez être connecté pour louer un véhicule.');
         }
-
+        
+        if (!$user->getProfile() || !$user->getProfile()->isVerified()) {
+            $this->addFlash('profile_verification', 'Votre profil doit être vérifié pour pouvoir louer un véhicule.');
+        }
+        
+        
         // Récupérer l'ID du véhicule depuis l'URL
         $vehicleId = $request->query->get('vehicle_id');
-
         // Récupérer le véhicule correspondant dans la base de données
         $vehicle = $vehicleRepository->find($vehicleId);
 

@@ -83,3 +83,31 @@ select{
 
 /* ////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 
+/* password input eye */
+.password-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    cursor: pointer;
+    color: #666;
+}
+
+/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+
+/* form error style */
+.form-error, .alert-error{
+    font-size: 14px;
+    color: red;
+    list-style-type: none;
+    max-width: 400px;
+}
+.form-error ul{
+    list-style-type: none;
+    margin-top: 3px;
+}
