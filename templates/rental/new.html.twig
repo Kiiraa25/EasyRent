@@ -1,10 +1,63 @@
 {% extends 'base.html.twig' %}
 
+{% block importmap %}
+	{{ parent() }}
+	{{ importmap(['componentsStyle', 'adminDashboardStyle']) }}
+
+{% endblock %}
 {% block title %}Nouvelle Réservation
 {% endblock %}
 
 {% block stylesheets %}
 	<style>
+	/* Conteneur du formulaire */
+
+	/* Structure principale */
+		body, html {
+			height: 100%;
+			margin: 0;
+			padding: 0;
+			display: flex;
+			flex-direction: column;
+		}
+		
+		.form-container {
+			width: 80%;
+			background-color: #ffffff;
+			padding: 40px;
+			border-radius: 8px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin: auto;
+			gap: 20px;
+		}
+
+		h1 {
+			color: #282F4B;
+			font-size: 24px;
+			margin-bottom: 20px;
+		}
+
+		/* Boutons */
+		.btn, .popup .content a {
+			padding: 10px 20px;
+			background-color: #282F4B;
+			color: white;
+			text-decoration: none;
+			border-radius: 5px;
+			font-weight: bold;
+			text-align: center;
+			transition: background-color 0.3s ease;
+			cursor: pointer;
+			border: none;
+		}
+
+		.btn:hover, .popup .content a:hover {
+			background-color: #1e233a;
+		}
+
 		/* POP UP STYLE  */
 
 		.overlay {
@@ -82,6 +135,9 @@
 {% endblock %}
 
 {% block body %}
+	<section class="admin-dashboard-content">
+
+	<div class="form-container">
 	<h1>Créer une nouvelle réservation</h1>
 
 	<!-- START POP UP -->
@@ -103,14 +159,6 @@
 {{ form_widget(form.endDate) }}
 {{ form_widget(form.paymentMethod) }}
 
-{% for type, messages in app.flashes %}
-	{% for message in messages %}
-		<div class="alert alert-{{ type }}">
-			{{ message }}
-		</div>
-	{% endfor %}
-{% endfor %}
-
 
 {% if app.user.profile.isVerified is not same as true %}
 	<a href="#msg" class="btn">Reserver</a>
@@ -118,5 +166,7 @@
 	<button type="submit" class="btn">{{ button_label|default('Réserver') }}</button>
 {% endif %}
 {{ form_end(form) }}
+</div>
+	</section>
 
-<a href="{{ path('app_vehicles') }}">Retour à la liste</a>{% endblock %}
+{% endblock %}

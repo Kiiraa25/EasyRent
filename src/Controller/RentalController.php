@@ -265,6 +265,20 @@ class RentalController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function show(Rental $rental): Response
     {
+
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur est bien connecté
+        if (!$user) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
+
+        if($user !== $rental->getRenter() || $user !== $rental->getVehicle()->getOwner())
+        {
+            throw $this->createAccessDeniedException("Vous n'êtes pas autorisé à accéder à cette page");
+
+        }
+
         return $this->render('rental/show.html.twig', [
             'rental' => $rental,
         ]);

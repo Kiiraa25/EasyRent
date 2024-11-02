@@ -1,66 +1,157 @@
 <div class="sidebar">
-    <div class="top-section">
-        <h3>Tableau de Bord</h3>
-        <ul>
-            {% if is_granted('ROLE_ADMIN') %}
-                <!-- Menu Admin -->
-                <li><a href="{{ path('app_admin_dashboard') }}"><i class="fas fa-tachometer-alt"></i>Tableau de bord</a></li>
-                <li><a href="{{ path('app_admin_users') }}"><i class="fas fa-users"></i>Utilisateurs</a></li>
-                <li><a href="{{ path('app_admin_vehicles') }}"><i class="fas fa-car"></i>Véhicules</a></li>
-                <li><a href="{{ path('app_admin_rentals') }}"><i class="fas fa-calendar-alt"></i>Locations</a></li>
-                <li><a href="#"><i class="fas fa-file-alt"></i>Rapports</a></li>
-                <li><a href="#"><i class="fas fa-cog"></i>Paramètres</a></li>
-            
+	<div class="top-section">
+		<h3>Tableau de Bord</h3>
+		<ul>
+			{% if is_granted('ROLE_ADMIN') %}
+				<!-- Menu admin Déroulant -->
+				<li class="user-menu-toggle" onclick="toggleUserMenu('admin-menu')">
+					<a href="javascript:void(0);">Menu utilisateur
+						<i class="fas fa-chevron-down"></i>
+					</a>
+				</li>
+                <div id="admin-menu" class="user-menu">
+				<li>
+					<a href="{{ path('app_admin_dashboard') }}">
+						<i class="fas fa-tachometer-alt"></i>Tableau de bord</a>
+				</li>
+				<li>
+					<a href="{{ path('app_admin_users') }}">
+						<i class="fas fa-users"></i>Utilisateurs</a>
+				</li>
+				<li>
+					<a href="{{ path('app_admin_vehicles') }}">
+						<i class="fas fa-car"></i>Véhicules</a>
+				</li>
+				<li>
+					<a href="{{ path('app_admin_rentals') }}">
+						<i class="fas fa-calendar-alt"></i>Locations</a>
+				</li>
+				<li>
+					<a href="#">
+						<i class="fas fa-file-alt"></i>Rapports</a>
+				</li>
+				<li>
+					<a href="#">
+						<i class="fas fa-cog"></i>Paramètres</a>
+				</li>
+				</div>
 
-            <!-- Menu Utilisateur Déroulant -->
-            	<li class="user-menu-toggle" onclick="toggleUserMenu()">
-                	<a href="javascript:void(0);">Menu utilisateur <i class="fas fa-chevron-down"></i></a>
-           	 	</li>
-         		<div id="user-menu" class="user-menu">
-                	<li><a href="{{ path('app_admin_dashboard') }}"><i class="fas fa-tachometer-alt"></i>Tableau de bord</a></li>
-                	<li><a href="{{ path('app_user_profile_verify') }}"><i class="fas fa-users"></i>Vérifier mon profil</a></li>
-                	<li><a href="{{ path('app_user_profile_edit') }}"><i class="fas fa-car"></i>Modifier mon profil</a></li>
-                	<li><a href="{{ path('app_user_edit') }}"><i class="fas fa-calendar-alt"></i>Paramètres de compte</a></li>
-                	<li><a href="#"><i class="fas fa-file-alt"></i>Moyens de paiement</a></li>
-                	<li><a href="#"><i class="fas fa-cog"></i>Paramètres de paiement</a></li>
-           	 	</div>
+
+				<!-- Menu Utilisateur Déroulant -->
+				<li class="user-menu-toggle" onclick="toggleUserMenu('user-menu')">
+					<a href="javascript:void(0);">Menu utilisateur
+						<i class="fas fa-chevron-down"></i>
+					</a>
+				</li>
+				<div id="user-menu" class="user-menu">
+					<li>
+						<a href="{{ path('app_admin_dashboard') }}">
+							<i class="fas fa-tachometer-alt"></i>Tableau de bord</a>
+					</li>
+					<li>
+						<a href="{{ path('app_user_profile_verify') }}">
+							<i class="fas fa-users"></i>Vérifier mon profil</a>
+					</li>
+					<li>
+						<a href="{{ path('app_user_profile_edit') }}">
+							<i class="fas fa-car"></i>Modifier mon profil</a>
+					</li>
+					<li>
+						<a href="{{ path('app_user_edit') }}">
+							<i class="fas fa-calendar-alt"></i>Paramètres de compte</a>
+					</li>
+					<li>
+						<a href="#">
+							<i class="fas fa-file-alt"></i>Moyens de paiement</a>
+					</li>
+					<li>
+						<a href="#">
+							<i class="fas fa-cog"></i>Paramètres de paiement</a>
+					</li>
+				</div>
 
 
-				{% elseif is_granted('ROLE_USER')%}
-					 {# menu user fixe #}
-                	<li><a href="{{ path('app_admin_dashboard') }}"><i class="fas fa-tachometer-alt"></i>Tableau de bord</a></li>
-                	<li><a href="{{ path('app_user_profile_verify') }}"><i class="fas fa-users"></i>Vérifier mon profil</a></li>
-                	<li><a href="{{ path('app_user_profile_edit') }}"><i class="fas fa-car"></i>Modifier mon profil</a></li>
-                	<li><a href="{{ path('app_user_edit') }}"><i class="fas fa-calendar-alt"></i>Paramètres de compte</a></li>
-                	<li><a href="#"><i class="fas fa-file-alt"></i>Moyens de paiement</a></li>
-                	<li><a href="#"><i class="fas fa-cog"></i>Paramètres de paiement</a></li>
-           	{% endif %}
-        </ul>
-    </div>
+			{% elseif is_granted('ROLE_USER')%}
+				{# menu user fixe #}
+				<li>
+					<a href="{{ path('app_user_rentals') }}">
+						<i class="fas fa-car-side"></i>
+						Mes locations</a>
+				</li>
+				<li>
+					<a href="{{ path('app_user_rental_requests') }}">
+						<i class="fas fa-receipt"></i>
+						Mes demandes</a>
+				</li>
+				<li>
+					<a href="{{ path('app_user_vehicles') }}">
+						<i class="fas fa-car"></i>
+						Mes véhicules</a>
+				</li>
+				<li>
+					<a href="{{ path('app_admin_dashboard') }}">
+						<i class="fas fa-chart-line"></i>
+						Performances</a>
+				</li>
 
-				
 
-    <!-- Section bas de page avec le profil utilisateur -->
-    <div class="bottom-section">
-        <div class="user-profile" onclick="window.location.href='{{ path('app_user_edit') }}'">
-		{% if app.user.profile.picture is not null %}
-		<img src="{{ vich_uploader_asset(app.user.profile, 'imageFile') }}" alt="Photo de profil">
-		{% else %}
-            <img src="{{ asset('img/default-user-icon.png') }}" alt="Photo de profil">
+				<!-- Menu compte Déroulant -->
+				<li class="user-menu-toggle" onclick="toggleUserMenu('menu-compte')">
+					<a href="javascript:void(0);">Mon compte
+						<i class="fas fa-chevron-down"></i>
+					</a>
+				</li>
+				<div id="menu-compte" class="user-menu">
+					<li>
+						<a href="{{ path('app_user_profile_verify') }}">
+							<i class="fas fa-users"></i>Vérifier mon profil</a>
+					</li>
+					<li>
+						<a href="{{ path('app_user_profile_edit') }}">
+							<i class="fas fa-car"></i>Modifier mon profil</a>
+					</li>
+					<li>
+						<a href="{{ path('app_user_edit') }}">
+							<i class="fas fa-calendar-alt"></i>Paramètres de compte</a>
+					</li>
+					<li>
+						<a href="#">
+							<i class="fas fa-file-alt"></i>Moyens de paiement</a>
+					</li>
+					<li>
+						<a href="#">
+							<i class="fas fa-cog"></i>Paramètres de paiement</a>
+					</li>
+				</div>
 			{% endif %}
-            <span>{{ app.user.profile.lastName }} {{ app.user.profile.firstName }}</span>
-        </div>
-        <a href="{{ path('app_logout') }}" class="logout"><i class="fas fa-sign-out-alt"></i></a>
-    </div>
+		</ul>
+	</div>
+
+
+	<!-- Section bas de page avec le profil utilisateur -->
+	<div class="bottom-section">
+		<div class="user-profile" onclick="window.location.href='{{ path('app_user_edit') }}'">
+			{% if app.user.profile.picture is not null %}
+				<img src="{{ vich_uploader_asset(app.user.profile, 'imageFile') }}" alt="Photo de profil">
+			{% else %}
+				<img src="{{ asset('img/default-user-icon.png') }}" alt="Photo de profil">
+			{% endif %}
+			<span>{{ app.user.profile.lastName }}
+				{{ app.user.profile.firstName }}</span>
+		</div>
+		<a href="{{ path('app_logout') }}" class="logout">
+			<i class="fas fa-sign-out-alt"></i>
+		</a>
+	</div>
 </div>
 
 <script>
-function toggleUserMenu() {
-    const userMenu = document.getElementById('user-menu');
-    if (userMenu.style.display === 'none' || userMenu.style.display === '') {
-        userMenu.style.display = 'block';
-    } else {
-        userMenu.style.display = 'none';
-    }
+	function toggleUserMenu(menu) {
+const userMenu = document.getElementById(menu);
+if (userMenu.style.display === 'none' || userMenu.style.display === '') {
+userMenu.style.display = 'block';
+} else {
+userMenu.style.display = 'none';
+}
 }
 </script>

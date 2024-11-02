@@ -43,7 +43,7 @@ body {
     align-self: flex-start;
 }
 
-.admin-dashboard-content textarea{
+.admin-dashboard-content textarea {
     height: 300px;
     padding: 50px;
 }
@@ -117,7 +117,7 @@ table tbody tr:hover {
 }
 
 .btn-delete {
-    background-color: #e74c3c; 
+    background-color: #e74c3c;
     color: #ffffff;
 }
 
@@ -167,16 +167,22 @@ table tbody tr:hover {
     color: #ffffff;
 }
 
-.user-profile{
+.user-profile {
     display: flex;
     align-items: center;
     gap: 10px;
     cursor: pointer;
 }
 
+.fas {
+    width: 20px;
+    /* Ajustez la valeur selon la taille souhaitée */
+    text-align: center;
+    display: inline-block;
+}
 
 /* sidebar bottom section */
-.bottom-section{
+.bottom-section {
     display: flex;
     justify-content: space-between;
     height: 80px;
@@ -194,16 +200,19 @@ table tbody tr:hover {
 
 /* menu utilisateur deroulant */
 .user-menu-toggle i.fa-chevron-down {
-    font-size: 0.8em; /* Taille de la flèche */
-    margin-left: 5px; /* Espace entre le texte et la flèche */
-    transition: transform 0.3s ease; /* Animation pour la rotation */
+    font-size: 0.8em;
+    /* Taille de la flèche */
+    margin-left: 5px;
+    /* Espace entre le texte et la flèche */
+    transition: transform 0.3s ease;
+    /* Animation pour la rotation */
 }
 
-.user-menu-toggle a{
+.user-menu-toggle a {
     margin-top: 40px;
 }
 
-.user-menu{
+.user-menu {
     display: none;
 }
 
@@ -320,7 +329,3 @@ PARAMETRES DE COMPTE
     transform: translate3d(0, -1px, 0);
     box-shadow: rgb(219, 218, 218) 0px 1px 5px;
 }
-
-
-
-

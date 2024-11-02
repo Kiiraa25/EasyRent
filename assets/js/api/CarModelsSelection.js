@@ -16,7 +16,7 @@ function handleInput(containerName, key, value = '') {
     if (key === 'make') {
         // Fetch car makes from CarQuery API
         $.ajax({
-            url: `https://www.carqueryapi.com/api/0.3/?callback=?&cmd=getMakes`,
+            url: `https://www.carqueryapi.com/api/0.3/?callback=?&cmd=getMakes&year=2000`,
             dataType: 'jsonp',
             success: function(data) {
                 let makes = data.Makes;

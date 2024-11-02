@@ -24,14 +24,17 @@ class RentalType extends AbstractType
         ->add('startDate', DateType::class, [
             'data' => $options['startDate'] ?? new \DateTime(),
             'required' => true,
+            'attr' => ['class' => 'edit-input'],
         ])
         ->add('endDate', DateType::class, [
             'data' => $options['endDate'] ?? (clone $options['startDate'])->modify('+7 days'),
             'required' => true,
+            'attr' => ['class' => 'edit-input'],
         ])
 
             ->add('paymentMethod', EnumType::class, [
-                'class' => PaymentMethodEnum::class
+                'class' => PaymentMethodEnum::class,
+                'attr' => ['class' => 'edit-input']
             ])
         ;
     }

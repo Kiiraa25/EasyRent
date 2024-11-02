@@ -41,8 +41,9 @@
 							<label for="remember_me">Se souvenir de moi</label>
 						</div>
 						{% if error %}
-							<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+							<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') | raw }}</div>
 						{% endif %}
+
 						<button type="submit" class="nav-button">Me connecter</button>
 					</div>
 
@@ -66,14 +67,14 @@
 
 
 			{#
-													            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-													            See https://symfony.com/doc/current/security/remember_me.html
-													
-													            <div class="checkbox mb-3">
-													                <input type="checkbox" name="_remember_me" id="_remember_me">
-													                <label for="_remember_me">Remember me</label>
-													            </div>
-													        #}
+																            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+																            See https://symfony.com/doc/current/security/remember_me.html
+																
+																            <div class="checkbox mb-3">
+																                <input type="checkbox" name="_remember_me" id="_remember_me">
+																                <label for="_remember_me">Remember me</label>
+																            </div>
+																        #}
 
 
 		</form>

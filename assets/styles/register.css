@@ -108,6 +108,7 @@ width: 100%;
 .rememberMe-block{
     display: flex;
     gap: 15px;
+    font-size: 14px;
 }
 
 .login-form{
@@ -133,6 +134,25 @@ width: 100%;
     background-color: #eb745c;
     border: solid 2px #eb745c;
 }
+
+.alert{
+    max-width: 400px; /* Prend la largeur de l'élément parent */
+    color: red;
+    margin-bottom: 15px; /* Espace en bas de l'alerte */
+    box-sizing: border-box; /* Inclut le padding dans la largeur totale */
+    font-size: 14px;
+}
+
+.alert a, .alert a:hover {
+    color: red;
+    text-decoration: underline;
+
+}
+
+.alert a:hover{
+    font-weight: 500;
+}
+
 
 
 

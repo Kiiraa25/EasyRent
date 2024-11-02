@@ -1,113 +1,30 @@
-{% extends 'base.html.twig' %}
+{% extends 'dashBoard/base.html.twig' %}
 
+{% block importmap %}
+	{{ parent() }}
+	{{ importmap(['componentsStyle']) }}
+
+{% endblock %}
 {% block title %}Modifier la Location
 {% endblock %}
 
-{% block stylesheets %}
-	<style>
-		.edit-rental {
-			max-width: 100vw;
-			padding: 20px;
-			background-color: #f9f9f9;
-			border-radius: 10px;
-			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-			margin: 0 auto;
-		}
+{% block content %}
+	<section class="admin-dashboard-content">
+		<h1 class="dashboard-title">Modifier la Location</h1>
 
-		.edit-rental h1 {
-			font-size: 24px;
-			margin-bottom: 20px;
-			color: #282F4B;
-			text-align: center;
-		}
+		
 
-		.edit-rental .edit-form {
-			max-width: 60%;
-			margin: 0 auto;
-			display: flex;
-			flex-direction: column;
-			gap: 15px;
-			background-color: white;
-			padding: 20px;
-			border-radius: 10px;
-			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-		}
+			{{ form_start(form) }}
+			{{ form_widget(form) }}
 
-		.edit-rental form .btn {
-			background-color: #EB8072;
-			color: white;
-			padding: 10px 20px;
-			border-radius: 5px;
-			border: none;
-			font-weight: bold;
-			transition: background-color 0.3s ease;
-			cursor: pointer;
-			margin-top: 10px;
-			align-self: center;
-		}
+			<div class="form-submit-block">
+				<a href="{{ path('app_user_rentals') }}" class="back-link">Retour à la page profil</a>
 
-		.edit-rental form .btn:hover {
-			background-color: #d96d61;
-		}
+				<button type="submit" class="nav-button" onclick="return confirm('Êtes-vous sûr de vouloir mettre à jour les informations de cette location ?');">Modifier</button>
+			</div>
 
-		.edit-rental a {
-			display: inline-block;
-			margin-top: 20px;
-			padding: 10px 20px;
-			background-color: #282F4B;
-			color: white;
-			text-decoration: none;
-			border-radius: 5px;
-			font-weight: bold;
-			transition: background-color 0.3s ease;
-			text-align: center;
-		}
+			{{ form_end(form) }}
+	
 
-		.edit-rental a:hover {
-			background-color: #1e233a;
-		}
-
-		.edit-rental .delete-form {
-			display: inline-block;
-			margin-top: 10px;
-			text-align: center;
-		}
-
-		.edit-rental .delete-form button {
-			background-color: #d9534f;
-			color: white;
-			padding: 10px 20px;
-			border-radius: 5px;
-			border: none;
-			font-weight: bold;
-			transition: background-color 0.3s ease;
-			cursor: pointer;
-		}
-
-		.edit-rental .delete-form button:hover {
-			background-color: #c9302c;
-		}
-
-		@media(max-width: 768px) {
-			.edit-rental form {
-				max-width: 100%;
-			}
-		}
-	</style>
-{% endblock %}
-
-{% block body %}
-	<main class="edit-rental">
-		<h1>Modifier la Location</h1>
-
-  <div class="edit-form">
-  
-		{{ form_start(form) }}
-		{{ form_widget(form) }}
-		<button class="btn" onclick="return confirm('Are you sure you want to modify?')">{{ button_label|default('Modifier') }}</button>
-		{{ form_end(form) }}
-</div>
-		<a href="{{ path('app_user_rentals') }}">Retour à la liste</a>
-
-	</main>
+	</section>
 {% endblock %}

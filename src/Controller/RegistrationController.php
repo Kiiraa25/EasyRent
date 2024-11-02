@@ -87,7 +87,7 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-    #[Route('/resend-verification', name: 'app_resend_verification')]
+    #[Route('/resend-verification/email', name: 'app_resend_verification_email')]
     public function resendVerification(Request $request, UserRepository $userRepository): Response
     {
         $userId = $request->query->get('id');

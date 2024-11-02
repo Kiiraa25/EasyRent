@@ -17,9 +17,11 @@ class EditRentalType extends AbstractType
         $builder
         ->add('startDate', null, [
             'widget' => 'single_text',
+            'attr' => ['class' => 'edit-input'],
         ])
         ->add('endDate', null, [
             'widget' => 'single_text',
+            'attr' => ['class' => 'edit-input'],
         ])
     ;
     }

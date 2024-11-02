@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
+
     let addButton = document.querySelector('.add-photo-button');
     let photoCollection = document.querySelector('.photo-items');
     let photoPrototype = document.querySelector('.photo-prototype').dataset.prototype;
