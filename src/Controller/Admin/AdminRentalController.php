@@ -29,11 +29,11 @@ class AdminRentalController extends AbstractController
        // Trier les locations par statut
        usort($rentals, function ($a, $b) {
            $order = [
-                RentalStatusEnum::EN_ATTENTE_VALIDATION->value => 3,
-                RentalStatusEnum::VALIDEE->value => 2,
-                RentalStatusEnum::REFUSEE->value => 5,
                 RentalStatusEnum::EN_COURS->value => 1,
+                RentalStatusEnum::VALIDEE->value => 2,
+                RentalStatusEnum::EN_ATTENTE_VALIDATION->value => 3,
                 RentalStatusEnum::TERMINEE->value => 4,
+                RentalStatusEnum::REFUSEE->value => 5,
                 RentalStatusEnum::ANNULEE->value => 6,
                 RentalStatusEnum::EXPIREE->value => 7,
                 RentalStatusEnum::DEMANDE_ANNULEE->value => 8,

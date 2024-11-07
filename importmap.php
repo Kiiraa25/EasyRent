@@ -38,6 +38,10 @@ return [
         'path' => './assets/js/styles/componentsStyle.js',
         'entrypoint' => true,
     ],
+    'userListStyle' => [
+        'path' => './assets/js/styles/userListStyle.js',
+        'entrypoint' => true,
+    ],
     
 
 // JAVASCRIPTS

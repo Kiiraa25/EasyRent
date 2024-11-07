@@ -1,212 +1,237 @@
 {% extends 'dashBoard/base.html.twig' %}
 
 {% block importmap %}
-    {{ parent() }}
-    {{ importmap(['componentsStyle']) }}
+	{{ parent() }}
+	{{ importmap(['componentsStyle', 'userListStyle']) }}
 {% endblock %}
 
 {% block title %}Détails de la Location
 {% endblock %}
 
 {% block stylesheets %}
-    <style>
-        /* Conteneur principal */
-        .content-container {
-            width: 90%;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            margin-top: 20px;
-            max-height: 84vh;
-            overflow: auto;
-        }
+	<style>
 
-        /* En-tête de la location */
-        .rental-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #FF866F;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-        }
+		/* En-tête de la location */
+		.rental-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			border-bottom: 2px solid #FF866F;
+			padding-bottom: 15px;
+			margin-bottom: 20px;
+		}
 
-        .rental-image-block {
-            width: 200px;
-            height: 200px;
-            background-color: #282F4B;
-            color: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-            font-size: 1.5em;
-            font-weight: bold;
-        }
+		.rental-image-block {
+			width: 200px;
+			height: 200px;
+			background-color: #282F4B;
+			color: #ffffff;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: 8px;
+			font-size: 1.5em;
+			font-weight: bold;
+		}
 
-        .vehicle-info {
-            flex: 1;
-            margin-left: 20px;
-        }
+		.vehicle-info {
+			flex: 1;
+			margin-left: 20px;
+		}
 
-        .vehicle-info h1 {
-            color: #282F4B;
-            font-size: 1.8em;
-            margin: 0;
-        }
+		.vehicle-info h1 {
+			color: #282F4B;
+			font-size: 1.8em;
+			margin: 0;
+		}
 
-        .vehicle-info p {
-            color: #666;
-            margin: 5px 0;
-            font-size: 1.1em;
-        }
+		.vehicle-info p {
+			color: #666;
+			margin: 5px 0;
+			font-size: 1.1em;
+		}
 
-        /* Sections de détails et d’annulation */
-        .details-section {
-            display: flex;
-            gap: 20px;
-            margin-top: 20px;
-        }
+		/* Sections de détails et d’annulation */
+		.details-section {
+			display: flex;
+			gap: 20px;
+			margin-top: 20px;
+		}
 
-        .section {
-            flex: 1;
-        }
+		.section {
+			flex: 1;
+		}
 
-        .section h2 {
-            color: #282F4B;
-            border-bottom: 1px solid #FF866F;
-            padding-bottom: 8px;
-            margin-bottom: 15px;
-            font-size: 1.5em;
-        }
+		.section h2 {
+			color: #282F4B;
+			border-bottom: 1px solid #FF866F;
+			padding-bottom: 8px;
+			margin-bottom: 15px;
+			font-size: 1.5em;
+		}
 
-        .section-content p {
-            color: #333;
-            margin: 5px 0;
-            font-size: 1.1em;
-        }
+		.section-content p {
+			color: #333;
+			margin: 5px 0;
+			font-size: 1.1em;
+		}
 
-        /* Table des détails */
-        .details-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
+		/* Table des détails */
+		.details-table {
+			width: 100%;
+			border-collapse: collapse;
+			margin-top: 10px;
+		}
 
-        .details-table th,
-        .details-table td {
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            text-align: left;
-            width: 50%;
-        }
+		.details-table th,
+		.details-table td {
+			padding: 12px 15px;
+			border: 1px solid #ddd;
+			text-align: left;
+			width: 50%;
+		}
 
-        .details-table th {
-            background-color: #282F4B;
-            color: white;
-            font-weight: bold;
-        }
+		.details-table th {
+			background-color: #282F4B;
+			color: white;
+			font-weight: bold;
+		}
 
-        .details-table td {
-            background-color: #fdfdfd;
-            color: #333;
-        }
+		.details-table td {
+			background-color: #fdfdfd;
+			color: #333;
+		}
 
-        /* Actions */
-        .rental-actions {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
+		.btn-action {
+			padding: 10px 20px;
+			background-color: #EB8072;
+			color: white;
+			border-radius: 5px;
+			font-weight: bold;
+			font-size: 16px;
+			text-align: center;
+			text-decoration: none;
+			border: none;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+		}
 
-        .btn-action {
-            padding: 10px 20px;
-            background-color: #EB8072;
-            color: white;
-            border-radius: 5px;
-            font-weight: bold;
-            font-size: 16px;
-            text-align: center;
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+		.btn-action:hover {
+			background-color: #d96d61;
+		}
 
-        .btn-action:hover {
-            background-color: #d96d61;
-        }
-
-        .back-link {
-            display: inline-block;
-            margin-top: 20px;
-            text-decoration: none;
-            color: #282F4B;
-        }
-    </style>
+		.back-link {
+			display: inline-block;
+			margin-top: 20px;
+			text-decoration: none;
+			color: #282F4B;
+		}
+	</style>
 {% endblock %}
 
 {% block content %}
-    <div class="admin-dashboard-content">
-        <h1 class="dashboard-title ">Détails de la Location</h1>
+	<div class="admin-dashboard-content">
+		{% if rental.status.value == 'en_attente_validation' or rental.status.value == 'refusée' or rental.status.value == 'expirée' or rental.status.value == 'demande_annulée' %}
+			<h1 class="dashboard-title ">Détails de la demande de location</h1>
+		{% else %}
+			<h1 class="dashboard-title ">Détails de la location</h1>
+		{% endif %}
 
-        <div class="content-container">
 
-            <!-- Rental Header -->
-            <div class="rental-header">
-                <div class="rental-image-block">
-                    IMG
-                </div>
-                <div class="vehicle-info">
-                    <h1 class="dashboard-title">Location de {{ rental.vehicle.model.brand.name }} {{ rental.vehicle.model.name }}</h1>
-                    <p><strong>Client:</strong> {{ rental.renter.profile.firstName }} {{ rental.renter.profile.lastName }}</p>
-                    <p><strong>Dates:</strong> du {{ rental.startDate|date('d/m/Y') }} au {{ rental.endDate|date('d/m/Y') }}</p>
-                    <p><strong>Statut:</strong> {{ rental.status.value }}</p>
-                    <p><strong>Prix total:</strong> {{ rental.totalPrice }} €</p>
-                </div>
-            </div>
+		<div
+			class="content-container">
 
-            <!-- Sections en flex: Détails et Annulation -->
-            <div class="details-section">
-                <div class="section">
-                    <h2>Détails de la location</h2>
-                    <div class="section-content">
-                        <p><strong>Méthode de paiement:</strong> {{ rental.paymentMethod.value }}</p>
-                        <p><strong>Limite de kilométrage:</strong> {{ rental.mileageLimit }} km</p>
-                        <p><strong>Créé le:</strong> {{ rental.createdAt|date('d/m/Y H:i') }}</p>
-                        <p><strong>Dernière mise à jour:</strong> {{ rental.updatedAt|date('d/m/Y H:i') }}</p>
-                    </div>
-                </div>
+			<!-- Rental Header -->
+			<div class="rental-header">
+				<div class="rental-image-block">
+					IMG
+				</div>
+				<div class="vehicle-info">
+					<h1 class="dashboard-title">
+						{{ rental.vehicle.model.brand.name }}
+						{{ rental.vehicle.model.name }}</h1>
+					<p>
+						<strong>Client:</strong>
+						{{ rental.renter.profile.firstName }}
+						{{ rental.renter.profile.lastName }}</p>
+					<p>
+						<strong>Dates:</strong>
+						du
+						{{ rental.startDate|date('d/m/Y') }}
+						au
+						{{ rental.endDate|date('d/m/Y') }}</p>
+					<p>
+						<strong>Statut:</strong>
+						{{ rental.status.value }}</p>
+					<p>
+						<strong>Prix total:</strong>
+						{{ rental.totalPrice }}
+						€</p>
+				</div>
+			</div>
 
-                <div class="section">
-                    <h2>Annulation</h2>
-                    <div class="section-content">
-                        {% if rental.status.value == 'ANNULEE' %}
-                            <p><strong>Raison de l'annulation:</strong> {{ rental.cancellationReason }}</p>
-                            <p><strong>Annulé par:</strong> {{ rental.cancelledBy.value }}</p>
-                        {% else %}
-                            <p>Cette location n'a pas été annulée.</p>
+			<!-- Sections en flex: Détails et Annulation -->
+			<div class="details-section">
+				<div class="section">
+					<h2>Détails de la location</h2>
+					<div class="section-content">
+						<p>
+							<strong>Méthode de paiement:</strong>
+							{{ rental.paymentMethod.value }}</p>
+						<p>
+							<strong>Limite de kilométrage:</strong>
+							{{ rental.mileageLimit }}
+							km</p>
+						<p>
+							<strong>Créé le:</strong>
+							{{ rental.createdAt|date('d/m/Y H:i') }}</p>
+						<p>
+							<strong>Dernière mise à jour:</strong>
+							{{ rental.updatedAt|date('d/m/Y H:i') }}</p>
+					</div>
+				</div>
+
+				<div class="section">
+					<h2>Annulation</h2>
+					<div class="section-content">
+						{% if rental.status.value == 'ANNULEE' %}
+							<p>
+								<strong>Raison de l'annulation:</strong>
+								{{ rental.cancellationReason }}</p>
+							<p>
+								<strong>Annulé par:</strong>
+								{{ rental.cancelledBy.value }}</p>
+						{% else %}
+							<p>Cette location n'a pas été annulée.</p>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+
+			<!-- Boutons d'actions -->
+			<div class="rental-actions">
+				{% if rental.renter == app.user %}
+                        {% if rental.status.value == 'en_attente_validation' or rental.status.value == 'validée'  or rental.status.value == 'en_cours'%}
+					        <a href="{{ path('app_rental_edit', { 'id': rental.id }) }}" class="btn-action">Modifier</a>
+					        <a href="{{ path('app_rental_cancel', { 'id': rental.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir annuler ?')" class="btn-action">Annuler</a>
                         {% endif %}
-                    </div>
-                </div>
-            </div>
+                    {% elseif rental.vehicle.owner == app.user %}
 
-            <!-- Boutons d'actions -->
-            <div class="rental-actions">
-                {% if rental.renter == app.user %}
-                    <a href="{{ path('app_rental_edit', { 'id': rental.id }) }}" class="btn-action">Modifier</a>
-                    <a href="{{ path('app_rental_cancel', { 'id': rental.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir annuler ?')" class="btn-action">Annuler</a>
-                {% elseif rental.vehicle.owner == app.user %}
-                    <a href="{{ path('app_rental_cancel', { 'id': rental.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir annuler ?')" class="btn-action">Annuler</a>
+					    {% if rental.status.value == 'en_attente_validation' %}
+						    <a href="{{ path('app_rental_accept', { 'id': rental.id }) }}" onclick="return confirm('Are you sure you want to accept?')" class="btn-action accept-button">Accepter</a>
+						    <a href="{{ path('app_rental_refuse', { 'id': rental.id }) }}" onclick="return confirm('Are you sure you want to refuse?')" class="btn-action refuse-button">Refuser</a>
+
+                            {% elseif rental.status.value == 'validée' %}
+						    <a href="{{ path('app_rental_cancel', { 'id': rental.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir annuler ?')" class="btn-action">Annuler</a>
+					    {% endif %}
                 {% endif %}
-            </div>
+				</div>
 
-        </div>
-        <div class="form-submit-block">
 
-        <a href="{{ path('app_user_rentals') }}" class="back-link">Retour à la liste des locations</a>
+			</div>
+			<div class="form-submit-block">
+
+				<a href="{{ path('app_user_rentals') }}" class="back-link">Retour à la liste des locations</a>
+			</div>
 		</div>
-    </div>
-{% endblock %}
+	{% endblock %}

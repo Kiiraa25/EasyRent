@@ -10,17 +10,18 @@
 
 {% block stylesheets %}
 	<style>
-	/* Conteneur du formulaire */
+		/* Conteneur du formulaire */
 
-	/* Structure principale */
-		body, html {
+		/* Structure principale */
+		body,
+		html {
 			height: 100%;
 			margin: 0;
 			padding: 0;
 			display: flex;
 			flex-direction: column;
 		}
-		
+
 		.form-container {
 			width: 80%;
 			background-color: #ffffff;
@@ -41,7 +42,8 @@
 		}
 
 		/* Boutons */
-		.btn, .popup .content a {
+		.btn,
+		.popup .content a {
 			padding: 10px 20px;
 			background-color: #282F4B;
 			color: white;
@@ -54,7 +56,8 @@
 			border: none;
 		}
 
-		.btn:hover, .popup .content a:hover {
+		.btn:hover,
+		.popup .content a:hover {
 			background-color: #1e233a;
 		}
 
@@ -124,7 +127,7 @@
 			font-weight: 500;
 		}
 
-        .alert-error {
+		.alert-error {
 			list-style-type: none;
 			margin-top: 3px;
 			font-size: 15px;
@@ -137,36 +140,35 @@
 {% block body %}
 	<section class="admin-dashboard-content">
 
-	<div class="form-container">
-	<h1>Créer une nouvelle réservation</h1>
+		<div class="form-container">
+			<h1>Créer une nouvelle réservation</h1>
 
-	<!-- START POP UP -->
-	<div id="msg" class="overlay">
-		<div class="popup">
-			<a class="close" href="#">x</a>
-			<div class="content">
-				Votre profil doit être vérifié pour pouvoir louer un véhicule.
-				<br>
-				<a href="{{ path('app_user_profile_verify') }}">Vérifier mon profil</a>
+			<!-- START POP UP -->
+			<div id="msg" class="overlay">
+				<div class="popup">
+					<a class="close" href="#">x</a>
+					<div class="content">
+						Votre profil doit être vérifié pour pouvoir louer un véhicule.
+						<br>
+						<a href="{{ path('app_user_profile_verify') }}">Vérifier mon profil</a>
+					</div>
+				</form>
 			</div>
-		</form>
+		</div>
+		<!-- END POP UP -->
+
+		{{ form_start(form) }}
+		{{ form_widget(form.startDate) }}
+		{{ form_widget(form.endDate) }}
+		{{ form_widget(form.paymentMethod) }}
+
+
+		{% if app.user.profile.isVerified is not same as true %}
+			<a href="#msg" class="btn">Reserver</a>
+		{% else %}
+			<button type="submit" class="btn">{{ button_label|default('Réserver') }}</button>
+		{% endif %}
+		{{ form_end(form) }}
 	</div>
-</div>
-<!-- END POP UP -->
-
-{{ form_start(form) }}
-{{ form_widget(form.startDate) }}
-{{ form_widget(form.endDate) }}
-{{ form_widget(form.paymentMethod) }}
-
-
-{% if app.user.profile.isVerified is not same as true %}
-	<a href="#msg" class="btn">Reserver</a>
-{% else %}
-	<button type="submit" class="btn">{{ button_label|default('Réserver') }}</button>
-{% endif %}
-{{ form_end(form) }}
-</div>
 	</section>
-
 {% endblock %}

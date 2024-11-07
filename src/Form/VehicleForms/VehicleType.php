@@ -96,7 +96,7 @@ class VehicleType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
-                'label' => 'Photos du véhicule (5 minimum)',
+                'label' => false, //'Photos du véhicule (5 minimum)',
                 'prototype' => true,
                 // 'constraints' => [
                 //     new Count([

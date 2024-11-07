@@ -24,6 +24,7 @@ security:
                 always_remember_me: true  # Connexion automatique pour tous les utilisateurs
                 
             user_checker: App\Security\UserChecker
+            
             form_login:
                 login_path: app_login
                 check_path: app_login

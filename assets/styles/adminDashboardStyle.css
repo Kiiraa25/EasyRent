@@ -95,35 +95,7 @@ table tbody tr:hover {
 }
 
 
-/* Boutons */
-.btn {
-    width: 96px;
-    padding: 5px 10px;
-    font-size: 0.9em;
-    text-align: center;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-}
 
-.btn-edit {
-    background-color: #FF866F;
-    color: #ffffff;
-}
-
-.btn-toggle-status {
-    background-color: #282F4B;
-    color: #ffffff;
-}
-
-.btn-delete {
-    background-color: #e74c3c;
-    color: #ffffff;
-}
-
-.btn:hover {
-    opacity: 0.9;
-}
 
 
 /* SideBar */

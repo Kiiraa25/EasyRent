@@ -48,7 +48,7 @@ class RegistrationController extends AbstractController
             $age = $today->diff($birthDate)->y;
 
             if ($age < 18) {
-                $this->addFlash('error', 'Vous devez être majeur pour vous inscrire.');
+                $this->addFlash('register-error', 'Vous devez être majeur pour vous inscrire.');
                 return $this->redirectToRoute('app_register');
             }
 

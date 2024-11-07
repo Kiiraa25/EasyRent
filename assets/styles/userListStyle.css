@@ -1,0 +1,166 @@
+
+
+/* filtre propriétaire/locataire*/
+.filter-form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.filter-form select,
+.filter-form button {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.filter-form button {
+    background-color: #282F4B;
+    color: #ffffff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.filter-form button:hover {
+    background-color: #1d2337;
+}
+
+/* Filtre de statut */
+
+.tab-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.tabs {
+    display: flex;
+    overflow-x: auto;
+}
+
+.tab {
+    padding: 10px 20px;
+    background-color: #f1f1f1;
+    margin-right: 10px;
+    text-decoration: none;
+    color: #333;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.tab.active {
+    background-color: #eb8072;
+    color: white;
+}
+
+.tab:hover {
+    background-color: #eb8072;
+    color: white;
+}
+
+.filters-block {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Liste des locations */
+.rental-item {
+    display: grid;
+    grid-template-columns: 80px 1fr 1fr 1fr 1fr 1fr;
+    align-items: center;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.05) 2px 4px 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    width: 97%;
+    gap: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.rental-item:hover {
+    transform: scale(1.02);
+    box-shadow: rgba(0, 0, 0, 0.1) 2px 6px 12px;
+}
+
+/* Image de la location */
+.rental-image {
+    width: 80px;
+    height: 80px;
+    background-color: #282F4B;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* Détails de la location */
+.rental-details,
+.rental-owner,
+.rental-renter,
+.rental-price,
+.rental-status {
+    color: #282F4B;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 14px;
+}
+
+.rental-details h3,
+.rental-owner strong,
+.rental-renter strong,
+.rental-price strong {
+    color: #FF866F;
+    font-size: 15px;
+}
+
+/* Boutons d'actions */
+.item-actions {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-action {
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.btn.cancel-button {
+    background-color: #FF6347;
+}
+
+.btn.modify-button {
+    background-color: #6495ED;
+}
+
+.btn.accept-button {
+    background-color: #32CD32;
+}
+
+.btn.refuse-button {
+    background-color: #FF6347;
+}
+
+.btn:hover {
+    opacity: 0.85;
+}
+
+
+
+

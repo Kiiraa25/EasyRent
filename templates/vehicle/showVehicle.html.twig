@@ -165,8 +165,10 @@
 
 			<div class="button-container">
 				{% if vehicle.owner == app.user %}
+					{% if vehicle.status.value != 'archived' %}
 					<a href="{{ path('app_vehicle_edit', {'id': vehicle.id}) }}" class="edit-button">Éditer l'annonce</a>
 					<a href="{{ path('app_vehicle_delete', {'id': vehicle.id}) }}" class="edit-button">Supprimer l'annonce</a>
+					{% endif %}
 				{% else %}
 					<a href="{{ path('app_rental_new', {'vehicle_id': vehicle.id, 'startDate': startDate|date('Y-m-d'), 'endDate': endDate|date('Y-m-d')}) }}" class="edit-button">Réserver</a>
 				{% endif %}

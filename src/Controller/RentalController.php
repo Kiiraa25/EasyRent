@@ -273,7 +273,7 @@ class RentalController extends AbstractController
             throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
         }
 
-        if($user !== $rental->getRenter() || $user !== $rental->getVehicle()->getOwner())
+        if($user !== $rental->getRenter() && $user !== $rental->getVehicle()->getOwner())
         {
             throw $this->createAccessDeniedException("Vous n'êtes pas autorisé à accéder à cette page");
 

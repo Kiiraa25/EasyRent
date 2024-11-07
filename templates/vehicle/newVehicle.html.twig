@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block importmap %}
-	{{ importmap(['app', 'search-input', 'CarModelsSelection', 'country-input', 'vehiclePhotoDynamicInput']) }}
+	{{ importmap(['app', 'search-input', 'CarModelsSelection', 'country-input', 'vehiclePhotoDynamicInput', 'adminDashboardStyle']) }}
 {% endblock %}
 
 {% block title %}Déposez votre annonce
@@ -10,27 +10,33 @@
 {% block stylesheets %}
 	<style>
 		/* Conteneur principal */
-		main.newVehicle {
-			width: 90%;
+		body,
+		html {
+			height: 100%;
+			margin: 0;
+			padding: 0;
+			display: flex;
+			flex-direction: column;
+		}
+
+		.content-container {
+			width: 80%;
+			min-height: 58vh;
 			background-color: #ffffff;
+			padding: 25px;
 			border-radius: 8px;
 			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-			padding: 20px;
-			margin: 20px auto;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin: auto;
+			gap: 30px;
 		}
 
-		.newVehicle h1 {
+		h1 {
+			color: #282F4B;
 			text-align: center;
-			font-size: 24px;
-			color: #282F4B;
-		}
-
-		.newVehicle h3 {
-			font-size: 18px;
-			color: #282F4B;
-			border-bottom: 2px solid #FF866F;
-			padding-bottom: 10px;
-			margin-top: 0;
+			font-size: clamp(1rem, 3vw, 1.5rem);
 		}
 
 		.form-container {
@@ -38,10 +44,10 @@
 			grid-template-columns: repeat(2, 1fr);
 			gap: 40px;
 			padding-top: 15px;
+			align-items: center;
 		}
 
 		.form-group {
-			margin-bottom: 15px;
 		}
 
 		label {
@@ -75,7 +81,6 @@
 			margin-top: 15px;
 		}
 
-	
 
 		.nav-button:hover,
 		.prev:hover,
@@ -90,7 +95,6 @@
 		.steps {
 			display: flex;
 			justify-content: center;
-			margin-bottom: 20px;
 		}
 
 		.step {
@@ -189,6 +193,12 @@
 			font-size: 15px;
 			color: red;
 		}
+
+		.form-navigation{
+			display:flex;
+			justify-content: center;
+			gap: 20px
+		}
 	</style>
 {% endblock %}
 
@@ -207,203 +217,206 @@
 
 	<!-- END POP UP -->
 
-	<main class="newVehicle">
-		<h1>Déposez votre annonce et louez votre voiture en toute simplicité</h1>
+	<section class="admin-dashboard-content">
+		<div class="content-container">
+			<h1>Déposez votre annonce et louez votre voiture en toute simplicité</h1>
+			<!-- Indicateurs de progression -->
+			<div class="steps">
+				<div class="step active">1</div>
+				<div class="step">2</div>
+				<div class="step">3</div>
+				<div class="step">4</div>
+				<div class="step">5</div>
+				<div class="step">6</div>
+				<div class="step">7</div>
+			</div>
 
-		<!-- Indicateurs de progression -->
-		<div class="steps">
-			<div class="step active">1</div>
-			<div class="step">2</div>
-			<div class="step">3</div>
-			<div class="step">4</div>
-			<div class="step">5</div>
-			<div class="step">6</div>
-			<div class="step">7</div>
-		</div>
+			{{ form_start(vehicleForm) }}
 
-		{{ form_start(vehicleForm) }}
-
-		<!-- Étape 1 : Informations du véhicule -->
-		<div class="form-step-1">
-			<h3>Votre véhicule</h3>
-			<div class="form-container">
-				<div class="form-group brand-container vehicle-container">
-					{{ form_label(vehicleForm.model.brand.name, 'Marque') }}
-					{{ form_widget(vehicleForm.model.brand.name, { 'attr': {'data-action': 'brand-input'} }) }}
-					<div class="form-error">{{ form_errors(vehicleForm.model.brand.name) }}</div>
-					<div id="dropdownMenu" class="hidden">
-						<ul id="dropdownResults">
-							<li>Aucun résultat</li>
-						</ul>
+			<!-- Étape 1 : Informations du véhicule -->
+			<div class="form-step-1">
+				<h3>Votre véhicule</h3>
+				<div class="form-container">
+					<div class="form-group brand-container vehicle-container">
+						{{ form_label(vehicleForm.model.brand.name, 'Marque') }}
+						{{ form_widget(vehicleForm.model.brand.name, { 'attr': {'data-action': 'brand-input'} }) }}
+						<div class="form-error">{{ form_errors(vehicleForm.model.brand.name) }}</div>
+						<div id="dropdownMenu" class="hidden">
+							<ul id="dropdownResults">
+								<li>Aucun résultat</li>
+							</ul>
+						</div>
+					</div>
+					<div class="form-group model-container">
+						{{ form_label(vehicleForm.model.name, 'Modèle') }}
+						{{ form_widget(vehicleForm.model.name, { 'attr': {'data-action': 'model-input'} }) }}
+						<div class="form-error">{{ form_errors(vehicleForm.model.name) }}</div>
+						<div id="dropdownMenu" class="hidden">
+							<ul id="dropdownResults">
+								<li>Aucun résultat</li>
+							</ul>
+						</div>
+					</div>
+					<div class="form-group">
+						{{ form_row(vehicleForm.model.vehicleCategory, { label: 'Type de véhicule' }) }}
+					</div>
+					<div class="form-group">
+						{{ form_row(vehicleForm.color, { label: 'Couleur' }) }}
+					</div>
+					<div class="form-group">
+						{{ form_row(vehicleForm.seats, { label: 'nombre de sièges' }) }}
+					</div>
+					<div class="form-group">
+						{{ form_row(vehicleForm.doors, { label: 'nombre de portes' }) }}
 					</div>
 				</div>
-				<div class="form-group model-container">
-					{{ form_label(vehicleForm.model.name, 'Modèle') }}
-					{{ form_widget(vehicleForm.model.name, { 'attr': {'data-action': 'model-input'} }) }}
-					<div class="form-error">{{ form_errors(vehicleForm.model.name) }}</div>
-					<div id="dropdownMenu" class="hidden">
-						<ul id="dropdownResults">
-							<li>Aucun résultat</li>
-						</ul>
+			</div>
+
+			<!-- Étape 2 : Immatriculation -->
+			<div class="form-step-2 hidden">
+				<h3>Immatriculation</h3>
+				<div class="form-container">
+					<div class="form-group">
+						{{ form_row(vehicleForm.RegistrationCertificate.certificateNumber, { label: 'Plaque d\'immatriculation' }) }}
+					</div>
+					<div class="form-group country-container">
+					{{ form_label(vehicleForm.RegistrationCertificate.countryOfIssue, 'Pays d\'immatriculation') }}
+						{{ form_widget(vehicleForm.RegistrationCertificate.countryOfIssue, { 'attr': {'data-action': 'country-input'} }) }}
+						<div class="form-error">
+							{{ form_errors(vehicleForm.RegistrationCertificate.countryOfIssue) }}
+						</div>
+						<div id="dropdownMenu" class="hidden">
+							<ul id="dropdownResults">
+								<li>Aucun résultat</li>
+							</ul>
+						</div>
+					</div>
+					<div class="form-group">
+						{{ form_row(vehicleForm.RegistrationCertificate.frontImageFile, { label: 'Image recto' }) }}
+						<div class="form-error">{{ form_errors(vehicleForm.RegistrationCertificate.frontImageFile) }}</div>
+					</div>
+					<div class="form-group">
+						{{ form_row(vehicleForm.RegistrationCertificate.backImageFile, { label: 'Image verso' }) }}
+						<div class="form-error">{{ form_errors(vehicleForm.RegistrationCertificate.backImageFile) }}</div>
+					</div>
+					<div class="form-group">
+						{{ form_row(vehicleForm.RegistrationCertificate.issueDate, { label: "Date d'immatriculation" }) }}
+						<div class="form-error">{{ form_errors(vehicleForm.RegistrationCertificate.issueDate) }}</div>
 					</div>
 				</div>
-				<div class="form-group">
-					{{ form_row(vehicleForm.model.vehicleCategory, { label: 'Type de véhicule' }) }}
-				</div>
-				<div class="form-group">
-					{{ form_row(vehicleForm.color, { label: 'Couleur' }) }}
-				</div>
-				<div class="form-group">
-					{{ form_row(vehicleForm.seats, { label: 'nombre de sièges' }) }}
-				</div>
-				<div class="form-group">
-					{{ form_row(vehicleForm.doors, { label: 'nombre de portes' }) }}
-				</div>
 			</div>
-		</div>
 
-		<!-- Étape 2 : Immatriculation -->
-		<div class="form-step-2 hidden">
-			<h3>Immatriculation</h3>
-			<div class="form-container">
-				<div class="form-group">
-					{{ form_row(vehicleForm.RegistrationCertificate.certificateNumber, { label: 'Plaque d\'immatriculation' }) }}
-				</div>
-				<div class="form-group country-container">
-				 {{ form_label(vehicleForm.RegistrationCertificate.countryOfIssue, 'Pays d\'immatriculation') }}
-					{{ form_widget(vehicleForm.RegistrationCertificate.countryOfIssue, { 'attr': {'data-action': 'country-input'} }) }}
-					<div class="form-error">
-						{{ form_errors(vehicleForm.RegistrationCertificate.countryOfIssue) }}
+			<!-- Étape 3 : Caractéristiques techniques -->
+			<div class="form-step-3 hidden">
+				<h3>Caractéristiques techniques</h3>
+				<div class="form-container">
+					<div class="form-group">
+						{{ form_row(vehicleForm.mileage, { label: 'Kilométrage' }) }}
 					</div>
-					<div id="dropdownMenu" class="hidden">
-						<ul id="dropdownResults">
-							<li>Aucun résultat</li>
-						</ul>
+					<div class="form-group">
+						{{ form_row(vehicleForm.fuelType, { label: 'Carburant' }) }}
+					</div>
+					<div class="form-group">
+						{{ form_row(vehicleForm.gearboxType, { label: 'Boîte de vitesse' }) }}
 					</div>
 				</div>
-				<div class="form-group">
-					{{ form_row(vehicleForm.RegistrationCertificate.frontImageFile, { label: 'Image recto' }) }}
-					<div class="form-error">{{ form_errors(vehicleForm.RegistrationCertificate.frontImageFile) }}</div>
-				</div>
-				<div class="form-group">
-					{{ form_row(vehicleForm.RegistrationCertificate.backImageFile, { label: 'Image verso' }) }}
-					<div class="form-error">{{ form_errors(vehicleForm.RegistrationCertificate.backImageFile) }}</div>
-				</div>
-				<div class="form-group">
-					{{ form_row(vehicleForm.RegistrationCertificate.issueDate, { label: "Date d'immatriculation" }) }}
-					<div class="form-error">{{ form_errors(vehicleForm.RegistrationCertificate.issueDate) }}</div>
-				</div>
 			</div>
-		</div>
-	</div>
-	<!-- Étape 3 : Caractéristiques techniques -->
-	<div class="form-step-3 hidden">
-		<h3>Caractéristiques techniques</h3>
-		<div class="form-container">
-			<div class="form-group">
-				{{ form_row(vehicleForm.mileage, { label: 'Kilométrage' }) }}
-			</div>
-			<div class="form-group">
-				{{ form_row(vehicleForm.fuelType, { label: 'Carburant' }) }}
-			</div>
-			<div class="form-group">
-				{{ form_row(vehicleForm.gearboxType, { label: 'Boîte de vitesse' }) }}
-			</div>
-		</div>
-	</div>
 
-	<!-- Étape 4 : Tarification -->
-	<div class="form-step-4 hidden">
-		<h3>Tarification</h3>
-		<div class="form-container">
-			<div class="form-group">
-				{{ form_row(vehicleForm.pricePerDay, { label: 'Tarif/jour' }) }}
-			</div>
-			<div class="form-group">
-				{{ form_row(vehicleForm.extraMileageRate, { label: 'Prix par km supplémentaire' }) }}
-			</div>
-		</div>
-	</div>
-
-	<!-- Étape 5 : Localisation -->
-	<div class="form-step-5 hidden">
-		<h3>Localisation</h3>
-		<div class="form-container">
-			<div class="form-group address-container street-container">
-				{{ form_label(vehicleForm.address,'Adresse') }}
-				{{ form_widget(vehicleForm.address, { 'attr': {'data-action': 'address-input'} }) }}
-				{{ form_errors(vehicleForm.address) }}
-				<div id="dropdownMenu" class="hidden">
-					<ul id="dropdownResults">
-						<li>Aucun résultat</li>
-					</ul>
-				</div>
-			</div>
-			<div class="form-group city-container">
-				{{ form_label(vehicleForm.city,'ville') }}
-				{{ form_widget(vehicleForm.city, { 'attr': {'data-action': 'city-input'} }) }}
-				{{ form_errors(vehicleForm.city) }}
-				<div id="dropdownMenu" class="hidden">
-					<ul id="dropdownResults">
-						<li>Aucun résultat</li>
-					</ul>
-				</div>
-			</div>
-			<div class="form-group postcode-container">
-				{{ form_label(vehicleForm.postalCode,'code postal') }}
-				{{ form_widget(vehicleForm.postalCode, { 'attr': {'data-action': 'postcode-input'} }) }}
-				{{ form_errors(vehicleForm.postalCode) }}
-				<div id="dropdownMenu" class="hidden">
-					<ul id="dropdownResults">
-						<li>Aucun résultat</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- Étape 6 : Description -->
-	<div class="form-step-6 hidden">
-		<h3>Description</h3>
-		<div class="form-group">
-			{{ form_row(vehicleForm.description, { label: "Description de l'annonce" }) }}
-		</div>
-	</div>
-
-	<!-- Étape 7 : Photos du véhicule -->
-	<div class="form-step-7 hidden">
-		<h3>Photos du véhicule</h3>
-		<div class="photo-collection">
-			{{ form_label(vehicleForm.photos) }}
-			<div class="photo-items">
-				{% for photoForm in vehicleForm.photos %}
-					<div class="photo-item">
-						{{ form_row(photoForm.imageFile) }}
+			<!-- Étape 4 : Tarification -->
+			<div class="form-step-4 hidden">
+				<h3>Tarification</h3>
+				<div class="form-container">
+					<div class="form-group">
+						{{ form_row(vehicleForm.pricePerDay, { label: 'Tarif/jour' }) }}
 					</div>
-				{% endfor %}
+					<div class="form-group">
+						{{ form_row(vehicleForm.extraMileageRate, { label: 'Prix par km supplémentaire' }) }}
+					</div>
+				</div>
 			</div>
-			<button type="button" class="add-photo-button">Ajouter une photo</button>
-			<div class="photo-prototype" data-prototype="{{ form_widget(vehicleForm.photos.vars.prototype)|e('html_attr') }}"></div>
+
+			<!-- Étape 5 : Localisation -->
+			<div class="form-step-5 hidden">
+				<h3>Localisation</h3>
+				<div class="form-container">
+					<div class="form-group address-container street-container">
+						{{ form_label(vehicleForm.address,'Adresse') }}
+						{{ form_widget(vehicleForm.address, { 'attr': {'data-action': 'address-input'} }) }}
+						{{ form_errors(vehicleForm.address) }}
+						<div id="dropdownMenu" class="hidden">
+							<ul id="dropdownResults">
+								<li>Aucun résultat</li>
+							</ul>
+						</div>
+					</div>
+					<div class="form-group city-container">
+						{{ form_label(vehicleForm.city,'ville') }}
+						{{ form_widget(vehicleForm.city, { 'attr': {'data-action': 'city-input'} }) }}
+						{{ form_errors(vehicleForm.city) }}
+						<div id="dropdownMenu" class="hidden">
+							<ul id="dropdownResults">
+								<li>Aucun résultat</li>
+							</ul>
+						</div>
+					</div>
+					<div class="form-group postcode-container">
+						{{ form_label(vehicleForm.postalCode,'code postal') }}
+						{{ form_widget(vehicleForm.postalCode, { 'attr': {'data-action': 'postcode-input'} }) }}
+						{{ form_errors(vehicleForm.postalCode) }}
+						<div id="dropdownMenu" class="hidden">
+							<ul id="dropdownResults">
+								<li>Aucun résultat</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Étape 6 : Description -->
+			<div class="form-step-6 hidden">
+				<h3>Description</h3>
+				<div class="form-group">
+					{{ form_row(vehicleForm.description, { label: "Description de l'annonce" }) }}
+				</div>
+			</div>
+
+			<!-- Étape 7 : Photos du véhicule -->
+			<div class="form-step-7 hidden">
+				<h3>Photos du véhicule</h3>
+				<div class="photo-collection">
+					{{ form_label(vehicleForm.photos, 'Photos du véhicule (5 minimum)') }}
+					{{ form_errors(vehicleForm.photos) }}
+					<div class="photo-items">
+						{% for photoForm in vehicleForm.photos %}
+							<div class="photo-item">
+								{{ form_row(photoForm.imageFile) }}
+
+							</div>
+						{% endfor %}
+					</div>
+					<button type="button" class="add-photo-button">Ajouter une photo</button>
+					<div class="photo-prototype" data-prototype="{{ form_widget(vehicleForm.photos.vars.prototype)|e('html_attr') }}"></div>
+				</div>
+			</div>
+
+			<!-- Boutons de navigation -->
+			<div class="form-navigation">
+				<button type="button" class="prev hidden">Précédent</button>
+				<button type="button" class="next">Suivant</button>
+				{% if app.user.profile.isVerified is not same as true %}
+					<a href="#msg" class="nav-button">Ajouter mon véhicule</a>
+				{% else %}
+					<button type="submit" class="nav-button hidden submit-button">Ajouter mon véhicule</button>
+				{% endif %}
+			</div>
+
+
+			{{ form_end(vehicleForm) }}
 		</div>
-	</div>
+	</section>
 
-	<!-- Boutons de navigation -->
-<div class="form-navigation">
-    <button type="button" class="prev hidden">Précédent</button>
-    <button type="button" class="next">Suivant</button>
-    {% if app.user.profile.isVerified is not same as true %}
-        <a href="#msg" class="nav-button">Ajouter mon véhicule</a>
-    {% else %}
-        <button type="submit" class="nav-button hidden submit-button">Ajouter mon véhicule</button>
-    {% endif %}
-</div>
-
-
-	{{ form_end(vehicleForm) }}
-</main>
-
-<script>
-	document.addEventListener("DOMContentLoaded", function () {
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
 const prevButton = document.querySelector('.prev');
 const nextButton = document.querySelector('.next');
 const submitButton = document.querySelector('.submit-button');
@@ -413,18 +426,18 @@ const sections = document.querySelectorAll('[class^="form-step"]');
 let currentStep = 0;
 
 function showStep(index) {
-    sections.forEach((section, i) => {
-        section.classList.toggle('hidden', i !== index);
-    });
+sections.forEach((section, i) => {
+section.classList.toggle('hidden', i !== index);
+});
 
-    stepIndicators.forEach((indicator, i) => {
-        indicator.classList.toggle('active', i <= index);
-    });
+stepIndicators.forEach((indicator, i) => {
+indicator.classList.toggle('active', i <= index);
+});
 
-    // Afficher/Masquer les boutons en fonction de l'étape
-    prevButton.classList.toggle('hidden', index === 0);
-    nextButton.classList.toggle('hidden', index === sections.length - 1);
-    submitButton.classList.toggle('hidden', index !== sections.length - 1);
+// Afficher/Masquer les boutons en fonction de l'étape
+prevButton.classList.toggle('hidden', index === 0);
+nextButton.classList.toggle('hidden', index === sections.length - 1);
+submitButton.classList.toggle('hidden', index !== sections.length - 1);
 }
 
 
@@ -451,7 +464,8 @@ showStep(currentStep);
 
 showStep(currentStep);
 });
-</script>
+	</script>
 
-<script type="text/javascript" src="http://www.carqueryapi.com/js/jquery.min.js"></script>
-<script type="text/javascript" src="http://www.carqueryapi.com/js/carquery.0.3.4.js"></script>{% endblock %}
+	<script type="text/javascript" src="http://www.carqueryapi.com/js/jquery.min.js"></script>
+	<script type="text/javascript" src="http://www.carqueryapi.com/js/carquery.0.3.4.js"></script>
+{% endblock %}
