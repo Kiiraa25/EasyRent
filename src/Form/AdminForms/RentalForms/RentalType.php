@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form\AdminForms;
+namespace App\Form\AdminForms\RentalForms;
 
 use App\Entity\Rental;
 use Symfony\Component\Form\AbstractType;

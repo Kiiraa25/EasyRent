@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form\AdminForms;
+namespace App\Form\AdminForms\VehicleForms;
 
 use App\Entity\Vehicle;
 use Symfony\Component\Form\AbstractType;

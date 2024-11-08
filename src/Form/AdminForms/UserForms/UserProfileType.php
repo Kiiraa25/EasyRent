@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form\AdminForms;
+namespace App\Form\AdminForms\UserForms;
 
 use App\Entity\UserProfile;
 use Symfony\Component\Form\AbstractType;
