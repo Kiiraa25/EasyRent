@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\EditProfileForms;
 
 use App\Entity\DrivingLicense;
 use App\Entity\Request;

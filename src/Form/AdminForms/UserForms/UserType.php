@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form\AdminForms\UserType;
+namespace App\Form\AdminForms\UserForms;
 
 use App\Entity\User;
 use App\Form\AdminForms\UserForms\UserProfileType;

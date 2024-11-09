@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\EditProfileForms;
 
 use App\Entity\UserProfile;
 use Symfony\Component\Form\AbstractType;
@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use App\Form\DrivingLicenseType;
+use App\Form\EditProfileForms\DrivingLicenseType as EditProfileFormsDrivingLicenseType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -88,7 +89,7 @@ class UserProfileType extends AbstractType
                     'class' => 'profile-picture-input'
                 ]
             ])
-            ->add('drivingLicense', DrivingLicenseType::class, [
+            ->add('drivingLicense', EditProfileFormsDrivingLicenseType::class, [
                 'label' => false,
             ]);
            
