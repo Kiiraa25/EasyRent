@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Enum\RoleEnum;
 use App\Entity\User;
-use App\Form\RegistrationFormType;
+use App\Form\RegistrationForms\RegistrationFormType;
 use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;

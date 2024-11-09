@@ -15,7 +15,7 @@ use App\Enum\GearboxTypeEnum;
 use App\Enum\PhotoTypeEnum;
 use App\Enum\VehicleCategoryEnum;
 use App\Enum\VehicleStatusEnum;
-use App\Service\DataGouvAddressService;
+use App\Service\Api\DataGouvAddressService;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Faker\Factory;
 use Symfony\Component\HttpFoundation\File\File;

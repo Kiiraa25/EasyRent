@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\UserProfile;
-use App\Form\UserType;
+use App\Form\EditUserForms\ChangeEmailType;
+use App\Form\EditUserForms\ChangePasswordType;
+use App\Form\EditUserForms\DeleteAccountType;
 use App\Enum\RoleEnum;
 use App\Enum\UserStatusEnum;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -13,9 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
-use App\Form\ChangeEmailType;
-use App\Form\ChangePasswordType;
-use App\Form\DeleteAccountType;
+
 
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;

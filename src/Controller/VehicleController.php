@@ -10,20 +10,15 @@ use Symfony\Component\Routing\Attribute\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use App\Entity\Vehicle;
-use App\Entity\Model;
-use App\Entity\RegistrationCertificate;
 use App\Enum\PhotoTypeEnum;
-use App\Form\VehicleType;
-use App\Form\EditVehicleType;
+use App\Form\VehicleForms\VehicleType;
+use App\Form\VehicleForms\EditVehicleType;
+use App\Form\SearchType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\VehicleRepository;
 use App\Enum\VehicleStatusEnum;
-use App\Form\RentalType;
-use App\Form\SearchType;
-use App\Service\DataGouvAddressService;
-use Symfony\Component\HttpFoundation\Exception\BadRequestException;
+use App\Service\Api\DataGouvAddressService;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Twig\Node\Expression\Binary\StartsWithBinary;
 
 use function Amp\Dns\query;
 
