@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\RentalForms;
 
 use App\Entity\Rental;
 use App\Entity\User;

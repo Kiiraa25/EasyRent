@@ -3,7 +3,7 @@
 
 // formulaire utilisé pour intégrer le nom + prenom (de la table userprofile) dans le formulaire d'inscription lié à la table user
 
-namespace App\Form;
+namespace App\Form\RegistrationForms;
 
 use App\Entity\UserProfile;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\VehicleForms;
 
 use App\Entity\Brand;
 use Symfony\Component\Form\AbstractType;

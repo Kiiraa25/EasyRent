@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\RentalForms;
 
 use Amp\Http\Client\Interceptor\ModifyRequest;
 use App\Entity\PaymentMethod;

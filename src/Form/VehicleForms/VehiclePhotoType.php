@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\VehicleForms;
 
 use App\Entity\Vehicle;
 use App\Entity\VehicleCondition;

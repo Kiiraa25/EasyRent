@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\RegistrationForms;
 
 use App\Entity\User;
+use App\Form\RegistrationForms\NameUserProfileType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
