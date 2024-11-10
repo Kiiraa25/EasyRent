@@ -48,7 +48,7 @@ class VehicleType extends AbstractType
             ])
 
             ->add('gearboxType', EnumType::class, [
-                'class' => GearBoxTypeEnum::class
+                'enum_class' => GearBoxTypeEnum::class
             ])
 
             ->add('mileage', IntegerType::class, [
