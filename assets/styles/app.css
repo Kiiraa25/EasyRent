@@ -1157,3 +1157,32 @@ main {
     cursor: pointer;
 }
 
+/* style cookies consent */
+
+.cky-consent-bar{
+    background-color: #282F4B;
+    border-color: #282F4B;
+}
+
+.cky-title{
+    color: white;
+    font-weight: 400;
+}
+
+.cky-notice-des{
+    color: white;
+    font-weight: 300;
+}
+
+.cky-btn-accept{
+    border-color: #FF866F;
+    background-color: #FF866F;
+}
+
+.cky-btn-reject, .cky-btn-customize{
+    border-color: #FF866F;
+    color: #FF866F;
+}
+
+
+
