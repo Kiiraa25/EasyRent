@@ -3,7 +3,7 @@
 namespace App\Dto;
 
 use App\Enum\FuelTypeEnum;
-use App\Enum\GearboxTypeEnum;
+use App\Enum\GearBoxTypeEnum;
 use App\Enum\VehicleCategoryEnum;
 use DateTimeInterface;
 
@@ -13,7 +13,7 @@ class SearchDto
     private ?DateTimeInterface $startDate = null;
     private ?DateTimeInterface $endDate = null;
     private ?VehicleCategoryEnum $vehicleCategory = null;
-    private ?GearboxTypeEnum $gearboxType = null;
+    private ?GearBoxTypeEnum $gearboxType = null;
     private ?FuelTypeEnum $fuelType = null;
     private ?int $totalPrice = null;
 
@@ -63,12 +63,12 @@ class SearchDto
         return $this;
     }
 
-    public function getGearboxType(): ?GearboxTypeEnum
+    public function getGearboxType(): ?GearBoxTypeEnum
     {
         return $this->gearboxType;
     }
 
-    public function setGearboxType(?GearboxTypeEnum $gearboxType): self
+    public function setGearboxType(?GearBoxTypeEnum $gearboxType): self
     {
         $this->gearboxType = $gearboxType;
         return $this;
