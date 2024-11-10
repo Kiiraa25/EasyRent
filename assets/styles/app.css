@@ -1160,6 +1160,7 @@ main {
 /* style cookies consent */
 
 .cky-consent-bar{
+<<<<<<< HEAD
     background-color: #282F4B !important;
     border-color: #282F4B !important;
 }
@@ -1188,3 +1189,31 @@ main {
     color: #282F4B !important;
     font-weight: 600 !important;
 }
+=======
+    background-color: #282F4B;
+    border-color: #282F4B;
+}
+
+.cky-title{
+    color: white;
+    font-weight: 400;
+}
+
+.cky-notice-des{
+    color: white;
+    font-weight: 300;
+}
+
+.cky-btn-accept{
+    border-color: #FF866F;
+    background-color: #FF866F;
+}
+
+.cky-btn-reject, .cky-btn-customize{
+    border-color: #FF866F;
+    color: #FF866F;
+}
+
+
+
+>>>>>>> da0d83d934d4d4b026e94b2ed5eb420c248c4c89
