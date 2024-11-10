@@ -2,7 +2,7 @@
 
 namespace App\Enum;
 
-enum GearboxTypeEnum: string
+enum GearBoxTypeEnum: string
 {
     case MANUELLE = 'manuelle';
     case AUTOMATIQUE = 'automatique';

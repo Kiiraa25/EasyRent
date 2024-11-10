@@ -1157,3 +1157,34 @@ main {
     cursor: pointer;
 }
 
+/* style cookies consent */
+
+.cky-consent-bar{
+    background-color: #282F4B !important;
+    border-color: #282F4B !important;
+}
+
+.cky-title{
+    color: white !important;
+    font-weight: 400 !important;
+}
+
+.cky-notice-des{
+    color: white !important;
+    font-weight: 300 !important;
+}
+
+.cky-btn-accept{
+    border-color: #FF866F !important;
+    background-color: #FF866F !important;
+}
+
+.cky-btn-reject, .cky-btn-customize, .cky-btn-preferences{
+    border-color: #FF866F !important;
+    color: #FF866F !important;
+}
+
+.cky-show-desc-btn{
+    color: #282F4B !important;
+    font-weight: 600 !important;
+}

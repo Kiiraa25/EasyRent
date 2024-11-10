@@ -5,7 +5,7 @@ namespace App\Entity;
 use App\Repository\VehicleRepository;
 use App\Enum\VehicleStatusEnum;
 use App\Enum\FuelTypeEnum;
-use App\Enum\GearboxTypeEnum;
+use App\Enum\GearBoxTypeEnum;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -297,13 +297,13 @@ class Vehicle
     }
 
     // Getter pour gearboxType avec enum
-    public function getGearboxType(): ?GearboxTypeEnum
+    public function getGearboxType(): ?GearBoxTypeEnum
     {
-        return $this->gearboxType ? GearboxTypeEnum::from($this->gearboxType) : null;
+        return $this->gearboxType ? GearBoxTypeEnum::from($this->gearboxType) : null;
     }
 
     // Setter pour gearboxType avec enum
-    public function setGearboxType(GearboxTypeEnum $gearboxType): self
+    public function setGearboxType(GearBoxTypeEnum $gearboxType): self
     {
         $this->gearboxType = $gearboxType->value;
 

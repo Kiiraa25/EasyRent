@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Dto\SearchDto;
 use App\Entity\Vehicle;
 use App\Enum\FuelTypeEnum;
-use App\Enum\GearboxTypeEnum;
+use App\Enum\GearBoxTypeEnum;
 use App\Enum\RentalStatusEnum;
 use App\Enum\VehicleCategoryEnum;
 use DateTime;

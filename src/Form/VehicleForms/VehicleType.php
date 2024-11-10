@@ -7,9 +7,9 @@ use App\Entity\Model;
 use App\Entity\Status;
 use App\Entity\User;
 use App\Enum\FuelType;
-use App\Enum\GearboxType;
+use App\Enum\GearBoxType;
 use App\Enum\FuelTypeEnum;
-use App\Enum\GearboxTypeEnum;
+use App\Enum\GearBoxTypeEnum;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use App\Entity\Vehicle;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -48,7 +48,7 @@ class VehicleType extends AbstractType
             ])
 
             ->add('gearboxType', EnumType::class, [
-                'class' => GearboxTypeEnum::class
+                'class' => GearBoxTypeEnum::class
             ])
 
             ->add('mileage', IntegerType::class, [

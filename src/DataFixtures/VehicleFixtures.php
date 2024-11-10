@@ -11,7 +11,7 @@ use App\Entity\RegistrationCertificate;
 use App\Entity\User;
 use App\Entity\VehiclePhoto;
 use App\Enum\FuelTypeEnum;
-use App\Enum\GearboxTypeEnum;
+use App\Enum\GearBoxTypeEnum;
 use App\Enum\PhotoTypeEnum;
 use App\Enum\VehicleCategoryEnum;
 use App\Enum\VehicleStatusEnum;
@@ -161,7 +161,7 @@ class VehicleFixtures extends Fixture
                         ->setCreatedAt(new \DateTimeImmutable())
                         ->setUpdatedAt(new \DateTimeImmutable())
                         ->setFuelType($faker->randomElement(FuelTypeEnum::cases()))
-                        ->setGearboxType($faker->randomElement(GearboxTypeEnum::cases()))
+                        ->setGearboxType($faker->randomElement(GearBoxTypeEnum::cases()))
                         ->setDoors($faker->numberBetween(2, 5))
                         ->setSeats($faker->numberBetween(2, 7))
                         ->setPricePerDay($faker->numberBetween(20, 150))

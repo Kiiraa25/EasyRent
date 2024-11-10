@@ -4,7 +4,7 @@ namespace App\Form;
 
 use App\Dto\SearchDto;
 use App\Enum\FuelTypeEnum;
-use App\Enum\GearboxTypeEnum;
+use App\Enum\GearBoxTypeEnum;
 use App\Enum\VehicleCategoryEnum;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -59,7 +59,7 @@ class SearchType extends AbstractType
                 ]
             ])
             ->add('gearboxType', EnumType::class, [
-                'class' => GearboxTypeEnum::class,
+                'class' => GearBoxTypeEnum::class,
                 'required' => false,
                 'label' => false,
                 'placeholder' => 'Boite de vitesse',
