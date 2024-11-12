@@ -416,7 +416,7 @@
 	</section>
 
 	<script>
-		document.addEventListener("DOMContentLoaded", function () {
+	document.addEventListener("DOMContentLoaded", function () {
     const prevButton = document.querySelector('.prev');
     const nextButton = document.querySelector('.next');
     const submitButton = document.querySelector('.submit-button');
@@ -444,21 +444,26 @@
         let isValid = true;
 
         inputs.forEach(input => {
-            const errorMessage = input.parentElement.querySelector('.form-error');
+            // Supprimer tout message d'erreur précédent
+            let errorMessage = input.parentElement.querySelector('.error-message');
             if (errorMessage) {
-                errorMessage.textContent = ''; // Clear previous error
+                errorMessage.remove();
             }
 
-            // Validation spécifique pour chaque champ
+            // Créer un élément pour le message d'erreur s'il n'existe pas
+            errorMessage = document.createElement('div');
+            errorMessage.className = 'error-message';
+            errorMessage.style.color = 'red';
+            errorMessage.style.fontSize = '14px';
+            input.parentElement.appendChild(errorMessage);
+
+            // Validation spécifique pour certains champs
             if (input.name.includes('color')) {
-                // Vérifie que la couleur est bien un texte
                 if (!/^[a-zA-Z\s]+$/.test(input.value)) {
                     errorMessage.textContent = 'Veuillez entrer une couleur valide (texte uniquement).';
                     isValid = false;
                 }
-            }
-
-            if (!input.checkValidity()) {
+            } else if (!input.checkValidity()) {
                 errorMessage.textContent = input.validationMessage || 'Ce champ est obligatoire.';
                 isValid = false;
             }
@@ -481,6 +486,7 @@
 
     showStep(currentStep);
 });
+
 
 	</script>
 
