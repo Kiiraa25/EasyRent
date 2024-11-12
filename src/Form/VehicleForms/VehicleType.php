@@ -2,30 +2,19 @@
 
 namespace App\Form\VehicleForms;
 
-use App\Entity\Location;
-use App\Entity\Model;
-use App\Entity\Status;
-use App\Entity\User;
-use App\Enum\FuelType;
-use App\Enum\GearBoxType;
+
 use App\Enum\FuelTypeEnum;
 use App\Enum\GearBoxTypeEnum;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use App\Entity\Vehicle;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Validator\Constraints\Count;
-use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
-use Symfony\Component\Validator\Constraints\LessThanOrEqual;
-use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class VehicleType extends AbstractType
 {
