@@ -417,53 +417,71 @@
 
 	<script>
 		document.addEventListener("DOMContentLoaded", function () {
-const prevButton = document.querySelector('.prev');
-const nextButton = document.querySelector('.next');
-const submitButton = document.querySelector('.submit-button');
-const stepIndicators = document.querySelectorAll('.step');
+    const prevButton = document.querySelector('.prev');
+    const nextButton = document.querySelector('.next');
+    const submitButton = document.querySelector('.submit-button');
+    const stepIndicators = document.querySelectorAll('.step');
+    const sections = document.querySelectorAll('[class^="form-step"]');
+    let currentStep = 0;
 
-const sections = document.querySelectorAll('[class^="form-step"]');
-let currentStep = 0;
+    function showStep(index) {
+        sections.forEach((section, i) => {
+            section.classList.toggle('hidden', i !== index);
+        });
 
-function showStep(index) {
-sections.forEach((section, i) => {
-section.classList.toggle('hidden', i !== index);
+        stepIndicators.forEach((indicator, i) => {
+            indicator.classList.toggle('active', i <= index);
+        });
+
+        // Afficher/Masquer les boutons en fonction de l'étape
+        prevButton.classList.toggle('hidden', index === 0);
+        nextButton.classList.toggle('hidden', index === sections.length - 1);
+        submitButton.classList.toggle('hidden', index !== sections.length - 1);
+    }
+
+    function validateCurrentStep() {
+        const inputs = sections[currentStep].querySelectorAll('input, select, textarea');
+        let isValid = true;
+
+        inputs.forEach(input => {
+            const errorMessage = input.parentElement.querySelector('.form-error');
+            if (errorMessage) {
+                errorMessage.textContent = ''; // Clear previous error
+            }
+
+            // Validation spécifique pour chaque champ
+            if (input.name.includes('color')) {
+                // Vérifie que la couleur est bien un texte
+                if (!/^[a-zA-Z\s]+$/.test(input.value)) {
+                    errorMessage.textContent = 'Veuillez entrer une couleur valide (texte uniquement).';
+                    isValid = false;
+                }
+            }
+
+            if (!input.checkValidity()) {
+                errorMessage.textContent = input.validationMessage || 'Ce champ est obligatoire.';
+                isValid = false;
+            }
+        });
+
+        return isValid;
+    }
+
+    prevButton.addEventListener('click', function () {
+        if (currentStep > 0) currentStep--;
+        showStep(currentStep);
+    });
+
+    nextButton.addEventListener('click', function () {
+        if (validateCurrentStep() && currentStep < sections.length - 1) {
+            currentStep++;
+            showStep(currentStep);
+        }
+    });
+
+    showStep(currentStep);
 });
 
-stepIndicators.forEach((indicator, i) => {
-indicator.classList.toggle('active', i <= index);
-});
-
-// Afficher/Masquer les boutons en fonction de l'étape
-prevButton.classList.toggle('hidden', index === 0);
-nextButton.classList.toggle('hidden', index === sections.length - 1);
-submitButton.classList.toggle('hidden', index !== sections.length - 1);
-}
-
-
-function validateCurrentStep() {
-const inputs = sections[currentStep].querySelectorAll('input, select, textarea');
-return Array.from(inputs).every(input => input.checkValidity());
-}
-
-prevButton.addEventListener('click', function () {
-if (currentStep > 0) 
-currentStep--;
-
-
-
-showStep(currentStep);
-});
-
-nextButton.addEventListener('click', function () {
-if (validateCurrentStep() && currentStep < sections.length - 1) {
-currentStep++;
-showStep(currentStep);
-}
-});
-
-showStep(currentStep);
-});
 	</script>
 
 	<script type="text/javascript" src="https://www.carqueryapi.com/js/jquery.min.js"></script>
