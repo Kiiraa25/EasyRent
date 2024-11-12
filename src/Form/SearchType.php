@@ -59,11 +59,7 @@ class SearchType extends AbstractType
                 ]
             ])
             ->add('gearboxType', EnumType::class, [
-<<<<<<< HEAD
                 'class' => GearBoxTypeEnum::class,
-=======
-                'enum_class' => GearBoxTypeEnum::class,
->>>>>>> da0d83d934d4d4b026e94b2ed5eb420c248c4c89
                 'required' => false,
                 'label' => false,
                 'placeholder' => 'Boite de vitesse',
