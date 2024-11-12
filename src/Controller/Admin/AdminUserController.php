@@ -6,7 +6,7 @@ use App\Entity\Rating;
 use App\Entity\Rental;
 use App\Entity\User;
 use App\Enum\UserStatusEnum;
-use App\Form\AdminForms\UserType;
+use App\Form\AdminForms\UserForms\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

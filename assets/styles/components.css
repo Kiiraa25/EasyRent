@@ -149,7 +149,7 @@ select{
     font-size: 14px;
     color: red;
     list-style-type: none;
-    max-width: 400px;
+    max-width: 395px;
 }
 .form-error ul{
     list-style-type: none;

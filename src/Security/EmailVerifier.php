@@ -44,7 +44,7 @@ class EmailVerifier
     $email = (new TemplatedEmail())
     ->from(new \Symfony\Component\Mime\Address('easy_rent@registration.com', 'easy_rent'))
         ->to($user->getEmail())
-        ->subject('Please Confirm your Email')
+        ->subject('Veuillez confirmer votre email')
         ->htmlTemplate('registration/confirmation_email.html.twig');
         
     $this->sendEmailConfirmation($verifyEmailRouteName, $user, $email);

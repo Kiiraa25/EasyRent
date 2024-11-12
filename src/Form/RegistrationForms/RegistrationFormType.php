@@ -44,7 +44,7 @@ class RegistrationFormType extends AbstractType
         ->add('plainPassword', RepeatedType::class, [
             'type' => PasswordType::class,
             'mapped' => false,
-            'invalid_message' => 'The password fields must match.',
+            'invalid_message' => 'Les deux mots de passe ne sont pas identiques.',
             'required' => true,
             'first_options'  => [
                 'label' => false,
