@@ -1159,7 +1159,7 @@ main {
 
 /* style cookies consent */
 
-.cky-consent-bar{
+.cky-consent-container .cky-consent-bar{
     background-color: #282F4B !important;
     border-color: #282F4B !important;
 }
