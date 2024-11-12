@@ -466,15 +466,15 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             } else if (input.name.includes('mileage')) {
                 const mileage = parseInt(input.value, 10);
-                if (isNaN(mileage) || mileage < 0) {
-                    errorMessage.textContent = 'Le kilométrage ne peut pas être négatif.';
+                if (isNaN(mileage) || mileage < 1) {
+                    errorMessage.textContent = 'Veuillez indiquer un kilométrage valide.';
                     isValid = false;
                 } else if (mileage > 200000) {
-                    errorMessage.textContent = 'Le kilométrage doit être inférieur ou égal à 200 000 km.';
+                    errorMessage.textContent = 'Le kilométragene peux pas être suppérieur à 200 000 km.';
                     isValid = false;
                 }
             } else if (input.name.includes('postalCode') && !/^\d+$/.test(input.value)) {
-                errorMessage.textContent = 'Le code postal doit être un nombre entier.';
+                errorMessage.textContent = 'Veuillez indiquer un code postal valide.';
                 isValid = false;
             } else if (input.name.includes('issueDate')) {
                 const issueDate = new Date(input.value);
@@ -483,7 +483,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 fifteenYearsAgo.setFullYear(now.getFullYear() - 15);
 
                 if (issueDate > now) {
-                    errorMessage.textContent = "La date d'immatriculation ne peut pas être postérieure à aujourd'hui.";
+                    errorMessage.textContent = "La date d'immatriculation ne peut pas être ultérieure à aujourd'hui.";
                     isValid = false;
                 } else if (issueDate < fifteenYearsAgo) {
                     errorMessage.textContent = 'Vous ne pouvez pas ajouter un véhicule de plus de 15 ans.';
