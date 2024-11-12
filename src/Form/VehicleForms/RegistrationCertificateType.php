@@ -17,12 +17,15 @@ class RegistrationCertificateType extends AbstractType
         $builder
             ->add('issueDate', DateType::class, [
                 'widget' => 'single_text',
+                'required' => true,
             ])
             ->add('certificateNumber', TextType::class, [
                 'label' => 'Numéro de certificat',
+                'required' => true,
             ])
             ->add('countryOfIssue', TextType::class, [
                 'label' => 'Pays d\'émission',
+                'required' => true,
             ])
             ->add('frontImageFile', VichImageType::class, [
                 'label' => 'Photo recto',

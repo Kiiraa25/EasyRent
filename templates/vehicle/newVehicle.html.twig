@@ -47,8 +47,7 @@
 			align-items: center;
 		}
 
-		.form-group {
-		}
+		.form-group {}
 
 		label {
 			font-weight: bold;
@@ -194,8 +193,8 @@
 			color: red;
 		}
 
-		.form-navigation{
-			display:flex;
+		.form-navigation {
+			display: flex;
 			justify-content: center;
 			gap: 20px
 		}
@@ -416,7 +415,7 @@
 	</section>
 
 	<script>
-	document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
     const prevButton = document.querySelector('.prev');
     const nextButton = document.querySelector('.next');
     const submitButton = document.querySelector('.submit-button');
@@ -461,8 +460,17 @@
                 errorMessage.textContent = 'Veuillez entrer un pays valide.';
                 isValid = false;
             } else if (input.name.includes('brand') || input.name.includes('model') || input.name.includes('address') || input.name.includes('city')) {
-                if (!/^[a-zA-Z\s]+$/.test(input.value)) {
-                    errorMessage.textContent = 'Veuillez entrer un texte valide.';
+                if (!/^[a-zA-Z0-9\s\-.,'()]+$/.test(input.value)) {
+                    errorMessage.textContent = 'Veuillez entrer une valeur valide.';
+                    isValid = false;
+                }
+            } else if (input.name.includes('mileage')) {
+                const mileage = parseInt(input.value, 10);
+                if (isNaN(mileage) || mileage < 0) {
+                    errorMessage.textContent = 'Le kilométrage ne peut pas être négatif.';
+                    isValid = false;
+                } else if (mileage > 200000) {
+                    errorMessage.textContent = 'Le kilométrage doit être inférieur ou égal à 200 000 km.';
                     isValid = false;
                 }
             } else if (input.name.includes('postalCode') && !/^\d+$/.test(input.value)) {
@@ -473,7 +481,7 @@
                 const now = new Date();
                 const fifteenYearsAgo = new Date();
                 fifteenYearsAgo.setFullYear(now.getFullYear() - 15);
-                
+
                 if (issueDate > now) {
                     errorMessage.textContent = "La date d'immatriculation ne peut pas être postérieure à aujourd'hui.";
                     isValid = false;
@@ -481,9 +489,15 @@
                     errorMessage.textContent = 'Vous ne pouvez pas ajouter un véhicule de plus de 15 ans.';
                     isValid = false;
                 }
-            } else if ((input.name.includes('pricePerDay') || input.name.includes('extraMileageRate')) && isNaN(parseFloat(input.value))) {
-                errorMessage.textContent = 'Veuillez entrer un nombre valide pour le tarif.';
-                isValid = false;
+            } else if ((input.name.includes('pricePerDay') || input.name.includes('extraMileageRate'))) {
+                const value = parseFloat(input.value);
+                if (isNaN(value)) {
+                    errorMessage.textContent = 'Veuillez entrer un nombre valide pour le tarif.';
+                    isValid = false;
+                } else if (value < 0) {
+                    errorMessage.textContent = 'Le tarif ne peut pas être négatif.';
+                    isValid = false;
+                }
             } else if (input.type === 'file') {
                 const file = input.files[0];
                 if (file && !file.type.startsWith('image/')) {
@@ -501,6 +515,7 @@
 
     prevButton.addEventListener('click', function () {
         if (currentStep > 0) currentStep--;
+
         showStep(currentStep);
     });
 
@@ -513,8 +528,6 @@
 
     showStep(currentStep);
 });
-
-
 
 	</script>
 
