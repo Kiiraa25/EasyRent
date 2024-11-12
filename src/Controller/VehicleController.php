@@ -110,7 +110,7 @@ class VehicleController extends AbstractController
            
             }
             else if($issueDate > new \DateTime()){
-                $this->addFlash('error', "La date d'immatriculation ne peux pas être postérieur à la date du jour");
+                $this->addFlash('error', "La date d'immatriculation ne peux pas être ultérieure à la date du jour");
     
             }
 

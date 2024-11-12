@@ -10,6 +10,7 @@ use App\Enum\FuelType;
 use App\Enum\GearBoxType;
 use App\Enum\FuelTypeEnum;
 use App\Enum\GearBoxTypeEnum;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use App\Entity\Vehicle;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -51,17 +52,48 @@ class VehicleType extends AbstractType
                 'class' => GearBoxTypeEnum::class
             ])
 
-            ->add('mileage', IntegerType::class, [
-                'label' => 'Kilométrage',
-            ])
-
             ->add('doors', IntegerType::class, [
                 'label' => 'Nombre de portes',
+                'constraints' => [
+                    new Assert\GreaterThanOrEqual([
+                        'value' => 1,
+                        'message' => 'Le nombre de portes doit être au moins de 1.'
+                    ]),
+                    new Assert\LessThanOrEqual([
+                        'value' => 5,
+                        'message' => 'Le nombre de portes doit être au maximum de 5.'
+                    ]),
+                ],
             ])
-
+        
             ->add('seats', IntegerType::class, [
                 'label' => 'Nombre de sièges',
+                'constraints' => [
+                    new Assert\GreaterThanOrEqual([
+                        'value' => 1,
+                        'message' => 'Le nombre de sièges doit être au moins de 1.'
+                    ]),
+                    new Assert\LessThanOrEqual([
+                        'value' => 7,
+                        'message' => 'Le nombre de sièges doit être au maximum de 7.'
+                    ]),
+                ],
             ])
+        
+            ->add('mileage', IntegerType::class, [
+                'label' => 'Kilométrage',
+                'constraints' => [
+                    new Assert\GreaterThanOrEqual([
+                        'value' => 0,
+                        'message' => 'Le kilométrage doit être au minimum de 0 km.'
+                    ]),
+                    new Assert\LessThanOrEqual([
+                        'value' => 200000,
+                        'message' => 'Le kilométrage doit être au maximum de 200 000 km.'
+                    ]),
+                ],
+            ])
+
             ->add('description', TextType::class, [
                 'label' => 'Description',
             ])

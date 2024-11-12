@@ -433,7 +433,6 @@
             indicator.classList.toggle('active', i <= index);
         });
 
-        // Afficher/Masquer les boutons en fonction de l'étape
         prevButton.classList.toggle('hidden', index === 0);
         nextButton.classList.toggle('hidden', index === sections.length - 1);
         submitButton.classList.toggle('hidden', index !== sections.length - 1);
@@ -444,23 +443,51 @@
         let isValid = true;
 
         inputs.forEach(input => {
-            // Supprimer tout message d'erreur précédent
             let errorMessage = input.parentElement.querySelector('.error-message');
             if (errorMessage) {
                 errorMessage.remove();
             }
 
-            // Créer un élément pour le message d'erreur s'il n'existe pas
             errorMessage = document.createElement('div');
             errorMessage.className = 'error-message';
             errorMessage.style.color = 'red';
             errorMessage.style.fontSize = '14px';
             input.parentElement.appendChild(errorMessage);
 
-            // Validation spécifique pour certains champs
-            if (input.name.includes('color')) {
+            if (input.name.includes('color') && !/^[a-zA-Z\s]+$/.test(input.value)) {
+                errorMessage.textContent = 'Veuillez entrer une couleur valide (texte uniquement).';
+                isValid = false;
+            } else if (input.name.includes('countryOfIssue') && !/^[a-zA-Z\s]+$/.test(input.value)) {
+                errorMessage.textContent = 'Veuillez entrer un pays valide.';
+                isValid = false;
+            } else if (input.name.includes('brand') || input.name.includes('model') || input.name.includes('address') || input.name.includes('city')) {
                 if (!/^[a-zA-Z\s]+$/.test(input.value)) {
-                    errorMessage.textContent = 'Veuillez entrer une couleur valide (texte uniquement).';
+                    errorMessage.textContent = 'Veuillez entrer un texte valide.';
+                    isValid = false;
+                }
+            } else if (input.name.includes('postalCode') && !/^\d+$/.test(input.value)) {
+                errorMessage.textContent = 'Le code postal doit être un nombre entier.';
+                isValid = false;
+            } else if (input.name.includes('issueDate')) {
+                const issueDate = new Date(input.value);
+                const now = new Date();
+                const fifteenYearsAgo = new Date();
+                fifteenYearsAgo.setFullYear(now.getFullYear() - 15);
+                
+                if (issueDate > now) {
+                    errorMessage.textContent = "La date d'immatriculation ne peut pas être postérieure à aujourd'hui.";
+                    isValid = false;
+                } else if (issueDate < fifteenYearsAgo) {
+                    errorMessage.textContent = 'Vous ne pouvez pas ajouter un véhicule de plus de 15 ans.';
+                    isValid = false;
+                }
+            } else if ((input.name.includes('pricePerDay') || input.name.includes('extraMileageRate')) && isNaN(parseFloat(input.value))) {
+                errorMessage.textContent = 'Veuillez entrer un nombre valide pour le tarif.';
+                isValid = false;
+            } else if (input.type === 'file') {
+                const file = input.files[0];
+                if (file && !file.type.startsWith('image/')) {
+                    errorMessage.textContent = 'Veuillez télécharger un fichier image.';
                     isValid = false;
                 }
             } else if (!input.checkValidity()) {
@@ -486,6 +513,7 @@
 
     showStep(currentStep);
 });
+
 
 
 	</script>
