@@ -460,7 +460,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 errorMessage.textContent = 'Veuillez entrer un pays valide.';
                 isValid = false;
             } else if (input.name.includes('brand') || input.name.includes('model') || input.name.includes('address') || input.name.includes('city')) {
-                if (!/^[a-zA-Z0-9\s\-.,'()]+$/.test(input.value)) {
+                if (!/^[a-zA-ZÀ-ÿ0-9\s\-.,'()]+$/.test(input.value)) {
                     errorMessage.textContent = 'Veuillez entrer une valeur valide.';
                     isValid = false;
                 }
@@ -504,10 +504,39 @@ document.addEventListener("DOMContentLoaded", function () {
                     errorMessage.textContent = 'Veuillez télécharger un fichier image.';
                     isValid = false;
                 }
-            } else if (!input.checkValidity()) {
+            }
+			else if (input.name.includes('seats')) {
+			const seats = parseInt(input.value, 10);
+			if (isNaN(seats) || seats < 1) {
+				errorMessage.textContent = 'Le nombre de sièges doit être au moins de 1.';
+				isValid = false;
+			} else if (seats > 7) {
+				errorMessage.textContent = 'Le nombre de sièges doit être au maximum de 7.';
+				isValid = false;
+			}
+			} else if (input.name.includes('mileage')) {
+			const mileage = parseInt(input.value, 10);
+			if (isNaN(mileage) || mileage < 0) {
+				errorMessage.textContent = 'Le kilométrage doit être au minimum de 0 km.';
+				isValid = false;
+			} else if (mileage > 200000) {
+				errorMessage.textContent = 'Le kilométrage doit être au maximum de 200 000 km.';
+				isValid = false;
+			}
+			} else if (input.name.includes('doors')) {
+			const doors = parseInt(input.value, 10);
+			if (isNaN(doors) || doors < 1) {
+				errorMessage.textContent = 'Le nombre de portes doit être au moins de 1.';
+				isValid = false;
+			} else if (doors > 5) {
+				errorMessage.textContent = 'Le nombre de portes doit être au maximum de 5.';
+				isValid = false;
+			}
+			} else if (!input.checkValidity()) {
                 errorMessage.textContent = input.validationMessage || 'Ce champ est obligatoire.';
                 isValid = false;
             }
+
         });
 
         return isValid;
