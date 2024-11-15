@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
 
 class SearchType extends AbstractType
 {
@@ -23,7 +24,7 @@ class SearchType extends AbstractType
 
         $builder
             ->add('search', TextType::class, [
-                'required' => false,
+                'required' => true,
                 'label' => false,
                 'attr' => [
                     'class' => 'suscribe-input',

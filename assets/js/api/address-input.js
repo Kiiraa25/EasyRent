@@ -20,7 +20,7 @@ function handleInput(containerName, key, value) {
         method: 'GET'
     }).then((response) => {
         let status = response.status;
-        if (status !== 200) {
+        if (value.length > 3 && status !== 200) {
             alert("Une erreur liée à l'API est survenue. Veuillez réessayer")
         }
 

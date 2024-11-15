@@ -5,6 +5,7 @@ function setLocationInSearch() {
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 const latitude = position.coords.latitude;
+
                 const longitude = position.coords.longitude;
                 
                 // Appelez la fonction pour obtenir l'adresse
@@ -71,6 +72,7 @@ function getAddressFromCoordinates(lat, lon) {
                 let input1 = document.querySelector('input[name="search"]');
                 let input2 = document.querySelector('input[name="search[search]"]');
 
+                console.log(input1.value, input2.value)
                 if(input1)
                 {input1.value = majorCity}
                 

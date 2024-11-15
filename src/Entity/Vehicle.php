@@ -64,7 +64,7 @@ class Vehicle
     #[ORM\Column(type: 'integer')]
     private ?int $seats = null;
 
-    #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
+    #[ORM\Column]
     private ?float $pricePerDay = null;
 
     #[ORM\Column(type: 'string', length: 255)]

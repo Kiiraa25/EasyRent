@@ -17,7 +17,7 @@ countryInput.addEventListener('keyup', debounce((e) => {
         }
     })
     .then((response) => {
-        if (response.status !== 200) {
+        if (value.length > 3 && response.status !== 200) {
             throw new Error("Une erreur liée à l'API est survenue. Veuillez réessayer");
         }
         return response.json();

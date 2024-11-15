@@ -15,8 +15,9 @@ function handleSearchInput(value) {
         method: 'GET'
     }).then((response) => {
         if (response.status !== 200) {
-            alert("Une erreur liée à l'API est survenue. Veuillez réessayer.");
-            return;
+            // alert("Une erreur liée à l'API est survenue. Veuillez réessayer.");
+            location.reload();
+
         }
         return response.json();
     }).then((body) => {

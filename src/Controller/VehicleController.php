@@ -50,7 +50,6 @@ class VehicleController extends AbstractController
         if ($vehicleForm->isSubmitted() && $vehicleForm->isValid()) {
             if (count($vehicle->getPhotos()) < 5) {
                 $this->addFlash('error', 'Vous devez ajouter au moins 5 photos pour ce véhicule.');
-
             }
 
             // Traitement de chaque photo soumise
@@ -103,32 +102,27 @@ class VehicleController extends AbstractController
 
             $issueDate = $vehicle->getRegistrationCertificate()->getIssueDate();
             $fifteenYearsAgo = (new \DateTime())->modify('-15 years');
-            
+
             // Vérification de la date d'immatriculation
             if ($issueDate < $fifteenYearsAgo) {
                 $this->addFlash('error', 'Vous ne pouvez pas ajouter un véhicule de plus de 15 ans.');
-           
-            }
-            else if($issueDate > new \DateTime()){
+            } else if ($issueDate > new \DateTime()) {
                 $this->addFlash('error', "La date d'immatriculation ne peux pas être ultérieure à la date du jour");
-    
             }
 
             // Vérifier le nombre de portes
             $doors = $vehicle->getDoors();
             if ($doors < 1 || $doors > 5) {
-            $this->addFlash('error', 'Le nombre de portes doit être entre 1 et 5.');
-           
-        }
+                $this->addFlash('error', 'Le nombre de portes doit être entre 1 et 5.');
+            }
 
-             // Vérifier le nombre de sièges
-             $seats = $vehicle->getSeats();
-             if ($seats < 1 || $seats > 7) {
-                 $this->addFlash('error', 'Le nombre de sièges doit être entre 1 et 7.');
-               
-                }
+            // Vérifier le nombre de sièges
+            $seats = $vehicle->getSeats();
+            if ($seats < 1 || $seats > 7) {
+                $this->addFlash('error', 'Le nombre de sièges doit être entre 1 et 7.');
+            }
 
-             // Vérifier le kilométrage
+            // Vérifier le kilométrage
             $mileage = $vehicle->getMileage();
             if ($mileage < 0 || $mileage > 200000) {
                 $this->addFlash('error', 'Le kilométrage doit être entre 0 et 200 000 km.');
@@ -208,57 +202,54 @@ class VehicleController extends AbstractController
     #[Route('/vehicles', name: 'app_vehicles')]
     public function showVehicles(VehicleRepository $vehicleRepository, Request $request, DataGouvAddressService $DataGouvAddressService): Response
     {
-
-        $today = (new \DateTime())->modify('+1 day');
-        $todayString = $today->format('Y-m-d');
-
-        $endDate = (new \DateTime())->modify('+8 days');
-        $endDateString = $endDate->format('Y-m-d');
+        $today = (new \DateTime())->format('Y-m-d');
+        $defaultEndDate = (new \DateTime())->modify('+8 days')->format('Y-m-d');
 
         // Récupérer les paramètres GET ou utiliser les valeurs par défaut
-        $search = $request->query->get('search');
+        $search = $request->query->get('search', '');
+        $startDateQuery = $request->query->get('startDate', $today);
+        $endDateQuery = $request->query->get('endDate', $defaultEndDate);
 
-        // Récupérer les dates GET ou utiliser les dates actuelles par défaut (chaînes de caractères)
-        $startDateQuery = new \DateTime($request->query->get('startDate', $todayString));
-        $endDateQuery = new \DateTime($request->query->get('endDate', $endDateString));
-
+        // Créer l'objet DTO
         $searchDto = new SearchDto();
         $searchDto
             ->setSearch($search)
-            ->setStartDate($startDateQuery)
-            ->setEndDate($endDateQuery);
+            ->setStartDate(new \DateTime($startDateQuery))
+            ->setEndDate(new \DateTime($endDateQuery));
 
-
-        $searchForm = $this->createForm(SearchType::class, $searchDto, [
-            'startDate' => $startDateQuery,
-            'endDate' => $endDateQuery
-        ]);
+        // Formulaire
+        $searchForm = $this->createForm(SearchType::class, $searchDto);
         $searchForm->handleRequest($request);
 
         $vehicleTotalPrices = [];
-        $startDate = $searchForm->get('startDate')->getData();
-        $endDate = $searchForm->get('endDate')->getData();
-        $days = $startDate->diff($endDate)->days;
-
         $vehicleMarkers = [];
-        $latitude = 45.750000;
+        $latitude = 45.750000; // Valeurs par défaut
         $longitude = 4.850000;
+        $search = $searchDto->getSearch();
+            $startDate = $searchDto->getStartDate()->format('Y-m-d');
+            $endDate = $searchDto->getEndDate()->format('Y-m-d');
 
-        if (($searchForm->isSubmitted() && $searchForm->isValid()) ||
-            ($request->query->has('search') && $request->query->has('startDate') && $request->query->has('endDate'))
-        ) {
+        if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+            
 
-
-            if ($startDate < $today || $endDate < $today || $endDate < $startDate) {
-                $this->addFlash('error', 'Les dates saisies ne sont pas valides');
-                return $this->redirectToRoute('app_vehicles');
+            // Vérification des erreurs
+            if ($startDate <= $today || $endDate <= $today || $endDate < $startDate) {
+                $this->addFlash('search-error', 'Les dates saisies ne sont pas valides');
             }
 
+            if (strlen($search) < 3) {
+                $this->addFlash('search-error', 'La recherche doit contenir au moins 3 caractères.');
+            }
+
+
+
+            // Recherche des véhicules
             $vehicles = $vehicleRepository->search($searchDto);
+
+            $days = $searchDto->getStartDate()->diff($searchDto->getEndDate())->days;
 
             foreach ($vehicles as $vehicle) {
                 $vehicleTotalPrices[$vehicle->getId()] = $vehicle->getPricePerDay() * $days;
-
                 $vehicleMarkers[] = [
                     'id' => $vehicle->getId(),
                     'latitude' => $vehicle->getLatitude(),
@@ -269,32 +260,36 @@ class VehicleController extends AbstractController
                 ];
             }
 
-            // Obtenir les coordonnées de la ville recherchée
+            // Obtenir les coordonnées de la recherche
             $cityCoordinates = $DataGouvAddressService->getCityCoordinates($searchDto->getSearch());
-
             if ($cityCoordinates) {
                 $latitude = $cityCoordinates['features'][0]['geometry']['coordinates'][1];
                 $longitude = $cityCoordinates['features'][0]['geometry']['coordinates'][0];
             }
+
+           
         }
 
-
-
-
-
+        $queryString = http_build_query([
+            'search' => $search,
+            'startDate' => $startDateQuery,
+            'endDate' => $endDateQuery,
+        ]);
 
         return $this->render('vehicle/showAllVehicles.html.twig', [
             'searchForm' => $searchForm,
             'vehicles' => $vehicles ?? [],
             'vehicleTotalPrices' => $vehicleTotalPrices,
-            'days' => $days,
-            'startDate' => $startDate,
-            'endDate' => $endDate,
+            'days' => $days ?? 0,
             'vehicleMarkers' => $vehicleMarkers,
-            'latitude' => $latitude,  // Passer la latitude
-            'longitude' => $longitude, // Passer la longitude
+            'latitude' => $latitude,
+            'longitude' => $longitude,
+            'queryString' => $queryString,
+            'startDate' => $startDate,
+            'endDate' => $endDate
         ]);
     }
+
 
 
     // UPDATE

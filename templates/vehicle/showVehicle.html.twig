@@ -115,7 +115,13 @@
 			<div class="vehicle-header">
 				<div class="vehicle-picture">
 					{% if vehicle.photos|length > 0 %}
-						<img src="{{ asset('/img/vehicles/' ~ vehicle.getPhotos[0].imagePath) }}" alt="Photo du véhicule {{ vehicle.model.name }}">
+						{# <img src="{{ asset('/img/vehicles/' ~ vehicle.getPhotos[0].imagePath) }}" alt="Photo du véhicule {{ vehicle.model.name }}"> #}
+						<img src="{{ vich_uploader_asset(vehicle.photos[0], 'imageFile') }}" alt="Photo du véhicule">
+						<img src="{{ vich_uploader_asset(vehicle.photos[1], 'imageFile') }}" alt="Photo du véhicule">
+						<img src="{{ vich_uploader_asset(vehicle.photos[2], 'imageFile') }}" alt="Photo du véhicule">
+						<img src="{{ vich_uploader_asset(vehicle.photos[3], 'imageFile') }}" alt="Photo du véhicule">
+						<img src="{{ vich_uploader_asset(vehicle.photos[4], 'imageFile') }}" alt="Photo du véhicule">
+
 					{% endif %}
 				</div>
 				<div class="vehicle-info">
