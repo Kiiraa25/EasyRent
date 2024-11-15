@@ -962,7 +962,7 @@ h4 {
     color: black;
     padding: 20px;
     font-weight: 400;
-    z-index: 200;
+    z-index: 9999;
 }
 
 .clip-path-container {
