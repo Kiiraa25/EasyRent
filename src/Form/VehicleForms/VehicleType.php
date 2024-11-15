@@ -15,6 +15,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class VehicleType extends AbstractType
 {
@@ -94,11 +95,20 @@ class VehicleType extends AbstractType
                 'currency' => false,
                 'scale' => 2,
             ])
-            ->add('pricePerDay', MoneyType::class, [
-                'label' => 'Tarif/jour',
-                'currency' => false,
-                'scale' => 2,
-            ])
+            // ->add('pricePerDay', MoneyType::class, [
+               //  'label' => 'Tarif/jour',
+                // 'currency' => false,
+               // 'scale' => 2,
+            //])
+
+	    ->add('pricePerDay', NumberType::class, [
+    'label' => 'Tarif/jour',
+    'scale' => 2,        // Nombre de décimales (2 pour un prix)
+    'html5' => true,     // Génère un input HTML5
+    'attr' => [
+        'step' => '0.01', // Autorise des nombres avec deux décimales
+    ],
+])
 
             ->add('address', TextType::class, [
                 'label' => 'Adresse',

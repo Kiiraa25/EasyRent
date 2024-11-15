@@ -50,7 +50,7 @@ class VehicleController extends AbstractController
         if ($vehicleForm->isSubmitted() && $vehicleForm->isValid()) {
             if (count($vehicle->getPhotos()) < 5) {
                 $this->addFlash('error', 'Vous devez ajouter au moins 5 photos pour ce véhicule.');
-               
+
             }
 
             // Traitement de chaque photo soumise
