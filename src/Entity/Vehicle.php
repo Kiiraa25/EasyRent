@@ -9,6 +9,7 @@ use App\Enum\GearBoxTypeEnum;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 #[ORM\Entity(repositoryClass: VehicleRepository::class)]
@@ -80,6 +81,11 @@ class Vehicle
     private Collection $rentals;
 
     #[ORM\OneToMany(mappedBy: 'vehicle', targetEntity: VehiclePhoto::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    // #[Assert\Count(
+    //     min: 5,
+    //     minMessage: 'Vous devez télécharger au moins {{ limit }} photos.'
+    // )]
+    #[Assert\Valid] // Valide les entités enfants (VehiclePhoto)
     private Collection $photos;
 
     public function __construct()

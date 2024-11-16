@@ -119,12 +119,12 @@ class VehicleType extends AbstractType
                 'by_reference' => false,
                 'label' => false, //'Photos du véhicule (5 minimum)',
                 'prototype' => true,
-                // 'constraints' => [
-                //     new Count([
-                //         'min' => 5,
-                //         'minMessage' => 'Vous devez télécharger au moins {{ limit }} photos.',
-                //     ]),
-                // ],
+                'constraints' => [
+                    new Assert\Count([
+                        'min' => 5,
+                        'minMessage' => 'Vous devez télécharger au moins 5 photos.',
+                    ]),
+                ],
             ]);
         ;
     }

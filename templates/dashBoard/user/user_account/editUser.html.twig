@@ -1,7 +1,7 @@
 {% extends 'dashBoard/base.html.twig' %}
 {# {% extends 'base.html.twig' %} #}
 
-{% block title %}Modifier mon compte
+{% block title %}Modifier mon compte - Easy-Rent
 {% endblock %}
 
 {% block content %}
@@ -11,29 +11,29 @@
     
 		<section class="account-blocks">
 			<article>
-				<div class="edit-img"><img src="{{ asset('/img/changeEmail.png') }}" alt=""></div>
+				<div class="edit-img"><img src="{{ asset('/img/changeEmail.png') }}" alt="Image modifier mon email"></div>
 				<div class="text-block">
 					<h3>Adresse mail</h3>
 					<p>Vous avez changé d'adresse mail ? c'est par ici !</p>
 				</div>
-				<a class="edit-icon" href="{{ path('app_user_edit_email') }}"></a>
+				<a class="edit-icon" href="{{ path('app_user_edit_email') }}" aria-label="Modifier mon email"></a>
 
 			</article>
 			<article>
-				<div class="edit-img"><img src="{{ asset('/img/changePassword.png') }}" alt=""></div>
+				<div class="edit-img"><img src="{{ asset('/img/changePassword.png') }}" alt="Image modifier mon mot de passe"></div>
 				<div class="text-block">
 					<h3>Mot de passe</h3>
 					<p>Une envie de changer de mot de passe ? c'est par ici !</p>
 				</div>
-				<a class="edit-icon" href="{{ path('app_user_edit_password') }}"></a>
+				<a class="edit-icon" href="{{ path('app_user_edit_password') }}" aria-label="Modifier mon mot de passe"></a>
 			</article>
 			<article>
-				<div class="edit-img"><img src="{{ asset('/img/deleteAccount.png') }}" alt=""></div>
+				<div class="edit-img"><img src="{{ asset('/img/deleteAccount.png') }}" alt="Image supprimer mon compte"></div>
 				<div class="text-block">
 					<h3>Suppression de compte</h3>
 					<p>Cette action est irréversible !</p>
 				</div>
-				<a class="edit-icon" href="{{ path('app_user_delete_account') }}"></a>
+				<a class="edit-icon" href="{{ path('app_user_delete_account') }}" aria-label="Supprimer mon compte"></a>
 			</article>
 		</section>
 	</div>

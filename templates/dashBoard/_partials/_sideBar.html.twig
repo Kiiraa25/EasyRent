@@ -45,7 +45,7 @@
 				</li>
 				<div id="user-menu" class="user-menu">
 					<li>
-						<a href="{{ path('app_admin_dashboard') }}">
+						<a href="{{ path('app_user_dashBoard') }}">
 							<i class="fas fa-tachometer-alt"></i>Tableau de bord</a>
 					</li>
 					<li>
@@ -89,7 +89,7 @@
 						Mes véhicules</a>
 				</li>
 				<li>
-					<a href="{{ path('app_admin_dashboard') }}">
+					<a href="{{ path('app_user_dashBoard') }}">
 						<i class="fas fa-chart-line"></i>
 						Performances</a>
 				</li>
@@ -139,7 +139,7 @@
 			<span>{{ app.user.profile.lastName }}
 				{{ app.user.profile.firstName }}</span>
 		</div>
-		<a href="{{ path('app_logout') }}" class="logout">
+		<a href="{{ path('app_logout') }}" class="logout" aria-label="Me déconnecter">
 			<i class="fas fa-sign-out-alt"></i>
 		</a>
 	</div>

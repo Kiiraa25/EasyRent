@@ -4,7 +4,12 @@
 	{{ importmap(['app', 'search-input', 'CarModelsSelection', 'country-input', 'vehiclePhotoDynamicInput', 'adminDashboardStyle']) }}
 {% endblock %}
 
-{% block title %}Déposez votre annonce
+{% block title %}Ajouter un véhicule - Easy-Rent
+{% endblock %}
+
+{% block meta_description %}
+	<meta name="description" content="Ajoutez votre véhicule sur Easy-Rent et commencez à le louer en toute simplicité. Gagnez un revenu supplémentaire en partageant votre voiture avec notre communauté.">
+
 {% endblock %}
 
 {% block stylesheets %}
@@ -384,7 +389,7 @@
 			<div class="form-step-7 hidden">
 				<h3>Photos du véhicule</h3>
 				<div class="photo-collection">
-					{{ form_label(vehicleForm.photos, 'Photos du véhicule (5 minimum)') }}
+					{{ form_label(vehicleForm.photos, '(5 minimum)') }}
 					{{ form_errors(vehicleForm.photos) }}
 					<div class="photo-items">
 						{% for photoForm in vehicleForm.photos %}
@@ -392,6 +397,7 @@
 								{{ form_row(photoForm.imageFile) }}
 
 							</div>
+
 						{% endfor %}
 					</div>
 					<button type="button" class="add-photo-button">Ajouter une photo</button>
@@ -416,149 +422,149 @@
 	</section>
 
 	<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const prevButton = document.querySelector('.prev');
-    const nextButton = document.querySelector('.next');
-    const submitButton = document.querySelector('.submit-button');
-    const stepIndicators = document.querySelectorAll('.step');
-    const sections = document.querySelectorAll('[class^="form-step"]');
-    let currentStep = 0;
+		document.addEventListener("DOMContentLoaded", function () {
+const prevButton = document.querySelector('.prev');
+const nextButton = document.querySelector('.next');
+const submitButton = document.querySelector('.submit-button');
+const stepIndicators = document.querySelectorAll('.step');
+const sections = document.querySelectorAll('[class^="form-step"]');
+let currentStep = 0;
 
-    function showStep(index) {
-        sections.forEach((section, i) => {
-            section.classList.toggle('hidden', i !== index);
-        });
-
-        stepIndicators.forEach((indicator, i) => {
-            indicator.classList.toggle('active', i <= index);
-        });
-
-        prevButton.classList.toggle('hidden', index === 0);
-        nextButton.classList.toggle('hidden', index === sections.length - 1);
-        submitButton.classList.toggle('hidden', index !== sections.length - 1);
-    }
-
-    function validateCurrentStep() {
-        const inputs = sections[currentStep].querySelectorAll('input, select, textarea');
-        let isValid = true;
-
-        inputs.forEach(input => {
-            let errorMessage = input.parentElement.querySelector('.error-message');
-            if (errorMessage) {
-                errorMessage.remove();
-            }
-
-            errorMessage = document.createElement('div');
-            errorMessage.className = 'error-message';
-            errorMessage.style.color = 'red';
-            errorMessage.style.fontSize = '14px';
-            input.parentElement.appendChild(errorMessage);
-
-            if (input.name.includes('color') && !/^[a-zA-Z\s]+$/.test(input.value)) {
-                errorMessage.textContent = 'Veuillez entrer une couleur valide (texte uniquement).';
-                isValid = false;
-            } else if (input.name.includes('countryOfIssue') && !/^[a-zA-Z\s]+$/.test(input.value)) {
-                errorMessage.textContent = 'Veuillez entrer un pays valide.';
-                isValid = false;
-            } else if (input.name.includes('brand') || input.name.includes('model') || input.name.includes('address') || input.name.includes('city')) {
-                if (!/^[a-zA-ZÀ-ÿ0-9\s\-.,'()]+$/.test(input.value)) {
-                    errorMessage.textContent = 'Veuillez entrer une valeur valide.';
-                    isValid = false;
-                }
-            } else if (input.name.includes('mileage')) {
-                const mileage = parseInt(input.value, 10);
-                if (isNaN(mileage) || mileage < 1) {
-                    errorMessage.textContent = 'Veuillez indiquer un kilométrage valide.';
-                    isValid = false;
-                } else if (mileage > 200000) {
-                    errorMessage.textContent = 'Le kilométragene peux pas être suppérieur à 200 000 km.';
-                    isValid = false;
-                }
-            } else if (input.name.includes('postalCode') && !/^\d+$/.test(input.value)) {
-                errorMessage.textContent = 'Veuillez indiquer un code postal valide.';
-                isValid = false;
-            } else if (input.name.includes('issueDate')) {
-                const issueDate = new Date(input.value);
-                const now = new Date();
-                const fifteenYearsAgo = new Date();
-                fifteenYearsAgo.setFullYear(now.getFullYear() - 15);
-
-                if (issueDate > now) {
-                    errorMessage.textContent = "La date d'immatriculation ne peut pas être ultérieure à aujourd'hui.";
-                    isValid = false;
-                } else if (issueDate < fifteenYearsAgo) {
-                    errorMessage.textContent = 'Vous ne pouvez pas ajouter un véhicule de plus de 15 ans.';
-                    isValid = false;
-                }
-            } else if ((input.name.includes('pricePerDay') || input.name.includes('extraMileageRate'))) {
-                const value = parseFloat(input.value);
-                if (isNaN(value)) {
-                    errorMessage.textContent = 'Veuillez entrer un nombre valide pour le tarif.';
-                    isValid = false;
-                } else if (value < 0) {
-                    errorMessage.textContent = 'Le tarif ne peut pas être négatif.';
-                    isValid = false;
-                }
-            } else if (input.type === 'file') {
-                const file = input.files[0];
-                if (file && !file.type.startsWith('image/')) {
-                    errorMessage.textContent = 'Veuillez télécharger un fichier image.';
-                    isValid = false;
-                }
-            }
-			else if (input.name.includes('seats')) {
-			const seats = parseInt(input.value, 10);
-			if (isNaN(seats) || seats < 1) {
-				errorMessage.textContent = 'Le nombre de sièges doit être au moins de 1.';
-				isValid = false;
-			} else if (seats > 7) {
-				errorMessage.textContent = 'Le nombre de sièges doit être au maximum de 7.';
-				isValid = false;
-			}
-			} else if (input.name.includes('mileage')) {
-			const mileage = parseInt(input.value, 10);
-			if (isNaN(mileage) || mileage < 0) {
-				errorMessage.textContent = 'Le kilométrage doit être au minimum de 0 km.';
-				isValid = false;
-			} else if (mileage > 200000) {
-				errorMessage.textContent = 'Le kilométrage doit être au maximum de 200 000 km.';
-				isValid = false;
-			}
-			} else if (input.name.includes('doors')) {
-			const doors = parseInt(input.value, 10);
-			if (isNaN(doors) || doors < 1) {
-				errorMessage.textContent = 'Le nombre de portes doit être au moins de 1.';
-				isValid = false;
-			} else if (doors > 5) {
-				errorMessage.textContent = 'Le nombre de portes doit être au maximum de 5.';
-				isValid = false;
-			}
-			} else if (!input.checkValidity()) {
-                errorMessage.textContent = input.validationMessage || 'Ce champ est obligatoire.';
-                isValid = false;
-            }
-
-        });
-
-        return isValid;
-    }
-
-    prevButton.addEventListener('click', function () {
-        if (currentStep > 0) currentStep--;
-
-        showStep(currentStep);
-    });
-
-    nextButton.addEventListener('click', function () {
-        if (validateCurrentStep() && currentStep < sections.length - 1) {
-            currentStep++;
-            showStep(currentStep);
-        }
-    });
-
-    showStep(currentStep);
+function showStep(index) {
+sections.forEach((section, i) => {
+section.classList.toggle('hidden', i !== index);
 });
 
+stepIndicators.forEach((indicator, i) => {
+indicator.classList.toggle('active', i <= index);
+});
+
+prevButton.classList.toggle('hidden', index === 0);
+nextButton.classList.toggle('hidden', index === sections.length - 1);
+submitButton.classList.toggle('hidden', index !== sections.length - 1);
+}
+
+function validateCurrentStep() {
+const inputs = sections[currentStep].querySelectorAll('input, select, textarea');
+let isValid = true;
+
+inputs.forEach(input => {
+let errorMessage = input.parentElement.querySelector('.error-message');
+if (errorMessage) {
+errorMessage.remove();
+}
+
+errorMessage = document.createElement('div');
+errorMessage.className = 'error-message';
+errorMessage.style.color = 'red';
+errorMessage.style.fontSize = '14px';
+input.parentElement.appendChild(errorMessage);
+
+if (input.name.includes('color') && !/^[a-zA-Z\s]+$/.test(input.value)) {
+errorMessage.textContent = 'Veuillez entrer une couleur valide (texte uniquement).';
+isValid = false;
+} else if (input.name.includes('countryOfIssue') && !/^[a-zA-Z\s]+$/.test(input.value)) {
+errorMessage.textContent = 'Veuillez entrer un pays valide.';
+isValid = false;
+} else if (input.name.includes('brand') || input.name.includes('model') || input.name.includes('address') || input.name.includes('city')) {
+if (!/^[a-zA-ZÀ-ÿ0-9\s\-.,'()]+$/.test(input.value)) {
+errorMessage.textContent = 'Veuillez entrer une valeur valide.';
+isValid = false;
+}
+} else if (input.name.includes('mileage')) {
+const mileage = parseInt(input.value, 10);
+if (isNaN(mileage) || mileage < 1) {
+errorMessage.textContent = 'Veuillez indiquer un kilométrage valide.';
+isValid = false;
+} else if (mileage > 200000) {
+errorMessage.textContent = 'Le kilométragene peux pas être suppérieur à 200 000 km.';
+isValid = false;
+}
+} else if (input.name.includes('postalCode') && !/^\d+$/.test(input.value)) {
+errorMessage.textContent = 'Veuillez indiquer un code postal valide.';
+isValid = false;
+} else if (input.name.includes('issueDate')) {
+const issueDate = new Date(input.value);
+const now = new Date();
+const fifteenYearsAgo = new Date();
+fifteenYearsAgo.setFullYear(now.getFullYear() - 15);
+
+if (issueDate > now) {
+errorMessage.textContent = "La date d'immatriculation ne peut pas être ultérieure à aujourd'hui.";
+isValid = false;
+} else if (issueDate < fifteenYearsAgo) {
+errorMessage.textContent = 'Vous ne pouvez pas ajouter un véhicule de plus de 15 ans.';
+isValid = false;
+}
+} else if ((input.name.includes('pricePerDay') || input.name.includes('extraMileageRate'))) {
+const value = parseFloat(input.value);
+if (isNaN(value)) {
+errorMessage.textContent = 'Veuillez entrer un nombre valide pour le tarif.';
+isValid = false;
+} else if (value < 0) {
+errorMessage.textContent = 'Le tarif ne peut pas être négatif.';
+isValid = false;
+}
+} else if (input.type === 'file') {
+const file = input.files[0];
+if (file && ! file.type.startsWith('image/')) {
+errorMessage.textContent = 'Veuillez télécharger un fichier image.';
+isValid = false;
+}
+} else if (input.name.includes('seats')) {
+const seats = parseInt(input.value, 10);
+if (isNaN(seats) || seats < 1) {
+errorMessage.textContent = 'Le nombre de sièges doit être au moins de 1.';
+isValid = false;
+} else if (seats > 7) {
+errorMessage.textContent = 'Le nombre de sièges doit être au maximum de 7.';
+isValid = false;
+}
+} else if (input.name.includes('mileage')) {
+const mileage = parseInt(input.value, 10);
+if (isNaN(mileage) || mileage < 0) {
+errorMessage.textContent = 'Le kilométrage doit être au minimum de 0 km.';
+isValid = false;
+} else if (mileage > 200000) {
+errorMessage.textContent = 'Le kilométrage doit être au maximum de 200 000 km.';
+isValid = false;
+}
+} else if (input.name.includes('doors')) {
+const doors = parseInt(input.value, 10);
+if (isNaN(doors) || doors < 1) {
+errorMessage.textContent = 'Le nombre de portes doit être au moins de 1.';
+isValid = false;
+} else if (doors > 5) {
+errorMessage.textContent = 'Le nombre de portes doit être au maximum de 5.';
+isValid = false;
+}
+} else if (!input.checkValidity()) {
+errorMessage.textContent = input.validationMessage || 'Ce champ est obligatoire.';
+isValid = false;
+}
+
+});
+
+return isValid;
+}
+
+prevButton.addEventListener('click', function () {
+if (currentStep > 0) 
+currentStep--;
+
+
+showStep(currentStep);
+});
+
+nextButton.addEventListener('click', function () {
+if (validateCurrentStep() && currentStep < sections.length - 1) {
+currentStep++;
+showStep(currentStep);
+}
+});
+
+showStep(currentStep);
+});
 	</script>
 
 	<script type="text/javascript" src="https://www.carqueryapi.com/js/jquery.min.js"></script>

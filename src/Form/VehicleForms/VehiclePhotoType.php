@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class VehiclePhotoType extends AbstractType
 {
@@ -23,11 +24,23 @@ class VehiclePhotoType extends AbstractType
                 'allow_delete' => false,
                 'download_uri' => false,
                 'attr' => [
-                    'accept' => 'image/*',
-                    'class' => 'image-upload'
-                ]
+                    'accept' => 'image/webp, image/png, image/jpeg, image/jpg',
+                    'class' => 'image-upload',
+                ],
+                'constraints' => [
+                    new Assert\Image([
+                        'maxSize' => '2M',
+                        'mimeTypes' => [
+                            'image/webp',
+                            'image/png',
+                            'image/jpg',
+                            'image/jpeg',
+                        ],
+                        'mimeTypesMessage' => 'Veuillez télécharger une image au format JPEG, PNG, JPG ou WEBPpp.',
+                    ]),
+                ],
+
             ]);
-        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

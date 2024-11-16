@@ -1,13 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block importmap %}
-	{# {{ parent() }} #}
 	{{ importmap(['app','geolocation']) }}
 {% endblock %}
 
-{% block title %}Easy-Rent
+{% block title %}Home - Easy-Rent
 {% endblock %}
 
+{% block meta_description %}
+<meta name="description" content="Easy-Rent est la plateforme idéale pour louer ou partager des voitures entre particuliers.
+Simple, sécurisé et rentable : rejoignez la communauté Easy-Rent dès aujourd'hui !">
+{% endblock %}
 
 {% block header %}
 	<header>
@@ -20,7 +23,7 @@
 			</div>
 			<form action="{{ path('app_vehicles') }}" method="get">
 				<div class="adress-input">
-					<input type="text" name="search" placeholder="Adresse précise, gare, métro" required>
+					<input type="text" name="search" placeholder="Adresse précise, gare, métro" required aria-label="Insérer une adresse précise, gare, métro">
 					<span class="input-adressIcon">
 						<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 							<path d="M19 10c0 5.091-5.924 11.073-6.175 11.325a1.165 1.165 0 0 1-1.65 0C10.922 21.073 5 15.091 5 10c0-3.86 3.14-7 7-7s7 3.14 7 7zm-7 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"></path>
@@ -29,8 +32,8 @@
 				</div>
 
 				<div class="date-input">
-					<input type="date" name="startDate" placeholder="Début" required value="{{ "now"|date_modify('+1 day')|date('Y-m-d') }}">
-					<input type="date" name="endDate" placeholder="Fin" required value="{{ "now"|date_modify('+8 days')|date('Y-m-d') }}">
+					<input type="date" name="startDate" placeholder="Début" required value="{{ "now"|date_modify('+1 day')|date('Y-m-d') }}" aria-label="Date de début de location">
+					<input type="date" name="endDate" placeholder="Fin" required value="{{ "now"|date_modify('+8 days')|date('Y-m-d') }}" aria-label="Date de fin de location">
 
 				</div>
 
@@ -53,20 +56,20 @@
 
 		<div class="advantages-grid">
 			<div class="advantages-left-side-div">
-				<img width="88px" src="{{ asset('img/icons/icon1.png')}}" alt="">
+				<img width="88px" src="{{ asset('img/icons/icon1.png')}}" alt="Icone avantages">
 				<h3>Louez à tout moment</h3>
 				Réservez une voiture près de chez vous instantanément, à tout moment, même à la dernière minute.</div>
 			<div class="advantages-middle-top-div">
-				<img width="88px" src="{{ asset('img/icons/icon1.png')}}" alt="">
+				<img width="88px" src="{{ asset('img/icons/icon1.png')}}" alt="Icone avantages">
 				<h3>Des prix personnalisés</h3>
 				Pour quelques heures ou bien pour quelques jours: C'est vous qui choisissez !</div>
 			<div class="advantages-middle-bottom-div">
-				<img width="88px" src="{{ asset('img/icons/icon1.png')}}" alt="">
+				<img width="88px" src="{{ asset('img/icons/icon1.png')}}" alt="Icone avantages">
 				<h3>Fini la paperasse</h3>
 				Les formalitées sont réglées une bonne fois pour toutes, à l'ouverture du compte.
 			</div>
 			<div class="advantages-right-side-div">
-				<img width="88px" src="{{ asset('img/icons/icon1.png')}}" alt="">
+				<img width="88px" src="{{ asset('img/icons/icon1.png')}}" alt="Icone avantages">
 				<h3>Pas d'agence, pas d'attente</h3>
 				Déverouillez votre véhicule directement grâce à votre smartphone.</div>
 		</div>
@@ -83,10 +86,10 @@
 		</div>
 		<div class="display-center">
 			<div class="section-2-vehicles">
-				<img width="376px" src="{{ asset('/img/citadine.png')}}" alt="">
-				<img width="398px" src="{{ asset('/img/monospace.svg')}}" alt="">
-				<img src="{{ asset('/img/suv.svg')}}" alt="">
-				<img src="{{ asset('/img/utilitaire.svg')}}" alt="">
+				<img width="376px" src="{{ asset('/img/citadine.png')}}" alt="Image type de véhicule citadine">
+				<img width="398px" src="{{ asset('/img/monospace.svg')}}" alt="Image type de véhicule monospace">
+				<img src="{{ asset('/img/suv.svg')}}" alt="Image type de véhicule SUV">
+				<img src="{{ asset('/img/utilitaire.svg')}}" alt="Image type de véhicule utilitaire">
 			</div>
 
 			<div class="section-2-vehicles-names">
@@ -131,7 +134,7 @@
 			<p>Votre voiture peut vous rapporter jusqu'a 600€ / mois.</p>
 		</div>
 
-		<img src="{{ asset('/img/home/pinkhomecar.jpg')}}" alt="">
+		<img src="{{ asset('/img/home/pinkhomecar.jpg')}}" alt="Image Louer votre véhicule">
 		<button class="nav-button">Je me lance !</button>
 	</section>
 
@@ -141,17 +144,17 @@
 
 			<div class="review-block">
 				<article class="section-5-review-box">
-					<img class="quote-icon" src="{{ asset('/img/home/quote.png')}}" alt="">
+					<img class="quote-icon" src="{{ asset('/img/home/quote.png')}}" alt="Icône citation">
 					<p>"Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.Separated they live."</p>
 					<span>- Jerry Doe -</span>
 				</article>
 				<article class="section-5-review-box">
-					<img class="quote-icon" src="{{ asset('/img/home/quote.png')}}" alt="">
+					<img class="quote-icon" src="{{ asset('/img/home/quote.png')}}" alt="Icône citation">
 					<p>Je suis très satisfait de Getaround. La plateforme est sérieuse et je loue en confiance dessus.</p>
 					<span>- Jerry Doe -</span>
 				</article>
 				<article class="section-5-review-box">
-					<img class="quote-icon" src="{{ asset('/img/home/quote.png')}}" alt="">
+					<img class="quote-icon" src="{{ asset('/img/home/quote.png')}}" alt="Icône citation">
 					<p>Expérience utilisateur optimale. Site bien fait et facile d'utilisation. Location auprès du propriétaire parfaite et fluide.
 					</p>
 					<span>- Jerry Doe -</span>

@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use App\Enum\PhotoTypeEnum;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: VehiclePhotoRepository::class)]
 #[Vich\Uploadable()]
@@ -28,7 +29,15 @@ class VehiclePhoto
     #[ORM\Column(length: 255)]
     private ?string $imagePath = null;
 
+    
     #[Vich\UploadableField(mapping: 'vehiclePhoto', fileNameProperty: 'imagePath')]
+    #[Assert\Image(
+        maxSize: "2M",
+        mimeTypes: ["image/webp", "image/png", "image/jpeg", "image/jpg"],
+        mimeTypesMessage: "Veuillez télécharger une image au format JPEG, PNG, JPG ou WEBP.",
+        maxSizeMessage: "La taille de l'image ne doit pas dépasser 2 Mo."
+    )]
+    
     private ?File $imageFile = null;
 
     #[ORM\Column(type: 'string', length: 20)]

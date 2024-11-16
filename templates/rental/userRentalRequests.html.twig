@@ -1,11 +1,10 @@
 {% extends 'dashBoard/base.html.twig' %}
 
 {% block importmap %}
-	{{ parent() }}
-	{{ importmap(['componentsStyle', 'userListStyle']) }}
+	{{ importmap(['app', 'adminDashboardStyle', 'componentsStyle', 'userListStyle']) }}
 {% endblock %}
 
-{% block title %}Liste des Locations
+{% block title %}Mes demandes de Locations - Easy-Rent
 {% endblock %}
 
 
@@ -34,8 +33,12 @@
 
 					<div class="rental-item">
 						<a href="{{ path('app_rental_show', {'id': rental.id}) }}" class="rental-details-link">
-							<!-- Image de la location -->
-							<div class="rental-image">IMG</div>
+							
+							
+							<!-- Image du véhicule -->
+							<div class="vehicle-image">
+							<img src="{{ vich_uploader_asset(rental.vehicle.photos[0], 'imageFile') }}" alt="Photo du véhicule">
+							</div>
 						</a>
 
 						<!-- Détails de la location -->

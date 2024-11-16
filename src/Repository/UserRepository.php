@@ -33,77 +33,68 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }
 
-    public function countUsersForCurrentMonth(): int
-{
-    $startOfMonth = new \DateTime('first day of this month');
-    $endOfMonth = new \DateTime('last day of this month 23:59:59');
+   
+    //admin dashboard
+    public function getMonthlySignupsForCurrentYear(): array
+    {
+        $currentYear = (new \DateTime())->format('Y');
+        $monthlySignups = [];
 
-    return $this->createQueryBuilder('u')
-        ->join('u.profile', 'p')
-        ->select('COUNT(u.id)')
-        ->where('p.createdAt BETWEEN :start AND :end')
-        ->setParameter('start', $startOfMonth)
-        ->setParameter('end', $endOfMonth)
-        ->getQuery()
-        ->getSingleScalarResult();
-}
+        // Boucle sur les 12 mois de l'année
+        for ($month = 1; $month <= 12; $month++) {
+            $startDate = new \DateTime("{$currentYear}-{$month}-01");
+            $endDate = (clone $startDate)->modify('last day of this month')->setTime(23, 59, 59);
 
-// UserRepository.php
+            $count = $this->createQueryBuilder('u')
+                ->join('u.profile', 'p')
+                ->select('COUNT(u.id)')
+                ->where('p.createdAt BETWEEN :start AND :end')
+                ->setParameter('start', $startDate)
+                ->setParameter('end', $endDate)
+                ->getQuery()
+                ->getSingleScalarResult();
 
-public function getMonthlySignupsForCurrentYear(): array
-{
-    $currentYear = (new \DateTime())->format('Y');
-    $monthlySignups = [];
+            $monthlySignups[] = $count;
+        }
 
-    // Boucle sur les 12 mois de l'année
-    for ($month = 1; $month <= 12; $month++) {
-        $startDate = new \DateTime("{$currentYear}-{$month}-01");
-        $endDate = (clone $startDate)->modify('last day of this month')->setTime(23, 59, 59);
-
-        $count = $this->createQueryBuilder('u')
-            ->join('u.profile', 'p')
-            ->select('COUNT(u.id)')
-            ->where('p.createdAt BETWEEN :start AND :end')
-            ->setParameter('start', $startDate)
-            ->setParameter('end', $endDate)
-            ->getQuery()
-            ->getSingleScalarResult();
-
-        $monthlySignups[] = $count;
+        return $monthlySignups;
     }
 
-    return $monthlySignups;
-}
+
+
+
+    //user dashboard Owner
+    public function getOwnerMonthlySignupsForCurrentYear(): array
+    {
+        $currentYear = (new \DateTime())->format('Y');
+        $monthlySignups = [];
+
+        // Boucle sur les 12 mois de l'année
+        for ($month = 1; $month <= 12; $month++) {
+            $startDate = new \DateTime("{$currentYear}-{$month}-01");
+            $endDate = (clone $startDate)->modify('last day of this month')->setTime(23, 59, 59);
+
+            $count = $this->createQueryBuilder('u')
+                ->join('u.profile', 'p')
+                ->select('COUNT(u.id)')
+                ->where('p.createdAt BETWEEN :start AND :end')
+                ->setParameter('start', $startDate)
+                ->setParameter('end', $endDate)
+                ->getQuery()
+                ->getSingleScalarResult();
+
+            $monthlySignups[] = $count;
+        }
+
+        return $monthlySignups;
+    }
 
 
 
 
 
-    
 
 
-    //    /**
-    //     * @return User[] Returns an array of User objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('u')
-    //            ->andWhere('u.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('u.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
 
-    //    public function findOneBySomeField($value): ?User
-    //    {
-    //        return $this->createQueryBuilder('u')
-    //            ->andWhere('u.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+
 }

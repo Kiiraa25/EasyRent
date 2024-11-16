@@ -1,6 +1,6 @@
 {% extends 'dashBoard/base.html.twig' %}
 
-{% block title %}Hello UserProfileController!
+{% block title %}mon profil - Easy-Rent
 {% endblock %}
 
 {% block body %}
@@ -10,10 +10,10 @@
 		<div class="user-icon">
 			{% if app.user.profile.picture is not null %}
 
-				<img src="{{ vich_uploader_asset(app.user.profile, 'imageFile') }}" alt=""></div>
+				<img src="{{ vich_uploader_asset(app.user.profile, 'imageFile') }}" alt="photo de profil utilisateur"></div>
 
 		{% else %}
-			<img width="200px" src="{{ asset('/img/default-user-icon.png') }}" alt=""></div>
+			<img width="200px" src="{{ asset('/img/default-user-icon.png') }}" alt="photo de profil par défaut"></div>
 
 	{% endif %}
 

@@ -4,24 +4,36 @@
 	{{ importmap(['app','componentsStyle']) }}
 {% endblock %}
 
-{% block title %}Détails du véhicule
+{% block title %}Détails du véhicule - Easy-Rent
 {% endblock %}
 
 {% block stylesheets %}
 	<style>
+
+	body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            color: #333;
+        }
+
 		.vehicle-container {
 			width: 80%;
 			background-color: #ffffff;
 			border-radius: 8px;
 			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 			padding: 20px;
-			margin-top: 20px;
-			max-height: 84vh;
-			overflow: auto;
+			margin-top: 0px;
+			min-height: 84vh;
+		}
+		.main{
+			margin-top: 0px !important;
 		}
 
 		.vehicle-header {
 			display: flex;
+			flex-direction: column;
 			align-items: center;
 			border-bottom: 2px solid #FF866F;
 			padding-bottom: 15px;
@@ -30,10 +42,30 @@
 
 		.vehicle-picture img {
 			border-radius: 8px;
-			width: 180px;
-			height: 120px;
+			width: 100%;
+			max-height: 300px;
 			object-fit: cover;
-			margin-right: 20px;
+			margin-bottom: 10px;
+		}
+
+		.thumbnails {
+			display: flex;
+			gap: 10px;
+			justify-content: center;
+		}
+
+		.thumbnails img {
+			width: 80px;
+			height: 80px;
+			object-fit: cover;
+			cursor: pointer;
+			border: 2px solid transparent;
+			border-radius: 5px;
+			transition: border-color 0.3s;
+		}
+
+		.thumbnails img:hover {
+			border-color: #EB8072;
 		}
 
 		.vehicle-info h1 {
@@ -75,13 +107,12 @@
 			font-size: 1em;
 		}
 
-		/* Boutons cohérents avec les couleurs du site */
 		.edit-button,
 		.reserve-button,
 		.btn {
 			display: inline-block;
 			padding: 10px 20px;
-			background-color: #282F4B; /* Couleur de fond principal */
+			background-color: #282F4B;
 			color: white;
 			text-decoration: none;
 			border: none;
@@ -94,7 +125,7 @@
 		.edit-button:hover,
 		.reserve-button:hover,
 		.btn:hover {
-			background-color: #EB8072; /* Couleur de survol */
+			background-color: #EB8072;
 			cursor: pointer;
 		}
 
@@ -110,74 +141,73 @@
 
 {% block content %}
 <main>
-		<div class="vehicle-container">
-			<div class="vehicle-header">
-				<div class="vehicle-picture">
-					{% if vehicle.photos|length > 0 %}
-						{# <img src="{{ asset('/img/vehicles/' ~ vehicle.getPhotos[0].imagePath) }}" alt="Photo du véhicule {{ vehicle.model.name }}"> #}
-						<img src="{{ vich_uploader_asset(vehicle.photos[0], 'imageFile') }}" alt="Photo du véhicule">
-						<img src="{{ vich_uploader_asset(vehicle.photos[1], 'imageFile') }}" alt="Photo du véhicule">
-						<img src="{{ vich_uploader_asset(vehicle.photos[2], 'imageFile') }}" alt="Photo du véhicule">
-						<img src="{{ vich_uploader_asset(vehicle.photos[3], 'imageFile') }}" alt="Photo du véhicule">
-						<img src="{{ vich_uploader_asset(vehicle.photos[4], 'imageFile') }}" alt="Photo du véhicule">
-
-					{% endif %}
-				</div>
-				<div class="vehicle-info">
-					<h1>{{ vehicle.model.brand.name }}
-						{{ vehicle.model.name }}</h1>
-					<p>
-						<strong>Prix par jour:</strong>
-						{{ vehicle.pricePerDay }}
-						€</p>
-					<p>
-						<strong>Adresse:</strong>
-						{{ vehicle.address }}</p>
-				</div>
+	<div class="vehicle-container">
+		<div class="vehicle-header">
+			<div class="vehicle-picture">
+				{# Grande image affichée #}
+				<img id="main-image" src="{{ vich_uploader_asset(vehicle.photos[0], 'imageFile') }}" alt="Photo principale du véhicule">
 			</div>
 
-			<div class="section">
-				<h2>Caractéristiques</h2>
-				<div class="section-content">
-					<p>
-						<strong>Couleur:</strong>
-						{{ vehicle.color }}</p>
-					<p>
-						<strong>Kilométrage:</strong>
-						{{ vehicle.mileage }}
-						km</p>
-					<p>
-						<strong>Type de carburant:</strong>
-						{{ vehicle.fuelType.value }}</p>
-					<p>
-						<strong>Type de boîte de vitesses:</strong>
-						{{ vehicle.gearboxType.value }}</p>
-					<p>
-						<strong>Portes:</strong>
-						{{ vehicle.doors }}</p>
-					<p>
-						<strong>Sièges:</strong>
-						{{ vehicle.seats }}</p>
-				</div>
-			</div>
-
-			<div class="section">
-				<h2>Description</h2>
-				<div class="reservation">
-					<p>{{ vehicle.description }}</p>
-				</div>
-			</div>
-
-			<div class="button-container">
-				{% if vehicle.owner == app.user %}
-					{% if vehicle.status.value != 'archived' %}
-					<a href="{{ path('app_vehicle_edit', {'id': vehicle.id}) }}" class="edit-button">Éditer l'annonce</a>
-					<a href="{{ path('app_vehicle_delete', {'id': vehicle.id}) }}" class="edit-button">Supprimer l'annonce</a>
-					{% endif %}
-				{% else %}
-					<a href="{{ path('app_rental_new', {'vehicle_id': vehicle.id, 'startDate': startDate|date('Y-m-d'), 'endDate': endDate|date('Y-m-d')}) }}" class="edit-button">Réserver</a>
-				{% endif %}
+			<div class="thumbnails">
+				{# Miniatures #}
+				{% for photo in vehicle.photos %}
+					<img src="{{ vich_uploader_asset(photo, 'imageFile') }}" alt="Photo miniature" 
+					     class="thumbnail" 
+					     onclick="changeMainImage('{{ vich_uploader_asset(photo, 'imageFile') }}', this)">
+				{% endfor %}
 			</div>
 		</div>
+
+		<div class="vehicle-info">
+			<h1>{{ vehicle.model.brand.name }} {{ vehicle.model.name }}</h1>
+			<p><strong>Prix par jour:</strong> {{ vehicle.pricePerDay }} €</p>
+			<p><strong>Adresse:</strong> {{ vehicle.address }}</p>
+		</div>
+
+		<div class="section">
+			<h2>Caractéristiques</h2>
+			<div class="section-content">
+				<p><strong>Couleur:</strong> {{ vehicle.color }}</p>
+				<p><strong>Kilométrage:</strong> {{ vehicle.mileage }} km</p>
+				<p><strong>Type de carburant:</strong> {{ vehicle.fuelType.value }}</p>
+				<p><strong>Type de boîte de vitesses:</strong> {{ vehicle.gearboxType.value }}</p>
+				<p><strong>Portes:</strong> {{ vehicle.doors }}</p>
+				<p><strong>Sièges:</strong> {{ vehicle.seats }}</p>
+			</div>
+		</div>
+
+		<div class="section">
+			<h2>Description</h2>
+			<div class="reservation">
+				<p>{{ vehicle.description }}</p>
+			</div>
+		</div>
+
+		<div class="button-container">
+			{% if vehicle.owner == app.user %}
+				{% if vehicle.status.value != 'archived' %}
+					<a href="{{ path('app_vehicle_edit', {'id': vehicle.id}) }}" class="edit-button">Éditer l'annonce</a>
+					<a href="{{ path('app_vehicle_delete', {'id': vehicle.id}) }}" class="edit-button">Supprimer l'annonce</a>
+				{% endif %}
+			{% else %}
+				<a href="{{ path('app_rental_new', {'vehicle_id': vehicle.id, 'startDate': startDate|date('Y-m-d'), 'endDate': endDate|date('Y-m-d')}) }}" class="edit-button">Réserver</a>
+			{% endif %}
+		</div>
+	</div>
 </main>
+
+<script>
+    function changeMainImage(imageUrl, thumbnail) {
+        const mainImage = document.getElementById('main-image');
+        mainImage.src = imageUrl;
+
+        // Réinitialiser les bordures des miniatures
+        document.querySelectorAll('.thumbnail').forEach(thumbnail => {
+            thumbnail.style.border = '2px solid transparent';
+        });
+
+        // Mettre en surbrillance la miniature sélectionnée
+        thumbnail.style.border = '2px solid #EB8072';
+    }
+</script>
 {% endblock %}

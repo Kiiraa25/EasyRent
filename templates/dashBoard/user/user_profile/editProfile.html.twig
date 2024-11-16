@@ -1,10 +1,12 @@
 {% extends 'dashBoard/base.html.twig' %}
 
 {% block importmap %}
-{{ parent() }}
+	{{ parent() }}
 	{{ importmap(['editProfileStyle']) }}
 {% endblock %}
 
+{% block title %}Modifier mon profil - Easy-Rent
+{% endblock %}
 
 {% block content %}
 
@@ -13,7 +15,8 @@
 		{% if app.user.profile.isVerified ==  false %}
 
 			<div>
-				Profil incomplet ! veuillez d'abord <a href="">vérifier votre profil</a>
+				Profil incomplet ! veuillez d'abord
+				<a href="">vérifier votre profil</a>
 			</div>
 
 		{% else %}
@@ -25,15 +28,14 @@
 							{{ app.user.profile.firstName }}
 							{{ app.user.profile.lastName }}
 						</p>
-					
+
 					</div>
 					<p class="user-rating">
-						<img src="{{ asset('/img/icons/rating-icon.png')}}" alt="">
-						<img src="{{ asset('/img/icons/rating-icon.png')}}" alt="">
-						<img src="{{ asset('/img/icons/rating-icon.png')}}" alt="">
-						<img src="{{ asset('/img/icons/rating-icon.png')}}" alt="">
-						<img src="{{ asset('/img/icons/rating-icon.png')}}" alt="">
+						{% for i in 1..app.user.getProfile.getRating %}
+							<img src="{{ asset('/img/icons/rating-icon.png') }}" alt="Étoile de notation">
+						{% endfor %}
 					</p>
+
 				</article>
 
 				<div class="user-img">
@@ -45,7 +47,7 @@
 						{% set userImageUrl = vich_uploader_asset(app.user.profile, 'imageFile') %}
 					{% endif %}
 
-					<img src="{{ userImageUrl}}" alt="">
+					<img src="{{ userImageUrl}}" alt="Photo de profile utilisateur ou photo par défaut">
 				</div>
 
 			</section>
@@ -54,7 +56,7 @@
 
 				<section class="left-side-profile">
 					<article class="profile-content-block">
-						<a class="edit-icon" href="{{ path('app_user_profile_edit_personal') }}"></a>
+						<a class="edit-icon" href="{{ path('app_user_profile_edit_personal') }}" aria-label="Modifier mes informations personnelles"></a>
 
 						<h3>Informations personnelles</h3>
 						<div class="profile-box">
@@ -97,7 +99,7 @@
 
 
 					<article class="profile-content-block">
-						<a class="edit-icon" href="{{ path('app_user_profile_edit_address') }}"></a>
+						<a class="edit-icon" href="{{ path('app_user_profile_edit_address') }}" aria-label="Modifier mon addresse"></a>
 
 						<h3>Adresse</h3>
 						<div class="profile-box">
@@ -145,7 +147,7 @@
 
 					{# Permis de conduire #}
 					<article class="profile-content-block">
-						<a class="edit-icon" href="{{ path('app_user_profile_edit_driving_license') }}"></a>
+						<a class="edit-icon" href="{{ path('app_user_profile_edit_driving_license') }}" aria-label="Modifier les informations de mon permis de conduire"></a>
 
 						<h3>Permis de conduire</h3>
 						<div class="profile-box">
@@ -188,7 +190,7 @@
 
 					{# A propos de moi #}
 					<article class="profile-content-block">
-						<a class="edit-icon" href="{{ path('app_user_profile_edit_description') }}"></a>
+						<a class="edit-icon" href="{{ path('app_user_profile_edit_description') }}" aria-label="Modifier ma description"></a>
 
 						<h3>A propos de moi</h3>
 						<div class="profile-box">

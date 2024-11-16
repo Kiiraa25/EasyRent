@@ -10,7 +10,12 @@
 {% endblock %}
 
 
-{% block title %}Mes véhicules
+{% block title %}Rechercher un véhicule - Easy-Rent
+{% endblock %}
+
+{% block meta_description %}
+	<meta name="description" content="Trouvez la voiture idéale avec Easy-Rent. Recherchez et réservez en quelques clics parmi des citadines, SUV, utilitaires et plus, disponibles près de chez vous.">
+
 {% endblock %}
 
 {% block stylesheets %}
@@ -252,7 +257,7 @@
 
 				<div class="form-group search-container">
 					{{ form_label(searchForm.search) }}
-					{{ form_widget(searchForm.search, {'attr': {'class': 'search-input search', 'data-action': 'search-input'}}) }}
+					{{ form_widget(searchForm.search, {'attr': {'class': 'search-input search', 'data-action': 'search-input', 'aria-label': 'Saisir une ville'}}) }}
 					{{ form_errors(searchForm.search) }}
 					<div id="dropdownMenu" class="hidden">
 						<ul id="dropdownResults">
@@ -262,31 +267,34 @@
 					{% set displayed_messages = [] %}
 
 					{% for type, messages in app.flashes %}
-						{% for message in messages %}
-							{% if message not in displayed_messages %}
-								<div class="alert alert-{{ 'search-error' }}">
-									{{ message }}
-								</div>
-								{% set displayed_messages = displayed_messages | merge([message]) %}
-							{% endif %}
-						{% endfor %}
+						{% if type == 'search-error' %}
+							{% for message in messages %}
+								{% if message not in displayed_messages %}
+									<div class="alert alert-{{ type }}">
+										{{ message }}
+									</div>
+									{% set displayed_messages = displayed_messages | merge([message]) %}
+								{% endif %}
+							{% endfor %}
+						{% endif %}
 					{% endfor %}
+
 
 				</div>
 				{# <input type="text" placeholder="Adresse précise, gare, métro..." class="search-input"> #}
 				<div class="date-container">
 					<div class="form-group">
 						{{ form_label(searchForm.startDate) }}
-						{{ form_widget(searchForm.startDate, {'attr': {'class': 'search-input, filter-btn'}}) }}
+						{{ form_widget(searchForm.startDate, {'attr': {'class': 'search-input, filter-btn', 'aria-label': 'Date de début de location souhaitée'}}) }}
 						{{ form_errors(searchForm.startDate) }}
 					</div>
 					<div class="form-group">
 						{{ form_label(searchForm.endDate) }}
-						{{ form_widget(searchForm.endDate, {'attr': {'class': 'search-input, filter-btn'}}) }}
+						{{ form_widget(searchForm.endDate, {'attr': {'class': 'search-input, filter-btn', 'aria-label': 'Date de fin de location souhaitée'}}) }}
 						{{ form_errors(searchForm.endDate) }}
 					</div>
 					{# <input type="date" placeholder="début" class="search-input">
-																																																																																					<input type="date" placeholder="fin" class="search-input"> #}
+																																																																																										<input type="date" placeholder="fin" class="search-input"> #}
 				</div>
 			</div>
 
@@ -294,30 +302,30 @@
 			<div class="filters">
 				<div class="form-group">
 					{{ form_label(searchForm.totalPrice) }}
-					{{ form_widget(searchForm.totalPrice, {'attr': {'class': 'filter-btn search-input'}}) }}
+					{{ form_widget(searchForm.totalPrice, {'attr': {'class': 'filter-btn search-input', 'aria-label': 'Filtrer par prix total souhaité'}}) }}
 					{{ form_errors(searchForm.totalPrice) }}
 				</div>
 				<div class="form-group">
 					{{ form_label(searchForm.vehicleCategory) }}
-					{{ form_widget(searchForm.vehicleCategory, {'attr': {'class': 'filter-btn'}}) }}
+					{{ form_widget(searchForm.vehicleCategory, {'attr': {'class': 'filter-btn', 'aria-label': 'Filtrer par type de véhicule souhaité'}}) }}
 					{{ form_errors(searchForm.vehicleCategory) }}
 				</div>
 				<div class="form-group">
 					{{ form_label(searchForm.gearboxType) }}
-					{{ form_widget(searchForm.gearboxType, {'attr': {'class': 'filter-btn'}}) }}
+					{{ form_widget(searchForm.gearboxType, {'attr': {'class': 'filter-btn', 'aria-label': 'Filtrer par type de boite de vitesse souhaité'}}) }}
 					{{ form_errors(searchForm.gearboxType) }}
 				</div>
 
 				<div class="form-group">
 					{{ form_label(searchForm.fuelType) }}
-					{{ form_widget(searchForm.fuelType, {'attr': {'class': 'filter-btn'}}) }}
+					{{ form_widget(searchForm.fuelType, {'attr': {'class': 'filter-btn', 'aria-label': 'Filtrer par type de carburant souhaité'}}) }}
 					{{ form_errors(searchForm.fuelType) }}
 				</div>
 
 				{# <button class="filter-btn">Prix total</button>
-																																																												<button class="filter-btn">Citadine</button>
-																																																												<button class="filter-btn">Type de véhicule</button>
-																																																												<button class="filter-btn">Plus de filtres</button> #}
+																																																																<button class="filter-btn">Citadine</button>
+																																																																<button class="filter-btn">Type de véhicule</button>
+																																																																<button class="filter-btn">Plus de filtres</button> #}
 			</div>
 
 			{{ form_end(searchForm) }}
@@ -334,18 +342,15 @@
 
 
 						<a
-							href="{{ path('app_vehicle_show', { 'id': vehicle.id, 'startDate': startDate|date('Y-m-d'), 'endDate': endDate|date('Y-m-d') }) }}" class="vehicle-item">
+							href="{{ path('app_vehicle_show', { 'id': vehicle.id, 'startDate': startDate|date('Y-m-d'), 'endDate': endDate|date('Y-m-d') }) }}" class="vehicle-item" , 'aria-label' : "Cliquer sur un véhicule pour afficher la page d'annonce">
 							<!-- Placeholder for vehicle image -->
 							<div class="vehicle-image-placeholder">
 
 								{% if vehicle.photos|length > 0 %}
-									
+
 									<img src="{{ vich_uploader_asset(vehicle.photos[0], 'imageFile') }}" alt="Photo du véhicule">
 
 								{% endif %}
-
-								{# <img src="{{ asset('/img/vehicles/' ~ vehicle.getPhotos[0].imagePath) }}" alt="Photo du véhicule"> #}
-
 
 							</div>
 
@@ -385,7 +390,7 @@
 			</div>
 
 			<!-- Right-side: Blue Placeholder -->
-			<div class="blue-box" id="map">
+			<div class="blue-box" id="map" , 'aria-label' : 'Carte affichant les véhicules recherchés'>
 				<p>Placeholder for map or other content</p>
 			</div>
 		</div>

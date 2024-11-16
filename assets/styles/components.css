@@ -155,3 +155,26 @@ select{
     list-style-type: none;
     margin-top: 3px;
 }
+
+/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+
+/* Image du véhicule */
+.vehicle-image {
+    width: 80px;
+    height: 80px;
+    background-color: #282F4B;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.vehicle-image img {
+    width: 80px;
+    height: 80px;
+    background-color: #282F4B; /* Dark blue color */
+    border-radius: 10px;
+}
