@@ -207,6 +207,7 @@ class VehicleController extends AbstractController
 
         // Récupérer les paramètres GET ou utiliser les valeurs par défaut
         $search = $request->query->get('search', '');
+
         $startDateQuery = $request->query->get('startDate', $today);
         $endDateQuery = $request->query->get('endDate', $defaultEndDate);
 
@@ -225,55 +226,57 @@ class VehicleController extends AbstractController
         $vehicleMarkers = [];
         $latitude = 45.750000; // Valeurs par défaut
         $longitude = 4.850000;
+
         $search = $searchDto->getSearch();
-            $startDate = $searchDto->getStartDate()->format('Y-m-d');
-            $endDate = $searchDto->getEndDate()->format('Y-m-d');
+        $startDate = $searchDto->getStartDate()->format('Y-m-d');
+        $endDate = $searchDto->getEndDate()->format('Y-m-d');
 
         if ($searchForm->isSubmitted() && $searchForm->isValid()) {
-            
+
 
             // Vérification des erreurs
-            if ($startDate <= $today || $endDate <= $today || $endDate < $startDate) {
+            if ($startDate <= $today || $endDate <= $today || $endDate < $startDate || $endDate == $startDate) {
                 $this->addFlash('search-error', 'Les dates saisies ne sont pas valides');
+                $vehicles = [];
             }
 
             if (strlen($search) < 3) {
                 $this->addFlash('search-error', 'La recherche doit contenir au moins 3 caractères.');
+                $vehicles = [];
             }
-
-
-
-            // Recherche des véhicules
-            $vehicles = $vehicleRepository->search($searchDto);
-
-            $days = $searchDto->getStartDate()->diff($searchDto->getEndDate())->days;
-
-            foreach ($vehicles as $vehicle) {
-                $vehicleTotalPrices[$vehicle->getId()] = $vehicle->getPricePerDay() * $days;
-                $vehicleMarkers[] = [
-                    'id' => $vehicle->getId(),
-                    'latitude' => $vehicle->getLatitude(),
-                    'longitude' => $vehicle->getLongitude(),
-                    'model' => $vehicle->getModel()->getName(),
-                    'pricePerDay' => $vehicle->getPricePerDay(),
-                    'city' => $vehicle->getCity(),
-                ];
-            }
-
-            // Obtenir les coordonnées de la recherche
-            $cityCoordinates = $DataGouvAddressService->getCityCoordinates($searchDto->getSearch());
-            if ($cityCoordinates) {
-                $latitude = $cityCoordinates['features'][0]['geometry']['coordinates'][1];
-                $longitude = $cityCoordinates['features'][0]['geometry']['coordinates'][0];
-            }
-
-           
         }
+
+        // Recherche des véhicules
+        $vehicles = $vehicleRepository->search($searchDto);
+
+        $days = $searchDto->getStartDate()->diff($searchDto->getEndDate())->days;
+
+        foreach ($vehicles as $vehicle) {
+            $vehicleTotalPrices[$vehicle->getId()] = $vehicle->getPricePerDay() * $days;
+            $vehicleMarkers[] = [
+                'id' => $vehicle->getId(),
+                'latitude' => $vehicle->getLatitude(),
+                'longitude' => $vehicle->getLongitude(),
+                'model' => $vehicle->getModel()->getName(),
+                'pricePerDay' => $vehicle->getPricePerDay(),
+                'city' => $vehicle->getCity(),
+            ];
+        }
+
+        // Obtenir les coordonnées de la recherche
+        $cityCoordinates = $DataGouvAddressService->getCityCoordinates($searchDto->getSearch());
+        if ($cityCoordinates) {
+            $latitude = $cityCoordinates['features'][0]['geometry']['coordinates'][1];
+            $longitude = $cityCoordinates['features'][0]['geometry']['coordinates'][0];
+        }
+
+
+
 
         $queryString = http_build_query([
             'search' => $search,
-            'startDate' => $startDateQuery,
-            'endDate' => $endDateQuery,
+            'startDate' => $startDate,
+            'endDate' => $endDate,
         ]);
 
         return $this->render('vehicle/showAllVehicles.html.twig', [

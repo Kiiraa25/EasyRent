@@ -1,8 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block importmap %}
-	{{ parent() }}
-	{{ importmap(['componentsStyle']) }}
+	{{ importmap(['app','componentsStyle']) }}
 {% endblock %}
 
 {% block title %}Détails du véhicule

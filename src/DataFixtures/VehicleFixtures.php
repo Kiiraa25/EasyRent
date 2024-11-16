@@ -84,7 +84,7 @@ class VehicleFixtures extends Fixture
             ['address' => '12 Avenue Thiers', 'postal_code' => '06000', 'city' => 'Nice'],
             ['address' => '13 Rue Masséna', 'postal_code' => '06000', 'city' => 'Nice'],
             ['address' => '39 Rue Saint-Rome', 'postal_code' => '31000', 'city' => 'Toulouse'],
-            ['address' => '26 Rue d’Italie', 'postal_code' => '13100', 'city' => 'Aix-en-Provence'],
+            ['address' => '26 Rue d\'Italie', 'postal_code' => '13100', 'city' => 'Aix-en-Provence'],
             ['address' => '15 Place d\'Albertas', 'postal_code' => '13100', 'city' => 'Aix-en-Provence'],
             ['address' => '27 Rue de la Loge', 'postal_code' => '13002', 'city' => 'Marseille'],
             ['address' => '23 Rue Victor Hugo', 'postal_code' => '69002', 'city' => 'Lyon'],
@@ -92,10 +92,10 @@ class VehicleFixtures extends Fixture
             ['address' => '9 Cours Berriat', 'postal_code' => '38000', 'city' => 'Grenoble'],
             ['address' => '31 Place Kléber', 'postal_code' => '67000', 'city' => 'Strasbourg'],
             ['address' => '5 Rue des Grandes Arcades', 'postal_code' => '67000', 'city' => 'Strasbourg'],
-            ['address' => '8 Rue de l’Église', 'postal_code' => '51100', 'city' => 'Reims'],
+            ['address' => '8 Rue de l\'Église', 'postal_code' => '51100', 'city' => 'Reims'],
             ['address' => '10 Rue d\'Isly', 'postal_code' => '34000', 'city' => 'Montpellier'],
             ['address' => '17 Boulevard Jean Jaurès', 'postal_code' => '92100', 'city' => 'Boulogne-Billancourt'],
-            ['address' => '18 Place de l’Hôtel de Ville', 'postal_code' => '42000', 'city' => 'Saint-Étienne'],
+            ['address' => '18 Place de l\'Hôtel de Ville', 'postal_code' => '42000', 'city' => 'Saint-Étienne'],
             ['address' => '16 Rue Gambetta', 'postal_code' => '72000', 'city' => 'Le Mans'],
             ['address' => '27 Rue de la Madeleine', 'postal_code' => '33000', 'city' => 'Bordeaux'],
             ['address' => '22 Rue des Dominicains', 'postal_code' => '38000', 'city' => 'Grenoble']
@@ -182,7 +182,9 @@ class VehicleFixtures extends Fixture
                         // Créer une nouvelle instance de VehiclePhoto
                         $photo = new VehiclePhoto();
                         $photo->setVehicle($vehicle);
+
                         $photo->setImagePath($randomImage);
+
                         $photo->setType(PhotoTypeEnum::VEHICLE); // Assigner le type de photo
                         $photo->setCreatedAt(new \DateTimeImmutable());
                         $photo->setUpdatedAt(new \DateTimeImmutable());

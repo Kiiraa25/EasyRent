@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block body %}
-	
+
 
 	<main>
 
@@ -79,12 +79,15 @@
 				</div>
 
 				{% for type, messages in app.flashes %}
-					{% for message in messages %}
-						<div class="alert alert-{{ 'register-error' }}">
-							{{ message }}
-						</div>
-					{% endfor %}
+					{% if type == 'register-error' %}
+						{% for message in messages %}
+							<div class="alert alert-register-error">
+								{{ message }}
+							</div>
+						{% endfor %}
+					{% endif %}
 				{% endfor %}
+
 
 				<div class="agree-terms">
 					{{ form_widget(registrationForm.agreeTerms) }}
@@ -92,8 +95,8 @@
 					<div class="form-error">{{ form_errors(registrationForm.agreeTerms) }}</div>
 				</div>
 				{% for flash_error in app.flashes('verify_email_error') %}
-		<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-	{% endfor %}
+					<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+				{% endfor %}
 
 				<button type="submit" class="nav-button">M'inscrire</button>
 				{{ form_end(registrationForm) }}

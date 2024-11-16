@@ -1,0 +1,144 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mentions Légales - Easy-Rent{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            color: #333;
+        }
+
+        .mentions-legales {
+            max-width: 800px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .mentions-legales h1, .mentions-legales h2 {
+            color: #282F4B;
+        }
+
+        .mentions-legales h1 {
+            font-size: 2em;
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #FF866F;
+            padding-bottom: 10px;
+        }
+
+        .mentions-legales h2 {
+            font-size: 1.4em;
+            margin-top: 30px;
+            border-bottom: 1px solid #FF866F;
+            padding-bottom: 8px;
+        }
+
+        .mentions-legales p, .mentions-legales li {
+            font-size: 1em;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+
+        .mentions-legales ul {
+            margin-left: 20px;
+        }
+
+        .mentions-legales footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .mentions-legales footer a {
+            color: #282F4B;
+        }
+        .mentions-legales section{
+            width: 90%;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<main class="mentions-legales">
+    <h1>Mentions Légales</h1>
+
+    <section>
+        <h2>1. Éditeur du site</h2>
+        <p>
+            Le site <strong>Easy-Rent</strong> est édité par :
+        </p>
+        <ul>
+            <li><strong>Raison sociale :</strong> Easy-Rent SAS</li>
+            <li><strong>Siège social :</strong> 123 Avenue des Entrepreneurs, 75000 Paris, France</li>
+            <li><strong>Capital social :</strong> 50 000 €</li>
+            <li><strong>RCS :</strong> Paris B 123 456 789</li>
+            <li><strong>Numéro de TVA intracommunautaire :</strong> FR 12 345678901</li>
+            <li><strong>Email :</strong> <a href="mailto:contact@easy-rent.fr">contact@easy-rent.fr</a></li>
+            <li><strong>Téléphone :</strong> +33 (0)1 23 45 67 89</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>2. Hébergement</h2>
+        <p>
+            Le site est hébergé par :
+        </p>
+        <ul>
+            <li><strong>Nom de l’hébergeur :</strong> OVH SAS</li>
+            <li><strong>Siège social :</strong> 2 Rue Kellermann, 59100 Roubaix, France</li>
+            <li><strong>Téléphone :</strong> +33 (0)9 72 10 10 07</li>
+            <li><strong>Site web :</strong> <a href="https://www.ovhcloud.com">www.ovhcloud.com</a></li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>3. Directeur de publication</h2>
+        <p>
+            Le directeur de publication est : <strong>Jean Dupont</strong>, en qualité de Président de Easy-Rent SAS.
+        </p>
+    </section>
+
+    <section>
+        <h2>4. Propriété intellectuelle</h2>
+        <p>
+            Tous les contenus présents sur le site (textes, images, logos, vidéos, etc.) sont protégés par les lois en vigueur sur la propriété intellectuelle. Toute reproduction, représentation, modification ou adaptation, en tout ou partie, de ces contenus est interdite sans l'accord préalable écrit de Easy-Rent.
+        </p>
+    </section>
+
+    <section>
+        <h2>5. Limitation de responsabilité</h2>
+        <p>
+            Easy-Rent s'efforce de fournir des informations exactes et à jour sur son site. Cependant, la société ne peut être tenue responsable des éventuelles erreurs, omissions ou indisponibilités du site.
+        </p>
+        <p>
+            Easy-Rent décline toute responsabilité quant à l'utilisation qui pourrait être faite des informations et services proposés sur le site.
+        </p>
+    </section>
+
+    <section>
+        <h2>6. Données personnelles</h2>
+        <p>
+            Easy-Rent collecte et traite vos données personnelles conformément à la réglementation en vigueur, notamment le RGPD. Pour plus d'informations, veuillez consulter notre <a href="{{path('app_privacy')}}">Politique de Confidentialité</a>.
+        </p>
+    </section>
+
+    <section>
+        <h2>7. Cookies</h2>
+        <p>
+            Le site utilise des cookies pour améliorer l'expérience utilisateur.</a>.
+        </p>
+    </section>
+
+    <footer>
+        <p>© 2024 Easy-Rent. Tous droits réservés. | <a href="#">Contactez-nous</a></p>
+    </footer>
+</main>
+{% endblock %}

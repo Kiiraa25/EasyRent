@@ -1,0 +1,175 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Politique de Confidentialité - Easy-Rent{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            color: #333;
+        }
+
+        .privacy {
+            max-width: 800px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .privacy h1, .privacy h2 {
+            color: #282F4B;
+        }
+
+        .privacy h1 {
+            font-size: 2em;
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #FF866F;
+            padding-bottom: 10px;
+        }
+
+        .privacy h2 {
+            font-size: 1.4em;
+            margin-top: 30px;
+            border-bottom: 1px solid #FF866F;
+            padding-bottom: 8px;
+        }
+
+        .privacy p, .privacy li {
+            font-size: 1em;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+
+        .privacy ul {
+            margin-left: 20px;
+        }
+
+        .privacy a {
+            color: #FF866F;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .privacy a:hover {
+            text-decoration: underline;
+        }
+
+        .privacy footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .privacy footer a {
+            color: #282F4B;
+        }
+
+        .privacy section{
+            width: 90%;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<main class="privacy">
+    <h1>Politique de Confidentialité</h1>
+
+    <section>
+        <h2>1. Introduction</h2>
+        <p>
+            Chez Easy-Rent, la protection de vos données personnelles est une priorité. Cette Politique de Confidentialité explique quelles informations nous collectons, comment nous les utilisons et quels sont vos droits concernant vos données personnelles, conformément au Règlement Général sur la Protection des Données (RGPD).
+        </p>
+    </section>
+
+    <section>
+        <h2>2. Responsable du traitement</h2>
+        <p>
+            Le responsable du traitement des données personnelles est :
+        </p>
+        <ul>
+            <li><strong>Nom :</strong> Easy-Rent SAS</li>
+            <li><strong>Adresse :</strong> 123 Avenue des Entrepreneurs, 75000 Paris, France</li>
+            <li><strong>Email :</strong> <a href="mailto:privacy@easy-rent.fr">privacy@easy-rent.fr</a></li>
+            <li><strong>Téléphone :</strong> +33 (0)1 23 45 67 89</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>3. Données collectées</h2>
+        <p>Nous collectons les données personnelles suivantes :</p>
+        <ul>
+            <li><strong>Données d’identification :</strong> Nom, prénom, adresse email, numéro de téléphone, etc.</li>
+            <li><strong>Données de compte :</strong> Identifiants de connexion, historique des locations, etc.</li>
+            <li><strong>Données de paiement :</strong> Informations liées aux transactions via notre prestataire sécurisé.</li>
+            <li><strong>Données techniques :</strong> Adresse IP, type de navigateur, pages visitées, etc.</li>
+        </ul>
+        <p>Ces données sont collectées lorsque :</p>
+        <ul>
+            <li>Vous créez un compte sur notre plateforme.</li>
+            <li>Vous effectuez une réservation ou mettez en ligne une annonce.</li>
+            <li>Vous nous contactez via le formulaire ou par email.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>4. Utilisation des données</h2>
+        <p>Vos données personnelles sont utilisées pour :</p>
+        <ul>
+            <li>Gérer vos réservations et annonces.</li>
+            <li>Assurer le fonctionnement et la sécurité de la plateforme.</li>
+            <li>Personnaliser votre expérience utilisateur.</li>
+            <li>Respecter nos obligations légales et réglementaires.</li>
+            <li>Envoyer des communications liées à nos services (notifications, offres, etc.).</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>5. Partage des données</h2>
+        <p>Nous partageons vos données uniquement avec :</p>
+        <ul>
+            <li>Nos partenaires techniques pour le traitement des paiements.</li>
+            <li>Les autorités compétentes en cas d’obligation légale.</li>
+            <li>Les autres utilisateurs (par exemple, lors d’une réservation, certaines informations seront partagées avec le loueur ou le locataire).</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>6. Conservation des données</h2>
+        <p>Vos données personnelles sont conservées aussi longtemps que nécessaire pour atteindre les finalités pour lesquelles elles ont été collectées. Certaines données peuvent être conservées plus longtemps pour respecter les obligations légales ou à des fins de preuve.</p>
+    </section>
+
+    <section>
+        <h2>7. Vos droits</h2>
+        <p>Conformément au RGPD, vous disposez des droits suivants :</p>
+        <ul>
+            <li><strong>Droit d'accès :</strong> Vous pouvez demander une copie de vos données personnelles.</li>
+            <li><strong>Droit de rectification :</strong> Vous pouvez demander la correction de données inexactes.</li>
+            <li><strong>Droit à l'effacement :</strong> Vous pouvez demander la suppression de vos données, sous réserve des obligations légales.</li>
+            <li><strong>Droit d'opposition :</strong> Vous pouvez vous opposer à certains traitements de vos données.</li>
+            <li><strong>Droit à la portabilité :</strong> Vous pouvez demander à recevoir vos données dans un format structuré.</li>
+        </ul>
+        <p>Pour exercer vos droits, contactez-nous à <a href="mailto:privacy@easy-rent.fr">privacy@easy-rent.fr</a>.</p>
+    </section>
+
+    <section>
+        <h2>8. Sécurité des données</h2>
+        <p>Nous mettons en œuvre des mesures techniques et organisationnelles pour protéger vos données contre tout accès non autorisé, perte, destruction ou altération.</p>
+    </section>
+
+    <section>
+        <h2>9. Modification de la politique</h2>
+        <p>Cette Politique de Confidentialité peut être mise à jour à tout moment. La date de la dernière mise à jour est indiquée en bas de cette page. Nous vous recommandons de consulter régulièrement cette page pour rester informé.</p>
+    </section>
+
+    <footer>
+        <p>Dernière mise à jour : 15 novembre 2024 | © 2024 Easy-Rent. Tous droits réservés.</p>
+    </footer>
+</main>
+{% endblock %}

@@ -29,7 +29,7 @@ class VehicleRepository extends ServiceEntityRepository
         
         $qb = $this->createQueryBuilder('v')
             ->leftJoin('v.rentals', 'r')
-            ->andWhere('(r.status IN (:nonValidStatuses) OR r.endDate <= :startDate OR r.startDate >= :endDate)')
+            ->andWhere('(r.status IN (:nonValidStatuses) OR r.endDate < :startDate OR r.startDate > :endDate)')
             ->setParameter('startDate', $startDate)
             ->setParameter('endDate', $endDate)
             ->setParameter('nonValidStatuses', [
@@ -67,6 +67,16 @@ class VehicleRepository extends ServiceEntityRepository
             $qb->andWhere('v.pricePerDay * :days <= :totalPrice')
                 ->setParameter('days', $days)
                 ->setParameter('totalPrice', $search->getTotalPrice());
+        }
+
+        $today = (new \DateTime());
+        // Vérification des erreurs
+        if ($startDate <= $today || $endDate <= $today || $endDate < $startDate|| $endDate == $startDate) {
+           return [];
+        }
+
+        if (strlen($search->getSearch()) < 3) {
+            return [];
         }
 
         return $qb->getQuery()->getResult();

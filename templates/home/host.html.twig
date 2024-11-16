@@ -1,0 +1,149 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pourquoi Devenir Hôte ? - Easy-Rent{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            color: #333;
+        }
+
+        .host {
+            max-width: 800px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+       .host h1 {
+            font-size: 2em;
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #FF866F;
+            padding-bottom: 10px;
+            color: #282F4B;
+        }
+
+        .host h2 {
+            font-size: 1.4em;
+            color: #282F4B;
+            margin-top: 30px;
+        }
+
+        .host p {
+            font-size: 1em;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+
+        .host ul {
+            margin-left: 20px;
+        }
+
+        .host .highlight {
+            background-color: #f7f7f7;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .host .cta {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .host .cta a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #FF866F;
+            color: white;
+            text-decoration: none;
+            font-size: 1em;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .host .cta a:hover {
+            background-color: #282F4B;
+        }
+
+        .host footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .host footer a {
+            color: #282F4B;
+        }
+
+        .host section{
+            width: 90%;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<main class="host">
+    <h1>Pourquoi Devenir Hôte sur Easy-Rent ?</h1>
+
+    <section>
+        <h2>Monétisez Votre Voiture</h2>
+        <p>
+            Votre voiture reste inutilisée la majeure partie de la semaine ? En devenant hôte sur Easy-Rent, vous transformez ce temps en revenus. Louez votre véhicule aux personnes qui en ont besoin et gagnez un revenu supplémentaire en toute simplicité.
+        </p>
+    </section>
+
+    <section>
+        <h2>Des Avantages Concrets</h2>
+        <div class="highlight">
+            <ul>
+                <li><strong>Flexibilité :</strong> Vous choisissez les dates de disponibilité et fixez vos propres tarifs.</li>
+                <li><strong>Sécurité :</strong> Chaque location est couverte par une assurance adaptée.</li>
+                <li><strong>Simplicité :</strong> Une interface intuitive pour gérer vos réservations en quelques clics.</li>
+                <li><strong>Support :</strong> Une équipe dédiée pour répondre à vos questions et vous accompagner.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section>
+        <h2>Comment Ça Marche ?</h2>
+        <p>
+            Devenir hôte est rapide et facile :
+        </p>
+        <ul>
+            <li>1. <strong>Inscrivez-vous :</strong> Créez un compte gratuitement.</li>
+            <li>2. <strong>Vérifiez votre profil :</strong> Envoyez-nous vos pièces justificatifs en quelques clics</li>
+            <li>3. <strong>Publiez une annonce :</strong> Ajoutez des photos, une description et définissez vos conditions.</li>
+            <li>4. <strong>Commencez à louer :</strong> Recevez des demandes de réservation et connectez-vous avec des locataires.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Pourquoi Choisir Easy-Rent ?</h2>
+        <p>
+            Contrairement aux services traditionnels, Easy-Rent met l'accent sur la communauté et la simplicité. Nos utilisateurs apprécient la transparence de notre plateforme et la tranquillité d'esprit offerte par nos garanties.
+        </p>
+        <p>
+            Que vous souhaitiez générer un revenu passif ou maximiser l'utilisation de votre véhicule, Easy-Rent est la solution idéale.
+        </p>
+    </section>
+
+    <div class="cta">
+        <a href="{{path('app_vehicle_new')}}">Devenez Hôte Maintenant</a>
+    </div>
+
+    <footer>
+        <p>© 2024 Easy-Rent. Tous droits réservés. | <a href="#">Contactez-nous</a></p>
+    </footer>
+</main>
+{% endblock %}

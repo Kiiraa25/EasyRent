@@ -1,103 +1,111 @@
 {% extends 'dashBoard/base.html.twig' %}
 
-{% block title %}Mes véhicules{% endblock %}
+{% block title %}Mes véhicules
+{% endblock %}
 
 {% block stylesheets %}
-    <style>
-        /* Conteneur principal */
-        .content-container {
-            width: 90%;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            margin-top: 20px;
-            max-height: 84vh;
-            overflow: auto;
-        }
+	<style>
+		/* Conteneur principal */
+		.content-container {
+			width: 90%;
+			background-color: #ffffff;
+			border-radius: 8px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			padding: 30px;
+			margin-top: 20px;
+			max-height: 84vh;
+			overflow: auto;
+		}
 
-        /* Liste des véhicules */
-        .vehicle-item {
-            display: grid;
-            grid-template-columns: 80px 1fr 1fr 1fr 1fr 1fr 1fr;
-            align-items: center;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: rgba(0, 0, 0, 0.05) 2px 4px 8px;
-            padding: 15px;
-            margin-bottom: 20px;
-            width: 97%;
-            gap: 10px;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
+		/* Liste des véhicules */
+		.vehicle-item {
+			display: grid;
+			grid-template-columns: 80px 1fr 1fr 1fr 1fr 1fr 1fr;
+			align-items: center;
+			background-color: white;
+			border-radius: 10px;
+			box-shadow: rgba(0, 0, 0, 0.05) 2px 4px 8px;
+			padding: 15px;
+			margin-bottom: 20px;
+			width: 97%;
+			gap: 10px;
+			transition: transform 0.2s, box-shadow 0.2s;
+		}
 
-        .vehicle-item:hover {
-            transform: scale(1.02);
-            box-shadow: rgba(0, 0, 0, 0.1) 2px 6px 12px;
-        }
+		.vehicle-item:hover {
+			transform: scale(1.02);
+			box-shadow: rgba(0, 0, 0, 0.1) 2px 6px 12px;
+		}
 
-        /* Image du véhicule */
-        .rental-image {
-            width: 80px;
-            height: 80px;
-            background-color: #282F4B;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 14px;
-        }
+		/* Image du véhicule */
+		.vehicle-image {
+			width: 80px;
+			height: 80px;
+			background-color: #282F4B;
+			border-radius: 8px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: white;
+			font-weight: bold;
+			font-size: 14px;
+		}
 
-        /* Informations du véhicule */
-        .vehicle-item h3 {
-            font-size: 18px;
-            color: #282F4B;
-            margin-bottom: 10px;
-        }
+        .vehicle-image img {
+			width: 80px;
+			height: 80px;
+			background-color: #282F4B; /* Dark blue color */
+			border-radius: 10px;
+		}
 
-        .vehicle-item p {
-            margin: 5px 0;
-            color: #555;
-        }
+		/* Informations du véhicule */
+		.vehicle-item h3 {
+			font-size: 18px;
+			color: #282F4B;
+			margin-bottom: 10px;
+		}
 
-        .vehicle-item strong {
-            color: #282F4B;
-        }
+		.vehicle-item p {
+			margin: 5px 0;
+			color: #555;
+		}
 
-        /* Boutons d'actions */
-        .item-actions {
-            display: flex;
-            gap: 8px;
-        }
+		.vehicle-item strong {
+			color: #282F4B;
+		}
 
-        /* Bouton ajouter un véhicule */
-        .add-vehicle-btn {
-            display: inline-block;
-            text-align: center;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #282F4B;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: background-color 0.3s;
-        }
+		/* Boutons d'actions */
+		.item-actions {
+			display: flex;
+			gap: 8px;
+		}
 
-        .add-vehicle-btn:hover {
-            background-color: #1e233a;
-        }
+		/* Bouton ajouter un véhicule */
+		.add-vehicle-btn {
+			display: inline-block;
+			text-align: center;
+			margin-top: 20px;
+			padding: 10px 20px;
+			background-color: #282F4B;
+			color: white;
+			text-decoration: none;
+			border-radius: 5px;
+			font-weight: bold;
+			transition: background-color 0.3s;
+		}
 
-        .no-vehicles {
-            text-align: center;
-            font-size: 18px;
-            color: #555;
-            margin-top: 50px;
-        }
+		.add-vehicle-btn:hover {
+			background-color: #1e233a;
+		}
 
-        .btn {
+		.no-vehicles {
+			text-align: center;
+			font-size: 18px;
+			color: #555;
+			margin-top: 50px;
+		}
+
+		.btn {
 			padding: 8px 12px;
 			font-size: 12px;
 			font-weight: bold;
@@ -120,45 +128,63 @@
 		.btn:hover {
 			opacity: 0.85;
 		}
-    </style>
+	</style>
 {% endblock %}
 
 {% block content %}
-    <div class="admin-dashboard-content">
-        <h1 class="dashboard-title">Mes véhicules</h1>
+	<div class="admin-dashboard-content">
+		<h1 class="dashboard-title">Mes véhicules</h1>
 
-        <div class="content-container">
-            {% if vehicles is empty %}
-                <p class="no-vehicles">Vous n'avez pas encore ajouté de véhicules.</p>
-            {% else %}
-                {% for vehicle in vehicles %}
-                    <div class="vehicle-item">
-                    <a href="{{ path('app_vehicle_show', {'id': vehicle.id}) }}" class="rental-details-link">
-                        <div class="rental-image">IMG</div> </a>
-                        
+		<div class="content-container">
+			{% if vehicles is empty %}
+				<p class="no-vehicles">Vous n'avez pas encore ajouté de véhicules.</p>
+			{% else %}
+				{% for vehicle in vehicles %}
+					<div class="vehicle-item">
+						<a href="{{ path('app_vehicle_show', {'id': vehicle.id}) }}" class="rental-details-link">
+							<div class="vehicle-image">
+								{% if vehicle.photos|length > 0 %}
 
-                        <!-- Détails du véhicule -->
-                        <h3>{{ vehicle.model.brand.name }} {{ vehicle.model.name }}</h3>
+									<img src="{{ vich_uploader_asset(vehicle.photos[0], 'imageFile') }}" alt="Photo du véhicule">
 
-                        <div>
-                            <p><strong>Adresse :</strong> {{ vehicle.address }}</p>
-                        </div>
+								{% endif %}
+							</div>
+						</a>
 
-                        <p><strong>Kilométrage :</strong> {{ vehicle.mileage }} km</p>
-                        <p><strong>Couleur :</strong> {{ vehicle.color }}</p>
-                        <p><strong>Tarif par jour :</strong> {{ vehicle.pricePerDay }} €</p>
 
-                        <!-- Actions -->
-                        <div class="item-actions">
-                            {% if vehicle.status.value == 'en_attente_validation' or vehicle.status.value == 'active' %}
-                                <a href="{{ path('app_vehicle_edit', {'id': vehicle.id}) }}" class=" btn modify-button">Éditer l'annonce</a>
-                                <a href="{{ path('app_vehicle_delete', {'id': vehicle.id}) }}" class="btn cancel-button" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce véhicule ?')">Supprimer l'annonce</a>
-                            {% endif %}
-                        </div>
-                    </div>
-                {% endfor %}
-            {% endif %}
-            <a href="{{ path('app_vehicle_new') }}" class="add-vehicle-btn">Ajouter un nouveau véhicule</a>
-        </div>
-    </div>
+						<!-- Détails du véhicule -->
+						<h3>{{ vehicle.model.brand.name }}
+							{{ vehicle.model.name }}</h3>
+
+						<div>
+							<p>
+								<strong>Adresse :</strong>
+								{{ vehicle.address }}</p>
+						</div>
+
+						<p>
+							<strong>Kilométrage :</strong>
+							{{ vehicle.mileage }}
+							km</p>
+						<p>
+							<strong>Couleur :</strong>
+							{{ vehicle.color }}</p>
+						<p>
+							<strong>Tarif par jour :</strong>
+							{{ vehicle.pricePerDay }}
+							€</p>
+
+						<!-- Actions -->
+						<div class="item-actions">
+							{% if vehicle.status.value == 'en_attente_validation' or vehicle.status.value == 'active' %}
+								<a href="{{ path('app_vehicle_edit', {'id': vehicle.id}) }}" class=" btn modify-button">Éditer l'annonce</a>
+								<a href="{{ path('app_vehicle_delete', {'id': vehicle.id}) }}" class="btn cancel-button" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce véhicule ?')">Supprimer l'annonce</a>
+							{% endif %}
+						</div>
+					</div>
+				{% endfor %}
+			{% endif %}
+			<a href="{{ path('app_vehicle_new') }}" class="add-vehicle-btn">Ajouter un nouveau véhicule</a>
+		</div>
+	</div>
 {% endblock %}

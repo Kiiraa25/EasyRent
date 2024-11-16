@@ -1,0 +1,134 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Conditions Générales d'Utilisation - Easy-Rent{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            color: #333;
+        }
+
+        .CGU {
+            max-width: 800px;
+            margin: 40px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px 40px;
+        }
+
+        .CGU h1, .CGU h2 {
+            color: #282F4B;
+        }
+
+        .CGU h1 {
+            font-size: 2em;
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #FF866F;
+            padding-bottom: 10px;
+        }
+
+        .CGU h2 {
+            font-size: 1.4em;
+            margin-top: 30px;
+            border-bottom: 1px solid #FF866F;
+            padding-bottom: 8px;
+        }
+
+        .CGU p, .CGU li {
+            font-size: 1em;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+
+        .CGU ul {
+            margin-left: 20px;
+        }
+
+        .CGU a {
+            color: #FF866F;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .CGU a:hover {
+            text-decoration: underline;
+        }
+
+        .CGU footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .CGU footer a {
+            color: #282F4B;
+        }
+
+        .CGU section{
+            width: 90%;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<main class="CGU">
+    <h1>Conditions Générales d'Utilisation</h1>
+
+    <section>
+        <h2>1. Préambule</h2>
+        <p>Easy-Rent (ci-après désigné "le Site") est une plateforme en ligne permettant la mise en relation de particuliers souhaitant louer ou proposer à la location leurs véhicules. Les présentes Conditions Générales d'Utilisation (CGU) définissent les règles d'utilisation du Site ainsi que les droits et obligations des utilisateurs.</p>
+        <p>L'accès au Site implique l'acceptation sans réserve des présentes CGU. Si vous n'acceptez pas ces termes, vous ne pouvez pas utiliser le Site.</p>
+    </section>
+
+    <section>
+        <h2>2. Définitions</h2>
+        <ul>
+            <li><strong>Plateforme :</strong> Le service en ligne Easy-Rent accessible via le site web et/ou une application mobile.</li>
+            <li><strong>Utilisateur :</strong> Toute personne physique ou morale inscrite sur le Site.</li>
+            <li><strong>Propriétaire :</strong> Un Utilisateur qui met son véhicule à disposition à la location.</li>
+            <li><strong>Locataire :</strong> Un Utilisateur qui loue un véhicule via la Plateforme.</li>
+            <li><strong>Véhicule :</strong> Tout moyen de transport terrestre à moteur mis à disposition sur la Plateforme par un Propriétaire.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>3. Objet du Service</h2>
+        <p>Easy-Rent agit en tant qu'intermédiaire technique permettant :</p>
+        <ul>
+            <li>Aux Propriétaires de publier des annonces pour la location de leurs véhicules.</li>
+            <li>Aux Locataires de rechercher, réserver et louer des véhicules.</li>
+        </ul>
+        <p>Easy-Rent ne constitue pas un loueur de voitures professionnel et n'intervient pas directement dans les transactions entre Propriétaires et Locataires.</p>
+    </section>
+
+    <section>
+        <h2>4. Inscription et Compte Utilisateur</h2>
+        <ul>
+            <li><strong>Conditions d'inscription :</strong> Être une personne majeure capable juridiquement et fournir des informations exactes, complètes et mises à jour lors de l'inscription.</li>
+            <li><strong>Création du compte :</strong> Chaque Utilisateur dispose d'un compte personnel et unique. L'Utilisateur est responsable de la confidentialité de ses identifiants.</li>
+            <li><strong>Vérification :</strong> Easy-Rent se réserve le droit de demander des documents justificatifs pour vérifier l'identité des Utilisateurs.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>5. Tarification et Paiement</h2>
+        <p>Les Propriétaires fixent librement le prix de location de leurs véhicules. Easy-Rent se réserve le droit de percevoir une commission sur chaque transaction, dont le pourcentage sera précisé au moment de la réservation si tel est le cas. Les paiements sont sécurisés via un prestataire tiers.</p>
+    </section>
+
+    <section>
+        <h2>6. Données Personnelles</h2>
+        <p>Conformément à la législation en vigueur (notamment le RGPD), Easy-Rent collecte et traite les données personnelles des Utilisateurs pour le fonctionnement de la Plateforme. Les détails concernant l'utilisation des données sont décrits dans notre <a href="{{ path('app_privacy') }}">Politique de Confidentialité</a>.</p>
+    </section>
+
+    <footer>
+        <p>© 2024 Easy-Rent. Tous droits réservés. | <a href="#">Contactez-nous</a></p>
+    </footer>
+</main>
+{% endblock %}

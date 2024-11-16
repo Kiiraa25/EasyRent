@@ -286,7 +286,7 @@
 						{{ form_errors(searchForm.endDate) }}
 					</div>
 					{# <input type="date" placeholder="début" class="search-input">
-																																																																																<input type="date" placeholder="fin" class="search-input"> #}
+																																																																																					<input type="date" placeholder="fin" class="search-input"> #}
 				</div>
 			</div>
 
@@ -315,9 +315,9 @@
 				</div>
 
 				{# <button class="filter-btn">Prix total</button>
-																																																								<button class="filter-btn">Citadine</button>
-																																																								<button class="filter-btn">Type de véhicule</button>
-																																																								<button class="filter-btn">Plus de filtres</button> #}
+																																																												<button class="filter-btn">Citadine</button>
+																																																												<button class="filter-btn">Type de véhicule</button>
+																																																												<button class="filter-btn">Plus de filtres</button> #}
 			</div>
 
 			{{ form_end(searchForm) }}
@@ -338,8 +338,14 @@
 							<!-- Placeholder for vehicle image -->
 							<div class="vehicle-image-placeholder">
 
-								<img src="{{ asset('/img/vehicles/' ~ vehicle.getPhotos[0].imagePath) }}" alt="Photo du véhicule">
-								
+								{% if vehicle.photos|length > 0 %}
+									
+									<img src="{{ vich_uploader_asset(vehicle.photos[0], 'imageFile') }}" alt="Photo du véhicule">
+
+								{% endif %}
+
+								{# <img src="{{ asset('/img/vehicles/' ~ vehicle.getPhotos[0].imagePath) }}" alt="Photo du véhicule"> #}
+
 
 							</div>
 
@@ -385,6 +391,7 @@
 		</div>
 	</main>
 	<script>
+
 		// Fonction pour soumettre automatiquement le formulaire lorsque les champs sont modifiés
 document.querySelectorAll('.filter-btn').forEach(function (element) {
 element.addEventListener('change', function () {
@@ -417,8 +424,6 @@ attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreet
 }).addTo(map);
 
 
-
-
 var coloredIcon = L.icon({
 iconUrl: "{{ asset('img/icons/leaflet-icon-marker.png') }}", // Chemin vers l'image colorée de l'icône
 iconAnchor: [
@@ -447,12 +452,14 @@ vehicle.pricePerDay
     `);
 });
 
- // Met à jour l'URL sans recharger la page
-    const params = "{{ queryString }}";
-    const newUrl = `${window.location.origin}${window.location.pathname}?${params}`;
-    window.history.replaceState({}, '', newUrl);
-
-
+// Met à jour l'URL sans recharger la page
+const params = "{{ queryString }}";
+const newUrl = `${
+window.location.origin
+}${
+window.location.pathname
+}?${params}`;
+window.history.replaceState({}, '', newUrl);
 	</script>
 
 {% endblock %}
