@@ -64,7 +64,7 @@ class VehicleFixtures extends Fixture
             ['address' => '35 Rue de Metz', 'postal_code' => '31000', 'city' => 'Toulouse'],
             ['address' => '18 Rue Sainte', 'postal_code' => '13001', 'city' => 'Marseille'],
             ['address' => '25 Boulevard Victor Hugo', 'postal_code' => '06000', 'city' => 'Nice'],
-            ['address' => '22 Rue d’Alsace-Lorraine', 'postal_code' => '31000', 'city' => 'Toulouse'],
+            ['address' => '22 Rue d\'Alsace-Lorraine', 'postal_code' => '31000', 'city' => 'Toulouse'],
             ['address' => '24 Rue Léon Gambetta', 'postal_code' => '59000', 'city' => 'Lille'],
             ['address' => '6 Place Masséna', 'postal_code' => '06000', 'city' => 'Nice'],
             ['address' => '9 Rue de Béthune', 'postal_code' => '59000', 'city' => 'Lille'],
@@ -104,7 +104,7 @@ class VehicleFixtures extends Fixture
         $brandRepo = $manager->getRepository(Brand::class);
         $modelRepo = $manager->getRepository(Model::class);
 
-        $vehicleImagesDirectory = __DIR__ . '/../../assets/img/vehicles';
+        $vehicleImagesDirectory = __DIR__ . '/../../public/uploads/vehiclePhoto';
         $vehicleImages = array_diff(scandir($vehicleImagesDirectory), ['.', '..']); // Récupère toutes les images sauf "." et ".."
 
         foreach ($brandsAndModels as $brandName => $modelNames) {
@@ -129,7 +129,7 @@ class VehicleFixtures extends Fixture
                 }
 
                 // Créer des véhicules associés au modèle et à la marque
-                for ($i = 0; $i < 3; $i++) { // Ajoute deux véhicules par modèle pour varier les données
+                for ($i = 0; $i < 5; $i++) { // Ajoute deux véhicules par modèle pour varier les données
 
                     // Création du certificat d'immatriculation
                     $registrationCertificate = new RegistrationCertificate;

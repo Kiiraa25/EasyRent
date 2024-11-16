@@ -3,7 +3,7 @@
 
 {% block javascripts %}
 	{% block importmap %}
-		{{ importmap(['app', 'vehicles-search-input', 'geolocation']) }}
+		{{ importmap(['app', 'vehicles-search-input', 'geolocation', 'showAllVehiclesStyle']) }}
 	{% endblock %}
 
 	<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
@@ -21,232 +21,7 @@
 {% block stylesheets %}
 
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-	<style>
-		/* Global Style */
 
-		.alert {
-			max-width: 400px; /* Prend la largeur de l'élément parent */
-			color: red;
-			margin-bottom: 15px; /* Espace en bas de l'alerte */
-			box-sizing: border-box; /* Inclut le padding dans la largeur totale */
-			font-size: 14px;
-		}
-
-		body {
-			font-family: Arial, sans-serif;
-			background-color: white;
-			max-height: 100vh;
-		}
-
-		.all-vehicles-container {
-			width: 100vw;
-			max-height: 100vh;
-			display: flex;
-			justify-content: center;
-		}
-
-		/* Search Bar Section */
-		.search-header {
-			display: flex;
-			flex-direction: column;
-			gap: 20px;
-			width: 100vw;
-		}
-
-		{
-			# .search-header div {
-				display: flex;
-			} #
-		}
-		.search-header .search-header-input {
-			width: 1043px;
-			gap: 10px;
-			display: flex;
-		}
-
-		.search-header-input,
-		.filters {
-			margin-left: 20px;
-		}
-		.search-header input {
-			padding: 10px;
-			border: 1px solid #ddd;
-			border-radius: 5px;
-			font-size: 16px;
-			display: flex;
-		}
-
-		.date-container {
-			display: flex;
-			gap: 20px;
-		}
-
-		.filters {
-			display: flex;
-			gap: 10px;
-			border-bottom: 1px #ddd solid;
-			border-top: 1px #ddd solid;
-			padding: 10px 0;
-		}
-
-		.filter-btn {
-			padding: 10px 20px;
-			background-color: white;
-			border: 1px solid #ddd;
-			border-radius: 5px;
-			cursor: pointer;
-			transition: background-color 0.3s ease;
-		}
-
-		.filter-btn:hover {
-			background-color: #f1f1f1;
-		}
-
-		/* Main Content Section */
-		.main-container {
-			width: 100%;
-			height: 610px;
-			display: flex;
-			gap: 20px;
-			padding: 0 20px;
-		}
-
-		/* Vehicle List */
-		.vehicle-list {
-			flex: 2;
-			display: flex;
-			flex-direction: column;
-			gap: 20px;
-			padding: 20px;
-			height: 591px;
-			overflow-y: auto;
-		}
-
-		.vehicle-item {
-			background-color: white;
-			border-radius: 10px;
-			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-			padding: 20px;
-			transition: transform 0.2s, box-shadow 0.2s;
-			display: flex;
-			align-items: center;
-			gap: 20px;
-		}
-
-		.vehicle-item:hover {
-			transform: scale(1.02);
-			box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-		}
-
-		.vehicle-info {
-			flex-grow: 1;
-		}
-
-		.vehicle-info h3 {
-			font-size: 18px;
-			margin-bottom: 10px;
-			color: #282F4B;
-		}
-
-		.vehicle-info p {
-			margin: 5px 0;
-			color: #555;
-		}
-
-		.vehicle-info strong {
-			color: #282F4B;
-		}
-
-		.reserve-button {
-			padding: 10px 20px;
-			background-color: #EB8072;
-			color: white;
-			border-radius: 5px;
-			text-decoration: none;
-			font-weight: bold;
-			transition: background-color 0.3s ease;
-		}
-
-		.reserve-button:hover {
-			background-color: #d96d61;
-		}
-
-		/* Right-side Blue Placeholder */
-		.blue-box {
-			flex: 3;
-			background-color: #007bff;
-			height: 631px;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			color: white;
-			font-size: 24px;
-		}
-
-		/* Dark blue image placeholder */
-		.vehicle-image-placeholder img {
-			width: 180px;
-			height: 120px;
-			background-color: #282F4B; /* Dark blue color */
-			border-radius: 10px;
-		}
-
-		/* Stars and Rating */
-		.vehicle-rating {
-			display: flex;
-			align-items: center;
-			margin-bottom: 10px;
-		}
-
-		.vehicle-rating .stars {
-			color: #f5b50a;
-			font-size: 18px;
-			margin-right: 5px;
-		}
-
-		.vehicle-rating span {
-			font-size: 14px;
-			color: #555;
-		}
-
-		/* Vehicle Details */
-		.vehicle-details {
-			display: flex;
-			gap: 10px;
-			color: #555;
-			font-size: 14px;
-			margin-bottom: 10px;
-		}
-
-		/* City Info */
-		.vehicle-info p {
-			color: #007bff;
-			font-weight: bold;
-			margin: 0;
-		}
-
-		/* Price Section */
-		.vehicle-price {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			background-color: #EB8072;
-			color: white;
-			padding: 10px 20px;
-			border-radius: 10px;
-			font-weight: bold;
-			font-size: 18px;
-		}
-
-		.vehicle-price:hover {
-			background-color: #d96d61;
-		}
-
-		.search {
-			width: 390px;
-		}
-
-	</style>
 {% endblock %}
 
 {% block body %}
@@ -294,7 +69,7 @@
 						{{ form_errors(searchForm.endDate) }}
 					</div>
 					{# <input type="date" placeholder="début" class="search-input">
-																																																																																										<input type="date" placeholder="fin" class="search-input"> #}
+																																																																																																																			<input type="date" placeholder="fin" class="search-input"> #}
 				</div>
 			</div>
 
@@ -321,11 +96,6 @@
 					{{ form_widget(searchForm.fuelType, {'attr': {'class': 'filter-btn', 'aria-label': 'Filtrer par type de carburant souhaité'}}) }}
 					{{ form_errors(searchForm.fuelType) }}
 				</div>
-
-				{# <button class="filter-btn">Prix total</button>
-																																																																<button class="filter-btn">Citadine</button>
-																																																																<button class="filter-btn">Type de véhicule</button>
-																																																																<button class="filter-btn">Plus de filtres</button> #}
 			</div>
 
 			{{ form_end(searchForm) }}
@@ -344,44 +114,50 @@
 						<a
 							href="{{ path('app_vehicle_show', { 'id': vehicle.id, 'startDate': startDate|date('Y-m-d'), 'endDate': endDate|date('Y-m-d') }) }}" class="vehicle-item" , 'aria-label' : "Cliquer sur un véhicule pour afficher la page d'annonce">
 							<!-- Placeholder for vehicle image -->
-							<div class="vehicle-image-placeholder">
 
-								{% if vehicle.photos|length > 0 %}
+							{% if vehicle.photos|length > 0 %}
 
-									<img src="{{ vich_uploader_asset(vehicle.photos[0], 'imageFile') }}" alt="Photo du véhicule">
+								<img class="vehicle-image" src="{{ vich_uploader_asset(vehicle.photos[0], 'imageFile') }}" alt="Photo du véhicule">
 
-								{% endif %}
+							{% endif %}
 
-							</div>
 
 							<!-- Vehicle info section -->
 							<div class="vehicle-info">
-								<h3>{{ vehicle.model.name }}</h3>
-								<div class="vehicle-rating">
-									<span class="stars">★★★★★</span>
+
+								<h3>{{ vehicle.model.brand.name }}
+									{{ vehicle.model.name }}</h3>
+
+								{# <div class="vehicle-rating"><span class="stars">★★★★★</span> 
 									<!-- Static stars for now -->
-									<span>(22 avis)</span>
-								</div>
+									<span>(22 avis)</span> 
+								</div> #}
+								
+								<hr>
 								<div class="vehicle-details">
-									<span>4 places</span>
-									<span>{{vehicle.model.vehicleCategory.value}}</span>
-									<span>{{vehicle.gearBoxType.value}}</span>
-									<span>{{vehicle.fuelType.value}}</span>
+									<div>
+										<span><img src="{{asset('/img/icons/seats.svg')}}" alt="">  {{vehicle.seats}} places</span>
+										<span><img src="{{asset('/img/icons/doors.svg')}}" alt="">  {{vehicle.doors}}</span>
+									</div>
+									<div>
+										<span><img src="{{asset('/img/icons/gearbox.svg')}}" alt="">  {{vehicle.gearBoxType.value}}</span>
+										<span><img src="{{asset('/img/icons/fueltype.svg')}}" alt="">  {{vehicle.fuelType.value}}</span>
+									</div>
 								</div>
-								<p>
-									<strong>{{ vehicle.city }}</strong>
-								</p>
+								<div class="bottom-infos">
+									<strong><img src="{{asset('/img/icons/city.svg')}}" alt="">{{ vehicle.city }}</strong>
+
+									<!-- Price per day -->
+									<div class="vehicle-price">
+										<span>{{ vehicle.pricePerDay ?? 0}}</span>
+										<p>€ / jour</p>
+									</div>
+
+								</div>
+
+
 							</div>
 
-							<!-- Price per day -->
-							<div>
-								<div class="vehicle-price">
-									<span>{{ vehicleTotalPrices[vehicle.id] ?? 0}}€</span>
-								</div>
-								<span>pour
-									{{days}}
-									jours</span>
-							</div>
 
 						</a>
 
@@ -395,14 +171,15 @@
 			</div>
 		</div>
 	</main>
-	<script>
 
+	<script>
 		// Fonction pour soumettre automatiquement le formulaire lorsque les champs sont modifiés
 document.querySelectorAll('.filter-btn').forEach(function (element) {
 element.addEventListener('change', function () {
 document.getElementById('searchForm').submit();
 });
 });
+
 
 // Fonction pour soumettre le formulaire quand la touche "Entrée" est pressée
 document.querySelectorAll('.search-input').forEach(function (element) {
@@ -437,13 +214,13 @@ iconAnchor: [
 popupAnchor: [0, -41] // Position du popup par rapport à l'icône
 });
 
-// Loop through the vehicleMarkers and add them to the map
+// Afficher les markers sur la map
 vehicleMarkers.forEach(function (vehicle) {
 let marker = L.marker([
 vehicle.latitude, vehicle.longitude
 ], {icon: coloredIcon}).addTo(map);
 
-// Add a popup for each marker with vehicle details
+// Ajouter un pop up pour chaque marker
 marker.bindPopup(`
         <strong>${
 vehicle.model

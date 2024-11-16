@@ -42,6 +42,10 @@ return [
         'path' => './assets/js/styles/userListStyle.js',
         'entrypoint' => true,
     ],
+    'showAllVehiclesStyle' => [
+        'path' => './assets/js/styles/showAllVehiclesStyle.js',
+        'entrypoint' => true,
+    ],
     
 
 // JAVASCRIPTS

@@ -20,14 +20,15 @@
 			padding: 0;
 			display: flex;
 			flex-direction: column;
+			background-color: #f9f9f9;
 		}
 
 		.form-container {
 			width: 80%;
 			background-color: #ffffff;
-			padding: 40px;
-			border-radius: 8px;
-			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			border-radius: 15px;
+			box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+			padding: 30px;
 			display: flex;
 			flex-direction: column;
 			align-items: center;
@@ -134,6 +135,24 @@
 			color: red;
 		}
 
+		.reserve-button {
+			padding: 12px 25px;
+			background-color: #282F4B;
+			color: white;
+			border: none;
+			border-radius: 30px;
+			text-decoration: none;
+			font-size: 16px;
+			font-weight: bold;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			transition: background-color 0.3s ease, transform 0.2s;
+		}
+
+		.reserve-button:hover {
+			background-color: #EB8072;
+			transform: translateY(-3px);
+		}
+
 	</style>
 {% endblock %}
 
@@ -164,9 +183,9 @@
 
 
 		{% if app.user.profile.isVerified is not same as true %}
-			<a href="#msg" class="btn">Reserver</a>
+			<a href="#msg" class="reserve-button">Reserver</a>
 		{% else %}
-			<button type="submit" class="btn">{{ button_label|default('Réserver') }}</button>
+			<button type="submit" class="reserve-button">{{ button_label|default('Réserver') }}</button>
 		{% endif %}
 		{{ form_end(form) }}
 	</div>
