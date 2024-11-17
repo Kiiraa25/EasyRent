@@ -9,12 +9,12 @@
 
 {% block meta_description %}
 	<meta name="description" content="Easy-Rent est la plateforme idéale pour louer ou partager des voitures entre particuliers.
-	Simple, sécurisé et rentable : rejoignez la communauté Easy-Rent dès aujourd'hui !">
+			Simple, sécurisé et rentable : rejoignez la communauté Easy-Rent dès aujourd'hui !">
 {% endblock %}
 
 {% block header %}
 	<header>
-		
+
 
 		<div class="header-form-section">
 			<h1 class="header-h1-title">Louez une voiture</h1>
@@ -53,7 +53,7 @@
 	</header>
 {% endblock %}
 
-{# {% block body %}
+{% block body %}
 
 	<section class="section-1 blue-section">
 		<div class="display-center">
@@ -63,118 +63,164 @@
 
 
 		<div class="advantages-grid">
-			<div class="advantages-left-side-div">
-				<img width="88px" src="{{ asset('img/icons/icon1.png')}}" alt="Icone avantages">
-				<h3>Louez à tout moment</h3>
-				Réservez une voiture près de chez vous instantanément, à tout moment, même à la dernière minute.</div>
-			<div class="advantages-middle-top-div">
-				<img width="88px" src="{{ asset('img/icons/icon1.png')}}" alt="Icone avantages">
-				<h3>Des prix personnalisés</h3>
-				Pour quelques heures ou bien pour quelques jours: C'est vous qui choisissez !</div>
-			<div class="advantages-middle-bottom-div">
-				<img width="88px" src="{{ asset('img/icons/icon1.png')}}" alt="Icone avantages">
-				<h3>Fini la paperasse</h3>
-				Les formalitées sont réglées une bonne fois pour toutes, à l'ouverture du compte.
+
+			<div class="desktop-advantages-grid">
+				<div class="advantages-left-side-div">
+					<img width="88px" src="{{ asset('img/icons/icon1.png')}}" alt="Icone avantages">
+					<h3>Louez à tout moment</h3>
+					Réservez une voiture près de chez vous instantanément, à tout moment, même à la dernière minute.
+				</div>
+				<div class="advantages-middle-top-div">
+					<img width="88px" src="{{ asset('img/icons/icon1.png')}}" alt="Icone avantages">
+					<h3>Des prix personnalisés</h3>
+					Pour quelques heures ou bien pour quelques jours: C'est vous qui choisissez !</div>
+				<div class="advantages-middle-bottom-div">
+					<img width="88px" src="{{ asset('img/icons/icon1.png')}}" alt="Icone avantages">
+					<h3>Fini la paperasse</h3>
+					Les formalitées sont réglées une bonne fois pour toutes, à l'ouverture du compte.
+				</div>
+
+				<div class="advantages-right-side-div">
+					<img width="88px" src="{{ asset('img/icons/icon1.png')}}" alt="Icone avantages">
+					<h3>Pas d'agence, pas d'attente</h3>
+					Déverouillez votre véhicule directement grâce à votre smartphone.
+				</div>
 			</div>
-			<div class="advantages-right-side-div">
-				<img width="88px" src="{{ asset('img/icons/icon1.png')}}" alt="Icone avantages">
-				<h3>Pas d'agence, pas d'attente</h3>
-				Déverouillez votre véhicule directement grâce à votre smartphone.</div>
+
+		</div>
+
+
+		<div class="mobile-advantages-grid">
+
+			<article class="advantages-left-side-div">
+				<img width="88px" src="{{ asset('img/home/advantages/icon.png')}}" alt="Icone avantages">
+				<div>
+					<h3>Louez à tout moment</h3>
+					<p>Réservez une voiture près de chez vous instantanément, à tout moment, même à la dernière minute.</p>
+				</div>
+
+			</article>
+			<hr class="mobile-advantages-separator">
+
+			<article class="advantages-middle-top-div">
+				<img width="88px" src="{{ asset('img/home/advantages/Wavy_Bus-31_Single-05 1.png')}}" alt="Icone avantages">
+				<div>
+					<h3>Des prix personnalisés</h3>
+					<p>Pour quelques heures ou bien pour quelques jours: <br> C'est vous qui choisissez !</p>
+				</div>
+			</article>
+			<hr class="mobile-advantages-separator">
+			<article class="advantages-middle-bottom-div">
+				<img width="88px" src="{{ asset('img/home/advantages/Group.png')}}" alt="Icone avantages">
+				<div>
+					<h3>Fini la paperasse</h3>
+					<p>Les formalitées sont réglées une bonne fois pour toutes, à l'ouverture du compte.</p>
+				</div>
+			</article>
+			<hr class="mobile-advantages-separator">
+			<article class="advantages-right-side-div">
+				<img width="88px" src="{{ asset('img/home/advantages/Wavy_Tech-14_Single-07 1.png')}}" alt="Icone avantages">
+				<div>
+					<h3>Pas d'agence, pas d'attente</h3>
+				<p>	Déverouillez votre véhicule directement grâce à votre smartphone.</p>
+				</div>
+			</article>
+
 		</div>
 
 	</section>
 
-	<section class="section-2">
+	{# <section class="section-2">
+		
+		
+				<div class="section-2-title">
+					<hr>
+					<h2>Des voitures adaptées à vos besoins</h2>
+					<hr>
+				</div>
+				<div class="display-center">
+					<div class="section-2-vehicles">
+						<img width="376px" src="{{ asset('/img/citadine.png')}}" alt="Image type de véhicule citadine">
+						<img width="398px" src="{{ asset('/img/monospace.svg')}}" alt="Image type de véhicule monospace">
+						<img src="{{ asset('/img/suv.svg')}}" alt="Image type de véhicule SUV">
+						<img src="{{ asset('/img/utilitaire.svg')}}" alt="Image type de véhicule utilitaire">
+					</div>
+		
+					<div class="section-2-vehicles-names">
+						<p>Citadine</p>
+						<p>Monospace</p>
+						<p>SUV</p>
+						<p>Utilitaire</p>
+					</div>
+				</div>
+		
+			</section>
+		
+			<section class="blue-section display-center section-3">
+		
+				<h2>Disponibles partout en France</h2>
+		
+				<div class="cities">
+					<div class="city paris-city">
+						<p>PARIS</p>
+					</div>
+					<div class="city lyon-city">
+						<p>LYON</p>
+					</div>
+					<div class="city marseille-city">
+						<p>MARSEILLE</p>
+					</div>
+					<div class="city bordeau-city">
+						<p>BORDEAUX</p>
+					</div>
+					<div class="city grenoble-city">
+						<p>GRENOBLE</p>
+					</div>
+					<div class="city lille-city">
+						<p>LILLE</p>
+					</div>
+				</div>
+			</section>
+		
+			<section class="section-4 display-center">
+				<div class="section-4-text">
+					<h1>Rentabilisez votre voiture !</h1>
+					<p>Votre voiture peut vous rapporter jusqu'a 600€ / mois.</p>
+				</div>
+		
+				<img src="{{ asset('/img/home/pinkhomecar.jpg')}}" alt="Image Louer votre véhicule">
+				<button class="nav-button">Je me lance !</button>
+			</section>
+		
+			<section class="section-5 display-center blue-section">
+				<h2>Les avis vous intéressent ?</h2>
+				<div class="carousel-box">
+		
+					<div class="review-block">
+						<article class="section-5-review-box">
+							<img class="quote-icon" src="{{ asset('/img/home/quote.png')}}" alt="Icône citation">
+							<p>"Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.Separated they live."</p>
+							<span>- Jerry Doe -</span>
+						</article>
+						<article class="section-5-review-box">
+							<img class="quote-icon" src="{{ asset('/img/home/quote.png')}}" alt="Icône citation">
+							<p>Je suis très satisfait de Getaround. La plateforme est sérieuse et je loue en confiance dessus.</p>
+							<span>- Jerry Doe -</span>
+						</article>
+						<article class="section-5-review-box">
+							<img class="quote-icon" src="{{ asset('/img/home/quote.png')}}" alt="Icône citation">
+							<p>Expérience utilisateur optimale. Site bien fait et facile d'utilisation. Location auprès du propriétaire parfaite et fluide.
+							</p>
+							<span>- Jerry Doe -</span>
+						</article>
+		
+					</div>
+					<svg class="feather feather-chevron-right" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="55" height="55">
+						<path d="m9 18 6-6-6-6"></path>
+					</svg>
+				</div>
+		
+		
+			</section> #}
 
-
-		<div class="section-2-title">
-			<hr>
-			<h2>Des voitures adaptées à vos besoins</h2>
-			<hr>
-		</div>
-		<div class="display-center">
-			<div class="section-2-vehicles">
-				<img width="376px" src="{{ asset('/img/citadine.png')}}" alt="Image type de véhicule citadine">
-				<img width="398px" src="{{ asset('/img/monospace.svg')}}" alt="Image type de véhicule monospace">
-				<img src="{{ asset('/img/suv.svg')}}" alt="Image type de véhicule SUV">
-				<img src="{{ asset('/img/utilitaire.svg')}}" alt="Image type de véhicule utilitaire">
-			</div>
-
-			<div class="section-2-vehicles-names">
-				<p>Citadine</p>
-				<p>Monospace</p>
-				<p>SUV</p>
-				<p>Utilitaire</p>
-			</div>
-		</div>
-
-	</section>
-
-	<section class="blue-section display-center section-3">
-
-		<h2>Disponibles partout en France</h2>
-
-		<div class="cities">
-			<div class="city paris-city">
-				<p>PARIS</p>
-			</div>
-			<div class="city lyon-city">
-				<p>LYON</p>
-			</div>
-			<div class="city marseille-city">
-				<p>MARSEILLE</p>
-			</div>
-			<div class="city bordeau-city">
-				<p>BORDEAUX</p>
-			</div>
-			<div class="city grenoble-city">
-				<p>GRENOBLE</p>
-			</div>
-			<div class="city lille-city">
-				<p>LILLE</p>
-			</div>
-		</div>
-	</section>
-
-	<section class="section-4 display-center">
-		<div class="section-4-text">
-			<h1>Rentabilisez votre voiture !</h1>
-			<p>Votre voiture peut vous rapporter jusqu'a 600€ / mois.</p>
-		</div>
-
-		<img src="{{ asset('/img/home/pinkhomecar.jpg')}}" alt="Image Louer votre véhicule">
-		<button class="nav-button">Je me lance !</button>
-	</section>
-
-	<section class="section-5 display-center blue-section">
-		<h2>Les avis vous intéressent ?</h2>
-		<div class="carousel-box">
-
-			<div class="review-block">
-				<article class="section-5-review-box">
-					<img class="quote-icon" src="{{ asset('/img/home/quote.png')}}" alt="Icône citation">
-					<p>"Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.Separated they live."</p>
-					<span>- Jerry Doe -</span>
-				</article>
-				<article class="section-5-review-box">
-					<img class="quote-icon" src="{{ asset('/img/home/quote.png')}}" alt="Icône citation">
-					<p>Je suis très satisfait de Getaround. La plateforme est sérieuse et je loue en confiance dessus.</p>
-					<span>- Jerry Doe -</span>
-				</article>
-				<article class="section-5-review-box">
-					<img class="quote-icon" src="{{ asset('/img/home/quote.png')}}" alt="Icône citation">
-					<p>Expérience utilisateur optimale. Site bien fait et facile d'utilisation. Location auprès du propriétaire parfaite et fluide.
-					</p>
-					<span>- Jerry Doe -</span>
-				</article>
-
-			</div>
-			<svg class="feather feather-chevron-right" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="55" height="55">
-				<path d="m9 18 6-6-6-6"></path>
-			</svg>
-		</div>
-
-
-	</section>
-
-{% endblock %} #}
+{% endblock %}

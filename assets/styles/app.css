@@ -117,8 +117,8 @@ nav {
 
 header {
     display: flex;
-    justify-content: center;
-    gap: 50px;
+    /* justify-content: center; */
+    /* gap: 50px; */
     align-items: center;
     margin-bottom: 50px;
 }
@@ -247,21 +247,23 @@ header {
     display: none;
 }
 
-#burger-toggle:checked + .burger-icon span:nth-child(1) {
-    transform: rotate(45deg) translateY(8px);
+#burger-toggle:checked+.burger-icon span:nth-child(1) {
+    transform: rotate(-45deg) translateY(11px);
 }
 
-#burger-toggle:checked + .burger-icon span:nth-child(2) {
+#burger-toggle:checked+.burger-icon span:nth-child(2) {
     opacity: 0;
 }
 
-#burger-toggle:checked + .burger-icon span:nth-child(3) {
-    transform: rotate(-45deg) translateY(-8px);
+#burger-toggle:checked+.burger-icon span:nth-child(3) {
+    transform: rotate(45deg) translateY(-12px);
 }
 
 /* Fullscreen Menu Overlay */
 .burger-menu-overlay {
     position: fixed;
+    /* padding-top: calc(50% - 66px); */
+    justify-content: center;
     top: 73px;
     left: 0;
     width: 100%;
@@ -270,44 +272,30 @@ header {
     background-image: url(../img/blueBG.png);
     display: none;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     z-index: 999;
     transition: opacity 0.3s;
 }
 
-.burger-menu-content ul{
+.burger-menu-content ul {
     list-style: none;
     text-align: left;
-}
-
-#burger-toggle:checked ~ .burger-menu-overlay {
     display: flex;
-    opacity: 1;
-}
-
-/* Menu Content */
-.burger-menu-content {
-    list-style-type: none;
-    text-align: center;
-    padding: 0;
-}
-
-.burger-menu-content ul {
+    flex-direction: column;
+    gap: 30px;
     padding: 0;
     margin: 0;
 }
 
-.burger-menu-content li {
-    margin: 20px 0;
+#burger-toggle:checked~.burger-menu-overlay {
+    display: flex;
+    opacity: 1;
 }
 
 .burger-menu-content a {
     color: white;
-    font-size: 20px;
-    font-weight: 500;
+    font-size: 16px;
     text-decoration: none;
-    transition: color 0.3s;
 }
 
 .burger-menu-content a:hover {
@@ -327,577 +315,47 @@ header {
     z-index: -1;
 }
 
-
-/* BREAKPOINTS MEDIA QUERIES ///////////////////////////////////////////////////////////////////////  */
-
-@media screen and (max-width: 480px) {}
-
-@media screen and (max-width: 768px) {
-    .hero-container {
-        background-image: url(../img/hero.jpg);
-        width: 100%;
-        background-position: center center;
-        background-size: contain;
-        height: clamp(300px, 40%, 454px);
-        aspect-ratio: 16 / 9;
-        /* Maintient une proportion fixe pour l'image */
-        height: auto;
-
-    }
-
-    header {
-        flex-direction: column-reverse;
-        justify-content: end;
-        padding: 0px 10px;
-        gap: 50px;
-        margin-top: 50px;
-    }
-
-    nav{
-        align-items: center;
-    }
-
-    nav a{
-        height: 57px;
-    }
-
-    /* Afficher menu burger et cacher navbar desktop */
-    .burger-icon {
-        display: flex;
-    }
-
-    .right-side-nav {
-        display: none;
-    }
-
-    /* Mobile title */
-
-    .mobile-header-subtitle {
-        display: inline-block;
-    }
-
-    .mobile-header-subtitle h1 {
-        font-size: clamp(32px, 6vw, 42px);
-    }
-
-    .header-subtitle,
-    .header-h1-title {
-        display: none;
-    }
-
-    .m-header-subtitle p {
-        font-size: clamp(20px, 4vw, 24px);
-    }
-
-
-
-    /*  Mobile Form */
-    .header-form-section {
-        width: clamp(336px, 85vw, 406px);
-    }
-
-    .header-form-section form {
-        width: 100%;
-        height: fit-content;
-    }
-
-    .header-form-section form input {
-        width: 100%;
-        height: clamp(50px, 7vw, 66px);
-        box-sizing: border-box;
-    }
-
-    .header-form-section form input::placeholder {
-        font-size: clamp(13px, 3vw, 14px);
-    }
-
-    .input-adressIcon svg {
-        height: clamp(50px, 7vw, 66px);
-    }
-
-    .date-input {
-        width: 100%;
-        box-sizing: border-box;
-    }
-
-    .header-form-section form .date-input input {
-        width: 49%;
-        box-sizing: border-box;
-        padding: 10px 20px;
-    }
-
-
-    header .nav-button {
-        width: 100%;
-        height: clamp(50px, 7vw, 66px);
-    }
-
+.menu-section-title {
+    color: #FF866F;
+    font-size: 18px;
+    font-weight: 500;
+    text-align: left;
 }
 
-
-  
-
-
-
-
-@media screen and (min-width: 769px) and (max-width: 1024px) {
-    .hero-container {
-        background-image: url(../img/hero_tab.jpg);
-        width: 50%;
-        /* min-width: 479px;
-        min-height: 600px;
-        max-width: 550px;
-        max-height: 550px; */
-        background-position: center center;
-        height: 100%;
-    }
-
-
-    header {
-        justify-content: end;
-        padding-left: 20px;
-        gap: 30px;
-        height: 70vh;
-    }
-
-    .header-form-section h1 {
-        font-size: clamp(28px, 4vw, 42px);
-    }
-
-
-    .header-subtitle {
-        font-size: 12px;
-        width: 100%;
-        display: inline-block;
-    }
-
-    .header-subtitle p {
-        width: 160px;
-    }
-
-    .header-form-section {
-        width: 40vw;
-    }
-
-    .header-form-section form {
-        width: 100%;
-    }
-
-    .header-form-section form input {
-        /* width: 310px; */
-        width: 100%;
-        height: clamp(46px, 7vw, 66px);
-        box-sizing: border-box;
-    }
-
-    .input-adressIcon svg {
-        height: clamp(46px, 7vw, 66px);
-        ;
-    }
-
-    .date-input {
-        width: 100%;
-        box-sizing: border-box;
-    }
-
-    .header-form-section form .date-input input {
-        width: 49%;
-        box-sizing: border-box;
-        padding: 10px 20px;
-    }
-
-
-    header .nav-button {
-        width: 100%;
-        height: clamp(46px, 7vw, 66px);
-    }
-
-
+.burger-menu-content div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-
-
-@media screen and (min-width: 1025px) and (max-width: 1440px) {
-
-    .section-1,
-    .section-2,
-    .section-3,
-    .section-4,
-    .section-5 {
-        height: 840px;
-    }
-
-    .header-form-section h1 {
-        font-size: 42px;
-    }
-
-    .header-subtitle {
-        font-size: 12px;
-    }
-
-    .header-form-section form input {
-        width: 310px;
-        height: 42px;
-    }
-
-    .date-input {
-        width: 406px;
-    }
-
-    .header-form-section form .date-input input {
-        width: 103px;
-    }
-
-
-    header .nav-button {
-        width: 406px;
-        height: 62px;
-    }
-
-    .advantages-grid {
-        height: 477px;
-        width: 84vw;
-
-    }
-
-    .advantages-grid div {
-        width: 27vw;
-        height: 27vh;
-        max-height: 225px;
-
-    }
-
-    .advantages-grid img {
-        width: 58px;
-        height: 50px;
-
-    }
-
-    .advantages-grid h3 {
-        font-size: 16px;
-    }
-
-    .advantages-grid {
-        font-size: 14px;
-    }
-
-    .section-3 .city p {
-        font-size: 16px;
-    }
-
-    .section-4 {
-        background-size: 1025px 576px;
-    }
-
-    .section-4 img {
-        width: 342px;
-    }
-
-    .section-4 .nav-button {
-        width: 162px;
-        height: 57px;
-        font-size: 14px;
-        top: 61%;
-    }
-
-    .section-4-text h1 {
-        font-size: 40px;
-    }
-
-    .section-5 .review-block {
-        gap: 25px;
-        margin-left: 35px;
-    }
-
-    .section-5-review-box {
-        width: 280px;
-        height: 266px;
-    }
-
-    .section-5 .feather {
-        width: 35px;
-        height: 35px;
-    }
-
+/* section 1 version mobile */
+.mobile-advantages-grid{
+    display: none;
 }
 
-@media screen and (min-width: 1025px) and (max-width: 1329px) {
-
-    .hero-container {
-        background-image: url(../img/hero_tab.jpg);
-        width: 50%;
-        min-width: 479px;
-        min-height: 600px;
-        max-width: 550px;
-        max-height: 550px;
-        background-position: center center;
-    }
-
-
-    header {
-        justify-content: end;
-        gap: 10%;
-        padding-left: 50px;
-    }
-
-    .section-2-vehicles img {
-        width: 30%;
-        min-width: 200px;
-        max-width: 306px;
-    }
-
-    /* .section-5-review-box {
-        width: 25%;
-        height: 23%;
-        min-width: 256px;
-        max-width: 400px;
-        min-height: 236px;
-        max-height: 380px;
-        margin-left: 0px;
-        gap: 0px;
-    }
-
-    .section-5 .carousel-box .review-block {
-        gap: 30px;
-    } */
-
-    hr {
-        width: 150px;
-    }
-
-    .section-2 h2 {
-        font-size: 20px;
-    }
-
-}
-
-@media screen and (min-width: 1441px) {
-
-    .section-1,
-    .section-2,
-    .section-3,
-    .section-4,
-    .section-5 {
-        height: 926px;
-    }
-
-    .section-4 {
-        background-size: 1441px 776px;
-    }
-
-    .section-4 img {
-        width: 445px;
-    }
-
-    .section-4 .nav-button {
-        width: 204px;
-        height: 72px;
-        top: 52.5%;
-    }
-
-    .section-4-text h1 {
-        font-size: 60px;
-    }
-
-    .section-5 .review-block {
-        gap: 55px;
-    }
-
-    .section-5-review-box {
-        width: 400px;
-        height: 380px;
-    }
-
-}
-
-@media screen and (min-width: 1441px) and (max-width: 1620px) {
-
-    .header-form-section h1 {
-        font-size: 52px;
-    }
-
-    .header-subtitle {
-        font-size: 16px;
-    }
-
-    .header-form-section form input {
-        width: 400px;
-        height: 42px;
-    }
-
-    .date-input {
-        width: 496px;
-    }
-
-    .header-form-section form .date-input input {
-        width: 149px;
-    }
-
-    header .nav-button {
-        width: 496px;
-        height: 62px;
-    }
-
-    .section-3 .city p {
-        font-size: 24px;
-    }
-
-}
-
-@media screen and (min-width: 1330px) and (max-width: 1620px) {
-
-    .hero-container {
-        width: 58%;
-        min-width: 800px;
-        min-height: 590px;
-        max-width: 1120px;
-        max-height: 800px;
-    }
-
-
-    .advantages-grid {
-        height: 477px;
-        width: 1100px;
-
-    }
-
-
-    div {
-        max-width: 100vw;
-    }
-
-    .advantages-grid div {
-        width: 355px;
-        height: 228px;
-
-    }
-
-    h2 {
-        width: fit-content;
-        font-size: 26px;
-
-    }
-
-    hr {
-        width: 320px;
-    }
-
-    .section-2-vehicles img {
-        width: 300px;
-    }
-
-    .section-2-vehicles-names p {
-        font-size: 24px;
-    }
-
-    /* .section-3 .city {
-        width: 192px;
-    } */
-
-}
-
-@media screen and (min-width: 1621px) {
-
-
-    .header-form-section h1 {
-        font-size: 52px;
-    }
-
-    .header-subtitle {
-        font-size: 16px;
-    }
-
-    .hero-container {
-        width: 58%;
-        min-width: 800px;
-        min-height: 590px;
-        max-width: 1120px;
-        max-height: 800px;
-    }
-
-    .header-form-section form input {
-        width: 478px;
-        height: 52px;
-    }
-
-    .date-input {
-        width: 572px;
-    }
-
-    .header-form-section form .date-input input {
-        width: 187px;
-    }
-
-    header .nav-button {
-        width: 570px;
-        height: 72px;
-    }
-
-    .advantages-grid {
-        height: 569px;
-        width: 1300px;
-    }
-
-    .advantages-grid div {
-        width: 420px;
-        height: 274px;
-    }
-
-    h2 {
-        font-size: 32px;
-        width: fit-content;
-    }
-
-
-    hr {
-        width: 391px;
-    }
-
-    .section-2-vehicles,
-    .section-2-vehicles-names {
-        gap: 50px;
-    }
-
-    .section-2-vehicles img {
-        width: 376px;
-    }
-
-    .section-2-vehicles img {
-        width: 30%;
-        min-width: 200px;
-        max-width: 376px;
-    }
-
-    .section-2-vehicles-names p {
-        font-size: 28px;
-    }
-
-    .section-3 .city p {
-        font-size: 24px;
-    }
-
-    /* .section-5 .carousel-box {
-        margin-left: 55px;
-    } */
-
-
-
-}
-
-
-.advantages-grid {
-    row-gap: 10px;
+.desktop-advantages-grid{
+    gap: 30px;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    justify-items: center;
+    padding: 10px;
     /* background-color: #FF866F;  */
 }
+
+.advantages-grid img {
+    width: clamp(68px, 20%, 88px);
+    aspect-ratio: 1 / 1; /* Définit un ratio carré */
+    object-fit: contain; /* S'assure que l'image s'adapte bien à l'espace sans déformation */
+    height: auto; /* Supprime les conflits éventuels */
+}
+
 
 div {
     max-width: 100vw;
 }
 
-.advantages-grid div {
+.advantages-grid .desktop-advantages-grid div {
     border-radius: 15px;
     background-color: white;
     color: black;
@@ -908,24 +366,24 @@ div {
     gap: 20px;
 }
 
-.advantages-left-side-div {
-    grid-row: 2 / span 2;
+.desktop-advantages-grid .advantages-left-side-div {
+    grid-row: 1 / span 1;
     grid-column: 1;
 }
 
-.advantages-middle-top-div {
+.desktop-advantages-grid .advantages-middle-top-div {
     grid-column: 2;
-    grid-row: 1 / span 2;
+    grid-row: 1 / span 1;
 }
 
-.advantages-middle-bottom-div {
-    grid-column: 2;
-    grid-row: 3 / span 2;
+.desktop-advantages-grid .advantages-middle-bottom-div {
+    grid-column: 1;
+    grid-row: 2 / span 1;
 }
 
-.advantages-right-side-div {
+.desktop-advantages-grid .advantages-right-side-div {
     grid-row: 2 / span 2;
-    grid-column: 3;
+    grid-column: 2;
 }
 
 
@@ -1482,4 +940,665 @@ main {
 .cky-show-desc-btn {
     color: #282F4B !important;
     font-weight: 600 !important;
+}
+
+.cky-revisit-bottom-left {
+    display: none;
+}
+
+
+
+
+/* BREAKPOINTS MEDIA QUERIES ///////////////////////////////////////////////////////////////////////  */
+
+@media screen and (max-width: 480px) {}
+
+
+@media screen and (max-width: 768px) {
+    .hero-container {
+        background-image: url(../img/hero.jpg);
+        width: 100%;
+        background-position: center center;
+        background-size: contain;
+        height: clamp(300px, 40%, 454px);
+        aspect-ratio: 16 / 9;
+        /* Maintient une proportion fixe pour l'image */
+        height: auto;
+
+    }
+
+    header {
+        flex-direction: column-reverse;
+        /* padding: 0px 10px; */
+        justify-content: space-evenly;
+        /* margin-top: 50px; */
+        height: calc(100vh - 68px);
+    }
+
+    nav {
+        align-items: center;
+    }
+
+    .desktop-nav .logo {
+        height: 57px;
+    }
+
+    /* Afficher menu burger et cacher navbar desktop */
+    .burger-icon {
+        display: flex;
+    }
+
+    .right-side-nav {
+        display: none;
+    }
+
+    /* Mobile title */
+
+    .mobile-header-subtitle {
+        display: inline-block;
+    }
+
+    .mobile-header-subtitle h1 {
+        font-size: clamp(32px, 6vw, 42px);
+    }
+
+    .header-subtitle,
+    .header-h1-title {
+        display: none;
+    }
+
+    .m-header-subtitle p {
+        font-size: clamp(20px, 4vw, 24px);
+    }
+
+
+
+    /*  Mobile Form */
+    .header-form-section {
+        width: clamp(336px, 85vw, 406px);
+    }
+
+    .header-form-section form {
+        width: 100%;
+        height: fit-content;
+    }
+
+    .header-form-section form input {
+        width: 100%;
+        height: clamp(50px, 7vw, 66px);
+        box-sizing: border-box;
+    }
+
+    .header-form-section form input::placeholder {
+        font-size: clamp(13px, 3vw, 14px);
+    }
+
+    .input-adressIcon svg {
+        height: clamp(50px, 7vw, 66px);
+    }
+
+    .date-input {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .header-form-section form .date-input input {
+        width: 49%;
+        box-sizing: border-box;
+        padding: 10px 20px;
+    }
+
+
+    header .nav-button {
+        width: 100%;
+        height: clamp(50px, 7vw, 66px);
+    }
+
+
+
+
+    /* section 1 advantages-grid */
+
+    .section-1{
+        height: 100vh;
+    }
+    .advantages-grid {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .desktop-advantages-grid .advantages-grid div {
+        width: 100%;
+        background-color: transparent;
+        display: flex;
+    }
+
+    .section-1 p{
+        width: 310px;
+        font-size: 14px;
+    }
+    .section-1 h2{
+        font-size: 30px;
+    }
+
+    .advantages-grid h3 {
+        font-size: 16px;
+    }
+
+    .advantages-grid {
+        font-size: 14px;
+    }
+
+    .desktop-advantages-grid{
+        display: none;
+    }
+
+    .section-1{
+        height: 100vh;
+    }
+
+    .mobile-advantages-grid{
+        display: flex;
+        flex-direction: column;
+        padding: 10px 10px;
+        justify-content: space-between;
+        gap: 40px;
+        align-items: center;
+        width: 90vw;
+    }
+
+    .mobile-advantages-grid article{
+        display: flex;
+        gap: clamp(10px, 5vw, 50px);
+        justify-content: center;
+        width: 100%;
+    }
+
+    .mobile-advantages-grid article div h3{
+        font-size: 15px ;
+    }
+    .mobile-advantages-grid article div{
+        display: flex;
+        flex-direction: column;
+        text-align: end;
+        color: white;
+        
+    }
+    .mobile-advantages-grid article div p{
+        font-weight: 200;
+        font-size: 12px;
+        width: 240px;
+    }
+
+    .mobile-advantages-separator{
+        width: clamp(300px, 75vw, 350px);
+        border: none;
+        height: 1px;
+        background-color: #b3b1b142;
+    }
+
+}
+
+
+
+
+
+
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .hero-container {
+        background-image: url(../img/hero_tab.jpg);
+        width: 50%;
+        /* min-width: 479px;
+        min-height: 600px;
+        max-width: 550px;
+        max-height: 550px; */
+        background-position: center center;
+        height: 100%;
+    }
+
+    header {
+        justify-content: end;
+        padding-left: 20px;
+        gap: 30px;
+        height: calc(100vh - 77px);
+    }
+
+    .header-form-section h1 {
+        font-size: clamp(28px, 4vw, 42px);
+    }
+
+
+    .header-subtitle {
+        font-size: 12px;
+        width: 100%;
+        display: inline-block;
+    }
+
+    .header-subtitle p {
+        width: 160px;
+    }
+
+    .header-form-section {
+        width: 40vw;
+    }
+
+    .header-form-section form {
+        width: 100%;
+    }
+
+    .header-form-section form input {
+        /* width: 310px; */
+        width: 100%;
+        height: clamp(46px, 7vw, 66px);
+        box-sizing: border-box;
+    }
+
+    .input-adressIcon svg {
+        height: clamp(46px, 7vw, 66px);
+        ;
+    }
+
+    .date-input {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .header-form-section form .date-input input {
+        width: 49%;
+        box-sizing: border-box;
+        padding: 10px 20px;
+    }
+
+
+    header .nav-button {
+        width: 100%;
+        height: clamp(46px, 7vw, 66px);
+    }
+
+
+    .section-1{
+        height: calc(100vh - 77px);
+    }
+    .mobile-advantages-grid{
+        display: none;
+    }
+
+    .advantages-grid .desktop-advantages-grid div {
+        width: 35vw;
+        height: 27vh;
+        max-height: 225px;
+        padding: 10px;
+    }
+
+    .advantages-grid h3 {
+        font-size: 16px;
+    }
+
+    .advantages-grid {
+        font-size: 14px;
+    }
+
+
+
+
+}
+
+
+
+@media screen and (min-width: 1025px) and (max-width: 1440px) {
+
+    .section-1,
+    .section-2,
+    .section-3,
+    .section-4,
+    .section-5 {
+        height: calc(100vh - 77px);
+    }
+
+    .header-form-section h1 {
+        font-size: 42px;
+    }
+
+    .header-subtitle {
+        font-size: 12px;
+    }
+
+    .header-form-section form input {
+        width: 310px;
+        height: 42px;
+    }
+
+    .date-input {
+        width: 406px;
+    }
+
+    .header-form-section form .date-input input {
+        width: 103px;
+    }
+
+
+    header .nav-button {
+        width: 406px;
+        height: 62px;
+    }
+
+    .advantages-grid {
+        height: 477px;
+    }
+
+    .advantages-grid .desktop-advantages-grid div {
+        width: 27vw;
+        height: 27vh;
+        max-height: 225px;
+        padding: 10px;
+
+    }
+
+    .advantages-grid h3 {
+        font-size: 16px;
+    }
+
+    .advantages-grid {
+        font-size: 14px;
+    }
+
+    .section-3 .city p {
+        font-size: 16px;
+    }
+
+    .section-4 {
+        background-size: 1025px 576px;
+    }
+
+    .section-4 img {
+        width: 342px;
+    }
+
+    .section-4 .nav-button {
+        width: 162px;
+        height: 57px;
+        font-size: 14px;
+        top: 61%;
+    }
+
+    .section-4-text h1 {
+        font-size: 40px;
+    }
+
+    .section-5 .review-block {
+        gap: 25px;
+        margin-left: 35px;
+    }
+
+    .section-5-review-box {
+        width: 280px;
+        height: 266px;
+    }
+
+    .section-5 .feather {
+        width: 35px;
+        height: 35px;
+    }
+
+}
+
+@media screen and (min-width: 1025px) and (max-width: 1329px) {
+
+    .hero-container {
+        background-image: url(../img/hero_tab.jpg);
+        width: 50%;
+        min-width: 479px;
+        min-height: 600px;
+        max-width: 550px;
+        max-height: 550px;
+        background-position: center center;
+    }
+
+
+    header {
+        justify-content: end;
+        gap: 10%;
+        padding-left: 50px;
+    }
+
+    .section-2-vehicles img {
+        width: 30%;
+        min-width: 200px;
+        max-width: 306px;
+    }
+
+    /* .section-5-review-box {
+        width: 25%;
+        height: 23%;
+        min-width: 256px;
+        max-width: 400px;
+        min-height: 236px;
+        max-height: 380px;
+        margin-left: 0px;
+        gap: 0px;
+    }
+
+    .section-5 .carousel-box .review-block {
+        gap: 30px;
+    } */
+
+    hr {
+        width: 150px;
+    }
+
+    .section-2 h2 {
+        font-size: 20px;
+    }
+
+}
+
+@media screen and (min-width: 1441px) {
+
+    .section-1,
+    .section-2,
+    .section-3,
+    .section-4,
+    .section-5 {
+        height: 926px;
+    }
+
+    .section-4 {
+        background-size: 1441px 776px;
+    }
+
+    .section-4 img {
+        width: 445px;
+    }
+
+    .section-4 .nav-button {
+        width: 204px;
+        height: 72px;
+        top: 52.5%;
+    }
+
+    .section-4-text h1 {
+        font-size: 60px;
+    }
+
+    .section-5 .review-block {
+        gap: 55px;
+    }
+
+    .section-5-review-box {
+        width: 400px;
+        height: 380px;
+    }
+
+}
+
+@media screen and (min-width: 1441px) and (max-width: 1620px) {
+
+    .header-form-section h1 {
+        font-size: 52px;
+    }
+
+    .header-subtitle {
+        font-size: 16px;
+    }
+
+    .header-form-section form input {
+        width: 400px;
+        height: 42px;
+    }
+
+    .date-input {
+        width: 496px;
+    }
+
+    .header-form-section form .date-input input {
+        width: 149px;
+    }
+
+    header .nav-button {
+        width: 496px;
+        height: 62px;
+    }
+
+    .section-3 .city p {
+        font-size: 24px;
+    }
+
+}
+
+@media screen and (min-width: 1330px) and (max-width: 1620px) {
+
+    .hero-container {
+        width: 58%;
+        min-width: 800px;
+        min-height: 590px;
+        max-width: 1120px;
+        max-height: 800px;
+    }
+
+
+    .advantages-grid {
+        height: 477px;
+    }
+
+
+    div {
+        max-width: 100vw;
+    }
+
+    .advantages-grid .desktop-advantages-grid div {
+        width: 355px;
+        height: 228px;
+
+    }
+
+    h2 {
+        width: fit-content;
+        font-size: 26px;
+
+    }
+
+    hr {
+        width: 320px;
+    }
+
+    .section-2-vehicles img {
+        width: 300px;
+    }
+
+    .section-2-vehicles-names p {
+        font-size: 24px;
+    }
+
+    /* .section-3 .city {
+        width: 192px;
+    } */
+
+}
+
+@media screen and (min-width: 1621px) {
+
+
+    .header-form-section h1 {
+        font-size: 52px;
+    }
+
+    .header-subtitle {
+        font-size: 16px;
+    }
+
+    .hero-container {
+        width: 58%;
+        min-width: 800px;
+        min-height: 590px;
+        max-width: 1120px;
+        max-height: 800px;
+    }
+
+    .header-form-section form input {
+        width: 478px;
+        height: 52px;
+    }
+
+    .date-input {
+        width: 572px;
+    }
+
+    .header-form-section form .date-input input {
+        width: 187px;
+    }
+
+    header .nav-button {
+        width: 570px;
+        height: 72px;
+    }
+
+    .advantages-grid {
+        height: 569px;
+    }
+
+    .advantages-grid .desktop-advantages-grid div {
+        width: 420px;
+        height: 274px;
+    }
+
+    h2 {
+        font-size: 32px;
+        width: fit-content;
+    }
+
+
+    hr {
+        width: 391px;
+    }
+
+    .section-2-vehicles,
+    .section-2-vehicles-names {
+        gap: 50px;
+    }
+
+    .section-2-vehicles img {
+        width: 376px;
+    }
+
+    .section-2-vehicles img {
+        width: 30%;
+        min-width: 200px;
+        max-width: 376px;
+    }
+
+    .section-2-vehicles-names p {
+        font-size: 28px;
+    }
+
+    .section-3 .city p {
+        font-size: 24px;
+    }
+
+    /* .section-5 .carousel-box {
+        margin-left: 55px;
+    } */
+
+
+
 }
