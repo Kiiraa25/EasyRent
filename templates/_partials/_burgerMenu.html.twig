@@ -1,0 +1,31 @@
+<nav>
+    <a aria-label="Accéder au menu déroulant" href="{{ path('app_home') }}">
+        <svg width="194" height="57" viewBox="0 0 194 57" xmlns="http://www.w3.org/2000/svg">
+            <!-- Logo SVG -->
+        </svg>
+    </a>
+
+    <!-- Input pour le menu burger -->
+    <input type="checkbox" id="menu-toggle" class="hidden-checkbox">
+    <label for="menu-toggle" class="burger-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </label>
+
+    <!-- Contenu de la navigation -->
+    <div class="right-side-nav">
+        {% if app.user %}
+            <ul class="nav-links">
+                <li><a href="{{ path('app_user_profile_edit') }}">Mon compte</a></li>
+                <li><a href="{{ path('app_user_rentals') }}">Locations</a></li>
+                <li><a href="{{ path('app_logout') }}">Se déconnecter</a></li>
+            </ul>
+        {% else %}
+            <ul class="nav-links">
+                <li><a href="{{ path('app_login') }}">Se connecter</a></li>
+                <li><a href="{{ path('app_register') }}">Créer un compte</a></li>
+            </ul>
+        {% endif %}
+    </div>
+</nav>

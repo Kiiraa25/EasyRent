@@ -39,10 +39,18 @@ body {
     margin-left: 20px;
 }
 
-.filters select, .filers #search_totalPrice::placeholder{
+input, select {
+    box-sizing: border-box;
+}
+
+.filters select,
+.filters #search_totalPrice::placeholder,
+.filters #search_totalPrice {
     color: #FA6960;
+    height: 47px;
     font-weight: 600;
 }
+
 .search-header input {
     padding: 10px;
     border: 1px solid #ddd;
@@ -53,7 +61,7 @@ body {
 
 .date-container {
     display: flex;
-    gap: 20px;
+    gap: 10px;
 }
 
 .filters {
@@ -65,12 +73,14 @@ body {
 }
 
 .filter-btn {
-    padding: 10px 20px;
+    padding: 10px 10px;
     background-color: white;
     border: 1px solid #ddd;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    font-size: 14px;
+    width: 194px;
 }
 
 .filter-btn:hover {
@@ -101,7 +111,6 @@ body {
     background-color: white;
     border-radius: 10px;
     border: 1px solid #00000012;
-    /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); */
     transition: transform 0.2s, box-shadow 0.2s;
     display: flex;
     padding-right: 10px;
@@ -148,26 +157,27 @@ body {
     background-color: #d96d61;
 }
 
-.bottom-infos{
+.bottom-infos {
     display: flex;
     justify-content: space-between;
 }
 
-.bottom-infos strong{
+.bottom-infos strong {
     display: flex;
     align-items: center;
 }
 
-.bottom-infos strong img{
+.bottom-infos strong img {
     margin-right: 3px;
 }
 
-.vehicle-info hr{
+.vehicle-info hr {
     width: 90%;
     border: none;
-    background-color: #cacaca72 ;
+    background-color: #cacaca72;
     height: 1px;
 }
+
 /* Right-side Blue Placeholder */
 .blue-box {
     flex: 3;
@@ -183,7 +193,8 @@ body {
 .vehicle-image {
     width: 290px;
     height: 220px;
-    background-color: #282F4B; /* Dark blue color */
+    background-color: #282F4B;
+    /* Dark blue color */
     border-radius: 10px 0px 0px 10px;
     object-fit: cover;
 }
@@ -216,7 +227,7 @@ body {
     padding-right: 70px;
 }
 
-.vehicle-details div span{
+.vehicle-details div span {
     display: block;
     margin-bottom: 5px;
 }
@@ -241,7 +252,7 @@ body {
     height: 11px;
 }
 
-.vehicle-price p{
+.vehicle-price p {
     font-weight: 300;
 }
 
@@ -250,7 +261,7 @@ body {
 }
 
 .search {
-    width: 390px;
+    width: 396px;
 }
 
 
@@ -270,8 +281,4 @@ body {
 .vehicle-list::-webkit-scrollbar-thumb {
     background: #282F4B;
     border-radius: 5px;
-}
-
-.vehicle-list::-webkit-scrollbar-thumb:hover {
-    background: #FF866F;
 }
