@@ -21,6 +21,9 @@ main {
     align-items: center;
 }
 
+.desktop-nav .logo {
+    height: 57px;
+}
 /* ---------------------------------------------------------------- Navbar */
 
 .mobile-header-subtitle {
@@ -117,7 +120,7 @@ nav {
 
 header {
     display: flex;
-    /* justify-content: center; */
+    justify-content: center;
     /* gap: 50px; */
     align-items: center;
     margin-bottom: 50px;
@@ -224,6 +227,10 @@ header {
 
 
 /* /////////////////      MENU BURGER        ///////////////////////// */
+
+.burger-menu{
+    position: absolute;
+}
 /* Burger Icon */
 .burger-icon {
     display: none;
@@ -422,6 +429,9 @@ hr {
     height: 0px;
 }
 
+.section-2-vehicles-mobile{
+    display: none;
+}
 
 .section-2-title {
     display: flex;
@@ -655,6 +665,10 @@ footer {
     justify-content: center;
     gap: 25%;
     align-self: center;
+}
+
+.footer-separator{
+    display: none;
 }
 
 .footer-left-side div {
@@ -979,9 +993,7 @@ main {
         align-items: center;
     }
 
-    .desktop-nav .logo {
-        height: 57px;
-    }
+    
 
     /* Afficher menu burger et cacher navbar desktop */
     .burger-icon {
@@ -1097,6 +1109,10 @@ main {
         height: 100vh;
     }
 
+    .burger-menu{
+        position: relative;
+    }
+
     .mobile-advantages-grid{
         display: flex;
         flex-direction: column;
@@ -1135,6 +1151,220 @@ main {
         border: none;
         height: 1px;
         background-color: #b3b1b142;
+    }
+
+
+
+    /* section 2 */
+
+    .section-2 {
+        height: 100vh;
+    }
+
+    .section-2 h2 {
+        font-size: clamp(15px, 2.5vw, 20px);
+        width: 350px;
+        text-align: center;
+    }
+    .section-2-title hr {
+        display: none;
+    }
+
+    .section-2-vehicles-mobile img {
+        width: 30vw;
+        min-width: 170px;
+        max-width: 200px;
+    }
+
+    .section-2-vehicles-mobile p{
+        font-size: clamp(14px, 1.5vw, 16px);
+        color: #FA6960;
+        font-weight: 600;
+        letter-spacing: 5px;
+        width: fit-content;
+    }
+    .section-2-vehicles-mobile div{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .section-2-vehicles{
+        flex-direction: column;
+    }
+
+    .section-2-vehicles-mobile{
+        display: flex;
+        flex-direction: column;
+        /* gap: 25px; */
+        gap: clamp(30px, 3vh, 40px);
+    }
+
+    .section-2-desktop{
+        display: none;
+    }
+
+
+    /* section 3 cities */
+
+    .section-3{
+        height: 100vh;
+    }
+    .section-3 h2{
+        font-size: clamp(18px, 4vw, 22px);
+        width: 350px;
+    }
+
+    .cities {
+       flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .cities .city{
+        width: 70%;
+        min-width: 275px;
+        height: 10vh;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .paris-city {
+        background-image: url(../img/Cities/Paris-mobile.png);
+    }
+    
+    .lyon-city {
+        background-image: url(../img/Cities/Lyon-mobile.png);
+    }
+    
+    .marseille-city {
+        background-image: url(../img/Cities/Marseille-mobile.png);
+    }
+    
+    .bordeau-city {
+        background-image: url(../img/Cities/Bordeau-mobile.png);
+    }
+    
+    .grenoble-city {
+        background-image: url(../img/Cities/Grenoble-mobile.png);
+    }
+    
+    .lille-city {
+        background-image: url(../img/Cities/Lille-mobile.png);
+    }
+
+
+
+    /* section 4 */
+
+    .section-4 {
+        background-image: none;
+        height: 100vh;
+        justify-content: space-evenly;
+    }
+
+    .section-4 img {
+        width: 390px;
+        width: clamp(370px, 60vw, 450px);
+    }
+    .section-4-text {
+       position: static;
+    }
+    .section-4-text p {
+       font-size: 14px;
+       width: 310px;
+    }
+
+    .section-4 .nav-button {
+        width: 204px;
+        position: relative;
+        height: clamp(55px, 9vw, 66px)
+    }
+
+    .section-4-text h1 {
+        font-size: clamp(18px, 4vw, 22px);
+    }
+
+    /* section 5 */
+
+    /* section 5 */
+
+    .section-5{
+        height: 100vh;
+        flex-direction: column;
+    }
+
+    .section-5 h2{
+        font-size: clamp(18px, 4vw, 22px);
+        width: 350px;
+    }
+
+    .section-5 .review-block {
+        gap: 25px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .section-5-review-box .quote-icon {
+        width: 15%
+    }
+
+    .section-5-review-box {
+        /* width: 280px;
+        height: 266px; */
+        justify-content: space-evenly;
+        width: clamp(200px, 32vw, 250px);
+        height: auto;
+        aspect-ratio: 1/1;
+    }
+
+    .section-5-review-box p {
+        font-size: 12px;
+        height: 126px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* footer */
+
+    footer {
+        flex-direction: column;
+        width: 90vw;
+        height: fit-content;
+        gap: 25px;
+    }
+    
+    .footer-left-side div {
+        display: flex;
+        gap: 10px;
+    }
+    .footer-left-side p {
+        display: none;
+    }
+    
+    .footer-right-side {
+        flex-direction: column;
+        gap: 35px;
+    }
+    
+    .footer-right-side article {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .footer-separator{
+        display: flex;
+        width: clamp(300px, 75vw, 350px);
+        border: none;
+        height: 1px;
+        background-color: #000000;
     }
 
 }
@@ -1239,8 +1469,134 @@ main {
         font-size: 14px;
     }
 
+    /* section 2  */
+
+    .section-1, .section-2 {
+        height: 100vh;
+    }
+
+    .section-2 h2 {
+        font-size: clamp(15px, 2.5vw, 20px);
+    }
+    .section-2-title hr {
+        display: none;
+    }
+
+    .section-2-vehicles img {
+        width: 30%;
+        min-width: 150px;
+        max-width: 306px;
+    }
+
+    .section-2-vehicles-names p{
+        font-size: clamp(14px, 1.5vw, 16px);
+    }
 
 
+    /* section 3 cities */
+
+    .section-3{
+        height: 100vh;
+    }
+
+    .cities {
+       flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .cities .city{
+        width: 70%;
+        min-width: 538px;
+        height: 10vh;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .paris-city {
+        background-image: url(../img/Cities/Paris-mobile.png);
+    }
+    
+    .lyon-city {
+        background-image: url(../img/Cities/Lyon-mobile.png);
+    }
+    
+    .marseille-city {
+        background-image: url(../img/Cities/Marseille-mobile.png);
+    }
+    
+    .bordeau-city {
+        background-image: url(../img/Cities/Bordeau-mobile.png);
+    }
+    
+    .grenoble-city {
+        background-image: url(../img/Cities/Grenoble-mobile.png);
+    }
+    
+    .lille-city {
+        background-image: url(../img/Cities/Lille-mobile.png);
+    }
+
+
+    /* section 4 */
+
+    .section-4 {
+        background-size: 1025px 576px;
+        height: 100vh;
+    }
+
+    .section-4 img {
+        width: 342px;
+    }
+
+    .section-4 .nav-button {
+        width: 162px;
+        height: 57px;
+        font-size: 14px;
+        top: 60.3%;
+    }
+
+    .section-4-text h1 {
+        font-size: 40px;
+    }
+
+    /* section 5 */
+
+    .section-5{
+        height: 100vh;
+    }
+    .section-5 .review-block {
+        gap: 25px;
+        margin-left: 35px;
+        width: 90vw;
+    }
+
+    .section-5-review-box .quote-icon {
+        width: 18%
+    }
+
+    .section-5-review-box {
+        /* width: 280px;
+        height: 266px; */
+        width: clamp(250px, 32vw, 280px);
+        height: auto;
+        aspect-ratio: 1/1;
+    }
+
+    .section-5-review-box p {
+        font-size: 14px;
+        height: 126px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .section-5 .feather {
+        width: 35px;
+        height: 35px;
+    }
 
 }
 
@@ -1253,7 +1609,7 @@ main {
     .section-3,
     .section-4,
     .section-5 {
-        height: calc(100vh - 77px);
+        height: 100vh;
     }
 
     .header-form-section h1 {
@@ -1319,7 +1675,7 @@ main {
         width: 162px;
         height: 57px;
         font-size: 14px;
-        top: 61%;
+        top: 60.2%;
     }
 
     .section-4-text h1 {
@@ -1328,13 +1684,13 @@ main {
 
     .section-5 .review-block {
         gap: 25px;
-        margin-left: 35px;
     }
 
     .section-5-review-box {
         width: 280px;
         height: 266px;
     }
+   
 
     .section-5 .feather {
         width: 35px;
