@@ -19,7 +19,6 @@ use App\Repository\VehicleRepository;
 use App\Enum\VehicleStatusEnum;
 use App\Service\Api\DataGouvAddressService;
 use Detection\MobileDetect;
-use Mobile_Detect;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 use function Amp\Dns\query;
