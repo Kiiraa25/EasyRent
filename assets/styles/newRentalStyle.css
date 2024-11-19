@@ -1,0 +1,159 @@
+	/* Structure principale */
+    body,
+    html {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        background-color: #f9f9f9;
+    }
+
+    .form-container {
+        width: 80%;
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: auto;
+        gap: 20px;
+    }
+
+    h1 {
+        color: #282F4B;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    /* Boutons */
+    .btn,
+    .popup .content a {
+        padding: 10px 20px;
+        background-color: #282F4B;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        text-align: center;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+        border: none;
+    }
+
+    .btn:hover,
+    .popup .content a:hover {
+        background-color: #1e233a;
+    }
+
+    /* POP UP STYLE  */
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.7);
+        transition: opacity 500ms;
+        visibility: hidden;
+        opacity: 0;
+    }
+    .overlay:target {
+        visibility: visible;
+        opacity: 1;
+        z-index: 99999;
+    }
+
+    .popup {
+        margin: 45vh auto;
+        padding: 50px 20px;
+        background: #fff;
+        border-radius: 5px;
+        width: 50%;
+        position: relative;
+        transition: all 2s ease-in-out;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .popup .close {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        transition: all 200ms;
+        font-size: 30px;
+        font-weight: bold;
+        text-decoration: none;
+        color: #333;
+    }
+    .popup .close:hover {
+        color: rgba(11, 79, 108, 0.575);
+    }
+    .popup .content {
+        max-height: 30%;
+        overflow: auto;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .popup .content a {
+        text-decoration: underline;
+    }
+
+    .popup .content a:hover {
+        text-decoration: underline;
+        font-weight: 500;
+    }
+
+    .alert-error {
+        list-style-type: none;
+        margin-top: 3px;
+        font-size: 15px;
+        color: red;
+    }
+
+    .reserve-button {
+        padding: 12px 25px;
+        background-color: #282F4B;
+        color: white;
+        border: none;
+        border-radius: 30px;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: bold;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s ease, transform 0.2s;
+    }
+
+    .reserve-button:hover {
+        background-color: #EB8072;
+        transform: translateY(-3px);
+    }
+
+    @media screen and (max-width: 768px) {
+        .form-container{
+            margin: 70px 0px;
+        }
+
+        .popup{
+            margin: 70% auto;
+        }
+
+        .popup .content{
+            gap: 30px;
+        }
+
+        .popup .close {
+            top: 0px;
+            right: 10px;
+            
+        }
+    }

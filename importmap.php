@@ -46,6 +46,14 @@ return [
         'path' => './assets/js/styles/showAllVehiclesStyle.js',
         'entrypoint' => true,
     ],
+    'showVehicleStyle' => [
+        'path' => './assets/js/styles/showVehicleStyle.js',
+        'entrypoint' => true,
+    ],
+    'newRentalStyle' => [
+        'path' => './assets/js/styles/newRentalStyle.js',
+        'entrypoint' => true,
+    ],
     
 
 // JAVASCRIPTS
@@ -60,6 +68,10 @@ return [
     ],
     'vehiclePhotoDynamicInput' => [
         'path' => './assets/js/vehiclePhotoDynamicInput.js',
+        'entrypoint' => true,
+    ],
+    'showVehicleThumbnailImage' => [
+        'path' => './assets/js/showVehicleThumbnailImage.js',
         'entrypoint' => true,
     ],
     

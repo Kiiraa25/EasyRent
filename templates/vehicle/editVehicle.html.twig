@@ -8,6 +8,35 @@
 {% block title %}Modifier le véhicule - Easy-Rent
 {% endblock %}
 
+{% block stylesheets %}
+	<style>
+		/* Conteneur principal */
+
+		@media screen and (max-width: 768px) {
+			.sidebar {
+				display: none !important;
+			}
+
+			
+			.admin-dashboard-content {
+				margin: auto;
+				max-width: 90%;
+				padding: 0;
+				height: calc(100vh - 126px) !important;
+				overflow: auto;
+			}
+
+			.container {
+				margin: 20px !important;
+			}
+			
+
+		}
+
+		
+	</style>
+{% endblock %}
+
 {% block content %}
 <section class="admin-dashboard-content">
 	<h1 class="dashboard-title">Modifier les informations du véhicule</h1>
@@ -36,7 +65,7 @@
 
 		<div class="form-submit-block">
 			<a href="{{ path('app_user_vehicles', { 'id': vehicle.id }) }}" class="back-link">Retour aux détails du véhicule</a>
-			<button type="submit" class="nav-button" onclick="return confirm('Êtes-vous sûr de vouloir mettre à jour les informations de ce véhicule ?');">Enregistrer les modifications</button>
+			<button type="submit" class="nav-button" onclick="return confirm('Êtes-vous sûr de vouloir mettre à jour les informations de ce véhicule ?');">Modifier</button>
 		</div>
 
 		{{ form_end(form) }}

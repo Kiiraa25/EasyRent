@@ -51,7 +51,7 @@
 			font-size: 14px;
 		}
 
-        .vehicle-image img {
+		.vehicle-image img {
 			width: 80px;
 			height: 80px;
 			background-color: #282F4B; /* Dark blue color */
@@ -128,6 +128,62 @@
 		.btn:hover {
 			opacity: 0.85;
 		}
+
+		@media screen and (max-width: 768px) {
+			.sidebar {
+				display: none !important;
+			}
+
+			.vehicle-item .mobile-none {
+				display: none;
+			}
+
+			.vehicle-item {
+				display: flex;
+				gap: 10px;
+				justify-content: space-between;
+				align-items: center;
+				max-width: 90%;
+
+			}
+
+			.vehicle-item h3{
+				font-size: clamp(14px, 4vw, 18px)
+			}
+			.vehicle-item p{
+				font-size: clamp(13px, 3.5vw, 15px)
+			}
+
+			.admin-dashboard-content {
+				margin: auto;
+				max-width: 90%;
+				padding: 0;
+				height: calc(100vh - 126px) !important;
+				overflow: auto;
+			}
+
+			.container {
+				margin: 20px !important;
+			}
+
+			.content-container {
+				max-width: 100%;
+				background-color: #F6F6F6;
+				box-shadow: none;
+				padding: 0;
+				margin: 0;
+				overflow: unset;
+				display: flex;
+				flex-direction: column;
+
+			}
+
+			.item-actions {
+				display: none;
+			}
+
+
+		}
 	</style>
 {% endblock %}
 
@@ -156,20 +212,20 @@
 						<h3>{{ vehicle.model.brand.name }}
 							{{ vehicle.model.name }}</h3>
 
-						<div>
-							<p>
-								<strong>Adresse :</strong>
-								{{ vehicle.address }}</p>
-						</div>
+
+						<p class="mobile-none">
+							<strong>Adresse :</strong>
+							{{ vehicle.address }}</p>
+
 
 						<p>
 							<strong>Kilométrage :</strong>
 							{{ vehicle.mileage }}
 							km</p>
-						<p>
+						<p class="mobile-none">
 							<strong>Couleur :</strong>
 							{{ vehicle.color }}</p>
-						<p>
+						<p class="mobile-none">
 							<strong>Tarif par jour :</strong>
 							{{ vehicle.pricePerDay }}
 							€</p>

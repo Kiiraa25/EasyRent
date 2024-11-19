@@ -5,10 +5,12 @@ namespace App\Controller\Admin;
 use App\Entity\Rating;
 use App\Entity\Vehicle;
 use App\Enum\VehicleStatusEnum;
+use App\Form\AdminForms\VehicleForms\VehicleType as VehicleFormsVehicleType;
 use App\Form\AdminForms\VehicleType;
 use App\Repository\RatingRepository;
 use App\Repository\RentalRepository;
 use App\Repository\VehicleRepository;
+use App\Service\Api\DataGouvAddressService as ApiDataGouvAddressService;
 use App\Service\DataGouvAddressService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -64,10 +66,10 @@ public function show(Vehicle $vehicle, RentalRepository $rentalRepository, Ratin
 
    // Route pour éditer un véhicule
 #[Route('/vehicle/edit/{id}', name: 'vehicle_edit')]
-public function edit(Vehicle $vehicle, Request $request, EntityManagerInterface $entityManager, DataGouvAddressService $dataGouvAddressService): Response
+public function edit(Vehicle $vehicle, Request $request, EntityManagerInterface $entityManager, ApiDataGouvAddressService $dataGouvAddressService): Response
 {
     // Création du formulaire avec les données du véhicule
-    $form = $this->createForm(VehicleType::class, $vehicle);
+    $form = $this->createForm(VehicleFormsVehicleType::class, $vehicle);
     $form->handleRequest($request);
 
     // Vérification de la soumission et de la validité du formulaire

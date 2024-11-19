@@ -35,7 +35,7 @@
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
-			margin: auto;
+			margin: 30px auto;
 			gap: 30px;
 		}
 
@@ -65,36 +65,26 @@
 		input,
 		select,
 		textarea {
-			width: 100%;
+			width: 396px;
 			padding: 10px;
 			border: 1px solid #ccc;
 			border-radius: 5px;
 			font-size: 14px;
 		}
 
-		.nav-button,
-		.prev,
-		.next {
-			background-color: #EB8072;
-			color: white;
-			padding: 10px 20px;
-			font-size: 16px;
-			border: none;
-			border-radius: 5px;
-			cursor: pointer;
-			transition: background-color 0.3s ease;
-			margin-top: 15px;
+		a.nav-button {
+			display: flex;
+			align-items: center;
 		}
 
 
-		.nav-button:hover,
 		.prev:hover,
 		.next:hover {
 			background-color: #d96d61;
 		}
 
 		.hidden {
-			display: none;
+			display: none !important;
 		}
 
 		.steps {
@@ -119,11 +109,6 @@
 			background-color: #EB8072;
 		}
 
-		@media(max-width: 768px) {
-			.form-container {
-				grid-template-columns: 1fr;
-			}
-		}
 
 		/* POP UP STYLE  */
 
@@ -202,7 +187,38 @@
 		.form-navigation {
 			display: flex;
 			justify-content: center;
-			gap: 20px
+			align-items: center;
+			gap: 20px;
+			margin-top: 30px;
+		}
+
+		a.nav-button {
+			height: 47px;
+		}
+
+		@media screen and (max-width: 768px) {
+
+			.form-container {
+				grid-template-columns: 1fr;
+			}
+
+			.content-container {
+				height: auto;
+			}
+
+			.admin-dashboard-content {
+				height: auto !important;
+			}
+
+			input,
+			select,
+			textarea {
+				width: 60vw;
+				max-width: 339px;
+
+			}
+
+
 		}
 	</style>
 {% endblock %}
@@ -407,12 +423,12 @@
 
 			<!-- Boutons de navigation -->
 			<div class="form-navigation">
-				<button type="button" class="prev hidden">Précédent</button>
-				<button type="button" class="next">Suivant</button>
+				<button type="button" class="prev nav-button hidden">Précédent</button>
+				<button type="button" class="next nav-button">Suivant</button>
 				{% if app.user.profile.isVerified is not same as true %}
-					<a href="#msg" class="nav-button">Ajouter mon véhicule</a>
+					<a href="#msg" class="nav-button submit-button1 hidden">Envoyer</a>
 				{% else %}
-					<button type="submit" class="nav-button hidden submit-button">Ajouter mon véhicule</button>
+					<button type="submit" class="nav-button hidden submit-button">Envoyer</button>
 				{% endif %}
 			</div>
 
@@ -422,14 +438,23 @@
 	</section>
 
 	<script>
-		document.addEventListener("DOMContentLoaded", function () {
+
+		// Execute le code JS une fois tout le DOM chargé
+document.addEventListener("DOMContentLoaded", function () {
 const prevButton = document.querySelector('.prev');
 const nextButton = document.querySelector('.next');
 const submitButton = document.querySelector('.submit-button');
+const submitButton1 = document.querySelector('.submit-button1');
 const stepIndicators = document.querySelectorAll('.step');
+
+// section du formulaire correspondant à chaque étape
 const sections = document.querySelectorAll('[class^="form-step"]');
+
+// variable qui permettra de garder une trace de l'étape en cours.
 let currentStep = 0;
 
+
+// Fonction qui affiche l'étape du formulaire ou index est égal à l'étape actuelle et cache les autres.
 function showStep(index) {
 sections.forEach((section, i) => {
 section.classList.toggle('hidden', i !== index);
@@ -438,10 +463,10 @@ section.classList.toggle('hidden', i !== index);
 stepIndicators.forEach((indicator, i) => {
 indicator.classList.toggle('active', i <= index);
 });
-
 prevButton.classList.toggle('hidden', index === 0);
 nextButton.classList.toggle('hidden', index === sections.length - 1);
-submitButton.classList.toggle('hidden', index !== sections.length - 1);
+submitButton1.classList.toggle('hidden', index !== sections.length - 1);
+
 }
 
 function validateCurrentStep() {
@@ -551,6 +576,7 @@ return isValid;
 prevButton.addEventListener('click', function () {
 if (currentStep > 0) 
 currentStep--;
+
 
 
 showStep(currentStep);

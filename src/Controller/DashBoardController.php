@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\RentalRepository;
 use App\Repository\UserRepository;
 use App\Repository\VehicleRepository;
+use Mobile_Detect;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
