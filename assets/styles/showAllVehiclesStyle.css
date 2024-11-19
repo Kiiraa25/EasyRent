@@ -264,6 +264,14 @@ input, select {
     width: 396px;
 }
 
+@media (min-width: 769px) {
+    .search-header-desktop {
+        display: block;
+    }
+    .search-header-mobile{
+        display: none;
+    }
+}
 
 
 
@@ -281,4 +289,188 @@ input, select {
 .vehicle-list::-webkit-scrollbar-thumb {
     background: #282F4B;
     border-radius: 5px;
+}
+
+
+
+
+
+
+
+
+
+@media (max-width: 768px) {
+    .blue-box {
+        display: none;
+    }
+
+    .all-vehicles-container{
+        justify-content: center;
+    }
+
+    .search-header-input, .filters {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .date-container {
+        display: flex;
+        gap: 10px;
+        justify-content: space-evenly;
+    }
+
+    .search-container {
+        display: flex;
+        width: 100%;
+    /* align-items: center; */
+        justify-content: center;
+    }
+
+
+    .main-container {
+        width: 100%;
+        height: 610px;
+        display: flex;
+        gap: 8px;
+        padding: 0px;
+    }
+
+    .vehicle-item {
+        background-color: white;
+        border-radius: 10px;
+        border: 1px solid #00000012;
+        transition: transform 0.2s, box-shadow 0.2s;
+        display: flex;
+        padding-right: 0px;
+        gap: 0px;
+        height: auto;
+        flex-direction: column;
+    }
+
+    .vehicle-image {
+        /* width: 390px; */
+        width: clamp(370px, 70vw, 390px);
+        height: 220px;
+        background-color: #282F4B;
+        object-fit: cover;
+        max-width: 420px;
+        border-radius: 10px 10px 0px 0px;
+    }
+
+    .vehicle-info hr{
+        margin-bottom: 10px;
+    }
+
+    .main-container {
+        /* width: 100%; */
+        height: 610px;
+        /* display: flex; */
+        /* gap: 8px; */
+        /* padding: 0 20px; */
+    }
+
+    .vehicle-list {
+        flex: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 20px 10px;
+        height: 591px;
+        overflow-y: visible;
+    }
+
+    .search-header{
+        display: none;
+    }
+
+    .search-header {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .search-container .search,  .date-container-mobile{
+        width: 90vw;
+        max-width: 420px;
+    }
+
+    .search-header-input-mobile {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+        padding: 0px 15px;
+    }
+
+    .date-container-mobile {
+        display: flex;
+        justify-content: space-between;
+       
+    }
+    .search-header input {
+        font-size: clamp(13px, 3vw, 14px)
+       
+    }
+
+    .filter-btn{
+        width: clamp(140px, 35vw, 170px);
+    }
+
+    #openFiltersMobile {
+        width: fit-content;
+    }
+
+    /* Pop-up des filtres */
+.filters-popup-mobile {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.filters-popup-mobile.hidden-mobile {
+    display: none;
+}
+
+.filters-content-mobile {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 70%;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding-bottom: 50px;
+}
+
+.filters-content-mobile .filter-btn{
+    width: 180px;
+}
+
+.close-filters-btn-mobile {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    float: right;
+    align-self: flex-end;
+}
+
+.filter-input-mobile {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
 }

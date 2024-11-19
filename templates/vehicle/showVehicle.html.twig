@@ -115,7 +115,7 @@
 		}
 
 		.section-content {
-			display:flex;
+			display: flex;
 			justify-content: space-between;
 		}
 		.section-content p {
@@ -189,6 +189,84 @@
 				font-size: 1em;
 			}
 		}
+
+
+		{# {
+			# {
+				# max-width: 768px #
+			} #
+		} #}
+
+		@media (max-width: 768px) {
+
+.vehicle-picture {
+    /* max-width: 100vw; */
+    width: 100%;
+}
+
+.vehicle-container {
+		width: 100%;
+        max-width: 1200px;
+        background-color: white;
+		    box-shadow: none;
+        padding: 0px;
+}
+
+    .thumbnails {
+        /* overflow: hidden; */
+        overflow-x: auto;
+        height: auto;
+        width: 90%;
+        display: flex;
+        justify-content: flex-start;
+        /* margin-left: 38px; */
+        height: 91px;
+        object-fit: cover;
+        cursor: pointer;
+        border: 2px solid transparent;
+        border-radius: 10px;
+        transition: transform 0.3s, border-color 0.3s;
+    }
+
+.thumbnails img {
+    width: 123px; 
+    height: 72px;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    transition: transform 0.3s, border-color 0.3s;
+}
+
+.vehicle-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+    height: auto;
+}
+
+    .vehicle-picture img {
+        width: 90%;
+        height: 226px;
+        object-fit: cover;
+        border-radius: 15px;
+        margin-bottom: 20px;
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+    }
+
+	.vehicle-picture {
+		display: flex;
+    justify-content: center;
+	}
+
+	.thumbnails img.selected {
+    transform: scale(1);
+    border-color: #EB8072;
+}
+
+		}
+
 	</style>
 {% endblock %}
 
@@ -211,10 +289,10 @@
 				<h1>{{ vehicle.model.brand.name }}
 					{{ vehicle.model.name }}</h1>
 				{# <p>
-																																	<strong>Prix par jour:</strong>
-																																	{{ vehicle.pricePerDay }}
-																																	€</p>
-																																<p> #}
+																																									<strong>Prix par jour:</strong>
+																																									{{ vehicle.pricePerDay }}
+																																									€</p>
+																																								<p> #}
 				<p>
 					{{ vehicle.registrationCertificate.issueDate|date('Y') }}
 					-

@@ -26,6 +26,74 @@
 
 {% block body %}
 	<main class="all-vehicles-container">
+
+		{% if is_mobile %}
+			<div class="search-header">
+
+				{{ form_start(searchForm, {'attr': {'id': 'searchForm'} }) }}
+
+				<div
+					class="search-header-input-mobile">
+					<!-- Input de recherche -->
+					<div class="form-group search-container">
+						{{ form_label(searchForm.search) }}
+						{{ form_widget(searchForm.search, {'attr': {'class': 'search-input search', 'data-action': 'search-input', 'aria-label': 'Saisir une ville'}}) }}
+						{{ form_errors(searchForm.search) }}
+					</div>
+
+					<!-- Inputs pour les dates -->
+					<div class="date-container-mobile">
+						<div class="form-group">
+							{{ form_label(searchForm.startDate) }}
+							{{ form_widget(searchForm.startDate, {'attr': {'class': 'search-input, filter-btn', 'aria-label': 'Date de début de location souhaitée'}}) }}
+							{{ form_errors(searchForm.startDate) }}
+						</div>
+						<div class="form-group">
+							{{ form_label(searchForm.endDate) }}
+							{{ form_widget(searchForm.endDate, {'attr': {'class': 'search-input, filter-btn', 'aria-label': 'Date de fin de location souhaitée'}}) }}
+							{{ form_errors(searchForm.endDate) }}
+						</div>
+
+						<!-- Bouton filtre -->
+						<button type="button" class="filter-btn" id="openFiltersMobile">Filtrer</button>
+					</div>
+
+
+					<!-- Pop-up des filtres -->
+					<div id="filtersPopupMobile" class="filters-popup-mobile hidden-mobile">
+						<div class="filters-content-mobile">
+							<button type="button" id="closeFiltersMobile" class="close-filters-btn-mobile">X</button>
+							<div class="form-group">
+								{{ form_label(searchForm.totalPrice) }}
+								{{ form_widget(searchForm.totalPrice, {'attr': {'class': 'filter-btn search-input total-price', 'aria-label': 'Filtrer par prix total souhaité'}}) }}
+								{{ form_errors(searchForm.totalPrice) }}
+							</div>
+
+							<div class="form-group">
+								{{ form_label(searchForm.vehicleCategory) }}
+								{{ form_widget(searchForm.vehicleCategory, {'attr': {'class': 'filter-btn', 'aria-label': 'Filtrer par type de véhicule souhaité'}}) }}
+								{{ form_errors(searchForm.vehicleCategory) }}
+							</div>
+							<div class="form-group">
+								{{ form_label(searchForm.gearboxType) }}
+								{{ form_widget(searchForm.gearboxType, {'attr': {'class': 'filter-btn', 'aria-label': 'Filtrer par type de boite de vitesse souhaité'}}) }}
+								{{ form_errors(searchForm.gearboxType) }}
+							</div>
+
+							<div class="form-group">
+								{{ form_label(searchForm.fuelType) }}
+								{{ form_widget(searchForm.fuelType, {'attr': {'class': 'filter-btn', 'aria-label': 'Filtrer par type de carburant souhaité'}}) }}
+								{{ form_errors(searchForm.fuelType) }}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			{{ form_end(searchForm) }}
+		</div>
+	{% else %}
+
 		<div class="search-header">
 			{{ form_start(searchForm, {'attr': {'id': 'searchForm'} }) }}
 			<div class="search-header-input">
@@ -69,7 +137,7 @@
 						{{ form_errors(searchForm.endDate) }}
 					</div>
 					{# <input type="date" placeholder="début" class="search-input">
-																																																																																																																			<input type="date" placeholder="fin" class="search-input"> #}
+																																																																																																																																																		<input type="date" placeholder="fin" class="search-input"> #}
 				</div>
 			</div>
 
@@ -100,80 +168,88 @@
 
 			{{ form_end(searchForm) }}
 		</div>
-
-		<div
-			class="main-container">
-			<!-- Left-side: Vehicle List -->
-			<div class="vehicle-list">
-				{% if vehicles is empty %}
-					<p class="no-vehicles">Il n'y a aucun véhicule disponible</p>
-				{% else %}
-					{% for vehicle in vehicles %}
+	{% endif %}
 
 
-						<a
-							href="{{ path('app_vehicle_show', { 'id': vehicle.id, 'startDate': startDate|date('Y-m-d'), 'endDate': endDate|date('Y-m-d') }) }}" class="vehicle-item" , 'aria-label' : "Cliquer sur un véhicule pour afficher la page d'annonce">
-							<!-- Placeholder for vehicle image -->
+	<div
+		class="main-container">
+		<!-- Left-side: Vehicle List -->
+		<div class="vehicle-list">
+			{% if vehicles is empty %}
+				<p class="no-vehicles">Il n'y a aucun véhicule disponible</p>
+			{% else %}
+				{% for vehicle in vehicles %}
 
-							{% if vehicle.photos|length > 0 %}
 
-								<img class="vehicle-image" src="{{ vich_uploader_asset(vehicle.photos[0], 'imageFile') }}" alt="Photo du véhicule">
+					<a
+						href="{{ path('app_vehicle_show', { 'id': vehicle.id, 'startDate': startDate|date('Y-m-d'), 'endDate': endDate|date('Y-m-d') }) }}" class="vehicle-item" , 'aria-label' : "Cliquer sur un véhicule pour afficher la page d'annonce">
+						<!-- Placeholder for vehicle image -->
 
-							{% endif %}
+						{% if vehicle.photos|length > 0 %}
+
+							<img class="vehicle-image" src="{{ vich_uploader_asset(vehicle.photos[0], 'imageFile') }}" alt="Photo du véhicule">
+
+						{% endif %}
 
 
-							<!-- Vehicle info section -->
-							<div class="vehicle-info">
+						<!-- Vehicle info section -->
+						<div class="vehicle-info">
 
-								<h3>{{ vehicle.model.brand.name }}
-									{{ vehicle.model.name }}</h3>
+							<h3>{{ vehicle.model.brand.name }}
+								{{ vehicle.model.name }}</h3>
 
-								{# <div class="vehicle-rating"><span class="stars">★★★★★</span> 
-									<!-- Static stars for now -->
-									<span>(22 avis)</span> 
-								</div> #}
-								
-								<hr>
-								<div class="vehicle-details">
-									<div>
-										<span><img src="{{asset('/img/icons/seats.svg')}}" alt="">  {{vehicle.seats}} places</span>
-										<span><img src="{{asset('/img/icons/doors.svg')}}" alt="">  {{vehicle.doors}}</span>
-									</div>
-									<div>
-										<span><img src="{{asset('/img/icons/gearbox.svg')}}" alt="">  {{vehicle.gearBoxType.value}}</span>
-										<span><img src="{{asset('/img/icons/fueltype.svg')}}" alt="">  {{vehicle.fuelType.value}}</span>
-									</div>
+							{# <div class="vehicle-rating"><span class="stars">★★★★★</span> 
+																																																					<!-- Static stars for now -->
+																																																					<span>(22 avis)</span> 
+																																																				</div> #}
+
+							<hr>
+							<div class="vehicle-details">
+								<div>
+									<span><img src="{{asset('/img/icons/seats.svg')}}" alt="">
+										{{vehicle.seats}}
+										places</span>
+									<span><img src="{{asset('/img/icons/doors.svg')}}" alt="">
+										{{vehicle.doors}}</span>
 								</div>
-								<div class="bottom-infos">
-									<strong><img src="{{asset('/img/icons/city.svg')}}" alt="">{{ vehicle.city }}</strong>
-
-									<!-- Price per day -->
-									<div class="vehicle-price">
-										<span>{{ vehicle.pricePerDay ?? 0}}</span>
-										<p>€ / jour</p>
-									</div>
-
+								<div>
+									<span><img src="{{asset('/img/icons/gearbox.svg')}}" alt="">
+										{{vehicle.gearBoxType.value}}</span>
+									<span><img src="{{asset('/img/icons/fueltype.svg')}}" alt="">
+										{{vehicle.fuelType.value}}</span>
 								</div>
+							</div>
+							<div class="bottom-infos">
+								<strong><img src="{{asset('/img/icons/city.svg')}}" alt="">{{ vehicle.city }}</strong>
 
+								<!-- Price per day -->
+								<div class="vehicle-price">
+									<span>{{ vehicle.pricePerDay ?? 0}}</span>
+									<p>€ / jour</p>
+								</div>
 
 							</div>
 
 
-						</a>
+						</div>
 
-					{% endfor %}
-				{% endif %}
-			</div>
 
-			<!-- Right-side: Blue Placeholder -->
-			<div class="blue-box" id="map" , 'aria-label' : 'Carte affichant les véhicules recherchés'>
-				<p>Placeholder for map or other content</p>
-			</div>
+					</a>
+
+				{% endfor %}
+			{% endif %}
 		</div>
-	</main>
 
-	<script>
-		// Fonction pour soumettre automatiquement le formulaire lorsque les champs sont modifiés
+		<!-- Right-side: Blue Placeholder -->
+		<div class="blue-box" id="map" , 'aria-label' : 'Carte affichant les véhicules recherchés'>
+			<p>Placeholder for map or other content</p>
+		</div>
+	</div>
+</main>
+
+<script>
+
+	// Fonction pour soumettre automatiquement le formulaire lorsque les champs sont modifiés
 document.querySelectorAll('.filter-btn').forEach(function (element) {
 element.addEventListener('change', function () {
 document.getElementById('searchForm').submit();
@@ -190,6 +266,9 @@ document.getElementById('searchForm').submit(); // Soumettre le formulaire
 }
 });
 });
+
+
+// Code pour afficher la carte et les markers dans la page recherche de véhicules
 
 let vehicleMarkers = {{ vehicleMarkers|json_encode|raw }};
 let latitude = {{ latitude }};
@@ -222,13 +301,9 @@ vehicle.latitude, vehicle.longitude
 
 // Ajouter un pop up pour chaque marker
 marker.bindPopup(`
-        <strong>${
-vehicle.model
-}</strong><br>
-        City: ${
-vehicle.city
-}<br>
-        Price per day: €${
+        <strong>${vehicle.brand} ${vehicle.model}</strong><br>
+        City: ${vehicle.city}<br>
+        Prix par jour: €${
 vehicle.pricePerDay
 }
     `);
@@ -242,8 +317,13 @@ window.location.origin
 window.location.pathname
 }?${params}`;
 window.history.replaceState({}, '', newUrl);
-	</script>
 
-{% endblock %}
 
-{% block footer %}{% endblock %}
+document.getElementById('openFiltersMobile').addEventListener('click', function () {
+document.getElementById('filtersPopupMobile').classList.remove('hidden-mobile');
+});
+
+document.getElementById('closeFiltersMobile').addEventListener('click', function () {
+document.getElementById('filtersPopupMobile').classList.add('hidden-mobile');
+});
+</script>{% endblock %}{% block footer %}{% endblock %}

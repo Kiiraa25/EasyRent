@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Repository\VehicleRepository;
 use App\Enum\VehicleStatusEnum;
 use App\Service\Api\DataGouvAddressService;
+use Mobile_Detect;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 use function Amp\Dns\query;
@@ -205,6 +206,9 @@ class VehicleController extends AbstractController
         $today = (new \DateTime())->format('Y-m-d');
         $defaultEndDate = (new \DateTime())->modify('+8 days')->format('Y-m-d');
 
+        $mobileDetect = new Mobile_Detect();
+        $isMobile = $mobileDetect->isMobile();
+
         // Récupérer les paramètres GET ou utiliser les valeurs par défaut
         $search = $request->query->get('search', '');
 
@@ -258,6 +262,7 @@ class VehicleController extends AbstractController
                 'latitude' => $vehicle->getLatitude(),
                 'longitude' => $vehicle->getLongitude(),
                 'model' => $vehicle->getModel()->getName(),
+                'brand' => $vehicle->getModel()->getBrand()->getName(),
                 'pricePerDay' => $vehicle->getPricePerDay(),
                 'city' => $vehicle->getCity(),
             ];
@@ -289,7 +294,8 @@ class VehicleController extends AbstractController
             'longitude' => $longitude,
             'queryString' => $queryString,
             'startDate' => $startDate,
-            'endDate' => $endDate
+            'endDate' => $endDate,
+            'is_mobile' => $isMobile,
         ]);
     }
 
