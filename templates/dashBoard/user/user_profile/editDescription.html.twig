@@ -1,7 +1,7 @@
 {% extends 'dashBoard/base.html.twig' %}
 
 {% block importmap %}
-{{ parent() }}
+	{{ parent() }}
 	{{ importmap(['componentsStyle']) }}
 {% endblock %}
 
@@ -12,24 +12,25 @@
 
 
 	<section class="admin-dashboard-content">
-		<h1 class="dashboard-title">
-			Modifier mon profil
-		</h1>
+		<div class="form-container">
+			<h1 class="dashboard-title">
+				Modifier mon profil
+			</h1>
 
-		{{ form_start(form) }}
+			{{ form_start(form) }}
 
-		<h3>Description</h3>
-		{{ form_row(form.description) }}
+			<h3>Description</h3>
+			{{ form_row(form.description) }}
 
 
-		<div class="form-submit-block">
-			<a href="{{ path('app_user_profile_edit') }}" class="back-link">Retour à la page profil</a>
+			<div class="form-submit-block">
+				<a href="{{ path('app_user_profile_edit') }}" class="back-link">Retour à la page profil</a>
 
-			<button type="submit" class="nav-button">Modifier</button>
+				<button type="submit" class="nav-button">Modifier</button>
+			</div>
+			{{ form_end(form) }}
+
 		</div>
-		{{ form_end(form) }}
-
-
 	</section>
 
 

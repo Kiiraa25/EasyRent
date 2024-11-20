@@ -12,53 +12,99 @@
 	<style>
 		/* Conteneur principal */
 
+		.form-container {
+        width: 80%;
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: auto;
+        gap: 20px;
+    }
+
 		@media screen and (max-width: 768px) {
 			.sidebar {
 				display: none !important;
 			}
 
-			
+
 			.admin-dashboard-content {
 				margin: auto;
 				max-width: 90%;
-				padding: 0;
-				height: calc(100vh - 126px) !important;
-				overflow: auto;
+				padding: 25px;
+				overflow: unset;
+				height: 100vh !important;
 			}
 
 			.container {
 				margin: 20px !important;
+				box-shadow: none !important;
 			}
-			
+
+			.dashboard-title {
+				font-size: clamp(1rem, 3vw, 1.5rem) !important;
+			}
+
+			body {
+				background-color: #f4f6f8;
+			}
+
+			.back-link {
+				position: absolute;
+				top: 60px;
+				left: -0.5%;
+				width: 300px;
+			}
+
+			.form-submit-block {
+				position: relative;
+				justify-content: flex-end !important;
+			}
+
+			.form-container {
+				padding: 30px 30px 60px 30px;
+			}
+
+			.form-container .nav-button {
+				background-color: #282F4B;
+				border: none;
+				font-size: 16px;
+				font-weight: bold;
+				padding: 12px 25px;
+				height: 49px;
+			}
+
 
 		}
 
-		
 	</style>
 {% endblock %}
 
 {% block content %}
 <section class="admin-dashboard-content">
+
+<div class="form-container">
 	<h1 class="dashboard-title">Modifier les informations du véhicule</h1>
-
-
 	{{ form_start(form) }}
 
 	<!-- Section Tarification -->
-	<div class="tarification">
+	<div class="tarification form-group">
 		{{ form_row(form.pricePerDay, { label: 'Tarif/jour' }) }}
 		{{ form_row(form.extraMileageRate, { label: 'Prix par km supplémentaire' }) }}
 	</div>
 
 	<!-- Section Adresse -->
-	<div class="adresse">
+	<div class="adresse form-group">
 		{{ form_row(form.address, { label: 'Adresse' }) }}
 		{{ form_row(form.postalCode, { label: 'Code postal' }) }}
 		{{ form_row(form.city, { label: 'Ville' }) }}
 	</div>
 
 	<!-- Section Description -->
-	<div class="description">
+	<div class="description form-group">
 		{{ form_row(form.description, { label: 'Description de l\'annonce' }) }}
 			</div>
 		
@@ -69,6 +115,7 @@
 		</div>
 
 		{{ form_end(form) }}
+		</div>
      
 </section>
 {% endblock %}

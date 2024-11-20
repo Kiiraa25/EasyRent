@@ -12,14 +12,12 @@
 {% block content %}
 
 	<section class="admin-dashboard-content">
+
+	<div class="form-container">
 		<h1 class="dashboard-title">
 			Modifier mon profil
 		</h1>
-
-
 		{{ form_start(form) }}
-
-		<h3>Informations personnelles</h3>
 
 		{{ form_row(form.lastName,  { label: 'Prénom'}) }}
 		{{ form_row(form.firstName,  { label: 'Nom'}) }}
@@ -33,6 +31,7 @@
 			<button type="submit" class="nav-button" onclick="return confirm('Êtes-vous sûr de vouloir modifier ces informations ?');">Modifier</button>
 		</div>
 		{{ form_end(form) }}
+		</div>
 	</section>
 
 

@@ -161,6 +161,90 @@
     opacity: 0.85;
 }
 
+.admin-dashboard-content{
+    width: 100%;
+}
+
+
+@media screen and (max-width: 768px) {
+    .sidebar {
+        display: none !important;
+    }
+
+    .rental-item .mobile-none, .filters-block .mobile-none {
+        display: none;
+    }
+
+    .rental-item {
+        display: flex;
+        gap: 10px;
+        justify-content: space-between;
+        align-items: center;
+        /* max-width: 90%; */
+
+    }
+
+    .rental-item h3{
+        font-size: clamp(14px, 4vw, 18px)
+    }
+    .rental-item p{
+        font-size: clamp(13px, 3.5vw, 15px)
+    }
+
+    .admin-dashboard-content {
+        margin: auto;
+        max-width: 90%;
+        padding: 20px 0;
+        height: calc(100vh - 126px) !important;
+        overflow: auto;
+        gap: 0;
+    }
+
+    .container {
+        margin: 20px !important;
+    }
+
+    .content-container {
+        max-width: 100%;
+        background-color: #F6F6F6;
+        box-shadow: none;
+        padding: 0;
+        margin: 0;
+        overflow: unset;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+    }
+
+    .item-actions {
+        display: none;
+    }
+
+    .content-container .nav-button{
+        margin-top: 15px;
+    }
+
+
+    /* rentals page */
+
+    .filters-block{
+        flex-direction: column;
+    }
+
+    .tabs a{
+        font-size: 16px;
+    }
+
+    .tab{
+        padding: 10px;
+    }
+
+    .dashboard-title{
+        font-size: clamp(18px, 3vw, 22px);
+    }
 
 
 
+
+}

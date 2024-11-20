@@ -49,3 +49,71 @@
     flex-direction: column;
 }
 
+.nav-button {
+    height: 47px;
+    background-color: #282F4B;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 768px) {
+
+    .admin-dashboard-content {
+        height: auto !important;
+        gap: 0px;
+    }
+
+    input,
+    select,
+    textarea {
+        width: 60vw;
+        max-width: 339px;
+
+    }
+
+    .sidebar {
+        display: none !important;
+    }
+
+    .profile-verification{
+        height: auto;
+        gap: 20px;
+    }
+    .profile-verification .form-step{
+        margin-top: 20px;
+    }
+
+    .container{
+        background-color: #ffffff;
+        margin: 30px auto;
+        width: 80%;
+    }
+
+    body{
+     background-color: #f4f6f8;
+    }
+
+    .step-indicators{
+        width: 50%;
+        position: static;
+    }
+
+    .profile-picture {
+        height: 200px;
+        width: 180px;
+        background-color: #f6f6f6 !important;
+        border: 1px solid #e5e5e5;
+    }
+
+    .form-step-2 .profile-picture-block{
+        flex-direction: column;
+    }
+    .form-step-2 .profile-picture-block .profile-picture{
+        height: 60px;
+        width: 100%;
+    }
+
+
+}
+

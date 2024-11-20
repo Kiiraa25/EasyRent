@@ -10,15 +10,15 @@
 
 {% block content %}
 	<div class="admin-dashboard-content">
-		<h1 class="dashboard-title ">Mes Demandes De Location</h1>
 
 		<div
 			class="content-container">
+		<h1 class="dashboard-title ">Mes Demandes De Location</h1>
 
 			<!-- Formulaire de filtre -->
 			<form method="get" action="{{ path('app_user_rental_requests') }}" class="filter-form">
 
-				<label for="filter">Afficher les locations en tant que :</label>
+				<label for="filter">Je suis</label>
 				<select name="filter" id="filter">
 					<option value="renter" {% if filter == 'renter' %} selected {% endif %}>Locataire</option>
 					<option value="owner" {% if filter == 'owner' %} selected {% endif %}>Propriétaire</option>
@@ -44,7 +44,7 @@
 						<!-- Détails de la location -->
 						<a href="{{ path('app_rental_show', {'id': rental.id}) }}" class="rental-details-link">
 							<div class="rental-details">
-								<h3>{{ rental.vehicle.model.name }}</h3>
+								<h3 class="mobile-none">{{ rental.vehicle.model.name }}</h3>
 								<p>Date de début :
 									{{ rental.startDate ? rental.startDate|date('d/m/Y') : '' }}</p>
 								<p>Date de fin :
@@ -69,7 +69,7 @@
 						{% endif %}
 
 						<!-- Prix -->
-						<a href="{{ path('app_rental_show', {'id': rental.id}) }}" class="rental-details-link">
+						<a href="{{ path('app_rental_show', {'id': rental.id}) }}" class="rental-details-link mobile-none">
 							<div class="rental-price">
 								<strong>Prix total :</strong>
 								<p>{{ rental.totalPrice }}
@@ -78,7 +78,7 @@
 						</a>
 
 						<!-- Statut -->
-						<a href="{{ path('app_rental_show', {'id': rental.id}) }}" class="rental-details-link">
+						<a href="{{ path('app_rental_show', {'id': rental.id}) }}" class="rental-details-link mobile-none">
 							<div class="rental-status">{{ rental.status.value }}</div>
 						</a>
 

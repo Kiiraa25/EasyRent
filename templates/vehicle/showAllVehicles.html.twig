@@ -249,7 +249,7 @@
 
 <script>
 
-	// Fonction pour soumettre automatiquement le formulaire lorsque les champs sont modifiés
+// Fonction pour soumettre automatiquement le formulaire lorsque les champs sont modifiés
 document.querySelectorAll('.filter-btn').forEach(function (element) {
 element.addEventListener('change', function () {
 document.getElementById('searchForm').submit();
@@ -261,7 +261,6 @@ document.getElementById('searchForm').submit();
 document.querySelectorAll('.search-input').forEach(function (element) {
 element.addEventListener('keypress', function (e) {
 if (e.key === 'Enter') { // Si la touche "Entrée" est pressée
-e.preventDefault(); // Empêche l'action par défaut
 document.getElementById('searchForm').submit(); // Soumettre le formulaire
 }
 });
@@ -284,9 +283,9 @@ maxZoom: 19,
 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
-// Initialiser 
+// Initialiser l'icon des markers
 var coloredIcon = L.icon({
-iconUrl: "{{ asset('img/icons/leaflet-icon-marker.png') }}", // Chemin vers l'image colorée de l'icône
+iconUrl: "{{ asset('img/icons/leaflet-icon-marker.png') }}",
 iconAnchor: [
 12, 41
 ], // Point d'ancrage
@@ -319,6 +318,7 @@ window.location.pathname
 window.history.replaceState({}, '', newUrl);
 
 
+// affiche le pop up filtres sur mobile
 document.getElementById('openFiltersMobile').addEventListener('click', function () {
 document.getElementById('filtersPopupMobile').classList.remove('hidden-mobile');
 });

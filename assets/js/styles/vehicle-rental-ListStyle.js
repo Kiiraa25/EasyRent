@@ -1,0 +1,1 @@
+import '../../styles/vehicle-rental-ListStyle.css';

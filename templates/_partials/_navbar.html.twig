@@ -1,3 +1,4 @@
+<div class="nav">
 <nav class="desktop-nav">
 	<a class="logo" aria-label="Logo de Easy-Rent" href="{{path('app_home')}}">
 		<svg width="194" height="57" viewbox="0 0 194 57" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -127,7 +128,7 @@
 						<li class="menu-section-title">Mode Locataire</li>
 						<a href="{{ path('app_user_profile_edit') }}">Mon compte</a>
 						<a href="{{ path('app_user_rentals') }}">Mes locations</a>
-						<a href="{{ path('app_user_rental_requests') }}">Demandes</a>
+						<a href="{{ path('app_user_rental_requests') }}">Mes demandes</a>
 						<a href="{{ path('app_vehicle_new') }}">Louer ma voiture</a>
 						
 					</div>
@@ -135,11 +136,12 @@
 					<div>
 						<li class="menu-section-title">Mode Propriétaire</li>
 						<a href="{{ path('app_user_vehicles') }}">Mes voitures</a>
-						<a href="{{ path('app_user_profile_edit') }}">Mon compte</a>
 						<a href="{{ path('app_user_rentals') }}">Mes locations</a>
+						<a href="{{ path('app_user_profile_edit') }}">Mon compte</a>
 						<a href="{{ path('app_user_dashBoard') }}">Performances</a>
 						<a href="#">Paiements</a>
 					</div>
+
 					<a href="{{ path('app_logout') }}">Se déconnecter</a>
 
 					{% if is_granted('ROLE_ADMIN') %}
@@ -162,4 +164,8 @@
 			</ul>
 		</div>
 	</div>
-</div></nav>
+</div>
+
+</nav>
+
+</div>

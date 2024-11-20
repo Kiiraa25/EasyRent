@@ -54,6 +54,14 @@ return [
         'path' => './assets/js/styles/newRentalStyle.js',
         'entrypoint' => true,
     ],
+    'vehicle-rental-ListStyle' => [
+        'path' => './assets/js/styles/vehicle-rental-ListStyle.js',
+        'entrypoint' => true,
+    ],
+    'newVehicleStyle' => [
+        'path' => './assets/js/styles/newVehicleStyle.js',
+        'entrypoint' => true,
+    ],
     
 
 // JAVASCRIPTS

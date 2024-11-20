@@ -8,12 +8,86 @@
 {% block title %}Modifier la Location - Easy-Rent
 {% endblock %}
 
+{% block stylesheets %}
+	<style>
+		/* Conteneur principal */
+
+
+		@media screen and (max-width: 768px) {
+			.sidebar {
+				display: none !important;
+			}
+
+			body {
+				background-color: #f4f6f8;
+			}
+
+
+			.admin-dashboard-content {
+				margin: auto;
+				max-width: 90%;
+				padding: 25px;
+				overflow: auto;
+				height: auto !important;
+			}
+
+			.container {
+				margin: 20px !important;
+				box-shadow: none !important;
+			}
+
+			.dashboard-title {
+				font-size: clamp(1rem, 3vw, 1.5rem) !important;
+			}
+
+			.admin-dashboard-content .form {
+				height: fit-content;
+			}
+
+			.form-container {
+				width: 80%;
+				background-color: #ffffff;
+				border-radius: 15px;
+				box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+				padding: 30px 30px 60px 30px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 20px;
+				margin: 100px 0;
+			}
+
+			.form-container .nav-button {
+				background-color: #282F4B;
+				border: none;
+				font-size: 16px;
+				font-weight: bold;
+				padding: 12px 25px;
+				height: 49px;
+			}
+			.back-link {
+				position: absolute;
+				top: 60px;
+				left: -0.5%;
+			}
+
+			.form-submit-block {
+				position: relative;
+				justify-content: flex-end !important;
+			}
+
+
+		}
+
+	</style>
+{% endblock %}
+
 {% block content %}
 	<section class="admin-dashboard-content">
-		<h1 class="dashboard-title">Modifier la Location</h1>
 
-		
 
+		<div class="form-container">
+			<h1 class="dashboard-title">Modifier la Location</h1>
 			{{ form_start(form) }}
 			{{ form_widget(form) }}
 
@@ -24,7 +98,8 @@
 			</div>
 
 			{{ form_end(form) }}
-	
+		</div>
+
 
 	</section>
 {% endblock %}

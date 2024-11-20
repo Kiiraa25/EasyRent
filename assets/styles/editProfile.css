@@ -132,3 +132,97 @@
     top: 20%;
     cursor: pointer;
 }
+
+@media screen and (max-width: 768px) {
+    .sidebar {
+        display: none !important;
+    }
+
+    body {
+        background-color: #f4f6f8;
+    }
+
+
+    .admin-dashboard-content {
+        margin: auto;
+        max-width: 90%;
+        padding: 25px;
+        overflow: auto;
+        height: auto !important;
+    }
+
+    .container{
+        background-color: none !important;
+        box-shadow: none !important;
+        margin: 0 !important;
+    }
+
+    .top-block{
+        height: 40px;
+        width: 95%;
+        padding: 15px 15px;
+    }
+
+    .user-name p{
+        font-size: 14px;
+    }
+
+    .user-img img{
+        width: 90px;
+        height: 90px;
+        top: -26%;
+    }
+
+    .bottom-block{
+        width: 90vw;
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .profile-box{
+        width: 80vw;
+        height: auto;
+        gap: 20px;
+        max-width: 433px;
+
+    }
+    .profile-box .line{
+        gap: 50px ;
+
+    }
+
+    .top-block{
+        margin-top: none;
+    }
+
+    .profile-content-block{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    } 
+    .profile-content-block h3{
+        font-size: clamp(18px, 4vw, 20px);
+    } 
+
+    .profile-box p{
+        font-size: 14px;
+    } 
+    .profile-box span{
+        font-size: 12px;
+    } 
+
+    .edit-icon {
+        width: 28px;
+        height: 28px;
+    }
+
+
+
+    }
+
+
+
+
+    
+
+
