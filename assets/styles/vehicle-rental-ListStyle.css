@@ -103,6 +103,16 @@ a.nav-button {
     font-weight: bold;
 }
 
+@media screen and (min-width: 1025px) {
+
+    .content-container{
+
+        max-height: 72vh;
+        overflow: auto;
+    }
+    
+}
+
 
 @media screen and (max-width: 768px) {
     .sidebar {

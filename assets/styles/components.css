@@ -10,6 +10,16 @@
     overflow: auto;
 }
 
+@media screen and (min-width: 1025px) {
+
+    .content-container{
+
+        max-height: 75vh;
+        overflow: auto;
+    }
+    
+}
+
 /* Boutons */
 .btn {
     width: 96px;

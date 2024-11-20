@@ -20,6 +20,7 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 use App\Form\NameUserProfileType;
 use App\Entity\UserProfile;
 use App\Enum\UserStatusEnum;
+use Mobile_Detect;
 
 class RegistrationController extends AbstractController
 {
@@ -32,6 +33,10 @@ class RegistrationController extends AbstractController
         if ($this->getUser()) {
             return $this->redirectToRoute('app_home');
         }
+
+        $mobileDetect = new Mobile_Detect();
+        $isMobile = $mobileDetect->isMobile();
+
 
         $user = new User();
         $userProfile = new UserProfile();
@@ -84,6 +89,7 @@ class RegistrationController extends AbstractController
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form,
+            'is_mobile' => $isMobile,
         ]);
     }
 

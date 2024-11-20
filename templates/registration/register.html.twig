@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block meta_description %}
-<meta name="description" content="Inscrivez-vous sur Easy-Rent et rejoignez notre communauté. Louez une voiture en quelques clics ou mettez votre véhicule en location dès aujourd'hui. Simple et sécurisé !">
+	<meta name="description" content="Inscrivez-vous sur Easy-Rent et rejoignez notre communauté. Louez une voiture en quelques clics ou mettez votre véhicule en location dès aujourd'hui. Simple et sécurisé !">
 
 {% endblock %}
 
@@ -16,23 +16,23 @@
 
 
 	<main>
-
 		<section class="register-login-section">
+			{% if not is_mobile %}
 
-			<article class="login-section left-section">
-				<div class="login-section-content">
-					<h2>Vous avez déja un
-						<br>
-						compte ?</h2>
-					<p>Connectez-vous maintenant !</p>
-					<a href="{{path('app_login')}}">
-						<button class="nav-button nav-blue-button">
-							Me connecter</button>
-					</a>
-				</div>
+				<article class="login-section left-section">
+					<div class="login-section-content">
+						<h2>Vous avez déja un
+							<br>
+							compte ?</h2>
+						<p>Connectez-vous maintenant !</p>
+						<a href="{{path('app_login')}}">
+							<button class="nav-button nav-blue-button">
+								Me connecter</button>
+						</a>
+					</div>
 
-			</article>
-
+				</article>
+			{% endif %}
 
 			<article class="subscribe-form display-center right-section">
 				<h2>Créer un compte</h2>

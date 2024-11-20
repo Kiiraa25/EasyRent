@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Mobile_Detect;
 
 class SecurityController extends AbstractController
 {
@@ -17,6 +18,9 @@ class SecurityController extends AbstractController
         if ($this->getUser()) {
             return $this->redirectToRoute('app_home');
         }
+
+        $mobileDetect = new Mobile_Detect();
+        $isMobile = $mobileDetect->isMobile();
         
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -27,6 +31,7 @@ class SecurityController extends AbstractController
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
+            'is_mobile' => $isMobile,
         ]);
     }
 

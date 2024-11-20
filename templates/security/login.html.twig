@@ -23,6 +23,7 @@
 
 			<section class="register-login-section">
 
+
 				<article class="subscribe-form display-center left-section">
 					<h2>Nous sommes ravis de vous revoir !</h2>
 
@@ -47,34 +48,33 @@
 						<button type="submit" class="nav-button">Me connecter</button>
 					</div>
 
-
 				</article>
+				{% if not is_mobile %}
+					<article class="login-section right-section">
+						<div class="login-section-content">
+							<h2>Vous n'avez pas encore
+								<br>
+								de compte ?</h2>
+							<p>Inscrivez-vous en quelques minutes !</p>
+							<a href="{{path('app_register')}}">
+								<span class="nav-button nav-blue-button">
+									M'inscrire</span>
+							</a>
+						</div>
 
-				<article class="login-section right-section">
-					<div class="login-section-content">
-						<h2>Vous n'avez pas encore
-							<br>
-							de compte ?</h2>
-						<p>Inscrivez-vous en quelques minutes !</p>
-						<a href="{{path('app_register')}}">
-							<span class="nav-button nav-blue-button">
-								M'inscrire</span>
-						</a>
-					</div>
-
-				</article>
-			</section>
-
+					</article>
+				</section>
+			{% endif %}
 
 			{#
-																            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-																            See https://symfony.com/doc/current/security/remember_me.html
-																
-																            <div class="checkbox mb-3">
-																                <input type="checkbox" name="_remember_me" id="_remember_me">
-																                <label for="_remember_me">Remember me</label>
-																            </div>
-																        #}
+																			            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+																			            See https://symfony.com/doc/current/security/remember_me.html
+																			
+																			            <div class="checkbox mb-3">
+																			                <input type="checkbox" name="_remember_me" id="_remember_me">
+																			                <label for="_remember_me">Remember me</label>
+																			            </div>
+																			        #}
 
 
 		</form>

@@ -1,18 +1,18 @@
-
-.register-login-section{
+.register-login-section {
     width: 80vw;
     min-height: 65vh !important;
     display: flex;
     height: min-content;
 }
 
-html, body {
+html,
+body {
     height: 100%;
     display: flex;
     flex-direction: column;
 }
 
-main{
+main {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -20,12 +20,12 @@ main{
     margin-top: 0;
 }
 
-.register-login-section h2{
+.register-login-section h2 {
     font-size: 28px;
     text-align: center;
 }
 
-.register-login-section .login-section{
+.register-login-section .login-section {
     width: 40%;
     background-color: #282F4B;
     display: flex;
@@ -35,15 +35,15 @@ main{
     color: white;
 }
 
-.left-section{
+.left-section {
     border-radius: 20px 0px 0px 20px;
 }
 
-.right-section{
+.right-section {
     border-radius: 0px 20px 20px 0px;
 }
 
-.login-section-content{
+.login-section-content {
     height: 250px;
     display: flex;
     flex-direction: column;
@@ -52,25 +52,25 @@ main{
     gap: 40px;
 }
 
-.login-section-content h2{
+.login-section-content h2 {
     color: white;
 }
 
-.register-login-section .subscribe-form{
+.register-login-section .subscribe-form {
     padding: 30px 0px;
     width: 60%;
     background-color: #D9D9D9;
     gap: 50px;
 }
 
-.subscribe-form form{
+.subscribe-form form {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     gap: 15px;
 }
 
-.suscribe-input{
+.suscribe-input {
     width: 346px;
     padding: 0px 20px;
     height: 44px;
@@ -78,14 +78,15 @@ main{
     border: none;
 }
 
-.subscribe-form form .nav-button, .subscribe-form .nav-button{
-width: 100%;
+.subscribe-form form .nav-button,
+.subscribe-form .nav-button {
+    width: 100%;
 }
 
 
 
 /* CGU CONDITIONS GENERALES D'UTILISATION */
-.agree-terms{
+.agree-terms {
     width: 100%;
     display: flex;
     gap: 20px;
@@ -105,13 +106,13 @@ width: 100%;
 
 /* REMEMBER ME BLOCK LOGIN */
 
-.rememberMe-block{
+.rememberMe-block {
     display: flex;
     gap: 15px;
     font-size: 14px;
 }
 
-.login-form{
+.login-form {
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -119,40 +120,107 @@ width: 100%;
 
 }
 
-.reset-password-link{
+.reset-password-link {
     font-size: 14px;
     text-decoration: underline;
 }
 
-.reset-password-link:hover{
+.reset-password-link:hover {
     font-size: 14px;
     text-decoration: underline;
     font-weight: 500;
 }
 
-.nav-blue-button:hover{
+.nav-blue-button:hover {
     background-color: #eb745c;
     border: solid 2px #eb745c;
 }
 
-.alert{
-    max-width: 400px; /* Prend la largeur de l'élément parent */
+.alert {
+    max-width: 400px;
+    /* Prend la largeur de l'élément parent */
     color: red;
-    box-sizing: border-box; /* Inclut le padding dans la largeur totale */
+    box-sizing: border-box;
+    /* Inclut le padding dans la largeur totale */
     font-size: 14px;
 }
 
-.alert a, .alert a:hover {
+.alert a,
+.alert a:hover {
     color: red;
     text-decoration: underline;
 
 }
 
-.alert a:hover{
+.alert a:hover {
     font-weight: 500;
 }
 
+.nav-button{
+    background-color: #282F4B;
+    border: none;
+    height: 47px;
+}
+
+@media screen and (max-width: 768px) {
+    main {
+        align-items: center;
+    }
+
+    .register-login-section {
+        width: 90vw;
+        max-width: 475px;
+    }
+
+    .right-section,
+    .left-section {
+        border-radius: 20px;
+        width: 90vw !important;
+    }
+
+    .register-login-section h2 {
+        font-size: clamp(20px, 4vw, 24px);
+        width: 80vw;
+        max-width: 475px;
+    }
+
+    .login-form,
+    .right-section,
+    .right-section form,
+    .right-section form div {
+        /* width: 100%; */
+        align-items: center;
+    }
+
+    /* .right-section form div {
+        display: flex;
+        justify-content: center;
+    } */
+
+    .suscribe-input,
+    .nav-button {
+        width: 90% !important;
+        box-sizing: border-box;
+        max-width: 346px;
+        min-width: 300px;
+    }
+
+    .nav-button {
+        max-width: 386px;
+    }
+
+    .reset-password-link,
+    .rememberMe-block {
+        align-self: baseline;
+        margin-left: 8%;
+    }
 
 
 
 
+
+
+
+
+
+}
