@@ -23,6 +23,7 @@ class DataGouvAddressService
      */
     public function getCityCoordinates(string $city,)
     {
+        
         $sluggedCity = $this->slugger->slug($city);
         $queries =
             [
@@ -38,7 +39,6 @@ class DataGouvAddressService
             'GET',
             $url
         );
-        // dd($url);
 
 
         $statusCode = $response->getStatusCode();
