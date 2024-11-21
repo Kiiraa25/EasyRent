@@ -1,8 +1,7 @@
 {% extends 'dashBoard/base.html.twig' %}
 
 {% block importmap %}
-	{{ parent() }}
-	{{ importmap(['componentsStyle']) }}
+	{{ importmap(['app', 'componentsStyle']) }}
 
 {% endblock %}
 

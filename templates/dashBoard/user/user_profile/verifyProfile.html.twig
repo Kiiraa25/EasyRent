@@ -1,8 +1,7 @@
 {% extends 'dashBoard/base.html.twig' %}
 
 {% block importmap %}
-{{ parent() }}
-	{{ importmap(['registerStyle', 'profileVerification', 'verifyProfileStyle', 'componentsStyle']) }}
+	{{ importmap(['app', 'registerStyle', 'profileVerification', 'verifyProfileStyle', 'componentsStyle', 'adminDashboardStyle',]) }}
 {% endblock %}
 
 {% block title %}Vérifier mon profil - Easy-Rent
