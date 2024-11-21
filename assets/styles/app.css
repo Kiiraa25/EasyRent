@@ -1977,6 +1977,9 @@ main {
         margin-left: 55px;
     } */
 
+    .cky-btn-revisit-wrapper .cky-revisit-bottom-left{
+        display: none;
+    }
 
 
 }
